@@ -220,8 +220,8 @@ export default function InventoryPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-serif italic text-gray-900">Inventory</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-serif italic text-theme-charcoal">Inventory</h2>
+          <p className="text-sm font-mono text-theme-industrial mt-1">
             Manage stock levels across Shopify and Etsy.
           </p>
         </div>
@@ -229,26 +229,26 @@ export default function InventoryPage() {
           {selectedItems.length > 0 && (
             <button
               onClick={syncSelected}
-              className="px-4 py-2 bg-theme-gold text-white text-sm rounded-lg hover:bg-theme-gold/90 transition-colors"
+              className="px-4 py-2 bg-theme-gold text-white text-sm font-mono rounded-lg hover:bg-theme-gold/90 transition-all duration-300 ease-liquid"
             >
               Sync {selectedItems.length} Items
             </button>
           )}
-          <button className="px-4 py-2 bg-theme-charcoal text-white text-sm rounded-lg hover:bg-theme-charcoal/90 transition-colors">
+          <button className="px-4 py-2 bg-theme-charcoal text-theme-alabaster text-sm font-mono rounded-lg hover:bg-theme-charcoal/90 transition-all duration-300 ease-liquid">
             + Add Stock
           </button>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
+      <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-theme-charcoal/10 p-4">
         <div className="flex items-center gap-4">
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Collection</label>
+            <label className="text-xs font-mono text-theme-industrial uppercase tracking-wider block mb-1">Collection</label>
             <select
               value={filterCollection}
               onChange={(e) => setFilterCollection(e.target.value)}
-              className="px-3 py-2 border border-gray-200 rounded-lg text-sm"
+              className="px-3 py-2 border border-theme-charcoal/10 rounded-lg text-sm font-mono bg-white/50"
             >
               <option value="all">All Collections</option>
               <option value="Atlas">Atlas</option>
@@ -256,11 +256,11 @@ export default function InventoryPage() {
             </select>
           </div>
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Territory</label>
+            <label className="text-xs font-mono text-theme-industrial uppercase tracking-wider block mb-1">Territory</label>
             <select
               value={filterTerritory}
               onChange={(e) => setFilterTerritory(e.target.value)}
-              className="px-3 py-2 border border-gray-200 rounded-lg text-sm"
+              className="px-3 py-2 border border-theme-charcoal/10 rounded-lg text-sm font-mono bg-white/50"
             >
               <option value="all">All Territories</option>
               <option value="Ember">Ember</option>
@@ -270,11 +270,11 @@ export default function InventoryPage() {
             </select>
           </div>
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Sync Status</label>
+            <label className="text-xs font-mono text-theme-industrial uppercase tracking-wider block mb-1">Sync Status</label>
             <select
               value={filterSync}
               onChange={(e) => setFilterSync(e.target.value)}
-              className="px-3 py-2 border border-gray-200 rounded-lg text-sm"
+              className="px-3 py-2 border border-theme-charcoal/10 rounded-lg text-sm font-mono bg-white/50"
             >
               <option value="all">All Status</option>
               <option value="synced">Synced</option>
@@ -282,52 +282,52 @@ export default function InventoryPage() {
               <option value="pending">Pending</option>
             </select>
           </div>
-          <div className="ml-auto text-sm text-gray-500">
+          <div className="ml-auto text-sm font-mono text-theme-industrial">
             {filteredInventory.length} items
           </div>
         </div>
       </div>
 
       {/* Inventory Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-theme-charcoal/10 overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-theme-alabaster border-b border-theme-charcoal/10">
             <tr>
               <th className="px-4 py-3 text-left">
                 <input
                   type="checkbox"
                   checked={selectedItems.length === filteredInventory.length && filteredInventory.length > 0}
                   onChange={selectAll}
-                  className="rounded border-gray-300"
+                  className="rounded border-theme-charcoal/20"
                 />
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Product
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 SKU
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Territory
               </th>
-              <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-center text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Local
               </th>
-              <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-center text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Shopify
               </th>
-              <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-center text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Etsy
               </th>
-              <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-center text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-xs font-mono text-theme-industrial uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-theme-charcoal/5">
             {filteredInventory.map((item) => {
               const isLowStock = item.localQuantity <= item.lowStockThreshold;
               const isEditing = editingId === item.id;
@@ -443,27 +443,27 @@ export default function InventoryPage() {
 
       {/* Summary Stats */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
-          <div className="text-sm text-gray-500">Total SKUs</div>
-          <div className="text-2xl font-mono font-medium text-gray-900 mt-1">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-theme-charcoal/10">
+          <div className="text-sm font-mono text-theme-industrial uppercase tracking-wider">Total SKUs</div>
+          <div className="text-2xl font-mono font-medium text-theme-charcoal mt-1">
             {inventory.length}
           </div>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
-          <div className="text-sm text-gray-500">Total Units</div>
-          <div className="text-2xl font-mono font-medium text-gray-900 mt-1">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-theme-charcoal/10">
+          <div className="text-sm font-mono text-theme-industrial uppercase tracking-wider">Total Units</div>
+          <div className="text-2xl font-mono font-medium text-theme-charcoal mt-1">
             {inventory.reduce((sum, i) => sum + i.localQuantity, 0)}
           </div>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
-          <div className="text-sm text-gray-500">Low Stock Items</div>
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-theme-charcoal/10">
+          <div className="text-sm font-mono text-theme-industrial uppercase tracking-wider">Low Stock Items</div>
           <div className="text-2xl font-mono font-medium text-red-600 mt-1">
             {inventory.filter((i) => i.localQuantity <= i.lowStockThreshold).length}
           </div>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-gray-200">
-          <div className="text-sm text-gray-500">Out of Sync</div>
-          <div className="text-2xl font-mono font-medium text-yellow-600 mt-1">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-theme-charcoal/10">
+          <div className="text-sm font-mono text-theme-industrial uppercase tracking-wider">Out of Sync</div>
+          <div className="text-2xl font-mono font-medium text-theme-gold mt-1">
             {inventory.filter((i) => i.syncStatus === 'out_of_sync').length}
           </div>
         </div>

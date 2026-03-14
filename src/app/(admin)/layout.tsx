@@ -66,17 +66,17 @@ export default async function AdminLayout({
   // }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <aside className="fixed inset-y-0 left-0 w-64 bg-theme-charcoal text-white">
+    <div className="min-h-screen bg-theme-alabaster">
+      {/* Sidebar - Using Charcoal for contrast */}
+      <aside className="fixed inset-y-0 left-0 w-64 bg-theme-charcoal text-theme-alabaster">
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-white/10">
+        <div className="h-16 flex items-center px-6 border-b border-theme-alabaster/10">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
             <span className="font-serif italic text-xl tracking-tight">
               Tarife Attär
             </span>
-            <span className="text-xs font-mono text-white/50 uppercase tracking-widest">
-              Admin
+            <span className="text-xs font-mono text-theme-gold uppercase tracking-widest">
+              Operations
             </span>
           </Link>
         </div>
@@ -90,12 +90,12 @@ export default async function AdminLayout({
                 key={item.name}
                 href={item.href}
                 className={`
-                  flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium
-                  transition-colors duration-150
+                  flex items-center gap-3 px-4 py-3 rounded-lg text-sm
+                  transition-all duration-300 ease-liquid
                   ${
                     isActive
-                      ? 'bg-white/10 text-white'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? 'bg-theme-gold/20 text-theme-gold font-medium'
+                      : 'text-theme-alabaster/60 hover:text-theme-alabaster hover:bg-theme-alabaster/5'
                   }
                 `}
               >
@@ -107,30 +107,30 @@ export default async function AdminLayout({
         </nav>
 
         {/* Platform Status */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
-          <div className="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-theme-alabaster/10">
+          <div className="text-xs font-mono text-theme-industrial uppercase tracking-widest mb-3">
             Platforms
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-white/60">Shopify</span>
+              <span className="text-theme-alabaster/60">Shopify</span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-white/40 text-xs">Connected</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-theme-industrial text-xs">Connected</span>
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-white/60">Etsy</span>
+              <span className="text-theme-alabaster/60">Etsy</span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-yellow-500" />
-                <span className="text-white/40 text-xs">Setup Required</span>
+                <span className="w-2 h-2 rounded-full bg-theme-gold" />
+                <span className="text-theme-industrial text-xs">Setup Required</span>
               </span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="text-white/60">Sanity</span>
+              <span className="text-theme-alabaster/60">Sanity</span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-green-500" />
-                <span className="text-white/40 text-xs">Connected</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-theme-industrial text-xs">Connected</span>
               </span>
             </div>
           </div>
@@ -140,16 +140,16 @@ export default async function AdminLayout({
       {/* Main Content */}
       <main className="pl-64">
         {/* Top Bar */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+        <header className="h-16 bg-theme-alabaster border-b border-theme-charcoal/10 flex items-center justify-between px-8">
           <div className="flex items-center gap-4">
-            <h1 className="text-lg font-medium text-gray-900">
+            <h1 className="text-lg font-serif italic text-theme-charcoal">
               Operations Hub
             </h1>
           </div>
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="text-sm text-gray-500 hover:text-gray-700"
+              className="text-sm font-mono text-theme-charcoal/50 hover:text-theme-charcoal transition-colors duration-300"
               target="_blank"
             >
               View Store →
