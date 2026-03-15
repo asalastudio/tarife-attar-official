@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     query: productBySlugQuery,
     params: { slug: params.slug },
     tags: [`product-${params.slug}`],
-    revalidate: 0, // Always fetch fresh data
+    revalidate: 60,
   });
 
   if (!product) {

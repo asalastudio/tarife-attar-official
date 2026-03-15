@@ -50,7 +50,6 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
   // Ensure component is mounted before creating portal
   useEffect(() => {
     setIsMounted(true);
-    console.log('[EssenceDrop] Component mounted');
     return () => setIsMounted(false);
   }, []);
 
@@ -62,12 +61,6 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
     // We want it to arc upward first, then down - like a thrown object
     const controlX = startPosition.x + dx * 0.3;
     const controlY = Math.min(startPosition.y, endPosition.y) - 100; // Arc peak
-
-    console.log('[EssenceDrop] Path calculated:', {
-      start: startPosition,
-      control: { x: controlX, y: controlY },
-      end: endPosition,
-    });
 
     return {
       start: startPosition,
@@ -84,8 +77,6 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
   // Ensure minimum 1.2s duration for visibility, max 2s
   const baseDuration = Math.min(Math.max(distance / 600, 1.2), 2.0);
   const duration = baseDuration * durationMultiplier;
-
-  console.log('[EssenceDrop] Animation config:', { isActive, distance, duration, enableParticles });
 
   // Generate trail positions for the comet effect
   useEffect(() => {
@@ -126,10 +117,7 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
   // Show toast after animation completes
   useEffect(() => {
     if (isActive) {
-      console.log('[EssenceDrop] Starting animation timer, duration:', duration);
-      
       const toastTimer = setTimeout(() => {
-        console.log('[EssenceDrop] Animation timer fired, showing toast');
         setShowToast(true);
         onCompleteRef.current?.();
       }, duration * 1000);
@@ -139,7 +127,6 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
       }, (duration + 3) * 1000); // Toast visible for 3 seconds
 
       return () => {
-        console.log('[EssenceDrop] Cleaning up timers');
         clearTimeout(toastTimer);
         clearTimeout(hideToastTimer);
       };
@@ -148,7 +135,6 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
 
   // Don't render until mounted (for SSR safety)
   if (!isMounted) {
-    console.log('[EssenceDrop] Not mounted yet, returning null');
     return null;
   }
 
@@ -187,9 +173,7 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
               ease: [0.25, 0.1, 0.25, 1],
               times: [0, 0.4, 1],
             }}
-            onAnimationComplete={() => {
-              console.log('[EssenceDrop] Animation complete');
-            }}
+            onAnimationComplete={undefined}
           >
             {/* The glowing essence orb - LARGER and BRIGHTER for visibility */}
             <div

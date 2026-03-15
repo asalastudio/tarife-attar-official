@@ -21,11 +21,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    // Verify webhook secret (optional but recommended)
+    // Verify webhook secret (required)
     const secret = request.headers.get('x-sanity-secret');
     const expectedSecret = process.env.SANITY_REVALIDATE_SECRET;
 
-    if (expectedSecret && secret !== expectedSecret) {
+    if (!expectedSecret) {
+      return NextResponse.json(
+        { message: 'SANITY_REVALIDATE_SECRET is not configured' },
+        { status: 503 }
+      );
+    }
+
+    if (secret !== expectedSecret) {
       return NextResponse.json(
         { message: 'Invalid secret' },
         { status: 401 }

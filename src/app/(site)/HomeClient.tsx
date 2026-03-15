@@ -83,7 +83,7 @@ export function HomeClient({ featuredProducts }: HomeClientProps) {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-16 md:gap-20">
                         {featuredProducts && featuredProducts.length > 0 ? (
-                            featuredProducts.map((product) => (
+                            featuredProducts.map((product, index) => (
                                 <motion.div
                                     key={product._id}
                                     whileHover={{ y: -10 }}
@@ -107,10 +107,11 @@ export function HomeClient({ featuredProducts }: HomeClientProps) {
                                                         fill
                                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                                         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                                                        priority={index < 3}
                                                     />
                                                 );
                                             }
-                                            
+
                                             // Use Shopify image as fallback
                                             if (shopifyImageUrl) {
                                                 return (
@@ -120,6 +121,7 @@ export function HomeClient({ featuredProducts }: HomeClientProps) {
                                                         fill
                                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                                         className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                                                        priority={index < 3}
                                                     />
                                                 );
                                             }

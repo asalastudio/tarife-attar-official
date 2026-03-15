@@ -6,8 +6,13 @@
 
 import { NextResponse } from 'next/server';
 import { platformManager } from '@/lib/connectors';
+import { verifyAdminToken } from '@/lib/admin-auth';
 
 export async function POST(request: Request) {
+  if (!verifyAdminToken(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { action, sku, quantity, productIds } = body;
@@ -78,7 +83,11 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  if (!verifyAdminToken(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const platforms = await platformManager.getConnectedPlatforms();
 

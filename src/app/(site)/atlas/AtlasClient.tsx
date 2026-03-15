@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { GlobalFooter } from "@/components/navigation";
@@ -63,6 +63,77 @@ interface Props {
   territories: Territory[];
   totalCount: number;
 }
+
+const AtlasProductCard = memo(function AtlasProductCard({ product, territoryId }: {
+  product: Territory['products'][number];
+  territoryId: string;
+}) {
+  const sanityImage = product.mainImage || product.fieldReport?.image;
+  const imageUrl = sanityImage ? urlForImage(sanityImage) : null;
+  const shopifyImageUrl = product.shopifyPreviewImageUrl || product.shopifyImage;
+
+  return (
+    <Link
+      href={`/product/${product.slug.current}`}
+      className="group flex flex-col bg-[#f8f6f3] hover:bg-[#f5f2ee] transition-colors"
+    >
+      <div className="relative aspect-square">
+        {imageUrl ? (() => {
+          try {
+            const imageSrc = imageUrl.width(500).height(500).url();
+            return (
+              <Image
+                src={imageSrc}
+                alt={product.title || 'Product image'}
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            );
+          } catch {
+            return null;
+          }
+        })() : shopifyImageUrl ? (
+          <Image
+            src={shopifyImageUrl}
+            alt={product.title || 'Product image'}
+            fill
+            sizes="(max-width: 768px) 50vw, 25vw"
+            className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
+              No Image
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="text-center py-6 md:py-8 space-y-1.5">
+        <h3 className="font-sans text-sm md:text-base font-medium tracking-[0.15em] uppercase">
+          {product.title}
+        </h3>
+        {!product.inStock ? (
+          <p className="text-xs md:text-sm tracking-wider opacity-50">
+            Coming Soon
+          </p>
+        ) : (
+          <p className="text-sm md:text-base tracking-wide">
+            ${getTerritoryStartingPrice(territoryId) || product.price || '—'}
+          </p>
+        )}
+      </div>
+    </Link>
+  );
+});
 
 export function AtlasClient({ territories, totalCount }: Props) {
   const router = useRouter();
@@ -187,81 +258,11 @@ export function AtlasClient({ territories, totalCount }: Props) {
                 {territory.products.length > 0 ? (
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-theme-charcoal/[0.08]">
                     {territory.products.map((product) => (
-                      <Link
+                      <AtlasProductCard
                         key={product._id}
-                        href={`/product/${product.slug.current}`}
-                        className="group flex flex-col bg-[#f8f6f3] hover:bg-[#f5f2ee] transition-colors"
-                      >
-                        {/* Product Image */}
-                        <div className="relative aspect-square">
-                          {(() => {
-                            const sanityImage = product.mainImage || product.fieldReport?.image;
-                            const imageUrl = sanityImage ? urlForImage(sanityImage) : null;
-                            const shopifyImageUrl = product.shopifyPreviewImageUrl || product.shopifyImage;
-                            
-                            if (imageUrl) {
-                              try {
-                                const imageSrc = imageUrl.width(500).height(500).url();
-                                return (
-                                  <Image
-                                    src={imageSrc}
-                                    alt={product.title || 'Product image'}
-                                    fill
-                                    sizes="(max-width: 768px) 50vw, 25vw"
-                                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                                    onError={(e) => {
-                                      const target = e.target as HTMLImageElement;
-                                      target.style.display = 'none';
-                                    }}
-                                  />
-                                );
-                              } catch (error) {
-                                console.warn('Failed to generate image URL:', product.title, error);
-                              }
-                            }
-                            
-                            if (shopifyImageUrl) {
-                              return (
-                                <Image
-                                  src={shopifyImageUrl}
-                                  alt={product.title || 'Product image'}
-                                  fill
-                                  sizes="(max-width: 768px) 50vw, 25vw"
-                                  className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.style.display = 'none';
-                                  }}
-                                />
-                              );
-                            }
-                            
-                            return (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
-                                  No Image
-                                </span>
-                              </div>
-                            );
-                          })()}
-                        </div>
-                        
-                        {/* Product Info - Centered in text area */}
-                        <div className="text-center py-6 md:py-8 space-y-1.5">
-                          <h3 className="font-sans text-sm md:text-base font-medium tracking-[0.15em] uppercase">
-                            {product.title}
-                          </h3>
-                          {!product.inStock ? (
-                            <p className="text-xs md:text-sm tracking-wider opacity-50">
-                              Coming Soon
-                            </p>
-                          ) : (
-                            <p className="text-sm md:text-base tracking-wide">
-                              ${getTerritoryStartingPrice(territory.id) || product.price || '—'}
-                            </p>
-                          )}
-                        </div>
-                      </Link>
+                        product={product}
+                        territoryId={territory.id}
+                      />
                     ))}
                   </div>
                 ) : (

@@ -79,18 +79,14 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
       // Prevent duplicate processing - ignore events within 500ms of each other
       const now = timestamp || Date.now();
       if (now - lastEventTimestamp.current < 500) {
-        console.log('[Satchel] Ignoring duplicate event, too soon after last one');
         return;
       }
       lastEventTimestamp.current = now;
 
       // Don't trigger if animation is already active
       if (essenceDropActive) {
-        console.log('[Satchel] Ignoring event, animation already active');
         return;
       }
-
-      console.log('[Satchel] Received essence drop event:', { productColor, productName, startX, startY });
 
       setDropDetails({
         productColor: productColor || '#c5a66a',
@@ -100,11 +96,9 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
       setEssenceDropActive(true);
     };
 
-    console.log('[Satchel] Setting up essence drop event listener');
     window.addEventListener(ESSENCE_DROP_EVENT, handleEssenceDrop as EventListener);
 
     return () => {
-      console.log('[Satchel] Cleaning up essence drop event listener');
       window.removeEventListener(ESSENCE_DROP_EVENT, handleEssenceDrop as EventListener);
     };
   }, [essenceDropActive]);
@@ -126,7 +120,6 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
 
   // Handle essence drop completion - memoized to prevent unnecessary re-renders
   const handleEssenceDropComplete = useCallback(() => {
-    console.log('[Satchel] Essence drop complete, resetting state');
     setEssenceDropActive(false);
     setDropDetails(null);
   }, []);
@@ -142,7 +135,6 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
       {/* Essence Drop Animation */}
       {essenceDropActive && dropDetails && (
         <>
-          {console.log('[Satchel] Rendering EssenceDrop:', { essenceDropActive, dropDetails, endPosition: getSatchelPosition() })}
           <EssenceDrop
             isActive={essenceDropActive}
             productColor={dropDetails.productColor}
@@ -231,8 +223,6 @@ export function triggerEssenceDrop(details: Omit<EssenceDropEventDetail, 'timest
     ...details,
     timestamp: Date.now(),
   };
-
-  console.log('[triggerEssenceDrop] Dispatching event:', detailsWithTimestamp);
 
   const event = new CustomEvent(ESSENCE_DROP_EVENT, {
     detail: detailsWithTimestamp,

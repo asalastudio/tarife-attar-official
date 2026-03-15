@@ -7,14 +7,15 @@
 
 import Link from 'next/link';
 import { headers } from 'next/headers';
+import { requireAdmin } from '@/lib/admin-auth';
 
 // Admin navigation items
 const navigation = [
-  { name: 'Dashboard', href: '/admin/dashboard', icon: 'grid' },
-  { name: 'Products', href: '/admin/products', icon: 'package' },
-  { name: 'Inventory', href: '/admin/inventory', icon: 'layers' },
-  { name: 'Orders', href: '/admin/orders', icon: 'shopping-bag' },
-  { name: 'Analytics', href: '/admin/analytics', icon: 'bar-chart' },
+  { name: 'Dashboard', href: '/dashboard', icon: 'grid' },
+  { name: 'Products', href: '/products', icon: 'package' },
+  { name: 'Inventory', href: '/inventory', icon: 'layers' },
+  { name: 'Orders', href: '/orders', icon: 'shopping-bag' },
+  { name: 'Analytics', href: '/analytics', icon: 'bar-chart' },
 ];
 
 // Simple icon components
@@ -55,15 +56,12 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Require admin authentication (redirects to /admin/login if not authenticated)
+  await requireAdmin();
+
   // Get current path for active state
   const headersList = await headers();
   const pathname = headersList.get('x-pathname') || '/admin/dashboard';
-
-  // TODO: Add authentication check here
-  // const session = await getSession();
-  // if (!session || !session.user.isAdmin) {
-  //   redirect('/login');
-  // }
 
   return (
     <div className="min-h-screen bg-theme-alabaster">
@@ -71,7 +69,7 @@ export default async function AdminLayout({
       <aside className="fixed inset-y-0 left-0 w-64 bg-theme-charcoal text-theme-alabaster">
         {/* Logo */}
         <div className="h-16 flex items-center px-6 border-b border-theme-alabaster/10">
-          <Link href="/admin/dashboard" className="flex items-center gap-3">
+          <Link href="/dashboard" className="flex items-center gap-3">
             <span className="font-serif italic text-xl tracking-tight">
               Tarife Attär
             </span>
@@ -154,6 +152,14 @@ export default async function AdminLayout({
             >
               View Store →
             </Link>
+            <form action="/api/admin/logout" method="POST">
+              <button
+                type="submit"
+                className="text-sm font-mono text-theme-charcoal/30 hover:text-red-600 transition-colors duration-300"
+              >
+                Logout
+              </button>
+            </form>
           </div>
         </header>
 

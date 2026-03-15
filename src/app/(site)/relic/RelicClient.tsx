@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { GlobalFooter } from "@/components/navigation";
@@ -39,6 +40,69 @@ interface Props {
   categories: Category[];
   totalCount: number;
 }
+
+const RelicProductCard = memo(function RelicProductCard({ product }: {
+  product: RelicProduct;
+}) {
+  const displayImage = product.museumExhibit?.exhibitImage || product.mainImage;
+  const imageUrl = displayImage ? urlForImage(displayImage) : null;
+
+  return (
+    <Link
+      href={`/product/${product.slug.current}`}
+      className="group flex flex-col bg-[#1a1a1a] hover:bg-[#222] transition-colors"
+    >
+      <div className="relative aspect-square">
+        {imageUrl ? (() => {
+          try {
+            const imageSrc = imageUrl.width(500).height(500).url();
+            return (
+              <Image
+                src={imageSrc}
+                alt={product.title || 'Product image'}
+                fill
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            );
+          } catch {
+            return (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
+                  No Image
+                </span>
+              </div>
+            );
+          }
+        })() : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
+              No Image
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="text-center py-6 md:py-8 space-y-1.5">
+        <h3 className="font-serif italic text-sm md:text-base tracking-wide">
+          {product.title}
+        </h3>
+        {!product.inStock ? (
+          <p className="font-mono text-xs md:text-sm tracking-wider opacity-40">
+            Out of Stock
+          </p>
+        ) : product.price ? (
+          <p className="text-sm md:text-base tracking-wide opacity-70">
+            ${product.price}
+          </p>
+        ) : null}
+      </div>
+    </Link>
+  );
+});
 
 export function RelicClient({ categories, totalCount }: Props) {
   const router = useRouter();
@@ -118,76 +182,7 @@ export function RelicClient({ categories, totalCount }: Props) {
               {category.products.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1px] bg-white/[0.08]">
                   {category.products.map((product) => (
-                    <Link
-                      key={product._id}
-                      href={`/product/${product.slug.current}`}
-                      className="group flex flex-col bg-[#1a1a1a] hover:bg-[#222] transition-colors"
-                    >
-                      {/* Product Image */}
-                      <div className="relative aspect-square">
-                        {product.museumExhibit?.exhibitImage || product.mainImage ? (() => {
-                          const displayImage = product.museumExhibit?.exhibitImage || product.mainImage;
-                          const imageUrl = urlForImage(displayImage);
-                          if (!imageUrl) {
-                            return (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
-                                  No Image
-                                </span>
-                              </div>
-                            );
-                          }
-
-                          try {
-                            const imageSrc = imageUrl.width(500).height(500).url();
-                            return (
-                              <Image
-                                src={imageSrc}
-                                alt={product.title || 'Product image'}
-                                fill
-                                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                                className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                                onError={(e) => {
-                                  const target = e.target as HTMLImageElement;
-                                  target.style.display = 'none';
-                                }}
-                              />
-                            );
-                          } catch (error) {
-                            console.warn('Failed to generate image URL:', product.title, error);
-                            return (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
-                                  No Image
-                                </span>
-                              </div>
-                            );
-                          }
-                        })() : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
-                              No Image
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Product Info - Minimal like Atlas */}
-                      <div className="text-center py-6 md:py-8 space-y-1.5">
-                        <h3 className="font-serif italic text-sm md:text-base tracking-wide">
-                          {product.title}
-                        </h3>
-                        {!product.inStock ? (
-                          <p className="font-mono text-xs md:text-sm tracking-wider opacity-40">
-                            Out of Stock
-                          </p>
-                        ) : product.price ? (
-                          <p className="text-sm md:text-base tracking-wide opacity-70">
-                            ${product.price}
-                          </p>
-                        ) : null}
-                      </div>
-                    </Link>
+                    <RelicProductCard key={product._id} product={product} />
                   ))}
                 </div>
               ) : (

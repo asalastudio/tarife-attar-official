@@ -61,14 +61,14 @@ export default async function AtlasPage() {
   const products = (await sanityFetch<AtlasProduct[]>({
     query: atlasProductsByTerritoryQuery,
     tags: ["atlas-products"],
-    revalidate: 0, // Always fetch fresh data, rely on webhook for revalidation
+    revalidate: 60,
   })) || [];
 
   // Fetch territory counts
   const counts = (await sanityFetch<TerritoryCounts>({
     query: atlasTerritoryCountsQuery,
     tags: ["atlas-counts"],
-    revalidate: 0, // Always fetch fresh data
+    revalidate: 60,
   })) || { tidal: 0, ember: 0, petal: 0, terra: 0 };
 
   // Group products by territory

@@ -7,6 +7,7 @@
 
 import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { verifyAdminToken } from '@/lib/admin-auth';
 
 // Brand Agent System Prompt (abbreviated - full version in BRAND_AGENT_SYSTEM_PROMPT.md)
 const BRAND_AGENT_SYSTEM = `You are the autonomous Brand Agent for TARIFE ATTÄR, a luxury artisanal fragrance house specializing in alcohol-free perfume oils.
@@ -34,6 +35,10 @@ OUTPUT FORMAT for onSkin (2 paragraphs):
 Always end Atlas products with: "Hand-blended with natural ingredients and modern aromachemicals for depth and longevity."`;
 
 export async function POST(request: Request) {
+  if (!verifyAdminToken(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { action, productData } = body;

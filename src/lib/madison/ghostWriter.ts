@@ -205,7 +205,6 @@ export async function pushDraft(data: MadisonPayload): Promise<string> {
   // Create the document
   try {
     await client.create(document as any); // Type assertion for document creation
-    console.log(`✅ Draft created: ${draftId}`);
     return draftId;
   } catch (error) {
     console.error('Error creating draft:', error);

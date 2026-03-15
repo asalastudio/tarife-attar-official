@@ -87,7 +87,6 @@ async function refreshAccessToken(): Promise<string> {
   // 1. Store the new refresh_token (data.refresh_token)
   // 2. Update environment variables or database
 
-  console.log('[Etsy] Access token refreshed successfully');
   return data.access_token;
 }
 

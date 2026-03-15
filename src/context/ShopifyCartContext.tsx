@@ -100,7 +100,6 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
     let currentCart = cart;
     if (!currentCart) {
-      console.log('No cart available. Creating new cart...');
       // Await the creation and use the RETURNED value, not the state
       currentCart = await createNewCart();
 
@@ -114,7 +113,6 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
     try {
       const formattedVariantId = formatVariantId(variantId);
-      console.log('Adding item to cart:', { variantId, formattedVariantId, quantity, cartId: currentCart.id });
 
       const response = await shopifyFetch({
         query: ADD_LINES_MUTATION,
@@ -127,8 +125,6 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
         }
       });
 
-      console.log('Shopify response:', response);
-
       if (response.errors) {
         console.error('Shopify GraphQL errors:', response.errors);
         throw new Error(response.errors[0]?.message || 'Failed to add item to cart');
@@ -136,7 +132,6 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
       if (response.data?.cartLinesAdd?.cart) {
         setCart(response.data.cartLinesAdd.cart);
-        console.log('Successfully added item to cart');
       } else {
         throw new Error('Invalid response from Shopify');
       }

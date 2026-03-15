@@ -345,16 +345,12 @@ export function ProductDetailClient({ product }: Props) {
     const buttonRef = source === 'mobile' ? mobileAddButtonRef : addButtonRef;
     const rect = buttonRef.current?.getBoundingClientRect();
 
-    console.log('[handleAddToSatchel] Button ref:', buttonRef.current);
-    console.log('[handleAddToSatchel] Button rect:', rect);
-
     // Trigger animation - use button position or fallback to screen center
     const startX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
     const startY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
 
     // Use setTimeout to ensure this runs in the next tick and doesn't block
     setTimeout(() => {
-      console.log('[handleAddToSatchel] Triggering animation from:', { startX, startY });
       triggerEssenceDrop({
         productColor: '#c5a66a', // Theme gold
         productName: `${product.title} (${selectedVariant})`,
@@ -364,9 +360,7 @@ export function ProductDetailClient({ product }: Props) {
     }, 0);
 
     try {
-      console.log('Adding to cart:', { variantId: variantIdToAdd, selectedVariant, quantity });
       await addItem(variantIdToAdd, quantity);
-      console.log('Successfully added to cart');
 
       // Success state feedback
       setTimeout(() => {
