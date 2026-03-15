@@ -119,6 +119,38 @@ if (expectedSecret && secret !== expectedSecret) {  // Only validates IF env var
 
 ---
 
+## PERFORMANCE ISSUES
+
+### HIGH Priority (Performance Critical)
+
+| File | Issue | Impact |
+|------|-------|--------|
+| `atlas/page.tsx:67,74` | `revalidate: 0` disables caching | Forces fresh DB fetch every request |
+| `relic/page.tsx:44` | `revalidate: 0` disables caching | Defeats CDN benefits |
+| `product/[slug]/page.tsx:21` | `revalidate: 0` disables caching | No ISR benefits |
+| `EssenceDrop.tsx` | 8 console.log statements | Bundle bloat, perf overhead |
+| `Satchel.tsx` | 7 console.log statements | Bundle bloat, perf overhead |
+
+**Fix:** Change `revalidate: 0` to `revalidate: 60` for ISR with webhook revalidation.
+
+### MEDIUM Priority (Best Practices)
+
+| File | Issue | Recommendation |
+|------|-------|----------------|
+| `ProductDetailClient.tsx` | 1174 lines monolithic | Split Atlas/Relic sections |
+| `HomeClient.tsx:86-158` | Product cards not memoized | Wrap in React.memo |
+| `AtlasClient.tsx:194-270` | Territory grid not memoized | Wrap in React.memo |
+| `atlas/page.tsx` | 2 separate queries | Combine into single GROQ |
+| `HomeClient.tsx:104` | No priority on hero images | Add `priority={true}` |
+
+### Image Optimization
+
+- Missing `placeholder="blur"` for loading states
+- Missing `priority` on above-fold images
+- Consider explicit avif/webp format handling
+
+---
+
 ### Required Environment Variables (Undocumented)
 
 See `.env.example` file with:
