@@ -1,21 +1,24 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Droplets, Check, AlertCircle, Map as MapIcon, Info, Flame, Flower2, Waves, TreePine } from "lucide-react";
+import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Droplets, Check, AlertCircle, Map as MapIcon, Flame, Flower2, Waves, TreePine } from "lucide-react";
 import { urlForImage } from "@/sanity/lib/image";
 import { useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
 import { PortableText } from "@portabletext/react";
-import { getClassLabel, getCoordinateLabel, COLLECTION_LABELS } from "@/lib/brandSystem";
+import { getClassLabel, getCoordinateLabel } from "@/lib/brandSystem";
 import { LegacyName } from "@/components/product/LegacyName";
 import { triggerEssenceDrop } from "@/components/cart/Satchel";
 
-// Portable Text type
-type PortableTextBlock = any;
+// Portable Text type - using generic type for Sanity block content
+type PortableTextBlock = {
+  _type: string;
+  _key: string;
+  children?: Array<{ _type: string; _key: string; text?: string }>;
+};
 
 interface Product {
   _id: string;
@@ -30,10 +33,10 @@ interface Product {
   price?: number;
   volume?: string;
   productFormat?: string;
-  mainImage?: any;
+  mainImage?: { asset?: { _ref: string } };
   shopifyPreviewImageUrl?: string;
   shopifyImage?: string;
-  gallery?: Array<{ _key: string; asset: any }>;
+  gallery?: Array<{ _key: string; asset: { _ref: string } }>;
   inStock?: boolean;
   shopifyHandle?: string;
   shopifyVariantId?: string;
@@ -49,7 +52,7 @@ interface Product {
     showLegacyName?: boolean;
     legacyNameStyle?: 'formerly' | 'once-known' | 'previously';
     price?: number;
-    mainImage?: any;
+    mainImage?: { asset?: { _ref: string } };
   }>;
   notes?: {
     top?: string[];
@@ -64,7 +67,7 @@ interface Product {
     travelLog?: PortableTextBlock[];
     badges?: string[];
     fieldReport?: {
-      image?: any;
+      image?: { asset?: { _ref: string } };
       hotspots?: Array<{
         product?: {
           _id: string;
@@ -85,7 +88,7 @@ interface Product {
     museumDescription?: PortableTextBlock[];
     badges?: string[];
     museumExhibit?: {
-      exhibitImage?: any;
+      exhibitImage?: { asset?: { _ref: string } };
       artifacts?: Array<{
         label?: string;
         specimenData?: string;
@@ -231,7 +234,7 @@ const ScentPyramid = ({ notes }: { notes: Product["notes"] }) => {
 };
 
 // Trust Badges Component - Conditionally rendered based on collection type
-const TrustBadges = ({ isAtlas, isRelic, product }: { isAtlas: boolean; isRelic: boolean; product: Product }) => {
+const TrustBadges = ({ isAtlas, product }: { isAtlas: boolean; product: Product }) => {
   // Use custom badges from Sanity if available, otherwise fall back to defaults
   const customBadges = isAtlas ? product.atlasData?.badges : product.relicData?.badges;
 
@@ -263,8 +266,7 @@ const TrustBadges = ({ isAtlas, isRelic, product }: { isAtlas: boolean; isRelic:
 };
 
 export function ProductDetailClient({ product }: Props) {
-  const router = useRouter();
-  const { addItem, isLoading: isCartLoading } = useShopifyCart();
+  const { addItem } = useShopifyCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
@@ -281,7 +283,6 @@ export function ProductDetailClient({ product }: Props) {
   const territoryTagline = territory ? TERRITORY_TAGLINES[territory] : null;
   const currentPrice = territoryPricing ? territoryPricing[selectedVariant] : product.price;
 
-  const scrollRef = useRef(null);
   const addButtonRef = useRef<HTMLButtonElement>(null);
   const mobileAddButtonRef = useRef<HTMLButtonElement>(null);
   const { scrollY } = useScroll();
@@ -388,11 +389,6 @@ export function ProductDetailClient({ product }: Props) {
       ...prev,
       [section]: !prev[section],
     }));
-  };
-
-  const handleNavigate = (path: string) => {
-    if (path === "home") router.push("/");
-    else router.push(`/${path}`);
   };
 
   return (
@@ -893,7 +889,7 @@ export function ProductDetailClient({ product }: Props) {
             )}
 
             {/* Trust Badges */}
-            <TrustBadges isAtlas={isAtlas} isRelic={isRelic} product={product} />
+            <TrustBadges isAtlas={isAtlas} product={product} />
 
             {/* Gift Option */}
             <motion.button

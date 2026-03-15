@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { RealisticCompass } from './RealisticCompass';
-import { CompassCurator } from './CompassCurator';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { GhostLabels } from '@/components/ui/GhostLabels';
 import { Satchel } from '@/components/cart/Satchel';
@@ -39,8 +38,7 @@ export function CompassProvider({ children }: CompassProviderProps) {
   const [showCornerCompass, setShowCornerCompass] = useState(false);
   const [showGhostLabels, setShowGhostLabels] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<'atlas' | 'relic'>('atlas');
-  const [curatorOpen, setCuratorOpen] = useState(false);
-  const [compassPosition, setCompassPosition] = useState({ x: 0, y: 0 });
+  const [curatorOpen] = useState(false);
 
   // Page detection
   const isSplitEntryPage = pathname === '/';
@@ -108,22 +106,7 @@ export function CompassProvider({ children }: CompassProviderProps) {
     }
   }, [showCornerCompass, isSplitEntryPage]);
 
-  // Track compass position for Curator morphing
-  useEffect(() => {
-    const updateCompassPosition = () => {
-      if (typeof window !== 'undefined') {
-        // Bottom-right corner position
-        const x = window.innerWidth - 80;
-        const y = window.innerHeight - 80;
-        setCompassPosition({ x, y });
-      }
-    };
-
-    updateCompassPosition();
-    window.addEventListener('resize', updateCompassPosition);
-    return () => window.removeEventListener('resize', updateCompassPosition);
-  }, []);
-
+  // Navigation handler for compass
   const handleNavigate = useCallback((path: string) => {
     const routes: Record<string, string> = {
       'home': '/',
@@ -134,14 +117,6 @@ export function CompassProvider({ children }: CompassProviderProps) {
     };
     router.push(routes[path] || `/${path}`);
   }, [router]);
-
-  const handleOpenCurator = useCallback(() => {
-    setCuratorOpen(true);
-  }, []);
-
-  const handleCloseCurator = useCallback(() => {
-    setCuratorOpen(false);
-  }, []);
 
   // Early return for Studio pages
   if (isStudioPage) {

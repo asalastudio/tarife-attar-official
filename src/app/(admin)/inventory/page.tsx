@@ -9,8 +9,27 @@
 
 import { useState } from 'react';
 
+type SyncStatus = 'synced' | 'out_of_sync' | 'pending' | 'error';
+type Territory = 'Ember' | 'Petal' | 'Tidal' | 'Terra' | null;
+
+interface InventoryItem {
+  id: string;
+  sku: string;
+  title: string;
+  variant: string;
+  territory: Territory;
+  collection: string;
+  costPrice: number;
+  retailPrice: number;
+  localQuantity: number;
+  shopifyQuantity: number;
+  etsyQuantity: number;
+  syncStatus: SyncStatus;
+  lowStockThreshold: number;
+}
+
 // Mock inventory data - in production, fetch from unified database
-const mockInventory = [
+const mockInventory: InventoryItem[] = [
   {
     id: '1',
     sku: 'TA-EMB-HONEY-6',
@@ -23,7 +42,7 @@ const mockInventory = [
     localQuantity: 24,
     shopifyQuantity: 24,
     etsyQuantity: 24,
-    syncStatus: 'synced' as const,
+    syncStatus: 'synced',
     lowStockThreshold: 5,
   },
   {
@@ -38,7 +57,7 @@ const mockInventory = [
     localQuantity: 18,
     shopifyQuantity: 18,
     etsyQuantity: 18,
-    syncStatus: 'synced' as const,
+    syncStatus: 'synced',
     lowStockThreshold: 5,
   },
   {
@@ -53,7 +72,7 @@ const mockInventory = [
     localQuantity: 5,
     shopifyQuantity: 5,
     etsyQuantity: 3,
-    syncStatus: 'out_of_sync' as const,
+    syncStatus: 'out_of_sync',
     lowStockThreshold: 5,
   },
   {
@@ -68,7 +87,7 @@ const mockInventory = [
     localQuantity: 4,
     shopifyQuantity: 4,
     etsyQuantity: 4,
-    syncStatus: 'synced' as const,
+    syncStatus: 'synced',
     lowStockThreshold: 5,
   },
   {
@@ -83,7 +102,7 @@ const mockInventory = [
     localQuantity: 12,
     shopifyQuantity: 12,
     etsyQuantity: 10,
-    syncStatus: 'out_of_sync' as const,
+    syncStatus: 'out_of_sync',
     lowStockThreshold: 5,
   },
   {
@@ -98,16 +117,13 @@ const mockInventory = [
     localQuantity: 3,
     shopifyQuantity: 3,
     etsyQuantity: 3,
-    syncStatus: 'synced' as const,
+    syncStatus: 'synced',
     lowStockThreshold: 2,
   },
 ];
 
-type SyncStatus = 'synced' | 'out_of_sync' | 'pending' | 'error';
-type Territory = 'Ember' | 'Petal' | 'Tidal' | 'Terra' | null;
-
 export default function InventoryPage() {
-  const [inventory, setInventory] = useState(mockInventory);
+  const [inventory, setInventory] = useState<InventoryItem[]>(mockInventory);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [filterTerritory, setFilterTerritory] = useState<string>('all');
   const [filterCollection, setFilterCollection] = useState<string>('all');

@@ -9,7 +9,6 @@ export { sanityConnector } from './sanity';
 
 import { shopifyConnector } from './shopify';
 import { etsyConnector } from './etsy';
-import { sanityConnector } from './sanity';
 import type { Platform, UnifiedProduct, UnifiedOrder } from '@/types/admin';
 
 // ============================================

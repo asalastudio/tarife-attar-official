@@ -32,7 +32,7 @@ interface RelicProduct {
   price?: number;
   volume?: string;
   productFormat?: string;
-  mainImage?: any;
+  mainImage?: { asset?: { _ref: string } };
   inStock?: boolean;
 }
 

@@ -7,14 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SplitEntry } from "@/components/home";
 import { GlobalFooter } from "@/components/navigation";
 import { EntryLoader } from "@/components/intro";
-import { Product } from "@/types";
+import { Product, SanityImage } from "@/types";
 import { urlForImage } from "@/sanity/lib/image";
 import { LegacyName } from "@/components/product/LegacyName";
 
 interface HomeClientProps {
-    featuredProducts: (Product & { 
-      atlasImage?: any; 
-      relicImage?: any;
+    featuredProducts: (Product & {
+      atlasImage?: SanityImage;
+      relicImage?: SanityImage;
       shopifyPreviewImageUrl?: string;
       shopifyImage?: string;
     })[];

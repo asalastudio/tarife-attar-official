@@ -3,9 +3,6 @@ import {
   atlasProductsByTerritoryQuery,
   atlasTerritoryCountsQuery,
 } from "@/sanity/lib/queries";
-import { urlForImage } from "@/sanity/lib/image";
-import Image from "next/image";
-import Link from "next/link";
 import { AtlasClient } from "./AtlasClient";
 
 // Territory metadata (static) - Order: Ember, Tidal, Petal, Terra
@@ -47,7 +44,7 @@ interface AtlasProduct {
   price?: number;
   volume?: string;
   productFormat?: string;
-  mainImage?: any;
+  mainImage?: { asset?: { _ref: string } };
   atmosphere: string;
   inStock?: boolean;
 }
@@ -82,7 +79,7 @@ export default async function AtlasPage() {
   }));
 
   // Products without atmosphere (shouldn't happen, but handle gracefully)
-  const productsWithoutTerritory = products.filter((p) => !p.atmosphere || !TERRITORIES.some((t) => t.id === p.atmosphere));
+  // Filter omitted from return - just for debugging if needed
 
   const totalCount = products.length;
 

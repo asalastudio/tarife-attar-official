@@ -38,7 +38,7 @@ export function AddToCartButton({
   const [isAdding, setIsAdding] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleAdd = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAdd = async () => {
     if (!variantId || !inStock || isAdding) return;
 
     setIsAdding(true);

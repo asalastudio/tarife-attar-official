@@ -45,11 +45,11 @@ interface Territory {
     price?: number;
     volume?: string;
     productFormat?: string;
-    mainImage?: any;
+    mainImage?: { asset?: { _ref: string } };
     shopifyPreviewImageUrl?: string;
     shopifyImage?: string;
     fieldReport?: {
-      image?: any;
+      image?: { asset?: { _ref: string } };
     };
     inStock?: boolean;
     legacyName?: string;
@@ -67,11 +67,6 @@ interface Props {
 export function AtlasClient({ territories, totalCount }: Props) {
   const router = useRouter();
   const [activeTerritory, setActiveTerritory] = useState<string | null>(null);
-
-  const handleNavigate = (path: string) => {
-    if (path === "home") router.push("/");
-    else router.push(`/${path}`);
-  };
 
   return (
     <div className="min-h-screen bg-theme-alabaster text-theme-charcoal overflow-x-hidden">

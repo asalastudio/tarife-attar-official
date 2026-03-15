@@ -1,10 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { productBySlugQuery } from "@/sanity/lib/queries";
-import { urlForImage } from "@/sanity/lib/image";
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft, Plus, Minus, Gift } from "lucide-react";
 import { ProductDetailClient } from "./ProductDetailClient";
 
 interface ProductPageProps {
@@ -13,8 +9,17 @@ interface ProductPageProps {
   };
 }
 
+// Product type for Sanity fetch (matches ProductDetailClient.Product)
+interface SanityProduct {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  collectionType: "atlas" | "relic";
+  [key: string]: unknown;
+}
+
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await sanityFetch<any>({
+  const product = await sanityFetch<SanityProduct>({
     query: productBySlugQuery,
     params: { slug: params.slug },
     tags: [`product-${params.slug}`],
@@ -25,5 +30,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  return <ProductDetailClient product={product} />;
+  // Cast to expected type for ProductDetailClient
+  return <ProductDetailClient product={product as Parameters<typeof ProductDetailClient>[0]['product']} />;
 }
