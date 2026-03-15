@@ -10,11 +10,112 @@
 
 | Category | Issues Found | Fixed | Remaining |
 |----------|-------------|-------|-----------|
+| **SECURITY ISSUES** | 16 | 0 | **16 (3 CRITICAL)** |
 | TypeScript Errors | 5 | 5 | 0 |
 | ESLint Warnings | ~45 | 34 | 11 |
 | Missing Dependencies | 1 | 1 | 0 |
 | npm Vulnerabilities | 30 | 9 | 21 (require breaking changes) |
 | Console Statements | 79 | 0 | 79 (to clean before production) |
+
+---
+
+## SECURITY AUDIT FINDINGS
+
+### CRITICAL (Must Fix Before Production)
+
+#### 1. Missing Authentication on Admin Routes
+**File:** `src/app/(admin)/layout.tsx`
+
+The entire admin section has **NO authentication protection**:
+```typescript
+// TODO: Add authentication check here
+// const session = await getSession();
+// if (!session || !session.user.isAdmin) {
+//   redirect('/login');
+// }
+```
+
+**Impact:** Anyone can access `/admin/dashboard`, `/admin/products`, `/admin/inventory`, `/admin/orders`, `/admin/analytics`
+
+**Fix Required:**
+- Implement NextAuth.js or similar authentication
+- Add middleware to protect `/admin/*` routes
+- Verify admin role before allowing access
+
+---
+
+#### 2. Unprotected Admin API Routes
+**Files:**
+- `src/app/(admin)/api/content/route.ts` - AI content generation (uses ANTHROPIC_API_KEY)
+- `src/app/(admin)/api/sync/route.ts` - Inventory sync across Shopify/Etsy
+
+**Impact:**
+- Attackers can generate unlimited AI content ($$$ cost)
+- Attackers can modify inventory across all platforms
+- No authentication or rate limiting
+
+---
+
+#### 3. Optional Webhook Secret Validation
+**File:** `src/app/api/revalidate/route.ts`
+
+```typescript
+if (expectedSecret && secret !== expectedSecret) {  // Only validates IF env var exists!
+```
+
+**Impact:** If `SANITY_REVALIDATE_SECRET` is not set, ANY request can trigger cache invalidation (DoS vector)
+
+---
+
+### HIGH Severity
+
+| Issue | File | Description |
+|-------|------|-------------|
+| Missing Input Validation | `api/content/route.ts`, `api/sync/route.ts` | No validation on request body |
+| Hardcoded Sanity Project ID | `sanity.config.ts` | Fallback ID `8h5l91ut` exposed |
+| dangerouslySetInnerHTML | `studio/layout.tsx` | Potential XSS vector |
+| Secret Logging Risk | `lib/connectors/etsy.ts` | Console logs near sensitive operations |
+
+### MEDIUM Severity
+
+| Issue | File | Description |
+|-------|------|-------------|
+| No .env.example | - | 16+ env vars undocumented |
+| In-Memory Token Cache | `lib/connectors/etsy.ts` | Lost on restart |
+| Debug Endpoint | `api/debug/route.ts` | Exposes system state |
+| No Rate Limiting | `api/chat/route.ts` | OpenAI abuse vector |
+| Verbose Error Messages | `lib/connectors/shopify.ts` | Leaks internal details |
+
+---
+
+### Required Environment Variables (Undocumented)
+
+Create a `.env.example` file with:
+```
+# Sanity CMS
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+NEXT_PUBLIC_SANITY_API_VERSION=
+SANITY_API_TOKEN=
+SANITY_API_WRITE_TOKEN=
+SANITY_REVALIDATE_SECRET=
+
+# AI Services
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+
+# Shopify
+SHOPIFY_STORE_DOMAIN=
+SHOPIFY_ADMIN_API_ACCESS_TOKEN=
+NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=
+
+# Etsy
+ETSY_API_KEY=
+ETSY_ACCESS_TOKEN=
+ETSY_REFRESH_TOKEN=
+ETSY_SHOP_ID=
+```
 
 ---
 
