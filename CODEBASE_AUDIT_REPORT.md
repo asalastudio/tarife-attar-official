@@ -88,9 +88,40 @@ if (expectedSecret && secret !== expectedSecret) {  // Only validates IF env var
 
 ---
 
+---
+
+## BUGS & LOGIC ISSUES
+
+### Missing Error Handling
+
+| File | Issue | Severity |
+|------|-------|----------|
+| `api/content/route.ts:76,107,147` | No boundary check on `response.content[0]` | MEDIUM |
+| `cart/page.tsx:23-26` | No fallback if `checkoutUrl` is undefined | MEDIUM |
+| `ShopifyCartContext.tsx:172,193` | Errors swallowed without logging | MEDIUM |
+| `api/revalidate/route.ts:64-76` | revalidateTag calls not awaited | LOW |
+
+### Incomplete Implementations
+
+| File | Issue | Severity |
+|------|-------|----------|
+| `lib/connectors/etsy.ts:80-88` | Token refresh not persisted to DB | MEDIUM |
+| `lib/shopify/client.ts:23` | Hardcoded API version `2026-01` | MEDIUM |
+| `navigation/HybridCompass.tsx:31` | Placeholder compass image TODO | LOW |
+
+### Type Safety Issues
+
+| File | Issue | Severity |
+|------|-------|----------|
+| `lib/madison/ghostWriter.ts:207` | `as any` type assertion | MEDIUM |
+| `ShopifyCartContext.tsx:212` | `any` type in cart mapping | LOW |
+| `CompassCurator.tsx:125` | `compassPosition` prop unused | LOW |
+
+---
+
 ### Required Environment Variables (Undocumented)
 
-Create a `.env.example` file with:
+See `.env.example` file with:
 ```
 # Sanity CMS
 NEXT_PUBLIC_SANITY_PROJECT_ID=
