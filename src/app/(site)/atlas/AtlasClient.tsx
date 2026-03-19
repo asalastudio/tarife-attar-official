@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { GlobalFooter } from "@/components/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Compass } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { urlForImage } from "@/sanity/lib/image";
@@ -12,8 +12,9 @@ import { getItemLabel } from "@/lib/brandSystem";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import dynamic from "next/dynamic";
+import type { PortOfCall } from "@/sanity/lib/queries";
 
-// Dynamically import Leaflet map to avoid SSR issues
+// Dynamically import Leaflet maps to avoid SSR issues
 const AtlasMapLeaflet = dynamic(
   () => import("@/components/atlas/AtlasMapLeaflet").then(mod => ({ default: mod.AtlasMapLeaflet })),
   {
@@ -21,6 +22,18 @@ const AtlasMapLeaflet = dynamic(
     loading: () => (
       <div className="w-full h-[70vh] flex items-center justify-center bg-[#1a1714] text-[#C4A265] font-serif">
         <p className="text-xl tracking-widest uppercase">Loading Atlas...</p>
+      </div>
+    ),
+  }
+);
+
+const CommunityMap = dynamic(
+  () => import("@/components/atlas/CommunityMap").then(mod => ({ default: mod.CommunityMap })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[50vh] flex items-center justify-center bg-[#1a1714] text-[#C4A265] font-serif">
+        <p className="text-sm tracking-widest uppercase opacity-50">Loading...</p>
       </div>
     ),
   }
@@ -83,9 +96,10 @@ interface Props {
   territories: Territory[];
   totalCount: number;
   placeholderImages?: PlaceholderImagesQueryResult | null;
+  portsOfCall?: PortOfCall[];
 }
 
-export function AtlasClient({ territories, totalCount, placeholderImages }: Props) {
+export function AtlasClient({ territories, totalCount, placeholderImages, portsOfCall = [] }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTerritory, setActiveTerritory] = useState<string | null>(null);
@@ -286,7 +300,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                             const sanityImage = product.mainImage || product.fieldReport?.image;
                             const imageUrl = sanityImage ? urlForImage(sanityImage) : null;
                             const shopifyImageUrl = product.shopifyPreviewImageUrl || product.shopifyImage;
-                            
+
                             if (imageUrl) {
                               try {
                                 const imageSrc = imageUrl.width(500).height(500).url();
@@ -307,7 +321,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                                 console.warn('Failed to generate image URL:', product.title, error);
                               }
                             }
-                            
+
                             if (shopifyImageUrl) {
                               return (
                                 <Image
@@ -323,7 +337,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                                 />
                               );
                             }
-                            
+
                             // Use placeholder image for products without images
                             return (
                               <Image
@@ -345,7 +359,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                             );
                           })()}
                         </div>
-                        
+
                         {/* Product Info - Centered in text area */}
                         <div className="text-center py-4 md:py-8 space-y-1.5 px-2">
                           <h3 className="font-sans text-xs md:text-base font-medium tracking-[0.15em] uppercase break-words line-clamp-2">
@@ -363,6 +377,29 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                         </div>
                       </Link>
                     ))}
+
+                    {/* Quiz CTA Card — fills the empty grid slot */}
+                    <Link
+                      href="/quiz"
+                      className="group flex flex-col bg-[#eae6df] hover:bg-[#e2ddd5] transition-colors"
+                    >
+                      <div className="relative aspect-square flex items-center justify-center px-6">
+                        <div className="text-center space-y-4">
+                          <Compass className="w-8 h-8 mx-auto opacity-20 group-hover:opacity-40 transition-opacity" />
+                          <p className="font-serif text-sm md:text-base italic text-theme-charcoal/60 leading-relaxed">
+                            Not sure where<br />to begin?
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-center py-4 md:py-8 space-y-1.5 px-2">
+                        <h3 className="font-sans text-xs md:text-base font-medium tracking-[0.15em] uppercase text-theme-gold group-hover:text-theme-charcoal transition-colors">
+                          Take the Quiz
+                        </h3>
+                        <p className="text-[10px] md:text-sm tracking-wider opacity-40">
+                          Find your waypoint
+                        </p>
+                      </div>
+                    </Link>
                   </div>
                 ) : (
                   <div className="py-20 text-center bg-[#f8f6f3]">
@@ -392,6 +429,28 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
           </div>
         </div>
       </section>
+
+      {/* Ports of Call — Community Map */}
+      {portsOfCall.length > 0 && (
+        <section className="py-16 md:py-24 px-4 md:px-24 bg-[#141210] border-t border-[#C4A265]/10">
+          <div className="max-w-[1800px] mx-auto">
+            <div className="text-center mb-8 md:mb-12">
+              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#c9a96e] block mb-3">
+                Ports of Call
+              </span>
+              <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
+                The Atlas Community
+              </h2>
+              <p className="font-serif text-sm md:text-base text-[#f5f0eb]/50 mt-3 max-w-lg mx-auto">
+                Every gold dot marks a city where the Atlas has found a home.
+              </p>
+            </div>
+            <div className="w-full h-[50vh] md:h-[60vh] rounded-lg overflow-hidden border border-[#C4A265]/10">
+              <CommunityMap ports={portsOfCall} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <GlobalFooter theme="dark" />
     </div>

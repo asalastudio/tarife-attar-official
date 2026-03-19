@@ -909,12 +909,6 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] pr-14 md:pr-0">
                 {product.title}
               </h1>
-              {product.legacyName && product.showLegacyName !== false && (
-                <p className="font-serif text-sm md:text-base text-theme-charcoal/50 mt-2 tracking-wide">
-                  {product.legacyName}
-                </p>
-              )}
-
               {/* Mobile-only compact audio button */}
               {isAtlas && audioState.hasAudio && (
                 <div className="md:hidden absolute right-0 top-1/2 -translate-y-1/2">
@@ -1574,7 +1568,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                     >
-                      {!product.inStock
+                      {product.inStock === false
                         ? "Out of Stock"
                         : !product.shopifyVariantId
                           ? "Not Connected"

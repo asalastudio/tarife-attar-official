@@ -5,6 +5,8 @@ import {
   atlasTerritoryCountsQuery,
   placeholderImagesQuery,
   PlaceholderImagesQueryResult,
+  portsOfCallQuery,
+  PortOfCall,
 } from "@/sanity/lib/queries";
 import { AtlasClient } from "./AtlasClient";
 import type { Metadata } from "next";
@@ -75,7 +77,7 @@ interface TerritoryCounts {
 
 export default async function AtlasPage() {
   // Fetch all Atlas products, territory counts, and placeholder images
-  const [products, counts, placeholderImages] = await Promise.all([
+  const [products, counts, placeholderImages, portsOfCall] = await Promise.all([
     sanityFetch<AtlasProduct[]>({
       query: atlasProductsByTerritoryQuery,
       tags: ["atlas-products"],
@@ -90,7 +92,12 @@ export default async function AtlasPage() {
       query: placeholderImagesQuery,
       tags: ["placeholder-images"],
       revalidate: 0,
-    })
+    }),
+    sanityFetch<PortOfCall[]>({
+      query: portsOfCallQuery,
+      tags: ["ports-of-call"],
+      revalidate: 0,
+    }),
   ]);
 
   // Group products by territory
@@ -123,7 +130,7 @@ export default async function AtlasPage() {
 
   return (
     <Suspense fallback={<div className="min-h-screen bg-theme-alabaster" />}>
-      <AtlasClient territories={productsByTerritory} totalCount={totalCount} placeholderImages={placeholderImages} />
+      <AtlasClient territories={productsByTerritory} totalCount={totalCount} placeholderImages={placeholderImages} portsOfCall={portsOfCall || []} />
     </Suspense>
   );
 }

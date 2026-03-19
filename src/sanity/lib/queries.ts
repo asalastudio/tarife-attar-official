@@ -560,6 +560,28 @@ export const recentFieldJournalQuery = groq`
   }
 `;
 
+// ===== PORTS OF CALL QUERY (Community Map) =====
+
+/**
+ * Get all ports of call for the community map
+ * Shows cities where Tarife Attar has shipped orders
+ */
+export const portsOfCallQuery = groq`
+  *[_type == "portOfCall" && !(_id in path("drafts.**"))] | order(country asc, city asc) {
+    city,
+    country,
+    latitude,
+    longitude
+  }
+`;
+
+export interface PortOfCall {
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+}
+
 // ===== HERO BACKGROUNDS QUERY (Two Roads Landing Page) =====
 
 /**
