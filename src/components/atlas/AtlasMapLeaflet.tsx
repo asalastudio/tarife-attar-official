@@ -298,8 +298,8 @@ export function AtlasMapLeaflet() {
                   {selectedWaypoint.name}
                 </h2>
                 {selectedWaypoint.legacy && (
-                  <p className="font-serif text-[#F5F0EB]/50 text-sm mb-6">
-                    Formerly known as &ldquo;{selectedWaypoint.legacy}&rdquo;
+                  <p className="font-serif text-[#F5F0EB]/40 text-sm mb-6 tracking-wide">
+                    {selectedWaypoint.legacy}
                   </p>
                 )}
               </div>
