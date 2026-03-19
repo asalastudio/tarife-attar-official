@@ -80,7 +80,7 @@ export const EVOCATION_COPY = {
 
   marrakesh: `The souk folds around you — leather, cedar, cumin, the metallic ring of hammered brass. Marrakesh is a city that assaults the senses and rewards the brave. In the spice stalls of the Jemaa el-Fnaa, warm cedar chips burn alongside ras el hanout and the oud rises like smoke, woody and magnetic, pulling you deeper into the labyrinth.`,
 
-  riyadh: `The palace doors close and the room fills with oud — not the tourist variety, but the real thing, aged in crystal decanters for years. In Riyadh, oud is status, devotion, identity. It rises from heated bukhoor, settling into white thobes and silk abayas with a nobility that cannot be faked. This is Arabian oud at its most uncompromising: dark, noble, ancient.`,
+  riyadh: `The palace doors close and the room fills with oud — not the souvenir variety, but something older, deeper, the kind aged in crystal decanters for years. In Riyadh, oud is status, devotion, identity. It rises from heated bukhoor, settling into white thobes and silk abayas with a nobility that cannot be faked. This is Arabian oud at its most uncompromising: dark, noble, ancient.`,
 
   samarkand: `The Registan's turquoise domes shimmer in the Central Asian sun and the Silk Road ghosts are everywhere — merchants who carried oud westward, wrapping it in silk alongside saffron and lapis lazuli. Samarkand is the crossroads of civilization: ceremonial oud, warm wood, the dusty grandeur of an empire that connected East and West through trade, trust, and fragrance.`,
 
