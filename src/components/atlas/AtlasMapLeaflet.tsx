@@ -152,19 +152,21 @@ export function AtlasMapLeaflet() {
     try {
       const { GoogleGenAI } = await import('@google/genai');
       const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '' });
-      const response = await ai.models.generateContent({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const response: any = await ai.models.generateContent({
         model: "gemini-2.5-flash",
         contents: `You are an antique atlas giving a poetic, atmospheric description of the real-world location of ${waypoint.name} at coordinates ${waypoint.lat}, ${waypoint.lng}. What is the geography and atmosphere like today? Keep it brief (2-3 sentences), fitting an antique atlas theme.`,
         config: {
-          tools: [{ googleMaps: {} } as any],
+          tools: [{ googleMaps: {} }],
         },
       });
 
-      let text = response.text || "The atlas is silent on this location.";
+      const text = response.text || "The atlas is silent on this location.";
 
-      const chunks = (response as any).candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+      const chunks = response?.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
       const links: { uri: string; title: string }[] = [];
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       chunks.forEach((chunk: any) => {
         if (chunk.web?.uri && chunk.web?.title) {
           links.push({ uri: chunk.web.uri, title: chunk.web.title });

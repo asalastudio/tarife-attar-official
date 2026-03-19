@@ -119,6 +119,7 @@ const CollapsibleSection = ({
   children,
   isOpen,
   onToggle,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   defaultOpenDesktop = false
 }: {
   title: string;
@@ -159,7 +160,8 @@ const CollapsibleSection = ({
   );
 };
 
-const EvocationSection = ({ title, story }: { title: string; story: string[] }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const EvocationSection = ({ title: _title, story }: { title: string; story: string[] }) => {
   if (!story || story.length === 0) return null;
   return (
     <div className="space-y-4 font-serif text-base md:text-lg leading-relaxed opacity-90">
