@@ -171,8 +171,8 @@ Visual World: Desert Sands
 Key Elements: Sandstone, terracotta, amber light, trust & craft
 Focus: Heat of distant markets, amber glow of incense
 
-Example Fragrances: ADEN, CARAVAN, HAVANA, DUNE
-Typical Notes: Oud, Honey, Tobacco, Cinnamon, Vanilla, Amber
+Waypoints (7): ADEN, ETHIOPIA, GRANADA, OMAN, PETRA, SERENGETI, ZANZIBAR
+Typical Notes: Oud, Honey, Frankincense, Myrrh, Amber, Vanilla, Musk
 ```
 
 #### PETAL — "The Exhale of Living Gardens"
@@ -185,8 +185,8 @@ Visual World: Floral Highlands
 Key Elements: Garden stone, morning dew, botany, transparency
 Focus: Flowers at their most alive, wet vitality of gardens at dawn
 
-Example Fragrances: SIENA, GRASSE, PROVENCE
-Typical Notes: Rose, Jasmine, Tuberose, Green Herbs, Fresh Florals
+Waypoints (7): AMER, DAMASCUS, GRASSE, KANDY, MANALI, MEDINA, SIWA
+Typical Notes: Rose, Jasmine, White Amber, Peach, Himalayan Musk, White Egyptian Musk
 ```
 
 #### TIDAL — "The Pull of Open Water"
@@ -199,8 +199,8 @@ Visual World: Mediterranean Waters
 Key Elements: Driftwood, salt, linen, brass, intimacy & centering
 Focus: Threshold between solid and liquid, knowing and dissolving
 
-Example Fragrances: KYOTO, OMAN, DUBAI, CORSICA
-Typical Notes: Petrichor, Water Lily, Marine Accord, Musk, Salt
+Waypoints (7): BAHIA, BAHRAIN, BIG SUR, KYOTO, MONACO, TANGIERS, TIGRIS
+Typical Notes: Petrichor, Water Lily, Coconut Jasmine, Blue Oud, Marine Accord, Musk
 ```
 
 #### TERRA — "The Gravity of Deep Forests"
@@ -213,8 +213,8 @@ Visual World: Mountain Vistas
 Key Elements: Granite, moss, iron, forest floor, sovereignty/resistance
 Focus: Weight not as heaviness but substance, forests older than memory
 
-Example Fragrances: SICILY, OBSIDIAN, TANGIER
-Typical Notes: Oud, Vetiver, Leather, Dark Musk, Woods
+Waypoints (7): ASTORIA, HAVANA, MARRAKESH, RIYADH, SAMARKAND, SICILY, TULUM
+Typical Notes: Oud, Cedar, Tobacco, Sandalwood, Black Oud, Leather, Dark Woods
 ```
 
 ---
@@ -457,7 +457,7 @@ sharpness, scientific documentation feel.
 
 **THE ATLAS (Voyage)**
 
-- Total Products: 24 perfume oils (6 per territory)
+- Total Products: 28 perfume oils (7 per territory)
 - Format: Perfume Oil
 - Volume: 6ml and 12ml
 - Price Range: $28-$55
@@ -788,7 +788,7 @@ If you're finding the initial warmth overwhelming, try applying
 to your inner wrist and allowing 15 minutes for the heart notes
 to emerge. The transformation is where CARAVAN reveals its depth.
 
-Should you prefer something with a gentler opening, DUNE from the
+Should you prefer something with a gentler opening, ZANZIBAR from the
 same Ember territory offers that sophisticated vanilla with a
 softer entrance.
 
@@ -918,7 +918,7 @@ At every caravanserai along the ancient routes, merchants would unseal their mos
 
 This month, we return to the Ember territory. Four fragrances that carry the heat of distant markets, the amber glow of incense, the particular sweetness of places where the sun has permission to linger.
 
-ADEN rises from volcanic rock—scorched sweetness with a tender heart. CARAVAN captures patience made aromatic—golden and resinous, every mile of the ancient road worn into its depth. HAVANA holds crumbling glory in permanent golden hour. And DUNE offers the strange softness of sand—vanilla sophisticated and slightly woody.
+ADEN rises from volcanic rock—scorched sweetness with a tender heart. CARAVAN captures patience made aromatic—golden and resinous, every mile of the ancient road worn into its depth. HAVANA holds crumbling glory in permanent golden hour. And ZANZIBAR offers the warmth of the Spice Islands—vanilla sophisticated and slightly woody.
 
 The Ember territories are open for exploration.
 

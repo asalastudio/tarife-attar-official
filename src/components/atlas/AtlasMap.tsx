@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 // Map projection calibrated to atlas-map.jpg
 // The parchment border takes ~4% on each side
@@ -51,6 +52,7 @@ interface Waypoint {
   x?: number;
   y?: number;
   legacyName?: string;
+  evocation?: string;
 }
 
 const TERRITORY_COLORS: Record<string, string> = {
@@ -81,40 +83,40 @@ const TERRITORY_LABELS: Record<string, string> = {
 // - Vertical: Europe ~28%, Sahara ~42%, Equator ~50%, S. America ~58%
 const WAYPOINTS: Waypoint[] = [
   // EMBER
-  { name: "ADEN", slug: "aden", territory: "ember", lat: 12.7797, long: 45.0365, x: 56, y: 50, legacyName: "Oud Fire" },
-  { name: "SAANA", slug: "saana", territory: "ember", lat: 15.3694, long: 44.1910, x: 55.5, y: 48, legacyName: "Honey Oud" },
-  { name: "GRANADA", slug: "granada", territory: "ember", lat: 37.1773, long: -3.5986, x: 46.5, y: 30, legacyName: "Granada Amber" },
-  { name: "MALABAR", slug: "malabar", territory: "ember", lat: 11.2588, long: 75.7804, x: 67, y: 50, legacyName: "Vanilla Sands" },
-  { name: "SERENGETI", slug: "serengeti", territory: "ember", lat: -2.3333, long: 34.8333, x: 53, y: 55, legacyName: "Black Musk" },
-  { name: "BEIRUT", slug: "beirut", territory: "ember", lat: 33.8938, long: 35.5018, x: 54, y: 32 },
-  { name: "TARIFA", slug: "tarifa", territory: "ember", lat: 36.0143, long: -5.6044, x: 46, y: 31, legacyName: "Teeb Musk" },
+  { name: "ADEN", slug: "aden", territory: "ember", lat: 12.7797, long: 45.0365, x: 56, y: 50, legacyName: "Oud Fire", evocation: "The port city exhales in layers: salt-crusted timber, coal smoke curling from dockside braziers, the honeyed amber of frankincense stacked in merchant stalls." },
+  { name: "SAANA", slug: "saana", territory: "ember", lat: 15.3694, long: 44.1910, x: 55.5, y: 48, legacyName: "Honey Oud", evocation: "The old city rises in gingerbread towers above the desert floor, and the air is thick with the sweetness of wild honey and aged agarwood." },
+  { name: "GRANADA", slug: "granada", territory: "ember", lat: 37.1773, long: -3.5986, x: 46.5, y: 30, legacyName: "Granada Amber", evocation: "The Alhambra glows amber at dusk, its walls still warm from the Andalusian sun, and the courtyards carry the memory of Moorish perfumers." },
+  { name: "MALABAR", slug: "malabar", territory: "ember", lat: 11.2588, long: 75.7804, x: 67, y: 50, legacyName: "Vanilla Sands", evocation: "The Malabar Coast trades in everything precious: cardamom, pepper, vanilla, and the golden dust of resins carried by monsoon winds." },
+  { name: "SERENGETI", slug: "serengeti", territory: "ember", lat: -2.3333, long: 34.8333, x: 53, y: 55, legacyName: "Black Musk", evocation: "The plains stretch beyond comprehension, and the musk rises from the earth itself, dark, ancestral, carrying the weight of a continent." },
+  { name: "BEIRUT", slug: "beirut", territory: "ember", lat: 33.8938, long: 35.5018, x: 54, y: 32, evocation: "The city rebuilt itself in gold and glass, and the nightlife carries the magnetism of somewhere that has survived everything and emerged more beautiful." },
+  { name: "TARIFA", slug: "tarifa", territory: "ember", lat: 36.0143, long: -5.6044, x: 46, y: 31, legacyName: "Teeb Musk", evocation: "The southernmost point of Europe, where the Mediterranean meets the Atlantic and Africa shimmers across the strait. This is where the Atlas begins." },
 
   // TIDAL
-  { name: "BAHIA", slug: "bahia", territory: "tidal", lat: -12.9714, long: -38.5014, x: 33, y: 58, legacyName: "Coconut Jasmine" },
-  { name: "BAHRAIN", slug: "bahrain", territory: "tidal", lat: 26.2041, long: 50.5515, x: 57.5, y: 38, legacyName: "Blue Oud" },
-  { name: "BIG SUR", slug: "big-sur", territory: "tidal", lat: 36.2704, long: -121.8081, x: 14, y: 32, legacyName: "Del Mar" },
-  { name: "MEISHAN", slug: "meishan", territory: "tidal", lat: 30.0422, long: 103.8318, x: 75, y: 35, legacyName: "China Rain" },
-  { name: "MONACO", slug: "monaco", territory: "tidal", lat: 43.7384, long: 7.4246, x: 49, y: 27, legacyName: "Dubai Musk" },
-  { name: "TANGIERS", slug: "tangiers", territory: "tidal", lat: 35.7595, long: -5.8340, x: 45.5, y: 32, legacyName: "Regatta" },
-  { name: "TIGRIS", slug: "tigris", territory: "tidal", lat: 33.3152, long: 44.3661, x: 56, y: 34 },
+  { name: "BAHIA", slug: "bahia", territory: "tidal", lat: -12.9714, long: -38.5014, x: 33, y: 58, legacyName: "Coconut Jasmine", evocation: "Salvador da Bahia moves to a rhythm older than the city itself. Coconut oil glistens on sun-warmed skin and jasmine tumbles over colonial balconies." },
+  { name: "BAHRAIN", slug: "bahrain", territory: "tidal", lat: 26.2041, long: 50.5515, x: 57.5, y: 38, legacyName: "Blue Oud", evocation: "Before oil, there was pearl. For four thousand years, Bahraini divers descended into the Gulf, hunting oysters in waters so warm they were nearly body-temperature." },
+  { name: "BIG SUR", slug: "big-sur", territory: "tidal", lat: 36.2704, long: -121.8081, x: 14, y: 32, legacyName: "Del Mar", evocation: "The Pacific crashes against cathedral rocks and the fog carries salt, kelp, and the mineral breath of a coastline that has never been tamed." },
+  { name: "MEISHAN", slug: "meishan", territory: "tidal", lat: 30.0422, long: 103.8318, x: 75, y: 35, legacyName: "China Rain", evocation: "Rain falls on bamboo groves and temple roofs. The green note is immediate, the lily appears like a whisper, and everything dissolves into mist." },
+  { name: "MONACO", slug: "monaco", territory: "tidal", lat: 43.7384, long: 7.4246, x: 49, y: 27, legacyName: "Dubai Musk", evocation: "The harbor catches light like crushed diamonds, and the musk that rises from sun-warmed skin carries the particular confidence of effortless wealth." },
+  { name: "TANGIERS", slug: "tangiers", territory: "tidal", lat: 35.7595, long: -5.8340, x: 45.5, y: 32, legacyName: "Regatta", evocation: "The medina narrows and the light turns blue. Tangiers sits at the hinge of two seas, two continents, and its scent carries that duality." },
+  { name: "TIGRIS", slug: "tigris", territory: "tidal", lat: 33.3152, long: 44.3661, x: 56, y: 34, evocation: "The ancient river carried amber resin downstream for centuries. Water and warmth fused into something that belongs to the cradle of civilization." },
 
   // PETAL
-  { name: "CARMEL", slug: "carmel", territory: "petal", lat: 36.5552, long: -121.9233, x: 14, y: 31, legacyName: "White Amber" },
-  { name: "DAMASCUS", slug: "damascus", territory: "petal", lat: 37.7556, long: 30.5566, x: 53.5, y: 30, legacyName: "Turkish Rose" },
-  { name: "TOBAGO", slug: "tobago", territory: "petal", lat: 11.1889, long: -60.6317, x: 28, y: 48, legacyName: "Arabian Jasmine" },
-  { name: "KANDY", slug: "kandy", territory: "petal", lat: 7.2906, long: 80.6337, x: 68.5, y: 52, legacyName: "Peach Memoir" },
-  { name: "MANALI", slug: "manali", territory: "petal", lat: 32.2396, long: 77.1887, x: 67.5, y: 34, legacyName: "Himalayan Musk" },
-  { name: "MEDINA", slug: "medina", territory: "petal", lat: 24.5247, long: 39.5692, x: 55, y: 40, legacyName: "Musk Tahara" },
-  { name: "SIWA", slug: "siwa", territory: "petal", lat: 29.2032, long: 25.5195, x: 51, y: 38, legacyName: "White Egyptian Musk" },
+  { name: "CARMEL", slug: "carmel", territory: "petal", lat: 36.5552, long: -121.9233, x: 14, y: 31, legacyName: "White Amber", evocation: "A town so committed to subtlety it doesn't have street addresses. The amber here is barely there, a warmth that exists just beneath the surface of clean skin." },
+  { name: "DAMASCUS", slug: "damascus", territory: "petal", lat: 37.7556, long: 30.5566, x: 53.5, y: 30, legacyName: "Turkish Rose", evocation: "The rose harvest begins before dawn. Hands move through wet petals, heavy-headed Damask roses blooming in a perfection that lasts only hours." },
+  { name: "TOBAGO", slug: "tobago", territory: "petal", lat: 11.1889, long: -60.6317, x: 28, y: 48, legacyName: "Arabian Jasmine", evocation: "The island blooms without being asked. White flowers climbing over everything, jasmine so sweet it makes the warm night air tremble." },
+  { name: "KANDY", slug: "kandy", territory: "petal", lat: 7.2906, long: 80.6337, x: 68.5, y: 52, legacyName: "Peach Memoir", evocation: "The Temple of the Tooth keeps its sacred relic behind seven golden caskets, and the gardens outside bloom with a sweetness that borders on devotion." },
+  { name: "MANALI", slug: "manali", territory: "petal", lat: 32.2396, long: 77.1887, x: 67.5, y: 34, legacyName: "Himalayan Musk", evocation: "The Himalayan air thins and clears. At this altitude, everything unnecessary falls away, leaving only the clean musk of mountain mornings." },
+  { name: "MEDINA", slug: "medina", territory: "petal", lat: 24.5247, long: 39.5692, x: 55, y: 40, legacyName: "Musk Tahara", evocation: "The Prophet's city carries a particular stillness. White musk, cotton, the powdery softness of a scent worn for purity rather than performance." },
+  { name: "SIWA", slug: "siwa", territory: "petal", lat: 29.2032, long: 25.5195, x: 51, y: 38, legacyName: "White Egyptian Musk", evocation: "The oasis appears like a rumor made real. Date palms, salt lakes, and a silence so complete you can hear the desert breathe." },
 
   // TERRA
-  { name: "ASTORIA", slug: "astoria", territory: "terra", lat: 46.1879, long: -123.8313, x: 13.5, y: 24, legacyName: "Pacific Moss" },
-  { name: "HAVANA", slug: "havana", territory: "terra", lat: 23.1136, long: -82.3666, x: 22, y: 40, legacyName: "Oud & Tobacco" },
-  { name: "HUDSON", slug: "hudson", territory: "terra", lat: 42.2529, long: -73.7910, x: 24, y: 27, legacyName: "Spanish Sandalwood" },
-  { name: "MARRAKESH", slug: "marrakesh", territory: "terra", lat: 31.6295, long: -7.9811, x: 45.5, y: 35 },
-  { name: "RIYADH", slug: "riyadh", territory: "terra", lat: 24.7136, long: 46.6753, x: 57, y: 40, legacyName: "Black Oud" },
-  { name: "SAMARKAND", slug: "samarkand", territory: "terra", lat: 39.6542, long: 66.9597, x: 63, y: 29, legacyName: "Oud Aura" },
-  { name: "SICILY", slug: "sicily", territory: "terra", lat: 37.5994, long: 14.0154, x: 50, y: 29, legacyName: "Sicilian Oudh" },
+  { name: "ASTORIA", slug: "astoria", territory: "terra", lat: 46.1879, long: -123.8313, x: 13.5, y: 24, legacyName: "Pacific Moss", evocation: "The Columbia River meets the Pacific and the old-growth forests drip with moss. Everything here grows faster than anyone can clear it." },
+  { name: "HAVANA", slug: "havana", territory: "terra", lat: 23.1136, long: -82.3666, x: 22, y: 40, legacyName: "Oud & Tobacco", evocation: "The tobacco leaves hang in the vega barn, curing slowly in Caribbean humidity. Dark leaf, sweet wood, the caramel edge of aged rum." },
+  { name: "HUDSON", slug: "hudson", territory: "terra", lat: 42.2529, long: -73.7910, x: 24, y: 27, legacyName: "Spanish Sandalwood", evocation: "Two hours north of Manhattan, the weekend escape for the creative class. Antique shops, independent bookstores, converted warehouses." },
+  { name: "MARRAKESH", slug: "marrakesh", territory: "terra", lat: 31.6295, long: -7.9811, x: 45.5, y: 35, evocation: "The souk folds around you: leather, cedar, cumin, the metallic ring of hammered brass. A city that assaults the senses and rewards the brave." },
+  { name: "RIYADH", slug: "riyadh", territory: "terra", lat: 24.7136, long: 46.6753, x: 57, y: 40, legacyName: "Black Oud", evocation: "The palace doors close and the room fills with oud, not the souvenir variety, but something older, deeper, the kind aged in crystal decanters." },
+  { name: "SAMARKAND", slug: "samarkand", territory: "terra", lat: 39.6542, long: 66.9597, x: 63, y: 29, legacyName: "Oud Aura", evocation: "The Registan's turquoise domes shimmer in the Central Asian sun and the Silk Road ghosts are everywhere." },
+  { name: "SICILY", slug: "sicily", territory: "terra", lat: 37.5994, long: 14.0154, x: 50, y: 29, legacyName: "Sicilian Oudh", evocation: "The citrus groves climb the volcanic slopes and the air is electric: bergamot, blood orange, the mineral breath of Etna's black soil." },
 ];
 
 interface AtlasMapProps {
@@ -122,8 +124,17 @@ interface AtlasMapProps {
   onWaypointClick?: (slug: string) => void;
 }
 
+// Territory pricing for the detail panel
+const TERRITORY_PRICING: Record<string, string> = {
+  ember: "$28 / $48",
+  tidal: "$30 / $50",
+  petal: "$30 / $50",
+  terra: "$33 / $55",
+};
+
 export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
   const [hoveredWaypoint, setHoveredWaypoint] = useState<string | null>(null);
+  const [selectedWaypoint, setSelectedWaypoint] = useState<Waypoint | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
 
   const filteredWaypoints = activeTerritory
@@ -131,10 +142,11 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
     : WAYPOINTS;
 
   return (
-    <div
-      ref={mapRef}
-      className="relative w-full aspect-[16/10] md:aspect-[16/9] lg:aspect-[2/1] min-h-[400px] md:min-h-[500px] lg:min-h-[600px] overflow-hidden rounded-sm border border-theme-charcoal/10"
-    >
+    <div className="atlas-map-wrapper">
+      <div
+        ref={mapRef}
+        className="relative w-full aspect-[16/10] md:aspect-[16/9] lg:aspect-[2/1] min-h-[400px] md:min-h-[500px] lg:min-h-[600px] overflow-hidden rounded-sm border border-theme-charcoal/10"
+      >
       {/* Map Background */}
       <Image
         src="/images/atlas-map.jpg"
@@ -189,14 +201,11 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
             />
 
             {/* Marker dot — padded for easier clicking */}
-            <Link
-              href={`/product/${waypoint.slug}`}
+            <button
               className="block p-3 -m-3"
-              onClick={(e) => {
-                if (onWaypointClick) {
-                  e.preventDefault();
-                  onWaypointClick(waypoint.slug);
-                }
+              onClick={() => {
+                setSelectedWaypoint(waypoint);
+                if (onWaypointClick) onWaypointClick(waypoint.slug);
               }}
               onMouseEnter={() => setHoveredWaypoint(waypoint.name)}
               onMouseLeave={() => setHoveredWaypoint(null)}
@@ -215,7 +224,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
                 whileHover={{ scale: 2 }}
                 transition={{ duration: 0.2 }}
               />
-            </Link>
+            </button>
 
             {/* Tooltip */}
             <AnimatePresence>
@@ -267,7 +276,80 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
             </span>
           </div>
         ))}
+        </div>
       </div>
+
+      {/* Detail Panel - appears below the map when a waypoint is selected */}
+      <AnimatePresence mode="wait">
+      {selectedWaypoint && (
+        <motion.div
+          key={selectedWaypoint.name}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.3 }}
+          className="mt-6 border border-white/10 bg-white/5 backdrop-blur-sm rounded-sm overflow-hidden"
+        >
+          <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-10">
+            {/* Left: Waypoint info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 mb-3">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: TERRITORY_COLORS[selectedWaypoint.territory] }}
+                />
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
+                  {TERRITORY_LABELS[selectedWaypoint.territory]} Territory
+                </span>
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-serif italic text-[#f5f0eb] tracking-tight mb-1">
+                {selectedWaypoint.name}
+              </h3>
+
+              {selectedWaypoint.legacyName && (
+                <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mb-4">
+                  Formerly known as {selectedWaypoint.legacyName}
+                </p>
+              )}
+
+              <p className="font-serif text-sm md:text-base text-white/70 leading-relaxed mb-4">
+                {selectedWaypoint.evocation || `A waypoint in the ${TERRITORY_LABELS[selectedWaypoint.territory]} territory. Click below to explore the full composition.`}
+              </p>
+
+              <div className="flex items-center gap-6">
+                <span className="font-mono text-xs uppercase tracking-widest text-white/40">
+                  {TERRITORY_PRICING[selectedWaypoint.territory]}
+                </span>
+                <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">
+                  {selectedWaypoint.lat.toFixed(2)}° {selectedWaypoint.lat >= 0 ? 'N' : 'S'}, {Math.abs(selectedWaypoint.long).toFixed(2)}° {selectedWaypoint.long >= 0 ? 'E' : 'W'}
+                </span>
+              </div>
+            </div>
+
+            {/* Right: CTA */}
+            <div className="flex flex-col justify-center items-start md:items-end gap-3">
+              <Link
+                href={`/product/${selectedWaypoint.slug}`}
+                className="group flex items-center gap-3 px-6 py-3 border border-[#c9a96e]/40 hover:border-[#c9a96e] hover:bg-[#c9a96e]/10 transition-all"
+              >
+                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#c9a96e]">
+                  Explore Waypoint
+                </span>
+                <ArrowRight className="w-4 h-4 text-[#c9a96e] group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <button
+                onClick={() => setSelectedWaypoint(null)}
+                className="font-mono text-[9px] uppercase tracking-widest text-white/30 hover:text-white/60 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+      </AnimatePresence>
     </div>
   );
 }
+

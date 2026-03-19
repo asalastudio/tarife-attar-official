@@ -58,7 +58,7 @@ The brand operates on a bifurcated philosophy — two distinct paths serving dif
 - **The boundary is sacred:** Atlas and Relic never blur into each other
 
 ### Key Phrases
-- "Four territories. Twenty-four coordinates."
+- "Four territories. Twenty-eight coordinates."
 - "Travel by instinct, not itinerary."
 - "Navigate by territory. Discover by instinct."
 - "Clean. Skin-safe. Cruelty-free."
@@ -99,7 +99,7 @@ The brand operates on a bifurcated philosophy — two distinct paths serving dif
 ### Atlas Collection Structure
 
 **Overview:**
-- Total Products: 24 perfume oils (6 per territory)
+- Total Products: 28 perfume oils (7 per territory)
 - Format: Perfume Oil
 - Volume: 6ml and 12ml
 - Price Range: $28-$55
@@ -113,11 +113,11 @@ The brand operates on a bifurcated philosophy — two distinct paths serving dif
 | **Petal** | Bloom. Herb. | "The exhale of living gardens." | Floral, herbaceous, green |
 | **Terra** | Wood. Oud. | "The gravity of deep forests." | Woody, exotic, oud, earthy |
 
-**Atlas Product Examples (from current inventory):**
-- **Ember:** Honey Oudh, Granada Amber, Vanilla Sands, Teeb Musk, White Musk, Dubai Musk
-- **Tidal:** Himalyan Musk, Blue Oudh, Del Mare, Peach Memoir, China Rain
-- **Petal:** Turkish Rose, Arabian Jasmine, Mukhallat Shifa, Sandalwood Rose, Oudh & Lavender, White Egyptian Musk
-- **Terra:** Black Musk, Frankincense & Myrrh, Oudh & Tobacco, Moroccan Leather, Majmua, Wild Wood Forest
+**Atlas Waypoints by Territory (28 Total):**
+- **Ember:** ADEN (Oud Fire), ETHIOPIA (Frankincense & Myrrh), GRANADA (Granada Amber), OMAN (Teeb Musk), PETRA (Honey Oudh), SERENGETI (Black Musk), ZANZIBAR (Vanilla Sands)
+- **Tidal:** BAHIA (Coconut Jasmine), BAHRAIN (Blue Oud), BIG SUR (Del Mare), KYOTO (China Rain), MONACO, TANGIERS (Dubai Musk), TIGRIS
+- **Petal:** AMER (White Amber), DAMASCUS (Turkish Rose), GRASSE (Arabian Jasmine), KANDY (Peach Memoir), MANALI (Himalayan Musk), MEDINA (Musk Tahara), SIWA (White Egyptian Musk)
+- **Terra:** ASTORIA, HAVANA (Oud & Tobacco), MARRAKESH, RIYADH (Black Oud), SAMARKAND (Oud Aura), SICILY (Sicilian Oudh), TULUM (Spanish Sandalwood)
 
 **Atlas Trust Badges:**
 - Skin-Safe
@@ -468,9 +468,9 @@ transition-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
 
 ### Immediate Opportunities
 
-1. **Complete the 24 Atlas Waypoints**
-   - Current: 26 products (some may be duplicates to audit)
-   - Goal: Exactly 24, 6 per territory
+1. **Atlas Waypoints — Complete (28)**
+   - Status: All 28 waypoints defined (7 per territory)
+   - Remaining: Connect all 28 to Shopify, ensure evocation copy consistency
 
 2. **Relic Collection Launch**
    - Opportunity: Launch curated Relic specimens with full provenance documentation
