@@ -77,7 +77,7 @@ function CustomZoomControl({ isPanelOpen }: { isPanelOpen: boolean }) {
 
   return (
     <div
-      className={`absolute bottom-8 z-[1000] flex flex-col gap-1 bg-[#1a1714]/80 backdrop-blur-md p-1 rounded border border-[#C4A265]/20 shadow-2xl transition-all duration-500 ease-in-out ${
+      className={`absolute bottom-8 z-[1000] flex flex-col gap-1 bg-[#2a2520]/80 backdrop-blur-md p-1 rounded border border-[#C4A265]/20 shadow-2xl transition-all duration-500 ease-in-out ${
         isPanelOpen ? 'right-8 md:right-[432px] opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto' : 'right-8'
       }`}
       onDoubleClick={stopPropagation}
@@ -186,16 +186,10 @@ export function AtlasMapLeaflet() {
 
   return (
     <div className="w-full h-full relative font-serif text-[#F5F0EB] overflow-hidden">
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-[1000] p-6 pointer-events-none flex flex-col items-center">
-        <h1 className="text-4xl md:text-5xl font-serif tracking-widest text-[#C4A265] drop-shadow-lg mb-2">THE ATLAS</h1>
-        <p className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-[#F5F0EB]/70 drop-shadow-md">
-          Four Territories · 28 Waypoints · One Atlas
-        </p>
-      </div>
+      {/* Header removed — parent page provides context */}
 
       {/* Filter Controls */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] flex flex-wrap justify-center gap-2 md:gap-4 bg-[#1a1714]/80 backdrop-blur-md p-2 md:p-3 rounded-full border border-[#C4A265]/20 shadow-2xl">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] flex flex-wrap justify-center gap-2 md:gap-4 bg-[#2a2520]/80 backdrop-blur-md p-2 md:p-3 rounded-full border border-[#C4A265]/20 shadow-2xl">
         {territories.map((t) => (
           <button
             key={t}
@@ -212,7 +206,7 @@ export function AtlasMapLeaflet() {
       </div>
 
       {/* Cartographer's Key */}
-      <div className="absolute bottom-8 left-8 z-[1000] hidden lg:flex flex-col gap-3 bg-[#1a1714]/80 backdrop-blur-md p-5 rounded border border-[#C4A265]/20 shadow-2xl">
+      <div className="absolute bottom-8 left-8 z-[1000] hidden lg:flex flex-col gap-3 bg-[#2a2520]/80 backdrop-blur-md p-5 rounded border border-[#C4A265]/20 shadow-2xl">
         <h3 className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#F5F0EB]/50 border-b border-[#C4A265]/20 pb-2 mb-1">
           Cartographer&apos;s Key
         </h3>
@@ -235,7 +229,7 @@ export function AtlasMapLeaflet() {
       </div>
 
       {/* Map Container */}
-      <div className="absolute inset-0 z-0 bg-[#1a1714]">
+      <div className="absolute inset-0 z-0 bg-[#2a2520]">
         <MapContainer
           center={[25, 35]}
           zoom={3}
@@ -247,11 +241,11 @@ export function AtlasMapLeaflet() {
           fadeAnimation={true}
           markerZoomAnimation={true}
           className="w-full h-full atlas-map-antique"
-          style={{ background: '#1a1714' }}
+          style={{ background: '#2a2520' }}
         >
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
-            attribution='&copy; OpenStreetMap contributors &copy; CARTO'
+            url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+            attribution='&copy; OpenStreetMap contributors &copy; Stadia Maps'
             maxZoom={10}
             minZoom={2}
           />
@@ -283,7 +277,7 @@ export function AtlasMapLeaflet() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="absolute top-0 right-0 bottom-0 w-full md:w-[400px] bg-[#1a1714]/95 backdrop-blur-xl border-l border-[#C4A265]/20 z-[2000] shadow-2xl flex flex-col"
+            className="absolute top-0 right-0 bottom-0 w-full md:w-[400px] bg-[#2a2520]/95 backdrop-blur-xl border-l border-[#C4A265]/20 z-[2000] shadow-2xl flex flex-col"
           >
             <div className="p-8 flex-1 overflow-y-auto">
               <button
@@ -394,7 +388,7 @@ export function AtlasMapLeaflet() {
               )}
             </div>
 
-            <div className="p-8 border-t border-[#C4A265]/10 bg-[#1a1714]">
+            <div className="p-8 border-t border-[#C4A265]/10 bg-[#2a2520]">
               <Link
                 href={`/product/${selectedWaypoint.id}`}
                 className="block w-full py-4 text-center font-mono text-xs tracking-[0.2em] uppercase bg-[#C4A265] text-[#1a1714] hover:bg-[#d4b57e] transition-colors rounded-sm font-bold"

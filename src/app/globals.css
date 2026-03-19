@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Atlas Map — Antique filter for Leaflet tiles */
+/* Atlas Map — Warm parchment filter for Leaflet tiles */
 .atlas-map-antique {
-  filter: sepia(0.8) hue-rotate(-20deg) saturate(1.5) brightness(0.7) contrast(1.2);
+  filter: sepia(0.5) hue-rotate(-10deg) saturate(1.2) brightness(0.9) contrast(1.1);
 }
 
 .leaflet-container {
-  background-color: #1a1714 !important;
+  background-color: #2a2520 !important;
 }
 
 .leaflet-control-zoom a {
