@@ -12,6 +12,7 @@ import { territorySchema } from "./territory";
 import { heroBackgroundsSchema } from "./heroBackgrounds";
 import { placeholderImagesSchema } from "./placeholderImages";
 import { portOfCallSchema } from "./portOfCall";
+import { reviewSchema } from "./review";
 
-export const schemaTypes = [productSchema, exhibitSchema, journalSchema, shoppableImage, museumExhibit, fieldReportSchema, fieldJournalSchema, territorySchema, heroBackgroundsSchema, placeholderImagesSchema, portOfCallSchema];
+export const schemaTypes = [productSchema, exhibitSchema, journalSchema, shoppableImage, museumExhibit, fieldReportSchema, fieldJournalSchema, territorySchema, heroBackgroundsSchema, placeholderImagesSchema, portOfCallSchema, reviewSchema];
 

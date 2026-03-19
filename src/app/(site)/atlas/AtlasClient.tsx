@@ -12,7 +12,6 @@ import { getItemLabel } from "@/lib/brandSystem";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import dynamic from "next/dynamic";
-import type { PortOfCall } from "@/sanity/lib/queries";
 
 // Dynamically import Leaflet maps to avoid SSR issues
 const AtlasMapLeaflet = dynamic(
@@ -27,17 +26,6 @@ const AtlasMapLeaflet = dynamic(
   }
 );
 
-const CommunityMap = dynamic(
-  () => import("@/components/atlas/CommunityMap").then(mod => ({ default: mod.CommunityMap })),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full h-[50vh] flex items-center justify-center bg-[#1a1714] text-[#C4A265] font-serif">
-        <p className="text-sm tracking-widest uppercase opacity-50">Loading...</p>
-      </div>
-    ),
-  }
-);
 
 // Territory-based pricing for Atlas Collection (same as ProductDetailClient)
 const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
@@ -96,10 +84,9 @@ interface Props {
   territories: Territory[];
   totalCount: number;
   placeholderImages?: PlaceholderImagesQueryResult | null;
-  portsOfCall?: PortOfCall[];
 }
 
-export function AtlasClient({ territories, totalCount, placeholderImages, portsOfCall = [] }: Props) {
+export function AtlasClient({ territories, totalCount, placeholderImages }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTerritory, setActiveTerritory] = useState<string | null>(null);
@@ -429,28 +416,6 @@ export function AtlasClient({ territories, totalCount, placeholderImages, portsO
           </div>
         </div>
       </section>
-
-      {/* Ports of Call — Community Map */}
-      {portsOfCall.length > 0 && (
-        <section className="py-16 md:py-24 px-4 md:px-24 bg-[#141210] border-t border-[#C4A265]/10">
-          <div className="max-w-[1800px] mx-auto">
-            <div className="text-center mb-8 md:mb-12">
-              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#c9a96e] block mb-3">
-                Ports of Call
-              </span>
-              <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
-                The Atlas Community
-              </h2>
-              <p className="font-serif text-sm md:text-base text-[#f5f0eb]/50 mt-3 max-w-lg mx-auto">
-                Every gold dot marks a city where the Atlas has found a home.
-              </p>
-            </div>
-            <div className="w-full h-[50vh] md:h-[60vh] rounded-lg overflow-hidden border border-[#C4A265]/10">
-              <CommunityMap ports={portsOfCall} />
-            </div>
-          </div>
-        </section>
-      )}
 
       <GlobalFooter theme="dark" />
     </div>

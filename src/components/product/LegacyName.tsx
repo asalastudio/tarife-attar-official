@@ -18,8 +18,9 @@ export const LegacyName: React.FC<LegacyNameProps> = ({
     variant = 'inline',
     className = '',
 }) => {
-    // Don't render if no legacy name or if toggle is off
-    if (!legacyName || !showLegacyName) {
+    // Don't render if no legacy name or if toggle is explicitly off
+    // showLegacyName defaults to true — null/undefined means show
+    if (!legacyName || showLegacyName === false) {
         return null;
     }
 

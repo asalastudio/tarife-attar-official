@@ -7,6 +7,11 @@
   filter: sepia(0.3) hue-rotate(-10deg) saturate(1.2) brightness(1.0) contrast(1.1);
 }
 
+/* Community Map — Dark land with visible blue ocean */
+.atlas-map-ocean {
+  filter: brightness(0.35) contrast(1.6) saturate(1.8);
+}
+
 .leaflet-container {
   background-color: #2a2520 !important;
 }

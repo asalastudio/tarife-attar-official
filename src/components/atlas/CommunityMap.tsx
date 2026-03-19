@@ -25,11 +25,11 @@ export function CommunityMap({ ports }: CommunityMapProps) {
         doubleClickZoom={false}
         touchZoom={false}
         attributionControl={false}
-        className="w-full h-full atlas-map-antique"
-        style={{ background: '#2a2520' }}
+        className="w-full h-full atlas-map-ocean"
+        style={{ background: '#0a1628' }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+          url="https://{s}.basemaps.cartocdn.com/voyager_nolabels/{z}/{x}/{y}{r}.png"
           maxZoom={10}
           minZoom={2}
         />
