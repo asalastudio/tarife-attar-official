@@ -11,7 +11,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import { getItemLabel } from "@/lib/brandSystem";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
-import { InteractiveMap, type MapWaypoint } from "@/components/atlas/InteractiveMap";
+import { AtlasMap } from "@/components/atlas/AtlasMap";
 
 // Territory-based pricing for Atlas Collection (same as ProductDetailClient)
 const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
@@ -364,45 +364,19 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
       </section>
 
       {/* Interactive Map — Explore section */}
-      {(() => {
-        const mapWaypoints = territories.flatMap((t) =>
-          t.products
-            .filter((p) => p.latitude && p.longitude)
-            .map((p) => ({
-              atlasName: p.title,
-              legacyName: p.legacyName || null,
-              slug: p.slug?.current || "",
-              territory: t.id,
-              scentNotes: p.scentProfile || "",
-              mapPin: p.evocationLocation || "",
-              lat: p.latitude || 0,
-              long: p.longitude || 0,
-              price6ml: TERRITORY_PRICING[t.id]?.["6ml"] || 28,
-              price12ml: TERRITORY_PRICING[t.id]?.["12ml"] || 48,
-              evocationCopy: p.evocationStory?.[0] || null,
-            }))
-        );
-        if (mapWaypoints.length === 0) return null;
-        return (
-          <section className="py-16 md:py-24 px-4 md:px-24 bg-[#0f0f0f]">
-            <div className="max-w-[1800px] mx-auto">
-              <div className="text-center mb-8 md:mb-12">
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#c9a96e] block mb-3">
-                  Four Territories · {mapWaypoints.length} Waypoints · One Atlas
-                </span>
-                <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
-                  Explore the Map
-                </h2>
-              </div>
-              <InteractiveMap
-                waypoints={mapWaypoints}
-                activeTerritory={activeTerritory}
-                onTerritoryChange={handleTerritorySelect}
-              />
-            </div>
-          </section>
-        );
-      })()}
+      <section className="py-16 md:py-24 px-4 md:px-24 bg-[#0f0f0f]">
+        <div className="max-w-[1800px] mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#c9a96e] block mb-3">
+              Four Territories · 28 Waypoints · One Atlas
+            </span>
+            <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
+              Explore the Map
+            </h2>
+          </div>
+          <AtlasMap activeTerritory={activeTerritory} />
+        </div>
+      </section>
 
       <GlobalFooter theme="dark" />
     </div>
