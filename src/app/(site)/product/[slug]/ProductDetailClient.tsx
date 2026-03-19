@@ -934,11 +934,20 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </p>
             )}
 
-            {/* Territory Context (Atlas only) */}
+            {/* Territory Accent (Atlas only) — colored bar representing territory */}
             {isAtlas && territory && territoryTagline && (
               <div className="py-4 border-y border-theme-charcoal/10 space-y-3">
                 <div className="flex items-center gap-3">
-                  <TerritoryBadge territory={territory} />
+                  <div className={`w-8 h-1 rounded-full ${
+                    territory === 'ember' ? 'bg-amber-600' :
+                    territory === 'tidal' ? 'bg-cyan-600' :
+                    territory === 'petal' ? 'bg-rose-400' :
+                    territory === 'terra' ? 'bg-emerald-700' :
+                    'bg-theme-gold'
+                  }`} />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/60">
+                    {TERRITORY_NAMES[territory] || territory}
+                  </span>
                 </div>
                 <p className="font-serif text-sm md:text-base opacity-70">
                   {territoryTagline}
