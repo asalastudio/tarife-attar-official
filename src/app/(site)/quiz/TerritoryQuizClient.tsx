@@ -311,7 +311,7 @@ export function TerritoryQuizClient() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="font-serif italic text-lg md:text-xl text-theme-charcoal/70 mb-4"
+                  className="font-serif text-lg md:text-xl text-theme-charcoal/70 mb-4"
                 >
                   Four territories. Four olfactory worlds.<br />
                   Which one speaks to your soul?

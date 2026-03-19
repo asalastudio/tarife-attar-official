@@ -8,7 +8,7 @@ export default function ProductNotFound() {
         <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter">
           Product Not Found
         </h1>
-        <p className="font-serif italic text-lg opacity-60">
+        <p className="font-serif text-lg opacity-60">
           This specimen has been archived or does not exist.
         </p>
         <Link

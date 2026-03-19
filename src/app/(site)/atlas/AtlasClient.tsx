@@ -167,7 +167,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                 </Link>
               </div>
               <div className="hidden md:block max-w-md text-right">
-                <p className="font-serif italic text-base opacity-60 leading-relaxed mb-3">
+                <p className="font-serif text-base opacity-60 leading-relaxed mb-3">
                   Clean, skin-safe perfume oils for those who travel by scent.
                 </p>
                 <Link
@@ -242,7 +242,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                     <h2 className="text-2xl md:text-4xl font-serif italic tracking-tighter leading-tight break-words">
                       {territory.name}
                     </h2>
-                    <p className="hidden md:block font-serif italic text-sm opacity-50 whitespace-nowrap">
+                    <p className="hidden md:block font-serif text-sm opacity-50 whitespace-nowrap">
                       {territory.tagline}
                     </p>
                   </div>

@@ -244,7 +244,7 @@ export function JournalEntryClient({ entry }: Props) {
                         </div>
                       )}
                     </div>
-                    <h4 className="font-serif italic text-sm group-hover:text-theme-gold transition-colors">
+                    <h4 className="font-serif text-sm group-hover:text-theme-gold transition-colors">
                       {product.title}
                     </h4>
                     {product.price && (

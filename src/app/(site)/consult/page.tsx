@@ -43,7 +43,7 @@ export default function ConsultPage() {
           <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-8">
             Private Consult
           </h1>
-          <p className="font-serif italic text-lg md:text-xl opacity-50 leading-relaxed mb-12 max-w-lg mx-auto">
+          <p className="font-serif text-lg md:text-xl opacity-50 leading-relaxed mb-12 max-w-lg mx-auto">
             Direct archival consultation with our in-house apothecary. 
             Bespoke formulation guidance for collectors and connoisseurs.
           </p>

@@ -86,7 +86,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
             
             {/* Right - Description */}
             <div className="hidden md:block max-w-md text-right">
-              <p className="font-serif italic text-lg opacity-80 leading-relaxed mb-2">
+              <p className="font-serif text-lg opacity-80 leading-relaxed mb-2">
                 Pure resins. Rare ouds. Aged materials sourced for the devoted collector.
               </p>
               <p className="font-mono text-[10px] uppercase tracking-widest opacity-60">
@@ -114,7 +114,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                   <h2 className="text-xl md:text-3xl font-serif tracking-tighter leading-tight break-words flex-shrink-0">
                     {category.name}
                   </h2>
-                  <p className="hidden md:block font-serif italic text-base opacity-60 leading-relaxed truncate">
+                  <p className="hidden md:block font-serif text-base opacity-60 leading-relaxed truncate">
                     {category.description}
                   </p>
                 </div>

@@ -387,7 +387,7 @@ export default function CartPage() {
                               Save for Later
                             </span>
                           </div>
-                          <p className="font-serif italic text-sm text-theme-charcoal/70 mb-4">
+                          <p className="font-serif text-sm text-theme-charcoal/70 mb-4">
                             Not ready? Save your satchel and we'll remind you.
                           </p>
                           <form onSubmit={handleSaveCart} className="space-y-3">
@@ -426,7 +426,7 @@ export default function CartPage() {
                           <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-green-100 flex items-center justify-center">
                             <Check className="w-5 h-5 text-green-600" />
                           </div>
-                          <p className="font-serif italic text-sm text-green-800">
+                          <p className="font-serif text-sm text-green-800">
                             Satchel saved! We'll send you a reminder.
                           </p>
                         </motion.div>

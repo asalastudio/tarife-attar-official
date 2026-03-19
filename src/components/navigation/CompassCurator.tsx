@@ -272,7 +272,7 @@ export const CompassCurator: React.FC<CompassCuratorProps> = ({
                 <h2 className="font-mono text-xs uppercase tracking-[0.3em] text-theme-charcoal/60">
                   The Atlas
                 </h2>
-                <p className="font-serif italic text-sm text-theme-charcoal/40 mt-0.5">
+                <p className="font-serif text-sm text-theme-charcoal/40 mt-0.5">
                   Your Fragrance Guide
                 </p>
               </div>

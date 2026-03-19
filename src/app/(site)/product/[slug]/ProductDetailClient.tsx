@@ -114,18 +114,58 @@ interface Props {
   placeholderImages?: PlaceholderImagesQueryResult | null;
 }
 
+const CollapsibleSection = ({
+  title,
+  children,
+  isOpen,
+  onToggle,
+  defaultOpenDesktop = false
+}: {
+  title: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  defaultOpenDesktop?: boolean;
+}) => {
+  return (
+    <div className="pt-8 border-t border-theme-charcoal/10">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between py-2 group"
+      >
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold">
+          {title}
+        </span>
+        <Plus
+          className={`w-4 h-4 opacity-40 group-hover:opacity-70 transition-all ${isOpen ? "rotate-45" : ""}`}
+        />
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="pt-4">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 const EvocationSection = ({ title, story }: { title: string; story: string[] }) => {
   if (!story || story.length === 0) return null;
   return (
-    <div className="pt-8 border-t border-theme-charcoal/10">
-      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold block mb-4">
-        {title}
-      </span>
-      <div className="space-y-4 font-serif italic text-base md:text-lg leading-relaxed opacity-90">
-        {story.map((paragraph, idx) => (
-          <p key={idx}>{paragraph}</p>
-        ))}
-      </div>
+    <div className="space-y-4 font-serif text-base md:text-lg leading-relaxed opacity-90">
+      {story.map((paragraph, idx) => (
+        <p key={idx}>{paragraph}</p>
+      ))}
     </div>
   );
 };
@@ -139,7 +179,7 @@ const FieldReportConcept = ({ concept, hotspots }: { concept?: string; hotspots?
         Field Report Concept
       </span>
       {concept && (
-        <p className="font-serif italic text-base md:text-lg leading-relaxed opacity-90 mb-6">
+        <p className="font-serif text-base md:text-lg leading-relaxed opacity-90 mb-6">
           {concept}
         </p>
       )}
@@ -523,7 +563,21 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     description: false,
     notes: false,
+    evocation: true,
+    onSkin: true,
+    journey: false,
   });
+
+  // Set responsive defaults after mount (collapse on mobile)
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setExpandedSections(prev => ({
+        ...prev,
+        evocation: false,
+        onSkin: false,
+      }));
+    }
+  }, []);
 
   // Get territory-based pricing for Atlas products
   const territory = product.atlasData?.atmosphere;
@@ -879,7 +933,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 <div className="flex items-center gap-3">
                   <TerritoryBadge territory={territory} />
                 </div>
-                <p className="font-serif italic text-sm md:text-base opacity-70">
+                <p className="font-serif text-sm md:text-base opacity-70">
                   {territoryTagline}
                 </p>
               </div>
@@ -944,21 +998,6 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   )}
                 </div>
               </>
-            )}
-
-            {/* Product Essence/Notes Preview */}
-            {product.notes && (
-              <div className="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs uppercase tracking-widest opacity-60 pt-2">
-                {product.notes.top && product.notes.top.length > 0 && (
-                  <span>Top: {product.notes.top.slice(0, 2).join(", ")}</span>
-                )}
-                {product.notes.heart && product.notes.heart.length > 0 && (
-                  <span>· Heart: {product.notes.heart.slice(0, 2).join(", ")}</span>
-                )}
-                {product.notes.base && product.notes.base.length > 0 && (
-                  <span>· Base: {product.notes.base.slice(0, 2).join(", ")}</span>
-                )}
-              </div>
             )}
 
             {/* Atlas-Specific Details - GPS / Origin Point */}
@@ -1082,6 +1121,9 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </div>
             )}
 
+            {/* Trust Badges - Above CTA for conversion */}
+            <TrustBadges isAtlas={isAtlas} product={product} />
+
             {/* Quantity Selector */}
             <div className="flex items-center gap-4">
               <span className="font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
@@ -1187,9 +1229,6 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </motion.div>
             )}
 
-            {/* Trust Badges */}
-            <TrustBadges isAtlas={isAtlas} product={product} />
-
             {/* Gift Option */}
             <motion.button
               whileHover={{ x: 5 }}
@@ -1208,9 +1247,16 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               />
             )}
 
-            {/* Evocation Story - The "Story" */}
+            {/* Evocation Story - Collapsible, open on desktop */}
             {isAtlas && product.atlasData?.evocationStory && (
-              <EvocationSection title="Evocation" story={product.atlasData.evocationStory} />
+              <CollapsibleSection
+                title="Evocation"
+                isOpen={expandedSections.evocation}
+                onToggle={() => toggleSection("evocation")}
+                defaultOpenDesktop={true}
+              >
+                <EvocationSection title="Evocation" story={product.atlasData.evocationStory} />
+              </CollapsibleSection>
             )}
 
             {/* Field Report Image & Concept - Conditional Display */}
@@ -1231,31 +1277,33 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </>
             )}
 
-            {/* On Skin Story */}
+            {/* On Skin Story - Collapsible, open on desktop, collapsed on mobile */}
             {isAtlas && product.atlasData?.onSkinStory && (
-              <EvocationSection title="On Skin" story={product.atlasData.onSkinStory} />
+              <CollapsibleSection
+                title="On Skin"
+                isOpen={expandedSections.onSkin}
+                onToggle={() => toggleSection("onSkin")}
+                defaultOpenDesktop={true}
+              >
+                <EvocationSection title="On Skin" story={product.atlasData.onSkinStory} />
+              </CollapsibleSection>
             )}
 
-            {/* The Journey / Travel Log - VISIBLE BY DEFAULT */}
+            {/* The Journey / Travel Log - Collapsible, collapsed by default */}
             {(isAtlas && product.atlasData?.travelLog) || (isRelic && product.relicData?.museumDescription) ? (
-              <div className="pt-8 border-t border-theme-charcoal/10">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold block mb-4">
-                    {isAtlas ? "The Journey" : "Curator's Notes"}
-                  </span>
-                  <div className="font-serif italic text-base md:text-lg leading-relaxed opacity-90">
-                    {isAtlas && product.atlasData?.travelLog ? (
-                      <PortableText value={product.atlasData.travelLog as any} />
-                    ) : isRelic && product.relicData?.museumDescription ? (
-                      <PortableText value={product.relicData.museumDescription as any} />
-                    ) : null}
-                  </div>
-                </motion.div>
-              </div>
+              <CollapsibleSection
+                title={isAtlas ? "The Journey" : "Curator's Notes"}
+                isOpen={expandedSections.journey}
+                onToggle={() => toggleSection("journey")}
+              >
+                <div className="font-serif text-base md:text-lg leading-relaxed opacity-90">
+                  {isAtlas && product.atlasData?.travelLog ? (
+                    <PortableText value={product.atlasData.travelLog as any} />
+                  ) : isRelic && product.relicData?.museumDescription ? (
+                    <PortableText value={product.relicData.museumDescription as any} />
+                  ) : null}
+                </div>
+              </CollapsibleSection>
             ) : null}
 
             {/* Collapsible Sections */}
@@ -1294,7 +1342,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 block mb-2">
                               Top Notes
                             </span>
-                            <div className="font-serif italic text-base">
+                            <div className="font-serif text-base">
                               {product.notes.top.join(", ")}
                             </div>
                           </motion.div>
@@ -1308,7 +1356,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 block mb-2">
                               Heart Notes
                             </span>
-                            <div className="font-serif italic text-base">
+                            <div className="font-serif text-base">
                               {product.notes.heart.join(", ")}
                             </div>
                           </motion.div>
@@ -1322,7 +1370,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 block mb-2">
                               Base Notes
                             </span>
-                            <div className="font-serif italic text-base">
+                            <div className="font-serif text-base">
                               {product.notes.base.join(", ")}
                             </div>
                           </motion.div>
@@ -1334,7 +1382,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                           <span className="font-mono text-[9px] uppercase tracking-widest opacity-40 block mb-2">
                             Perfumer
                           </span>
-                          <div className="font-serif italic text-sm">{product.perfumer}</div>
+                          <div className="font-serif text-sm">{product.perfumer}</div>
                         </div>
                       )}
                     </div>
@@ -1374,7 +1422,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             No Image
                           </div>
                         )}
-                        <h3 className="font-serif italic text-xl group-hover:tracking-tighter transition-all">
+                        <h3 className="font-serif text-xl group-hover:tracking-tighter transition-all">
                           {related.title}
                         </h3>
                         {related.legacyName && related.showLegacyName && (

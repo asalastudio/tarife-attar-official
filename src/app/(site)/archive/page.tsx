@@ -39,7 +39,7 @@ export default function ArchivePage() {
           <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-8">
             The Archive
           </h1>
-          <p className="font-serif italic text-lg md:text-xl opacity-60 leading-relaxed mb-12 max-w-lg mx-auto">
+          <p className="font-serif text-lg md:text-xl opacity-60 leading-relaxed mb-12 max-w-lg mx-auto">
             A comprehensive catalog of discontinued formulations, 
             vintage specimens, and historical reference materials.
           </p>

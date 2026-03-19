@@ -369,7 +369,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                                 />
                                             )}
                                         </div>
-                                        <h4 className="font-serif italic text-sm group-hover:text-theme-gold transition-colors">
+                                        <h4 className="font-serif text-sm group-hover:text-theme-gold transition-colors">
                                             {product.title}
                                         </h4>
                                         {product.price && (
@@ -424,7 +424,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                                         {relatedTerritoryStyle.icon} {relatedTerritoryStyle.label}
                                                     </span>
                                                 )}
-                                                <h4 className="font-serif italic text-lg group-hover:text-theme-gold transition-colors line-clamp-2">
+                                                <h4 className="font-serif text-lg group-hover:text-theme-gold transition-colors line-clamp-2">
                                                     {related.title}
                                                 </h4>
                                             </div>

@@ -46,7 +46,7 @@ export default function StockistsPage() {
             <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-8">
               Stockists
             </h1>
-            <p className="font-serif italic text-lg md:text-xl opacity-60 leading-relaxed">
+            <p className="font-serif text-lg md:text-xl opacity-60 leading-relaxed">
               Authorized purveyors of Tarife Attär specimens. 
               Physical locations for in-person consultation and acquisition.
             </p>

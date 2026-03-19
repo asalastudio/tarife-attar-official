@@ -95,7 +95,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-serif italic text-base sm:text-lg md:text-xl opacity-40 leading-relaxed max-w-sm"
+              className="font-serif text-base sm:text-lg md:text-xl opacity-40 leading-relaxed max-w-sm"
             >
               Clean, skin-safe perfume oils for those who travel by scent.
             </motion.p>
@@ -152,7 +152,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
             <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-20">
               Navigation
             </h3>
-            <ul className="space-y-4 font-serif italic text-base sm:text-lg opacity-60">
+            <ul className="space-y-4 font-serif text-base sm:text-lg opacity-60">
               {navigationLinks.map((link) => (
                 <li key={link.href}>
                   <Link 
@@ -178,7 +178,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               Stay Connected
             </h3>
             <div className="space-y-6">
-              <p className="font-serif italic text-sm sm:text-base opacity-40">
+              <p className="font-serif text-sm sm:text-base opacity-40">
                 New territories, limited releases, and scent journeys — delivered to your inbox.
               </p>
               
