@@ -145,7 +145,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     offers: [
       {
         '@type': 'Offer',
-        name: '6ml Roll-On',
+        name: '6ml Glass Wand Applicator',
         price: pricing.min,
         priceCurrency: 'USD',
         availability: product.inStock !== false
@@ -159,7 +159,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       },
       {
         '@type': 'Offer',
-        name: '12ml Roll-On',
+        name: '12ml Glass Wand Applicator',
         price: pricing.max,
         priceCurrency: 'USD',
         availability: product.inStock !== false
@@ -177,7 +177,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       ...(product.longevity ? [{ '@type': 'PropertyValue', name: 'Longevity', value: product.longevity }] : []),
       ...(product.season ? [{ '@type': 'PropertyValue', name: 'Season', value: product.season }] : []),
       ...(notesStr ? [{ '@type': 'PropertyValue', name: 'Fragrance Notes', value: notesStr }] : []),
-      { '@type': 'PropertyValue', name: 'Format', value: 'Concentrated Perfume Oil, Roll-On' },
+      { '@type': 'PropertyValue', name: 'Format', value: 'Concentrated Perfume Oil, Glass Wand Applicator' },
       { '@type': 'PropertyValue', name: 'Alcohol Free', value: 'Yes' },
       { '@type': 'PropertyValue', name: 'Cruelty Free', value: 'Yes' },
       { '@type': 'PropertyValue', name: 'Phthalate Free', value: 'Yes' },
