@@ -46,6 +46,10 @@ interface Waypoint {
   territory: "ember" | "tidal" | "petal" | "terra";
   lat: number;
   long: number;
+  // Manual x/y overrides (percentage) calibrated to atlas-map.jpg
+  // When set, these take priority over lat/long projection
+  x?: number;
+  y?: number;
   legacyName?: string;
 }
 
@@ -63,42 +67,54 @@ const TERRITORY_LABELS: Record<string, string> = {
   terra: "TERRA",
 };
 
+// Waypoints with manually calibrated x/y positions (%) for atlas-map.jpg
+// Calibrated against visible landmarks on the map:
+// - US West Coast ~14-15% x
+// - US East Coast ~22-24% x
+// - Caribbean ~24-26% x
+// - Brazil ~30-32% x
+// - Western Europe ~46-48% x
+// - North Africa ~47-50% x
+// - Middle East ~55-58% x
+// - India ~66-68% x
+// - China ~74-76% x
+// - Vertical: Europe ~28%, Sahara ~42%, Equator ~50%, S. America ~58%
 const WAYPOINTS: Waypoint[] = [
   // EMBER
-  { name: "ADEN", slug: "aden", territory: "ember", lat: 12.7797, long: 45.0365, legacyName: "Oud Fire" },
-  { name: "SAANA", slug: "saana", territory: "ember", lat: 15.3694, long: 44.1910, legacyName: "Honey Oud" },
-  { name: "GRANADA", slug: "granada", territory: "ember", lat: 37.1773, long: -3.5986, legacyName: "Granada Amber" },
-  { name: "MALABAR", slug: "malabar", territory: "ember", lat: 11.2588, long: 75.7804, legacyName: "Vanilla Sands" },
-  { name: "SERENGETI", slug: "serengeti", territory: "ember", lat: -2.3333, long: 34.8333, legacyName: "Black Musk" },
-  { name: "BEIRUT", slug: "beirut", territory: "ember", lat: 33.8938, long: 35.5018 },
-  { name: "TARIFA", slug: "tarifa", territory: "ember", lat: 36.0143, long: -5.6044, legacyName: "Teeb Musk" },
+  { name: "ADEN", slug: "aden", territory: "ember", lat: 12.7797, long: 45.0365, x: 56, y: 50, legacyName: "Oud Fire" },
+  { name: "SAANA", slug: "saana", territory: "ember", lat: 15.3694, long: 44.1910, x: 55.5, y: 48, legacyName: "Honey Oud" },
+  { name: "GRANADA", slug: "granada", territory: "ember", lat: 37.1773, long: -3.5986, x: 46.5, y: 30, legacyName: "Granada Amber" },
+  { name: "MALABAR", slug: "malabar", territory: "ember", lat: 11.2588, long: 75.7804, x: 67, y: 50, legacyName: "Vanilla Sands" },
+  { name: "SERENGETI", slug: "serengeti", territory: "ember", lat: -2.3333, long: 34.8333, x: 53, y: 55, legacyName: "Black Musk" },
+  { name: "BEIRUT", slug: "beirut", territory: "ember", lat: 33.8938, long: 35.5018, x: 54, y: 32 },
+  { name: "TARIFA", slug: "tarifa", territory: "ember", lat: 36.0143, long: -5.6044, x: 46, y: 31, legacyName: "Teeb Musk" },
 
   // TIDAL
-  { name: "BAHIA", slug: "bahia", territory: "tidal", lat: -12.9714, long: -38.5014, legacyName: "Coconut Jasmine" },
-  { name: "BAHRAIN", slug: "bahrain", territory: "tidal", lat: 26.2041, long: 50.5515, legacyName: "Blue Oud" },
-  { name: "BIG SUR", slug: "big-sur", territory: "tidal", lat: 36.2704, long: -121.8081, legacyName: "Del Mar" },
-  { name: "MEISHAN", slug: "meishan", territory: "tidal", lat: 30.0422, long: 103.8318, legacyName: "China Rain" },
-  { name: "MONACO", slug: "monaco", territory: "tidal", lat: 43.7384, long: 7.4246, legacyName: "Dubai Musk" },
-  { name: "TANGIERS", slug: "tangiers", territory: "tidal", lat: 35.7595, long: -5.8340, legacyName: "Regatta" },
-  { name: "TIGRIS", slug: "tigris", territory: "tidal", lat: 33.3152, long: 44.3661 },
+  { name: "BAHIA", slug: "bahia", territory: "tidal", lat: -12.9714, long: -38.5014, x: 33, y: 58, legacyName: "Coconut Jasmine" },
+  { name: "BAHRAIN", slug: "bahrain", territory: "tidal", lat: 26.2041, long: 50.5515, x: 57.5, y: 38, legacyName: "Blue Oud" },
+  { name: "BIG SUR", slug: "big-sur", territory: "tidal", lat: 36.2704, long: -121.8081, x: 14, y: 32, legacyName: "Del Mar" },
+  { name: "MEISHAN", slug: "meishan", territory: "tidal", lat: 30.0422, long: 103.8318, x: 75, y: 35, legacyName: "China Rain" },
+  { name: "MONACO", slug: "monaco", territory: "tidal", lat: 43.7384, long: 7.4246, x: 49, y: 27, legacyName: "Dubai Musk" },
+  { name: "TANGIERS", slug: "tangiers", territory: "tidal", lat: 35.7595, long: -5.8340, x: 45.5, y: 32, legacyName: "Regatta" },
+  { name: "TIGRIS", slug: "tigris", territory: "tidal", lat: 33.3152, long: 44.3661, x: 56, y: 34 },
 
   // PETAL
-  { name: "CARMEL", slug: "carmel", territory: "petal", lat: 36.5552, long: -121.9233, legacyName: "White Amber" },
-  { name: "DAMASCUS", slug: "damascus", territory: "petal", lat: 37.7556, long: 30.5566, legacyName: "Turkish Rose" },
-  { name: "TOBAGO", slug: "tobago", territory: "petal", lat: 11.1889, long: -60.6317, legacyName: "Arabian Jasmine" },
-  { name: "KANDY", slug: "kandy", territory: "petal", lat: 7.2906, long: 80.6337, legacyName: "Peach Memoir" },
-  { name: "MANALI", slug: "manali", territory: "petal", lat: 32.2396, long: 77.1887, legacyName: "Himalayan Musk" },
-  { name: "MEDINA", slug: "medina", territory: "petal", lat: 24.5247, long: 39.5692, legacyName: "Musk Tahara" },
-  { name: "SIWA", slug: "siwa", territory: "petal", lat: 29.2032, long: 25.5195, legacyName: "White Egyptian Musk" },
+  { name: "CARMEL", slug: "carmel", territory: "petal", lat: 36.5552, long: -121.9233, x: 14, y: 31, legacyName: "White Amber" },
+  { name: "DAMASCUS", slug: "damascus", territory: "petal", lat: 37.7556, long: 30.5566, x: 53.5, y: 30, legacyName: "Turkish Rose" },
+  { name: "TOBAGO", slug: "tobago", territory: "petal", lat: 11.1889, long: -60.6317, x: 28, y: 48, legacyName: "Arabian Jasmine" },
+  { name: "KANDY", slug: "kandy", territory: "petal", lat: 7.2906, long: 80.6337, x: 68.5, y: 52, legacyName: "Peach Memoir" },
+  { name: "MANALI", slug: "manali", territory: "petal", lat: 32.2396, long: 77.1887, x: 67.5, y: 34, legacyName: "Himalayan Musk" },
+  { name: "MEDINA", slug: "medina", territory: "petal", lat: 24.5247, long: 39.5692, x: 55, y: 40, legacyName: "Musk Tahara" },
+  { name: "SIWA", slug: "siwa", territory: "petal", lat: 29.2032, long: 25.5195, x: 51, y: 38, legacyName: "White Egyptian Musk" },
 
   // TERRA
-  { name: "ASTORIA", slug: "astoria", territory: "terra", lat: 46.1879, long: -123.8313, legacyName: "Pacific Moss" },
-  { name: "HAVANA", slug: "havana", territory: "terra", lat: 23.1136, long: -82.3666, legacyName: "Oud & Tobacco" },
-  { name: "HUDSON", slug: "hudson", territory: "terra", lat: 42.2529, long: -73.7910, legacyName: "Spanish Sandalwood" },
-  { name: "MARRAKESH", slug: "marrakesh", territory: "terra", lat: 31.6295, long: -7.9811 },
-  { name: "RIYADH", slug: "riyadh", territory: "terra", lat: 24.7136, long: 46.6753, legacyName: "Black Oud" },
-  { name: "SAMARKAND", slug: "samarkand", territory: "terra", lat: 39.6542, long: 66.9597, legacyName: "Oud Aura" },
-  { name: "SICILY", slug: "sicily", territory: "terra", lat: 37.5994, long: 14.0154, legacyName: "Sicilian Oudh" },
+  { name: "ASTORIA", slug: "astoria", territory: "terra", lat: 46.1879, long: -123.8313, x: 13.5, y: 24, legacyName: "Pacific Moss" },
+  { name: "HAVANA", slug: "havana", territory: "terra", lat: 23.1136, long: -82.3666, x: 22, y: 40, legacyName: "Oud & Tobacco" },
+  { name: "HUDSON", slug: "hudson", territory: "terra", lat: 42.2529, long: -73.7910, x: 24, y: 27, legacyName: "Spanish Sandalwood" },
+  { name: "MARRAKESH", slug: "marrakesh", territory: "terra", lat: 31.6295, long: -7.9811, x: 45.5, y: 35 },
+  { name: "RIYADH", slug: "riyadh", territory: "terra", lat: 24.7136, long: 46.6753, x: 57, y: 40, legacyName: "Black Oud" },
+  { name: "SAMARKAND", slug: "samarkand", territory: "terra", lat: 39.6542, long: 66.9597, x: 63, y: 29, legacyName: "Oud Aura" },
+  { name: "SICILY", slug: "sicily", territory: "terra", lat: 37.5994, long: 14.0154, x: 50, y: 29, legacyName: "Sicilian Oudh" },
 ];
 
 interface AtlasMapProps {
@@ -135,7 +151,10 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
 
       {/* Waypoint Markers */}
       {WAYPOINTS.map((waypoint) => {
-        const { x, y } = latLongToPercent(waypoint.lat, waypoint.long);
+        // Use manual x/y if available, otherwise fall back to projection
+        const projected = latLongToPercent(waypoint.lat, waypoint.long);
+        const x = waypoint.x ?? projected.x;
+        const y = waypoint.y ?? projected.y;
         const isActive = !activeTerritory || waypoint.territory === activeTerritory;
         const isHovered = hoveredWaypoint === waypoint.name;
         const color = TERRITORY_COLORS[waypoint.territory];
@@ -169,9 +188,10 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
               transition={{ duration: 3, repeat: Infinity, delay: Math.random() * 2 }}
             />
 
-            {/* Marker dot */}
+            {/* Marker dot — padded for easier clicking */}
             <Link
               href={`/product/${waypoint.slug}`}
+              className="block p-3 -m-3"
               onClick={(e) => {
                 if (onWaypointClick) {
                   e.preventDefault();
