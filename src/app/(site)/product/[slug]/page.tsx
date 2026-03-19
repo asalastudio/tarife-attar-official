@@ -34,7 +34,7 @@ function buildScentDescription(product: any): string {
     parts.push(territoryNames[territory] || territory);
   }
 
-  parts.push('Concentrated roll-on perfume oil, alcohol-free, skin-safe, cruelty-free');
+  parts.push('Concentrated perfume oil, glass wand applicator, alcohol-free, skin-safe, cruelty-free');
   return parts.join('. ') + '.';
 }
 
@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       product.title?.toLowerCase(),
       product.legacyName?.toLowerCase(),
       'niche fragrance',
-      'roll on perfume',
+      'perfume oil applicator',
       'alcohol free perfume',
       product.atlasData?.atmosphere,
       'tarife attar',
