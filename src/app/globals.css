@@ -4,7 +4,7 @@
 
 /* Atlas Map — Warm parchment filter for Leaflet tiles */
 .atlas-map-antique {
-  filter: sepia(0.5) hue-rotate(-10deg) saturate(1.2) brightness(0.9) contrast(1.1);
+  filter: sepia(0.3) hue-rotate(-10deg) saturate(1.2) brightness(1.0) contrast(1.1);
 }
 
 .leaflet-container {

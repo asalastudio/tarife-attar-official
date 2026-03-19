@@ -13,6 +13,19 @@ import { GlobalFooter } from "@/components/navigation";
 import { PortableText } from "@portabletext/react";
 import { getClassLabel, getCoordinateLabel } from "@/lib/brandSystem";
 import { LegacyName } from "@/components/product/LegacyName";
+import dynamic from "next/dynamic";
+
+const WaypointMiniMap = dynamic(
+  () => import("@/components/atlas/WaypointMiniMap").then(mod => ({ default: mod.WaypointMiniMap })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="aspect-[16/9] bg-theme-charcoal/[0.03] border border-theme-charcoal/10 flex items-center justify-center">
+        <MapIcon className="w-12 h-12 opacity-[0.06]" />
+      </div>
+    ),
+  }
+);
 import { triggerEssenceDrop } from "@/components/cart/Satchel";
 import { CompactAudioButton } from "@/components/ui/CompactAudioButton";
 
@@ -1050,19 +1063,30 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="aspect-[16/9] bg-theme-charcoal/[0.03] border border-theme-charcoal/10 flex items-center justify-center relative group/map">
-                          {/* Subtle grid pattern */}
-                          <div className="absolute inset-0 opacity-[0.03]" style={{
-                            backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
-                            backgroundSize: '40px 40px'
-                          }} />
-                          <MapIcon className="w-16 h-16 opacity-[0.06] group-hover/map:scale-105 transition-transform duration-1000" />
-                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-theme-alabaster/80 to-transparent">
-                            <span className="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 block">
-                              Origin · {TERRITORY_NAMES[territory || ''] || 'Unknown'} Territory
-                            </span>
+                        {(() => {
+                          // Parse lat/lng from gpsCoordinates string (e.g., "12.7797° N, 45.0365° E")
+                          const coords = product.atlasData?.gpsCoordinates || '';
+                          const match = coords.match(/([\d.]+)°\s*([NS]),?\s*([\d.]+)°\s*([EW])/);
+                          const lat = match ? parseFloat(match[1]) * (match[2] === 'S' ? -1 : 1) : null;
+                          const lng = match ? parseFloat(match[3]) * (match[4] === 'W' ? -1 : 1) : null;
+                          return lat && lng ? (
+                            <WaypointMiniMap
+                              lat={lat}
+                              lng={lng}
+                              territory={territory || 'ember'}
+                              coordinates={coords}
+                            />
+                          ) : (
+                          <div className="aspect-[16/9] bg-theme-charcoal/[0.03] border border-theme-charcoal/10 flex items-center justify-center relative">
+                            <MapIcon className="w-16 h-16 opacity-[0.06]" />
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-theme-alabaster/80 to-transparent">
+                              <span className="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 block">
+                                Origin · {TERRITORY_NAMES[territory || ''] || 'Unknown'} Territory
+                              </span>
+                            </div>
                           </div>
-                        </div>
+                          );
+                        })()}
                       </motion.div>
                     )}
                   </AnimatePresence>

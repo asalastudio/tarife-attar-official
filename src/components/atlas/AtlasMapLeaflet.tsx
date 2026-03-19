@@ -244,8 +244,8 @@ export function AtlasMapLeaflet() {
           style={{ background: '#2a2520' }}
         >
           <TileLayer
-            url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-            attribution='&copy; OpenStreetMap contributors &copy; Stadia Maps'
+            url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+            attribution='&copy; OpenStreetMap contributors &copy; CARTO'
             maxZoom={10}
             minZoom={2}
           />
