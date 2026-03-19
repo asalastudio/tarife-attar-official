@@ -25,6 +25,8 @@ export const atlasProductsByTerritoryQuery = groq`
     inStock,
     "atmosphere": atlasData.atmosphere,
     "gpsCoordinates": atlasData.gpsCoordinates,
+    "latitude": atlasData.latitude,
+    "longitude": atlasData.longitude,
     "evocationLocation": atlasData.evocationLocation,
     "evocationStory": atlasData.evocationStory,
     "onSkinStory": atlasData.onSkinStory,
@@ -210,6 +212,8 @@ export const productBySlugQuery = groq`
     atlasData {
       atmosphere,
       gpsCoordinates,
+      latitude,
+      longitude,
       evocationLocation,
       evocationStory,
       onSkinStory,

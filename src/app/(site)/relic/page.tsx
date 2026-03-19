@@ -1,6 +1,20 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { relicProductsQuery, placeholderImagesQuery, PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { RelicClient } from "./RelicClient";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'The Relic — Rare Oud Oils & Vintage Attars',
+  description: 'Pure oud oils, aged resins, and vintage attars. Single-origin agarwood specimens preserved in time. Rare, collectible, and authentic.',
+  openGraph: {
+    title: 'The Relic — Rare Oud Oils & Vintage Attars | Tarife Attar',
+    description: 'Pure oud oils, aged resins, and vintage attars. Single-origin specimens preserved in time.',
+    url: 'https://tarifeattar.com/relic',
+  },
+  alternates: {
+    canonical: 'https://tarifeattar.com/relic',
+  },
+};
 
 // Relic categories mapping
 // Note: productFormat values must match exactly what's in the Sanity schema

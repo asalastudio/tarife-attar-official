@@ -1,8 +1,21 @@
-
 import { sanityFetch } from "@/sanity/lib/client";
 import { featuredProductsQuery, heroBackgroundsQuery, HeroBackgroundsQueryResult, placeholderImagesQuery, PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { Product } from "@/types";
 import { HomeClient } from "./HomeClient";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
+  description: 'Navigate by instinct, not itinerary. 28 artisanal perfume oils across four olfactory territories — Ember, Tidal, Petal, Terra. Concentrated, alcohol-free, skin-safe roll-on fragrances.',
+  openGraph: {
+    title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
+    description: 'Navigate by instinct, not itinerary. 28 artisanal perfume oils across four olfactory territories.',
+    url: 'https://tarifeattar.com',
+  },
+  alternates: {
+    canonical: 'https://tarifeattar.com',
+  },
+};
 
 export default async function Home() {
   const [featuredProducts, heroBackgrounds, placeholderImages] = await Promise.all([

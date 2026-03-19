@@ -408,9 +408,23 @@ export const productSchema = {
         },
         {
           name: 'gpsCoordinates',
-          title: 'GPS Coordinates (Inspiration Point)',
+          title: 'GPS Coordinates (Display)',
           type: 'string',
-          description: 'Inspiration Point: The memory or atmosphere this scent captures (e.g., "A market in Tangier"). Coordinates like "45.5017° N, 73.5673° W".',
+          description: 'Display string for coordinates, e.g. "12.7855, 45.0187"',
+        },
+        {
+          name: 'latitude',
+          title: 'Latitude',
+          type: 'number',
+          description: 'Decimal latitude for interactive map pin',
+          validation: (Rule: SanityRule) => Rule.min(-90).max(90),
+        },
+        {
+          name: 'longitude',
+          title: 'Longitude',
+          type: 'number',
+          description: 'Decimal longitude for interactive map pin',
+          validation: (Rule: SanityRule) => Rule.min(-180).max(180),
         },
         {
           name: 'evocationLocation',

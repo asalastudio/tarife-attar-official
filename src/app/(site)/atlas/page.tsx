@@ -7,6 +7,20 @@ import {
   PlaceholderImagesQueryResult,
 } from "@/sanity/lib/queries";
 import { AtlasClient } from "./AtlasClient";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'The Atlas — 28 Perfume Oil Waypoints',
+  description: 'Four territories. Twenty-eight waypoints. One atlas. Explore Ember, Tidal, Petal, and Terra — concentrated perfume oils organized by olfactory territory. Oud, musk, amber, rose, jasmine, marine, and woody compositions.',
+  openGraph: {
+    title: 'The Atlas — 28 Perfume Oil Waypoints | Tarife Attar',
+    description: 'Four territories. Twenty-eight waypoints. Explore concentrated perfume oils organized by olfactory territory.',
+    url: 'https://tarifeattar.com/atlas',
+  },
+  alternates: {
+    canonical: 'https://tarifeattar.com/atlas',
+  },
+};
 
 // Territory metadata (static) - Order: Ember, Tidal, Petal, Terra
 const TERRITORIES = [
