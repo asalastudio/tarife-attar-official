@@ -38,13 +38,13 @@ export function CommunityMap({ ports }: CommunityMapProps) {
           <CircleMarker
             key={`${port.city}-${port.country}-${idx}`}
             center={[port.latitude, port.longitude]}
-            radius={4}
+            radius={3}
             pathOptions={{
               color: '#C4A265',
               fillColor: '#C4A265',
-              fillOpacity: 0.7,
-              weight: 1,
-              opacity: 0.9,
+              fillOpacity: 0.6,
+              weight: 0.5,
+              opacity: 0.8,
             }}
           >
           </CircleMarker>
