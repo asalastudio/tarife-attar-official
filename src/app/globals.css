@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Atlas Map — Antique filter for Leaflet tiles */
+.atlas-map-antique {
+  filter: sepia(0.8) hue-rotate(-20deg) saturate(1.5) brightness(0.7) contrast(1.2);
+}
+
+.leaflet-container {
+  background-color: #1a1714 !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: #2C2C2C !important;
+  color: #C4A265 !important;
+  border-color: #C4A265 !important;
+  border-width: 1px !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #C4A265 !important;
+  color: #1a1714 !important;
+}
+
 :root {
   --font-eb-garamond: 'EB Garamond', serif;
   --font-jetbrains-mono: 'JetBrains Mono', monospace;

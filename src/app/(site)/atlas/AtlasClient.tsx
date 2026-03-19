@@ -11,7 +11,20 @@ import { urlForImage } from "@/sanity/lib/image";
 import { getItemLabel } from "@/lib/brandSystem";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
-import { AtlasMap } from "@/components/atlas/AtlasMap";
+import dynamic from "next/dynamic";
+
+// Dynamically import Leaflet map to avoid SSR issues
+const AtlasMapLeaflet = dynamic(
+  () => import("@/components/atlas/AtlasMapLeaflet").then(mod => ({ default: mod.AtlasMapLeaflet })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[70vh] flex items-center justify-center bg-[#1a1714] text-[#C4A265] font-serif">
+        <p className="text-xl tracking-widest uppercase">Loading Atlas...</p>
+      </div>
+    ),
+  }
+);
 
 // Territory-based pricing for Atlas Collection (same as ProductDetailClient)
 const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
@@ -374,7 +387,9 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
               Explore the Map
             </h2>
           </div>
-          <AtlasMap activeTerritory={activeTerritory} />
+          <div className="w-full h-[70vh] md:h-[80vh] rounded-lg overflow-hidden border border-[#C4A265]/10">
+            <AtlasMapLeaflet />
+          </div>
         </div>
       </section>
 
