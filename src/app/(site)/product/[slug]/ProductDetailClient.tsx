@@ -8,6 +8,7 @@ import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Droplets, Check, AlertC
 import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { useShopifyCart } from "@/context";
+import { checkVariantAvailability } from "@/lib/shopify/client";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { GlobalFooter } from "@/components/navigation";
 import { PortableText } from "@portabletext/react";
@@ -583,6 +584,23 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     journey: false,
   });
 
+  // Real-time stock check from Shopify Storefront API
+  const [liveInStock, setLiveInStock] = useState<boolean | null>(null);
+  const isOutOfStock = liveInStock === false || (liveInStock === null && product.inStock === false);
+
+  useEffect(() => {
+    // Check real-time availability for whichever variant is selected
+    const variantId = selectedVariant === '12ml' && product.shopifyVariant12mlId
+      ? product.shopifyVariant12mlId
+      : product.shopifyVariant6mlId || product.shopifyVariantId;
+
+    if (!variantId) return;
+
+    checkVariantAvailability(variantId).then(available => {
+      setLiveInStock(available);
+    });
+  }, [selectedVariant, product.shopifyVariantId, product.shopifyVariant6mlId, product.shopifyVariant12mlId]);
+
   // Set responsive defaults after mount (collapse on mobile)
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -642,7 +660,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
   const handleAddToSatchel = async (source: 'desktop' | 'mobile' = 'desktop') => {
     // Check if product is purchasable
-    if (product.inStock === false) {
+    if (isOutOfStock) {
       console.warn('Product is out of stock');
       return;
     }
@@ -1192,10 +1210,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               ref={addButtonRef}
               layout
               onClick={() => handleAddToSatchel('desktop')}
-              disabled={product.inStock === false || isAdding || !product.shopifyVariantId}
-              whileHover={product.inStock !== false && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
-              whileTap={product.inStock !== false && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
-              className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${product.inStock !== false
+              disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
+              whileHover={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
+              whileTap={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
+              className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${!isOutOfStock
                 ? isAdding
                   ? "bg-theme-gold text-theme-obsidian"
                   : product.shopifyVariantId
@@ -1223,7 +1241,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {product.inStock === false
+                    {isOutOfStock
                       ? "Out of Stock"
                       : !product.shopifyVariantId
                         ? "Not Connected to Shopify"
@@ -1234,7 +1252,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             </motion.button>
 
             {/* Shopify Connection Warning */}
-            {product.inStock !== false && !product.shopifyVariantId && (
+            {!isOutOfStock && !product.shopifyVariantId && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -1250,7 +1268,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             )}
 
             {/* Ethical Scarcity Indicator - Only for Relic products or explicit scarcity notes */}
-            {product.inStock !== false && (isRelic || product.scarcityNote) && (
+            {!isOutOfStock && (isRelic || product.scarcityNote) && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
@@ -1539,8 +1557,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               <button
                 ref={mobileAddButtonRef}
                 onClick={() => handleAddToSatchel('mobile')}
-                disabled={product.inStock === false || isAdding || !product.shopifyVariantId}
-                className={`flex-1 py-3 font-mono text-xs uppercase tracking-[0.3em] transition-all relative overflow-hidden ${product.inStock !== false
+                disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
+                className={`flex-1 py-3 font-mono text-xs uppercase tracking-[0.3em] transition-all relative overflow-hidden ${!isOutOfStock
                   ? isAdding
                     ? "bg-theme-gold text-theme-obsidian"
                     : product.shopifyVariantId
@@ -1568,7 +1586,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                     >
-                      {product.inStock === false
+                      {isOutOfStock
                         ? "Out of Stock"
                         : !product.shopifyVariantId
                           ? "Not Connected"

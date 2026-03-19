@@ -306,4 +306,33 @@ export const REMOVE_LINES_MUTATION = `
   }
 `;
 
+/**
+ * Check real-time product availability via Storefront API
+ * Returns availableForSale status for the product and its variants
+ */
+export const CHECK_PRODUCT_AVAILABILITY_QUERY = `
+  query getProductAvailability($id: ID!) {
+    node(id: $id) {
+      ... on ProductVariant {
+        id
+        availableForSale
+        quantityAvailable
+      }
+    }
+  }
+`;
+
+export async function checkVariantAvailability(variantGid: string): Promise<boolean> {
+  try {
+    const { data } = await shopifyFetch({
+      query: CHECK_PRODUCT_AVAILABILITY_QUERY,
+      variables: { id: variantGid },
+    });
+    return data?.node?.availableForSale ?? false;
+  } catch {
+    // If Shopify check fails, don't block — fall back to Sanity value
+    return true;
+  }
+}
+
 export { shopifyFetch };
