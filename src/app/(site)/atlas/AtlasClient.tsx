@@ -351,7 +351,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                           <h3 className="font-sans text-xs md:text-base font-medium tracking-[0.15em] uppercase break-words line-clamp-2">
                             {product.title}
                           </h3>
-                          {!product.inStock ? (
+                          {product.inStock === false ? (
                             <p className="text-[10px] md:text-sm tracking-wider opacity-50">
                               Coming Soon
                             </p>

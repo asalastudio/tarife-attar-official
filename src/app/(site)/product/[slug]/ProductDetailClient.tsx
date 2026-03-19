@@ -642,7 +642,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
   const handleAddToSatchel = async (source: 'desktop' | 'mobile' = 'desktop') => {
     // Check if product is purchasable
-    if (!product.inStock) {
+    if (product.inStock === false) {
       console.warn('Product is out of stock');
       return;
     }
@@ -1198,10 +1198,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               ref={addButtonRef}
               layout
               onClick={() => handleAddToSatchel('desktop')}
-              disabled={!product.inStock || isAdding || !product.shopifyVariantId}
-              whileHover={product.inStock && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
-              whileTap={product.inStock && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
-              className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${product.inStock
+              disabled={product.inStock === false || isAdding || !product.shopifyVariantId}
+              whileHover={product.inStock !== false && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
+              whileTap={product.inStock !== false && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
+              className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${product.inStock !== false
                 ? isAdding
                   ? "bg-theme-gold text-theme-obsidian"
                   : product.shopifyVariantId
@@ -1229,7 +1229,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {!product.inStock
+                    {product.inStock === false
                       ? "Out of Stock"
                       : !product.shopifyVariantId
                         ? "Not Connected to Shopify"
@@ -1240,7 +1240,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             </motion.button>
 
             {/* Shopify Connection Warning */}
-            {product.inStock && !product.shopifyVariantId && (
+            {product.inStock !== false && !product.shopifyVariantId && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -1256,7 +1256,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             )}
 
             {/* Ethical Scarcity Indicator - Only for Relic products or explicit scarcity notes */}
-            {product.inStock && (isRelic || product.scarcityNote) && (
+            {product.inStock !== false && (isRelic || product.scarcityNote) && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
@@ -1545,8 +1545,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               <button
                 ref={mobileAddButtonRef}
                 onClick={() => handleAddToSatchel('mobile')}
-                disabled={!product.inStock || isAdding || !product.shopifyVariantId}
-                className={`flex-1 py-3 font-mono text-xs uppercase tracking-[0.3em] transition-all relative overflow-hidden ${product.inStock
+                disabled={product.inStock === false || isAdding || !product.shopifyVariantId}
+                className={`flex-1 py-3 font-mono text-xs uppercase tracking-[0.3em] transition-all relative overflow-hidden ${product.inStock !== false
                   ? isAdding
                     ? "bg-theme-gold text-theme-obsidian"
                     : product.shopifyVariantId
