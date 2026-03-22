@@ -69,10 +69,10 @@
 - **Legacy Name:** Vanilla Sands
 - **Territory:** Ember
 - **Coordinates:** 11.2588° N, 75.7804° E (Malabar Coast, India)
-- **Inspiration (INTERNAL ONLY):** Sunnamusk Golden Dust
-- **Top:** Balsam, Rose, Grapefruit
-- **Heart:** Vanilla, Honeysuckle, Musk, Fruity Notes
-- **Base:** Musk, Resins, Amber
+- **Inspiration (INTERNAL ONLY):** Surrati Golden Sand
+- **Top:** Vanilla, Sweet Caramel
+- **Heart:** Benzoin, Woody Notes
+- **Base:** Amber, Musk, Warm Resins
 - **Sillage:** Close, centering
 - **Longevity:** 10+ hours
 - **Season:** Year-round, evening ritual
@@ -450,7 +450,7 @@
 ---
 
 ## ETSY TITLE FORMAT
-`WAYPOINT — [2-3 scent words] Perfume Oil | Attar | Tarife Attar`
+`WAYPOINT — [2-3 scent words] Perfume Oil | Alcohol Free | Tarife Attar`
 
 ## MAIN SITE TITLE FORMAT
 `WAYPOINT`

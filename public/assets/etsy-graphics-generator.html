@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etsy Listing Graphics Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
+
+        :root {
+            --bg-color: #f7f3ed; /* Warm off-white parchment */
+            --text-dark: #2d2d2a;
+            --text-muted: #666666;
+            --divider: #e0dcd3;
+            
+            /* Territory Colors */
+            --ember-color: #c95c4d; /* Terracotta red */
+            --tidal-color: #5d8e9e; /* Muted coastal blue */
+            --petal-color: #c68596; /* Dusty rose */
+            --terra-color: #8c7355; /* Earthy brown */
+            
+            /* Table Colors */
+            --table-header-bg: #1a1a1a;
+            --table-header-text: #ffffff;
+            --table-row-alt: #eee9e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #cccccc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            gap: 40px;
+        }
+
+        /* 
+         * Etsy Aspect Ratio Containers 
+         * 5:4 ratio -> 2000px wide by 1600px tall 
+         */
+        .etsy-container {
+            width: 2000px;
+            height: 1600px;
+            background-color: var(--bg-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 100px 120px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .etsy-container.tall {
+            height: 2500px; /* For the long table, we'll make a tall one that the user can slice or resize */
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 54px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        p.intro {
+            font-size: 32px;
+            line-height: 1.5;
+            color: var(--text-dark);
+            margin-bottom: 60px;
+            max-width: 1600px;
+        }
+
+        /* Waypoints Layout */
+        .waypoint {
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .waypoint::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--divider);
+        }
+        
+        .waypoint:last-child::after {
+            display: none;
+        }
+
+        .waypoint-header {
+            margin-bottom: 20px;
+        }
+
+        .waypoint h2 {
+            font-size: 46px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .waypoint h2.ember { color: var(--ember-color); }
+        .waypoint h2.tidal { color: var(--tidal-color); }
+        .waypoint h2.petal { color: var(--petal-color); }
+        .waypoint h2.terra { color: var(--terra-color); }
+
+        .waypoint-subtitle {
+            font-size: 26px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .waypoint p.desc {
+            font-size: 28px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .waypoint p.notes {
+            font-size: 24px;
+            color: var(--text-muted);
+        }
+
+        /* Table Layout */
+        .table-container {
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 24px;
+        }
+
+        th {
+            background-color: var(--table-header-bg);
+            color: var(--table-header-text);
+            text-align: left;
+            padding: 24px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-alt);
+        }
+
+        td.bold {
+            font-weight: 700;
+        }
+
+        td.ember { color: var(--ember-color); }
+        td.tidal { color: var(--tidal-color); }
+        td.petal { color: var(--petal-color); }
+        td.terra { color: var(--terra-color); }
+
+        .footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 22px;
+            color: var(--text-muted);
+            padding-top: 60px;
+            border-top: 2px solid var(--divider);
+        }
+
+        .instruction {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="instruction">
+        <strong>How to use this generator:</strong><br>
+        1. Open this file in your web browser (Chrome/Safari).<br>
+        2. Zoom out if necessary so you can see the whole block.<br>
+        3. Use a screenshot tool (Cmd+Shift+4 on Mac) to capture each 2000x1600 block.<br>
+        These are pre-formatted to match Etsy's 5:4 aspect ratio perfectly.
+    </div>
+
+    <!-- IMAGE 1: Waypoints (Top Half) -->
+    <div class="etsy-container" id="waypoints-1">
+        <h1>FOUR WAYPOINTS TO START WITH</h1>
+        <p class="intro">New to Tarife Attar? Not sure where to begin? Here are four waypoints — one from each territory — that we think capture the spirit of the Atlas.</p>
+
+        <div class="waypoint">
+            <div class="waypoint-header">
+                <h2 class="ember">SAANA</h2>
+                <div class="waypoint-subtitle">Honey Oud • Sana'a, Yemen</div>
+            </div>
+            <p class="desc">The old city climbs. Stone towers rise eight stories into thin mountain air. In Sana'a the beekeepers still scale the high cliffs at dawn, returning with wild honey so dark it tastes of the rock itself. The honey arrives immediately — thick, golden, almost edible — before the oud pulls it downward into something darker and more complex.</p>
+            <p class="notes">Top: Honey, Floral Notes | Heart: Cinnamon, Leather, Jasmine | Base: Vanilla, Oud, Amber</p>
+        </div>
+
+        <div class="waypoint">
+            <div class="waypoint-header">
+                <h2 class="tidal">BIG SUR</h2>
+                <div class="waypoint-subtitle">Coastal Marine • Big Sur, California</div>
+            </div>
+            <p class="desc">The Pacific throws itself against granite and the mist carries everything — wild sage, coastal redwood, the mineral shock of cold saltwater on sun-heated stone. Bergamot and lemon open crisp and maritime. The seaweed accord adds a briny, almost umami depth. The dry-down is ambroxan and cedar: warm, woody, salt-kissed.</p>
+            <p class="notes">Top: Bergamot, Lemon | Heart: Seaweed, Marine Accord | Base: Musk, Ambroxan, Cedar</p>
+        </div>
+    </div>
+
+    <!-- IMAGE 2: Waypoints (Bottom Half) -->
+    <div class="etsy-container" id="waypoints-2">
+        <div class="waypoint" style="margin-top: 40px;">
+            <div class="waypoint-header">
+                <h2 class="petal">MEDINA</h2>
+                <div class="waypoint-subtitle">White Musk • Medina, Saudi Arabia</div>
+            </div>
+            <p class="desc">The Prophet's Mosque glows green at nightfall and the air fills with tahara — the musk of ritual purity. Powdery white musk opens like freshly laundered cotton held to your face — clean, comforting, utterly without pretension. This is the musk that launched a thousand re-orders.</p>
+            <p class="notes">Top: Powdery White Musk | Heart: Soft Florals, Sandalwood | Base: Clean Musk, Creamy Accord</p>
+        </div>
+
+        <div class="waypoint">
+            <div class="waypoint-header">
+                <h2 class="terra">MARRAKESH</h2>
+                <div class="waypoint-subtitle">Rich Leather • Jemaa el-Fnaa, Morocco</div>
+            </div>
+            <p class="desc">The souk folds around you — leather, cedar, cumin, the metallic ring of hammered brass. Plum and cardamom open rich and heady. The heart is a controlled chaos of rose, cinnamon, nutmeg, and jasmine. The base resolves into leather, oud, and incense. The most complex waypoint on the atlas.</p>
+            <p class="notes">Top: Plum, Cardamom | Heart: Rose, Cinnamon, Jasmine | Base: Leather, Oud, Incense, Cedar</p>
+        </div>
+    </div>
+
+    <!-- IMAGE 3: Full Table (Tall format, user can slice into two 5:4 images if they want) -->
+    <div class="etsy-container tall" id="table">
+        <h1>YOUR GUIDE TO THE NEW NAMES</h1>
+        <p class="intro">Every fragrance you know is still here — just with a new name and a place on the map. Use this table to find your favorites.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%">NEW NAME</th>
+                        <th style="width: 25%">LEGACY NAME</th>
+                        <th style="width: 25%">TERRITORY</th>
+                        <th style="width: 25%">SCENT PROFILE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold">ADEN</td>
+                        <td>Oud Fire</td>
+                        <td class="ember">Ember</td>
+                        <td>Oud Amber</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">SAANA</td>
+                        <td>Honey Oud</td>
+                        <td class="ember">Ember</td>
+                        <td>Honey Oud</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">GRANADA</td>
+                        <td>Granada Amber</td>
+                        <td class="ember">Ember</td>
+                        <td>Warm Amber</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">MALABAR</td>
+                        <td>Vanilla Sands</td>
+                        <td class="ember">Ember</td>
+                        <td>Vanilla</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">SERENGETI</td>
+                        <td>Black Musk</td>
+                        <td class="ember">Ember</td>
+                        <td>Dark Musk</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">BEIRUT</td>
+                        <td>—</td>
+                        <td class="ember">Ember</td>
+                        <td>Spiced Leather</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">TARIFA</td>
+                        <td>Teeb Musk</td>
+                        <td class="ember">Ember</td>
+                        <td>Floral Musk</td>
+                    </tr>
+                    <!-- Tidal -->
+                    <tr>
+                        <td class="bold">BAHIA</td>
+                        <td>Coconut Jasmine</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Coconut Jasmine</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">BAHRAIN</td>
+                        <td>Blue Oud</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Fresh Marine</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">BIG SUR</td>
+                        <td>Del Mar</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Coastal Marine</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">MEISHAN</td>
+                        <td>China Rain</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Green Floral</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">MONACO</td>
+                        <td>Dubai Musk</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Fresh Musk</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">TANGIERS</td>
+                        <td>Regatta</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Fresh Citrus</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">TIGRIS</td>
+                        <td>—</td>
+                        <td class="tidal">Tidal</td>
+                        <td>Citrus Amber</td>
+                    </tr>
+                    <!-- Petal -->
+                    <tr>
+                        <td class="bold">CARMEL</td>
+                        <td>White Amber</td>
+                        <td class="petal">Petal</td>
+                        <td>Soft Amber</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">DAMASCUS</td>
+                        <td>Turkish Rose</td>
+                        <td class="petal">Petal</td>
+                        <td>Pure Rose</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">TOBAGO</td>
+                        <td>Arabian Jasmine</td>
+                        <td class="petal">Petal</td>
+                        <td>Sweet Jasmine</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">KANDY</td>
+                        <td>Peach Memoir</td>
+                        <td class="petal">Petal</td>
+                        <td>Peach Floral</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">MANALI</td>
+                        <td>Himalayan Musk</td>
+                        <td class="petal">Petal</td>
+                        <td>Cool Musk</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">MEDINA</td>
+                        <td>Musk Tahara</td>
+                        <td class="petal">Petal</td>
+                        <td>White Musk</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">SIWA</td>
+                        <td>White Egyptian Musk</td>
+                        <td class="petal">Petal</td>
+                        <td>Skin Musk</td>
+                    </tr>
+                    <!-- Terra -->
+                    <tr>
+                        <td class="bold">ASTORIA</td>
+                        <td>—</td>
+                        <td class="terra">Terra</td>
+                        <td>Forest Moss</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">HAVANA</td>
+                        <td>Oud & Tobacco</td>
+                        <td class="terra">Terra</td>
+                        <td>Tobacco Oud</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">HUDSON</td>
+                        <td>Spanish Sandalwood</td>
+                        <td class="terra">Terra</td>
+                        <td>Creamy Sandalwood</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">MARRAKESH</td>
+                        <td>—</td>
+                        <td class="terra">Terra</td>
+                        <td>Rich Leather</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">RIYADH</td>
+                        <td>Black Oud</td>
+                        <td class="terra">Terra</td>
+                        <td>Rose Oud</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">SAMARKAND</td>
+                        <td>Oud Aura</td>
+                        <td class="terra">Terra</td>
+                        <td>Smoky Oud</td>
+                    </tr>
+                    <tr>
+                        <td class="bold">SICILY</td>
+                        <td>Sicilian Oudh</td>
+                        <td class="terra">Terra</td>
+                        <td>Mediterranean Oud</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            TARIFE ATTAR • The Atlas Collection • tarifeattar.com
+        </div>
+    </div>
+
+</body>
+</html>

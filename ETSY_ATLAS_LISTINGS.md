@@ -10,17 +10,17 @@
 
 | Section Name | Contents |
 |---|---|
-| **Ember** | Fire, oud, amber, resin, warmth (7 fragrances) |
-| **Tidal** | Marine, aquatic, coastal, fresh (7 fragrances) |
-| **Petal** | Floral, musk, soft, skin-close (7 fragrances) |
-| **Terra** | Wood, leather, earth, green (7 fragrances) |
+| **Ember — Warm & Amber** | Fire, oud, amber, resin, warmth (7 fragrances) |
+| **Tidal — Fresh & Marine** | Marine, aquatic, coastal, fresh (7 fragrances) |
+| **Petal — Floral & Musk** | Floral, musk, soft, skin-close (7 fragrances) |
+| **Terra — Woody & Oud** | Wood, leather, earth, green (7 fragrances) |
 | **The Archive** | Legacy formulations, available while supplies last |
 
 ---
 
 ## TITLE FORMAT
 
-`WAYPOINT — [2-3 scent words] Perfume Oil | Niche Fragrance | Tarife Attar`
+`WAYPOINT — [2-3 scent words] Perfume Oil | Alcohol Free | Tarife Attar`
 
 ---
 
@@ -34,11 +34,11 @@ Seven fragrances forged in warmth. Oud, amber, musk, and the ancient combustible
 
 ### 1. ADEN
 
-**Etsy Title:** ADEN — Woody Amber Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** ADEN — Oud Amber Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** oud perfume oil, woody amber attar, niche fragrance, unisex perfume oil, arabian perfume, roll on perfume, oud fragrance oil, amber perfume, warm fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** oud perfume oil, amber perfume oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, oud fire perfume, warm spicy fragrance, arabian perfume oil, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
@@ -49,7 +49,7 @@ The port city exhales in layers — salt-crusted timber, coal smoke curling from
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 12.7855°N, 45.0187°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Aden, Yemen — 12.7797°N, 45.0365°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Warm oud opens with smoky depth — not sharp, but slow-burning, like coals settled into sand. The amber arrives next, honeyed and golden, softening the wood into something rich and wearable. As it dries, the fire retreats and leaves behind a trail of resinous warmth that clings close to the skin for hours.
@@ -64,9 +64,9 @@ Base: Musk, Oud, Vanilla
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -74,17 +74,15 @@ Base: Musk, Oud, Vanilla
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 2. SAANA
 
-**Etsy Title:** SAANA — Honey Oud Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** SAANA — Honey Oud Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** honey oud perfume oil, warm amber attar, niche fragrance, unisex perfume oil, arabian perfume, roll on perfume, honey fragrance, oud perfume, sweet amber, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** honey oud perfume, honey perfume oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, vanilla oud perfume, warm amber fragrance, arabian perfume oil, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
@@ -95,7 +93,7 @@ The old city climbs. Stone towers rise eight stories into thin mountain air, eac
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 15.3694°N, 44.1910°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Sana'a, Yemen — 15.3694°N, 44.1910°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The honey arrives immediately — thick, golden, almost edible — before the oud pulls it downward into something darker and more complex. On warm skin the cinnamon and leather emerge like spice market undertones, and the dry-down leaves a trail of vanilla-laced amber that lasts well into the next day.
@@ -110,9 +108,9 @@ Base: Vanilla, Oud, Amber, Patchouli
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -120,17 +118,15 @@ Base: Vanilla, Oud, Amber, Patchouli
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 3. GRANADA
 
-**Etsy Title:** GRANADA — Warm Amber Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** GRANADA — Warm Amber Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** amber perfume oil, warm vanilla attar, niche fragrance, unisex perfume oil, arabian perfume, roll on perfume, amber fragrance, golden amber, sweet perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** amber perfume oil, warm amber fragrance, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, granada amber oil, vanilla amber perfume, golden amber perfume, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
@@ -141,7 +137,7 @@ Beneath the Alhambra's latticed arches, the air holds still. Warm amber pools in
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 37.1760°N, 3.5888°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Granada, Spain — 37.1773°N, 3.5986°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Golden amber settles immediately, warm and enveloping, like stepping into late-afternoon sunlight trapped in stone. The vanilla deepens over the first hour, giving the amber a caramelized richness that feels almost edible. By evening, it dries to a soft, powdery warmth — intimate, close to the body, the kind of scent someone discovers only when they lean in.
@@ -156,55 +152,53 @@ Base: Vanilla, Deep Amber
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
 28 waypoints. 4 territories. One atlas.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
-
-tarifeattar.com
 
 ---
 
 ### 4. MALABAR
 
-**Etsy Title:** MALABAR — Vanilla Resin Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** MALABAR — Vanilla Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** vanilla perfume oil, resinous attar, niche fragrance, unisex perfume oil, spice trade fragrance, roll on perfume, vanilla musk, warm sweet perfume, balsamic fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** vanilla perfume oil, caramel vanilla scent, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, vanilla sands oil, benzoin amber oil, sweet warm fragrance, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
 Formerly known as Vanilla Sands
 
-The monsoon has just broken and the coast exhales. Pepper vines climb teak pillars, cardamom dries on woven mats, and the air carries the balsamic sweetness of resins traded here since the Phoenicians first followed the current south. The Malabar Coast invented the spice route — and the vanilla that arrived centuries later found its home in this humidity, this warmth, this ancient rhythm of harvest and trade. You wear it and the skin warms to something golden: resinous, soft-edged, the olfactory equivalent of lantern light on wet timber.
+The monsoon has just broken and the coast exhales. Vanilla arrived on these shores centuries ago and never left — it found the warmth it needed, the humidity, the ancient rhythm of harvest and trade. The Malabar Coast invented the spice route, and the golden sweetness of benzoin and amber have been traded here since the Phoenicians first followed the current south. You wear it and the skin warms to something golden: caramelized, soft-edged, the olfactory equivalent of lantern light on warm stone.
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 11.2588°N, 75.7804°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Malabar Coast, India — 11.2588°N, 75.7804°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
-The balsam and rose arrive first — warm, rounded, slightly medicinal in the way old apothecary ingredients tend to be. Within minutes the vanilla emerges from the center, not sweet-shop vanilla but something earthier, more complex, married to musk and resin. The dry-down is a creamy amber glow that sits tight against the skin, lasting through the day without ever raising its voice.
+Vanilla arrives immediately — not the thin, extract-bottle kind, but warm, golden, almost caramelized, the way vanilla meets amber and skin heat. Benzoin deepens the sweetness, adding a soft, balsamic warmth that keeps the vanilla grounded and wearable. The dry-down is a creamy amber glow that sits tight against the skin, lasting through the day without ever raising its voice.
 
 MALABAR is the one people ask you about. It wears as well under linen in August as it does under wool in December.
 
 𝐍𝐎𝐓𝐄𝐒
-Top: Balsam, Rose, Grapefruit
-Heart: Vanilla, Honeysuckle, Musk, Fruity Notes
-Base: Musk, Resins, Amber
+Top: Vanilla, Sweet Caramel
+Heart: Benzoin, Woody Notes
+Base: Amber, Musk, Warm Resins
 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -212,17 +206,15 @@ Base: Musk, Resins, Amber
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 5. SERENGETI
 
-**Etsy Title:** SERENGETI — Dark Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** SERENGETI — Dark Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** black musk perfume oil, dark musk attar, niche fragrance, unisex perfume oil, arabian musk, roll on perfume, musky fragrance, deep musk, earthy perfume, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** dark musk perfume, black musk oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, earthy musk perfume, deep musk fragrance, arabian musk oil, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
@@ -233,7 +225,7 @@ Night falls fast on the plain. The grass exhales a dark, musky warmth and somewh
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 2.3333°S, 34.8333°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Serengeti, Tanzania — 2.3333°S, 34.8333°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The dark musk hits first — mineral, almost geological, like pressing your face to sun-warmed basalt. The resinous heart develops slowly, adding depth and a faint sweetness that keeps the musk from becoming austere. Hours later, what remains is a deep amber warmth that feels less like a fragrance and more like a climate.
@@ -248,9 +240,9 @@ Base: Rustic Musk, Deep Amber
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -258,17 +250,15 @@ Base: Rustic Musk, Deep Amber
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 6. BEIRUT
 
-**Etsy Title:** BEIRUT — Citrus Spice Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** BEIRUT — Spiced Leather Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** spicy perfume oil, leather cologne oil, niche fragrance, unisex perfume oil, arabian perfume, roll on perfume, mandarin spice, cinnamon fragrance, warm evening perfume, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** spiced perfume oil, leather perfume oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, cinnamon perfume oil, warm spice fragrance, mandarin spice oil, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
@@ -277,7 +267,7 @@ The city has been rebuilt seven times and it still stays up past midnight. Blood
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 33.8938°N, 35.5018°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Beirut, Lebanon — 33.8938°N, 35.5018°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The mandarin and mint open bright — almost aggressively fresh — before the cinnamon and rose drag the whole composition into warmer, more complex territory. On skin it moves fast: within twenty minutes you are in the leather-and-amber base, and that is where it stays, a spiced warmth that pulses with body heat for hours.
@@ -292,9 +282,9 @@ Base: Leather, Patchouli, Amber
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -302,17 +292,15 @@ Base: Leather, Patchouli, Amber
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 7. TARIFA
 
-**Etsy Title:** TARIFA — Floral Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** TARIFA — Floral Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** floral musk perfume oil, white flower attar, niche fragrance, unisex perfume oil, clean musk, roll on perfume, jasmine musk, soft perfume oil, skin scent, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** floral musk perfume, jasmine perfume oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, teeb musk perfume, white flower perfume, skin scent perfume, concentrated perfume
 
-**Etsy Section:** Ember
+**Etsy Section:** Ember — Warm & Amber
 
 **Description:**
 
@@ -323,7 +311,7 @@ You are standing at the southernmost point of Europe and Africa is thirteen kilo
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: EMBER — Where fire meets resin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 36.0143°N, 5.6044°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Tarifa, Spain — 36.0143°N, 5.6044°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Jasmine opens green and dewy, almost transparent, before a soft powdery musk settles over it like sea mist. The patchouli is barely perceptible — just enough to keep the florals from floating away entirely. On skin, TARIFA dries down to a clean, whisper-close musk that becomes indistinguishable from your own warmth.
@@ -338,17 +326,15 @@ Base: Powdery Notes, Patchouli, Musk
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($28) and 12ml ($48) roll-on
+⬥ Available in 6ml ($28) and 12ml ($48)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
 28 waypoints. 4 territories. One atlas.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
-
-tarifeattar.com
 
 ---
 
@@ -362,11 +348,11 @@ Seven fragrances drawn from the coast. Marine, aquatic, citrus, and the mineral 
 
 ### 8. BAHIA
 
-**Etsy Title:** BAHIA — Coconut Jasmine Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** BAHIA — Coconut Jasmine Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** coconut jasmine perfume oil, tropical attar, niche fragrance, unisex perfume oil, summer fragrance, roll on perfume, coconut perfume, jasmine fragrance oil, beach perfume, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** coconut perfume oil, jasmine coconut oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, tropical perfume oil, summer fragrance oil, gardenia perfume, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -377,7 +363,7 @@ The coast curves like a hip and the water is the temperature of skin. Jasmine gr
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 12.9714°S, 38.5124°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Salvador, Bahia, Brazil — 12.9714°S, 38.5014°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Coconut arrives first, creamy and sun-warmed, before the jasmine blooms through it — lush, tropical, almost narcotic. The gardenia and frangipani add layers of white-flower sweetness that never become cloying. The dry-down is a soft, milky musk that lingers on the skin like salt air on clean cotton.
@@ -392,9 +378,9 @@ Base: Light Musk, Creamy Accord
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -402,17 +388,15 @@ Base: Light Musk, Creamy Accord
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 9. BAHRAIN
 
-**Etsy Title:** BAHRAIN — Fresh Marine Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** BAHRAIN — Fresh Marine Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** blue oud perfume oil, marine attar, niche fragrance, unisex perfume oil, fresh perfume, roll on perfume, aquatic fragrance, ozonic perfume, clean oud, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** marine perfume oil, blue oud perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, aquatic fragrance, fresh ocean perfume, ozonic cologne oil, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -423,7 +407,7 @@ Before the oil, there were pearls. The divers descended on a single breath into 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 26.0667°N, 50.5577°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Bahrain Pearl Diving Coast — 26.2041°N, 50.5515°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The ozonic top note arrives like stepping out of an air-conditioned room onto a Gulf pier — metallic, marine, instantly cooling. The fresh woods in the heart keep it grounded without weighing it down. On skin, BAHRAIN dries to a warm, clean musk with an ambergris undertone that feels like salt still crystallizing on sun-dried skin.
@@ -438,9 +422,9 @@ Base: Warm Musk, Ambergris Accord
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -448,17 +432,15 @@ Base: Warm Musk, Ambergris Accord
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 10. BIG SUR
 
-**Etsy Title:** BIG SUR — Coastal Marine Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** BIG SUR — Coastal Marine Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** marine perfume oil, coastal attar, niche fragrance, unisex perfume oil, ocean fragrance, roll on perfume, sea salt perfume, fresh cologne oil, ambroxan perfume, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** ocean perfume oil, coastal fragrance, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, del mar perfume, sea salt perfume oil, cedar musk perfume, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -469,7 +451,7 @@ The Pacific throws itself against granite and the mist carries everything — wi
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 36.2704°N, 121.8081°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Big Sur, California — 36.2704°N, 121.8081°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Bergamot and lemon open crisp and maritime — there is nothing tropical here, only the mineral tang of cold Pacific air. The seaweed accord in the heart adds a briny, almost umami depth that keeps BIG SUR from being just another aquatic. The dry-down is ambroxan and cedar: warm, woody, salt-kissed, the feeling of a flannel shirt after a day on the headlands.
@@ -484,9 +466,9 @@ Base: Musk, Ambroxan, Cedar
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -494,17 +476,15 @@ Base: Musk, Ambroxan, Cedar
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 11. MEISHAN
 
-**Etsy Title:** MEISHAN — Green Floral Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** MEISHAN — Green Floral Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** china rain perfume oil, green floral attar, niche fragrance, unisex perfume oil, rain fragrance, roll on perfume, fresh perfume oil, green tea fragrance, mossy perfume, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** green floral perfume, china rain perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, lily perfume oil, rain scent perfume, mossy green perfume, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -515,7 +495,7 @@ The mist comes down the mountain in sheets, turning the tea terraces into green 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 30.0575°N, 103.8319°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Meishan, Sichuan, China — 30.0422°N, 103.8318°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The green notes arrive first — dewy, translucent, barely there — like rain on a leaf held to the wrist. The white lily heart is soft and clean, never heavy, never perfume-y in the traditional sense. MEISHAN dries to a mossy musk that sits on skin like humidity: present, gentle, impossible to separate from the body's own warmth.
@@ -530,9 +510,9 @@ Base: Musk, Moss
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -540,17 +520,15 @@ Base: Musk, Moss
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 12. MONACO
 
-**Etsy Title:** MONACO — Fresh Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** MONACO — Fresh Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** dubai musk perfume oil, fresh musk attar, niche fragrance, unisex perfume oil, light musk, roll on perfume, clean fragrance, fruity musk, airy perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** fresh musk perfume, light musk oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, dubai musk perfume, clean musk fragrance, fruity musk oil, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -561,7 +539,7 @@ The harbor at dusk. White hulls rock gently against their moorings and the last 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 43.7384°N, 7.4246°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Monaco — 43.7384°N, 7.4246°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The opening is light, fruity, almost effervescent — like the first sip of something sparkling. The airy musk that follows is transparent and modern, clinging to skin rather than radiating outward. MONACO dries to vanilla and light amber: a barely-there warmth that makes people lean closer without knowing why.
@@ -576,9 +554,9 @@ Base: Vanilla, Light Amber
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -586,17 +564,15 @@ Base: Vanilla, Light Amber
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 13. TANGIERS
 
-**Etsy Title:** TANGIERS — Fresh Citrus Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** TANGIERS — Fresh Citrus Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** fresh citrus perfume oil, bergamot attar, niche fragrance, unisex perfume oil, clean cologne oil, roll on perfume, citrus musk, fresh aquatic, green tea perfume, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** citrus perfume oil, bergamot perfume oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, regatta perfume oil, fresh cologne oil, matcha tea fragrance, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -607,7 +583,7 @@ The medina narrows and the light turns blue. White walls, white musks, the clean
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 35.7595°N, 5.8340°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Tangier, Morocco — 35.7595°N, 5.8340°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Bergamot and vervain arrive first — sharp, sun-drenched, unmistakably Mediterranean. The hedione in the heart gives it an airy radiance, almost like light itself has been captured in oil. TANGIERS dries to matcha tea and musk: green, clean, quietly magnetic. It sits close to the skin and rewards anyone who gets close enough.
@@ -622,9 +598,9 @@ Base: Matcha Tea, Musk, Woody Notes
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -632,17 +608,15 @@ Base: Matcha Tea, Musk, Woody Notes
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 14. TIGRIS
 
-**Etsy Title:** TIGRIS — Citrus Amber Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** TIGRIS — Citrus Amber Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** citrus amber perfume oil, ambroxan attar, niche fragrance, unisex perfume oil, fresh oud alternative, roll on perfume, grapefruit perfume, ginger fragrance, vetiver cologne oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** citrus amber perfume, grapefruit perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, ginger perfume oil, ambroxan fragrance, vetiver cologne oil, concentrated perfume
 
-**Etsy Section:** Tidal
+**Etsy Section:** Tidal — Fresh & Marine
 
 **Description:**
 
@@ -651,7 +625,7 @@ The river has been flowing since the first word was written in the clay beside i
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TIDAL — Where water meets mineral
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 33.3152°N, 44.3661°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Tigris River, Iraq — 33.3152°N, 44.3661°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The grapefruit opens tart and bright — a clean citrus that burns off quickly, handing the reins to ginger and ambrette in the heart. This is where TIGRIS becomes interesting: the ambrette gives it a musky, skin-like quality that bridges the citrus top and the deep ambroxan-vetiver base. The dry-down is warm, mineral, and long-lasting — a modern amber that reads as both fresh and grounded.
@@ -666,17 +640,15 @@ Base: Ambroxan, Musk, Patchouli, Vetiver
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
 28 waypoints. 4 territories. One atlas.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
-
-tarifeattar.com
 
 ---
 
@@ -690,11 +662,11 @@ Seven fragrances rooted in florals and soft musks. Intimate, close-wearing, and 
 
 ### 15. CARMEL
 
-**Etsy Title:** CARMEL — Soft Amber Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** CARMEL — Soft Amber Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** white amber perfume oil, skin scent attar, niche fragrance, unisex perfume oil, clean amber, roll on perfume, soft amber, minimal perfume, everyday fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** soft amber perfume, white amber oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, clean skin scent, everyday perfume oil, warm amber fragrance, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -705,7 +677,7 @@ No house numbers. No neon. The fog moves through Carmel-by-the-Sea like a whispe
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 36.5552°N, 121.9233°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Carmel-by-the-Sea, California — 36.5552°N, 121.9233°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The softest opening on the atlas — a floral whisper so faint it might be your own skin's warmth. The amber emerges gradually, woody and clean, never sweet, never heavy. CARMEL dries to a skin musk so transparent that it becomes indistinguishable from the body wearing it. Twelve hours later, you catch it on a scarf or a pillowcase and the memory surfaces.
@@ -720,9 +692,9 @@ Base: Clean Musk, Light Skin Accord
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -730,17 +702,15 @@ Base: Clean Musk, Light Skin Accord
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 16. DAMASCUS
 
-**Etsy Title:** DAMASCUS — Pure Rose Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** DAMASCUS — Pure Rose Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** rose perfume oil, turkish rose attar, niche fragrance, unisex perfume oil, rose fragrance, roll on perfume, damask rose, floral perfume oil, natural rose, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** rose perfume oil, turkish rose perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, damask rose oil, bulgarian rose oil, natural rose perfume, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -751,7 +721,7 @@ The rose harvest begins before dawn. Hands move through wet petals — Damask ro
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 33.5138°N, 36.2765°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Isparta, Turkey — 37.7556°N, 30.5566°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Rose otto opens vivid and honeyed, with a dewy green quality that separates this from synthetic florals immediately. The Bulgarian rose in the heart deepens the portrait — darker, more velvet — while a green stem note keeps it from ever becoming powdery or matronly. DAMASCUS dries to woody musk, the rose still present but now whispered rather than spoken.
@@ -766,9 +736,9 @@ Base: Woody Notes, Clean Musk
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -776,17 +746,15 @@ Base: Woody Notes, Clean Musk
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 17. TOBAGO
 
-**Etsy Title:** TOBAGO — Sweet Jasmine Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** TOBAGO — Sweet Jasmine Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** jasmine perfume oil, arabian jasmine attar, niche fragrance, unisex perfume oil, floral perfume, roll on perfume, sambac jasmine, sweet floral perfume, tropical jasmine, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** jasmine perfume oil, sambac jasmine oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, arabian jasmine oil, sweet floral perfume, tropical jasmine oil, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -797,7 +765,7 @@ The smaller island does not advertise. You find it by following the sound of ste
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 11.1889°N, 60.6320°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Tobago — 11.1889°N, 60.6317°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Jasmine opens immediately — not the thin, screechy jasmine of drugstore florals, but a full, rounded sambac that smells like the real flower crushed between warm fingers. The sweetness never cloys because a current of freshness runs through the heart, keeping the bloom airy and wearable. TOBAGO dries to soft musk and light woods, the jasmine still humming in the background hours later.
@@ -812,9 +780,9 @@ Base: Soft Musk, Light Woods
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -822,17 +790,15 @@ Base: Soft Musk, Light Woods
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 18. KANDY
 
-**Etsy Title:** KANDY — Peach Floral Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** KANDY — Peach Floral Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** peach perfume oil, fruity floral attar, niche fragrance, unisex perfume oil, peach fragrance, roll on perfume, fruity musk, apple blossom perfume, gentle perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** peach perfume oil, fruity floral perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, peach memoir perfume, apple blossom oil, fruity musk perfume, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -843,7 +809,7 @@ The Temple of the Tooth holds the relic in silence, and the gardens hold everyth
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 7.2906°N, 80.6337°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Kandy, Sri Lanka — 7.2906°N, 80.6337°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Ripe peach opens first — juicy, warm, almost tactile, like biting into fruit still holding the sun's heat. Apple blossom lightens the heart and gives the composition an airy, springlike quality. KANDY dries down gently: wild rose and musk and a whisper of patchouli that keeps the sweetness honest. The result is a soft, velvety wear that clings close and lasts all day.
@@ -858,9 +824,9 @@ Base: Wild Rose, Musk, Patchouli
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -868,17 +834,15 @@ Base: Wild Rose, Musk, Patchouli
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 19. MANALI
 
-**Etsy Title:** MANALI — Cool Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** MANALI — Cool Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** himalayan musk perfume oil, clean musk attar, niche fragrance, unisex perfume oil, cool musk, roll on perfume, mountain fragrance, fresh musk, crisp perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** cool musk perfume, himalayan musk oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, earthy musk perfume, mountain fragrance, fresh musk oil, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -889,7 +853,7 @@ The pines thin and the Himalayas appear — white peaks against an impossible bl
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 32.2396°N, 77.1887°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Manali, India — 32.2396°N, 77.1887°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 MANALI opens crisp and clean — high-altitude air translated into oil. There is no heaviness, no sweetness, just a cool musk that feels like freshly washed skin in cold mountain air. The woody notes in the heart add the faintest warmth, and the soft incense in the base gives it a meditative quality. The dry-down is luminous and impossibly clean.
@@ -904,9 +868,9 @@ Base: Earthy Musk, Soft Incense
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -914,17 +878,15 @@ Base: Earthy Musk, Soft Incense
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 20. MEDINA
 
-**Etsy Title:** MEDINA — White Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** MEDINA — White Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** white musk perfume oil, tahara musk attar, niche fragrance, unisex perfume oil, clean musk, roll on perfume, powdery musk, pure musk perfume, ritual fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** white musk perfume, musk tahara oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, powdery musk perfume, clean musk fragrance, sandalwood musk oil, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -935,7 +897,7 @@ The Prophet's Mosque glows green at nightfall and the air fills with tahara — 
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 24.4672°N, 39.6024°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Medina, Saudi Arabia — 24.5247°N, 39.5692°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Powdery white musk opens like freshly laundered cotton held to your face — clean, comforting, and utterly without pretension. The soft florals and sandalwood in the heart give it just enough depth to keep it from being merely "clean." MEDINA dries to a creamy, skin-close musk that wraps the body like a second layer of something sacred.
@@ -950,9 +912,9 @@ Base: Clean Musk, Creamy Accord
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -960,17 +922,15 @@ Base: Clean Musk, Creamy Accord
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 21. SIWA
 
-**Etsy Title:** SIWA — Skin Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** SIWA — Skin Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** egyptian musk perfume oil, skin scent attar, niche fragrance, unisex perfume oil, white musk, roll on perfume, clean skin scent, ambroxan perfume, ethereal fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** skin musk perfume, egyptian musk oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, ambroxan perfume oil, clean skin scent, white amber musk, concentrated perfume
 
-**Etsy Section:** Petal
+**Etsy Section:** Petal — Floral & Musk
 
 **Description:**
 
@@ -981,7 +941,7 @@ The oasis appears like a rumor made real — date palms, salt lakes, and a silen
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: PETAL — Where bloom meets skin
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 29.2032°N, 25.5195°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Siwa Oasis, Egypt — 29.2032°N, 25.5195°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 ISO E Super and aldehydes create a shimmering, almost holographic opening — you feel it more than you identify it, a warmth just above the skin's surface. The ambroxan and light musk build underneath, giving the composition a glowing, diffusive quality. SIWA dries to white amber and skin musk so seamlessly blended with the body that the boundary between fragrance and flesh dissolves entirely.
@@ -996,17 +956,15 @@ Base: White Amber, Skin Musk
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($30) and 12ml ($50) roll-on
+⬥ Available in 6ml ($30) and 12ml ($50)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
 28 waypoints. 4 territories. One atlas.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
-
-tarifeattar.com
 
 ---
 
@@ -1020,11 +978,11 @@ Seven fragrances carved from the earth. Wood, leather, moss, and the deep archit
 
 ### 22. ASTORIA
 
-**Etsy Title:** ASTORIA — Forest Moss Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** ASTORIA — Forest Moss Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** forest perfume oil, moss cologne oil, niche fragrance, unisex perfume oil, cedar fragrance, roll on perfume, earthy perfume, pacific northwest, woodsy perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** forest perfume oil, moss cologne oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, pacific moss perfume, cedar wood perfume, earthy forest scent, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1033,7 +991,7 @@ The fog rolls in from the Pacific and the forest floor disappears. Moss drapes e
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 46.1879°N, 123.8313°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Astoria, Oregon — 46.1879°N, 123.8313°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Fir needle and fresh sap arrive first — cool, green, immediately transporting. The forest floor accord in the heart brings wet earth and moss, not dirty but deeply alive, like pressing your hand to loam after a week of rain. ASTORIA dries to cedar and woody earth, the green note still threading through, giving it a living quality that persists for hours.
@@ -1048,9 +1006,9 @@ Base: Cedar, Woody Earth
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1058,17 +1016,15 @@ Base: Cedar, Woody Earth
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 23. HAVANA
 
-**Etsy Title:** HAVANA — Tobacco Oud Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** HAVANA — Tobacco Oud Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** tobacco oud perfume oil, smoky attar, niche fragrance, unisex perfume oil, tobacco fragrance, roll on perfume, oud perfume, whiskey cologne, dark perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** tobacco perfume oil, oud tobacco perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, whiskey cologne oil, smoky oud perfume, dark perfume oil, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1079,7 +1035,7 @@ The tobacco leaves hang in the vega barn, curing slowly in Caribbean humidity. D
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 23.1136°N, 82.3666°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Habana Vieja, Cuba — 23.1136°N, 82.3666°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 The whiskey accord opens with a boozy warmth — slightly sweet, slightly sharp, the first sip that opens the evening. Cinnamon and coriander in the heart give it spice and structure. Then the base unfolds: tobacco, oud, incense, sandalwood, patchouli, benzoin, vanilla, cedar — a full orchestra of dark, warm notes that refuse to resolve into a single chord. HAVANA is complex, evolving, and long-lasting.
@@ -1094,9 +1050,9 @@ Base: Tobacco, Oud, Incense, Sandalwood, Patchouli, Benzoin, Vanilla, Cedar
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1104,17 +1060,15 @@ Base: Tobacco, Oud, Incense, Sandalwood, Patchouli, Benzoin, Vanilla, Cedar
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 24. HUDSON
 
-**Etsy Title:** HUDSON — Creamy Sandalwood Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** HUDSON — Creamy Sandalwood Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** sandalwood perfume oil, creamy wood attar, niche fragrance, unisex perfume oil, sandalwood fragrance, roll on perfume, leather perfume, ambroxan cologne, woody musk, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** sandalwood perfume, creamy wood perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, santal perfume oil, leather wood cologne, cardamom perfume oil, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1125,7 +1079,7 @@ Two hours north and the city loosens its grip. The antique shops on Warren Stree
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 42.2529°N, 73.7910°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Hudson, New York — 42.2529°N, 73.7910°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Cardamom and violet open sharp and aromatic, a brief sophistication before the sandalwood takes center stage. And it takes the entire stage — creamy, rich, with a buttery depth that feels almost tactile. The ambroxan and leather base keep it modern, prevent it from drifting into head-shop territory. HUDSON dries to a woody musk that wears like a second skin: intimate, polished, utterly contemporary.
@@ -1140,9 +1094,9 @@ Base: Ambroxan, Leather, Musk
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1150,17 +1104,15 @@ Base: Ambroxan, Leather, Musk
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 25. MARRAKESH
 
-**Etsy Title:** MARRAKESH — Rich Leather Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** MARRAKESH — Rich Leather Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** leather oud perfume oil, spiced attar, niche fragrance, unisex perfume oil, moroccan fragrance, roll on perfume, oud perfume, leather cologne, spiced perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** leather oud perfume, spiced leather oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, moroccan perfume oil, oud incense perfume, dark spice fragrance, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1169,7 +1121,7 @@ The souk folds around you — leather, cedar, cumin, the metallic ring of hammer
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 31.6295°N, 7.9811°W
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Jemaa el-Fnaa, Morocco — 31.6295°N, 7.9811°W
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Plum and cardamom open rich and heady — immediately, you are in the souk, surrounded by warmth. The heart is a controlled chaos of rose, cinnamon, nutmeg, and jasmine, each vying for attention without drowning the others. The base resolves into leather, oud, and incense: dark, grounded, and deeply masculine-leaning though anyone with confidence can carry it. MARRAKESH is the most complex waypoint on the atlas and it rewards repeated wearing.
@@ -1184,9 +1136,9 @@ Base: Leather, Oud, Incense, Cedar, Patchouli
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1194,17 +1146,15 @@ Base: Leather, Oud, Incense, Cedar, Patchouli
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 26. RIYADH
 
-**Etsy Title:** RIYADH — Rose Oud Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** RIYADH — Rose Oud Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** black oud perfume oil, dark oud attar, niche fragrance, unisex perfume oil, arabian oud, roll on perfume, oud fragrance, rose oud, deep perfume oil, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** rose oud perfume, black oud oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, arabian oud perfume, rose patchouli oil, dark rose perfume, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1215,7 +1165,7 @@ The palace doors close and the room fills with oud — not the souvenir variety,
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 24.7136°N, 46.6753°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Riyadh Oud Souks, Saudi Arabia — 24.7136°N, 46.6753°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Mandarin opens bright, almost playful — a brief flash of citrus light before the composition descends into darkness. Rose and oud in the heart are classically Arabian: rich, animalic, unapologetic. The labdanum and patchouli base adds a smoky depth that lingers for hours, coating the skin in a warm, resinous darkness. RIYADH does not fade. It transforms — and each transformation is darker, warmer, more intimate than the last.
@@ -1230,9 +1180,9 @@ Base: Labdanum, Patchouli, Musk
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1240,17 +1190,15 @@ Base: Labdanum, Patchouli, Musk
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 27. SAMARKAND
 
-**Etsy Title:** SAMARKAND — Smoky Oud Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** SAMARKAND — Smoky Oud Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** smoky oud perfume oil, silk road attar, niche fragrance, unisex perfume oil, arabian oud, roll on perfume, birch perfume, vanilla oud, ceremonial fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** smoky oud perfume, oud aura perfume, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, vanilla oud oil, birch perfume oil, arabian oud oil, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1261,7 +1209,7 @@ The Registan's turquoise domes shimmer in the Central Asian sun and the Silk Roa
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 39.6542°N, 66.9597°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Samarkand, Uzbekistan — 39.6542°N, 66.9597°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Oud arrives immediately — not brash, but ceremonial, slow-burning, with a smoky quality that places you beside a caravan fire under a Silk Road sky. The vanilla in the heart softens the smoke, giving it an unexpected warmth and sweetness. Birch in the base adds a leathery, tarred quality that keeps the composition masculine and grounded. SAMARKAND dries dark and enduring — a fragrance that stays in the room after you leave.
@@ -1276,9 +1224,9 @@ Base: Birch, Smoky Accord
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1286,17 +1234,15 @@ Base: Birch, Smoky Accord
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### 28. SICILY
 
-**Etsy Title:** SICILY — Mediterranean Oud Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** SICILY — Mediterranean Oud Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** sicilian oud perfume oil, mediterranean attar, niche fragrance, unisex perfume oil, bergamot oud, roll on perfume, italian perfume, citrus oud, warm fragrance, artisan perfume, atlas collection, tarife attar
+**Etsy Tags:** bergamot oud perfume, sicilian oud oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, italian perfume oil, citrus oud perfume, warm leather perfume, concentrated perfume
 
-**Etsy Section:** Terra
+**Etsy Section:** Terra — Woody & Oud
 
 **Description:**
 
@@ -1307,7 +1253,7 @@ The citrus groves climb the volcanic slopes and the air is electric — bergamot
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐘: TERRA — Where root meets stone
-𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: 37.5994°N, 14.0154°E
+𝐂𝐎𝐎𝐑𝐃𝐈𝐍𝐀𝐓𝐄𝐒: Mount Etna, Sicily — 37.5994°N, 14.0154°E
 
 𝐎𝐍 𝐒𝐊𝐈𝐍
 Bergamot and pink pepper open sparkling and bright — unmistakably Mediterranean, full of sun. The davana in the top adds a fruity richness that bridges the citrus and the oud. The oud in the heart is warm and approachable, softened by white amber and rosemary into something almost gourmand. SICILY dries to leather, musk, and vetiver: a woody, salty finish that keeps evolving for hours.
@@ -1322,17 +1268,15 @@ Base: Leather, Musk, Vetiver
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml ($33) and 12ml ($55) roll-on
+⬥ Available in 6ml ($33) and 12ml ($55)
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
 28 waypoints. 4 territories. One atlas.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
-
-tarifeattar.com
 
 ---
 
@@ -1344,9 +1288,9 @@ Legacy formulations from the original Tarife Attar collection. These waypoints h
 
 ### CAIRO
 
-**Etsy Title:** CAIRO — Superior Egyptian Musk Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** CAIRO — Superior Egyptian Musk Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** egyptian musk perfume oil, superior musk attar, niche fragrance, unisex perfume oil, arabian musk, roll on perfume, vintage musk, classic perfume oil, legacy fragrance, artisan perfume, the archive, tarife attar
+**Etsy Tags:** egyptian musk perfume, superior musk oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, vintage musk perfume, arabian musk perfume, classic perfume oil, concentrated perfume
 
 **Etsy Section:** The Archive
 
@@ -1362,9 +1306,9 @@ Available while supplies last. When it is gone, this coordinate closes.
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml and 12ml roll-on
+⬥ Available in 6ml and 12ml
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1372,15 +1316,13 @@ Available while supplies last. When it is gone, this coordinate closes.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### KALAHARI
 
-**Etsy Title:** KALAHARI — Black Ambergris Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** KALAHARI — Black Ambergris Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** black ambergris perfume oil, ambergris attar, niche fragrance, unisex perfume oil, rare perfume, roll on perfume, animalic fragrance, dark ambergris, vintage perfume oil, artisan perfume, the archive, tarife attar
+**Etsy Tags:** ambergris perfume oil, black ambergris oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for him, long lasting perfume, handmade perfume oil, glass wand perfume, animalic fragrance, dark marine perfume, rare perfume oil, concentrated perfume
 
 **Etsy Section:** The Archive
 
@@ -1396,9 +1338,9 @@ Available while supplies last. When it is gone, this coordinate closes.
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml and 12ml roll-on
+⬥ Available in 6ml and 12ml
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1406,15 +1348,13 @@ Available while supplies last. When it is gone, this coordinate closes.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ### ETHIOPIA
 
-**Etsy Title:** ETHIOPIA — Frankincense & Myrrh Perfume Oil | Niche Fragrance | Tarife Attar
+**Etsy Title:** ETHIOPIA — Frankincense & Myrrh Perfume Oil | Alcohol Free | Tarife Attar
 
-**Etsy Tags:** frankincense perfume oil, myrrh fragrance oil, niche fragrance, unisex perfume oil, sacred resin, roll on perfume, incense perfume, church fragrance, spiritual perfume oil, artisan perfume, the archive, tarife attar
+**Etsy Tags:** frankincense perfume, myrrh perfume oil, alcohol free perfume, roll on perfume oil, unisex perfume oil, gift for her, long lasting perfume, handmade perfume oil, glass wand perfume, incense perfume oil, sacred resin perfume, spiritual fragrance, concentrated perfume
 
 **Etsy Section:** The Archive
 
@@ -1430,9 +1370,9 @@ Available while supplies last. When it is gone, this coordinate closes.
 ━━━━━━━━━━━━━━━━━━━━━━
 
 𝐃𝐄𝐓𝐀𝐈𝐋𝐒
-⬥ Available in 6ml and 12ml roll-on
+⬥ Available in 6ml and 12ml
 ⬥ Concentrated perfume oil — alcohol-free
-⬥ Roll-on application for precise, intimate wear
+⬥ Glass wand applicator (roll-on option available)
 ⬥ Handcrafted in small batches
 
 𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
@@ -1440,18 +1380,16 @@ Available while supplies last. When it is gone, this coordinate closes.
 Navigate by instinct, not itinerary.
 Each fragrance is a coordinate on a map only your senses can read.
 
-tarifeattar.com
-
 ---
 
 ## QUICK REFERENCE: WAYPOINT INDEX
 
 | # | Waypoint | Territory | Legacy Name | Title Descriptor | 6ml | 12ml |
 |---|----------|-----------|-------------|-----------------|-----|------|
-| 1 | ADEN | Ember | Oud Fire | Woody Amber | $28 | $48 |
+| 1 | ADEN | Ember | Oud Fire | Oud Amber | $28 | $48 |
 | 2 | SAANA | Ember | Honey Oud | Honey Oud | $28 | $48 |
 | 3 | GRANADA | Ember | Granada Amber | Warm Amber | $28 | $48 |
-| 4 | MALABAR | Ember | Vanilla Sands | Vanilla Resin | $28 | $48 |
+| 4 | MALABAR | Ember | Vanilla Sands | Vanilla | $28 | $48 |
 | 5 | SERENGETI | Ember | Black Musk | Dark Musk | $28 | $48 |
 | 6 | BEIRUT | Ember | — | Spiced Leather | $28 | $48 |
 | 7 | TARIFA | Ember | Teeb Musk | Floral Musk | $28 | $48 |
@@ -1479,3 +1417,77 @@ tarifeattar.com
 | — | CAIRO | Archive | Superior Egyptian Musk | — | — | — |
 | — | KALAHARI | Archive | Black Ambergris | — | — | — |
 | — | ETHIOPIA | Archive | Frankincense & Myrrh | — | — | — |
+
+---
+
+## DIGITAL DOWNLOADS
+
+### THE ATLAS COLLECTION GUIDE
+
+**Etsy Title:** THE ATLAS COLLECTION GUIDE — Free Digital Download | Perfume Oil Guide | Tarife Attar
+
+**Etsy Tags:** perfume guide, fragrance guide, perfume oil guide, digital download, free pdf, tarife attar, atlas collection, scent profile, fragrance notes, perfume lover gift, niche fragrance, fragrance collection, discovery guide
+
+**Etsy Section:** Digital Downloads
+
+**Description:**
+
+𝐓𝐇𝐄 𝐀𝐓𝐋𝐀𝐒 𝐂𝐎𝐋𝐋𝐄𝐂𝐓𝐈𝐎𝐍 𝐆𝐔𝐈𝐃𝐄
+Free Digital Download · 6 Pages · PDF
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+28 waypoints. 4 territories. One atlas.
+This is your complete guide to the Tarife Attar Atlas Collection — our full lineup of concentrated perfume oils, organized into four sensory territories and named for the real places that inspired them.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+𝐖𝐇𝐀𝐓'𝐒 𝐈𝐍𝐒𝐈𝐃𝐄
+⬥ A personal note from the founder
+⬥ The four territories explained (Ember, Tidal, Petal, Terra)
+⬥ Complete name-change reference table — match old names to new
+⬥ Four fragrance spotlights with full scent profiles and notes
+⬥ The Archive — 8 legacy formulations, available while supplies last
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+𝐓𝐇𝐄 𝐅𝐎𝐔𝐑 𝐓𝐄𝐑𝐑𝐈𝐓𝐎𝐑𝐈𝐄𝐒
+🔥 𝐄𝐌𝐁𝐄𝐑 — Where fire meets resin
+Oud, amber, musk, and warmth.
+🌊 𝐓𝐈𝐃𝐀𝐋 — Where water meets mineral
+Marine, citrus, fresh, and coastal.
+🌸 𝐏𝐄𝐓𝐀𝐋 — Where bloom meets skin
+Floral, musk, soft, and intimate.
+🌿 𝐓𝐄𝐑𝐑𝐀 — Where root meets stone
+Wood, leather, earth, and moss.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+𝐖𝐇𝐘 𝐓𝐇𝐈𝐒 𝐆𝐔𝐈𝐃𝐄?
+If you've been a Tarife Attar customer, you'll notice our fragrances have new names. Every oil you know and love is still here — same formulations, same handcrafted process. We've simply renamed each one for the real place that inspired it.
+
+This guide helps you:
+⬥ Find your favorite under its new name
+⬥ Discover which territory matches your taste
+⬥ Explore fragrances you haven't tried yet
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+𝐃𝐄𝐓𝐀𝐈𝐋𝐒
+⬥ Format: PDF (instant digital download)
+⬥ Pages: 6
+⬥ File size: ~200 KB
+⬥ Works on any device — phone, tablet, desktop
+⬥ Print-friendly design
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+𝐀𝐁𝐎𝐔𝐓 𝐓𝐀𝐑𝐈𝐅𝐄 𝐀𝐓𝐓𝐀𝐑
+We craft concentrated perfume oils — alcohol-free, applied with a glass wand applicator, and handmade in small batches. Each fragrance is a coordinate on a map only your senses can read.
+Navigate by instinct, not itinerary.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+𝐍𝐎𝐓𝐄
+This is a free guide — no purchase necessary. If you enjoy it and want to explore the collection, visit our shop to find the fragrance that speaks to you.
+Explore the full Atlas Collection → tarifeattar.etsy.com
