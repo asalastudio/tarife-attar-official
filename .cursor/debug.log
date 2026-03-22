@@ -12,3 +12,15 @@
 {"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"atlas/page.tsx:log-data","message":"AtlasPage fetched data","data":{"products":26,"territories":4},"timestamp":1769306659237}
 {"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"atlas/page.tsx:log-data","message":"AtlasPage fetched data","data":{"products":26,"territories":4},"timestamp":1769306699215}
 {"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"atlas/page.tsx:log-data","message":"AtlasPage fetched data","data":{"products":26,"territories":4},"timestamp":1769306699222}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769306905871}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769307037675}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769307061673}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769307107562}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"cart/page.tsx:log-state","message":"Cart render","data":{"items":1,"checkoutUrl":true},"timestamp":1769307116502}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769307224940}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769308512565}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"cart/page.tsx:log-state","message":"Cart render","data":{"items":2,"checkoutUrl":true},"timestamp":1769308524348}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769309680920}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769309748293}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769368543434}
+{"sessionId":"debug-session","runId":"lint-verify","hypothesisId":"H1","location":"HomeClient.tsx:log-render","message":"HomeClient rendered","data":{"featuredCount":3},"timestamp":1769368556462}

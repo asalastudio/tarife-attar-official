@@ -39,7 +39,7 @@ const SHOPIFY_TO_SANITY = {
   'Honey Oudh': 'caravan',
   'Teeb Musk': 'close',
   'Frankincense & Myrrh': 'devotion',
-  'Vanilla Sands': 'dune',
+  'Vanilla Sands': 'zanzibar',
   'Black Musk': 'obsidian',
   'Oudh Fire': 'aden',
   

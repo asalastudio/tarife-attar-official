@@ -58,12 +58,12 @@ If you have Shopify Plus, you can use the Preview API to set custom preview URLs
 After running the script, all products will have:
 - **Metafield**: `custom.preview_url`
 - **Value**: `https://www.tarifeattar.com/product/[slug]`
-- **Example**: `https://www.tarifeattar.com/product/dune`
+- **Example**: `https://www.tarifeattar.com/product/zanzibar`
 
 ## URL Mapping
 
 The script maps Shopify product handles to headless site URLs:
-- Shopify handle: `dune` → Headless URL: `/product/dune`
+- Shopify handle: `zanzibar` → Headless URL: `/product/zanzibar`
 - Shopify handle: `cairo` → Headless URL: `/product/cairo`
 - Shopify handle: `jasmine` → Headless URL: `/product/jasmine`
 
@@ -71,7 +71,7 @@ The script maps Shopify product handles to headless site URLs:
 
 1. **In Shopify Admin:**
    - Go to Products → Select a product
-   - Note the product handle (e.g., `dune`)
+   - Note the product handle (e.g., `zanzibar`)
 
 2. **Open Preview:**
    - Option A: Copy metafield URL

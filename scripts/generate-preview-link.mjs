@@ -5,7 +5,7 @@
  * 
  * Usage:
  *   node scripts/generate-preview-link.mjs <shopify-handle>
- *   node scripts/generate-preview-link.mjs dune
+ *   node scripts/generate-preview-link.mjs zanzibar
  */
 
 // Load environment variables
@@ -45,7 +45,7 @@ const handle = process.argv[2];
 if (!handle) {
   console.log('\n🔗 GENERATE PREVIEW LINK\n');
   console.log('Usage: node scripts/generate-preview-link.mjs <shopify-handle>');
-  console.log('Example: node scripts/generate-preview-link.mjs dune\n');
+  console.log('Example: node scripts/generate-preview-link.mjs zanzibar\n');
   process.exit(1);
 }
 

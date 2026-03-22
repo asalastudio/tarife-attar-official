@@ -55,7 +55,7 @@ const client = createClient({
 // Known product mappings (products that should be on the new site)
 const KNOWN_PRODUCTS = {
     'ONYX': { collectionType: 'atlas', territory: 'terra' },
-    'DUNE': { collectionType: 'atlas', territory: 'tidal' },
+    'ZANZIBAR': { collectionType: 'atlas', territory: 'ember' },
     'JASMINE': { collectionType: 'atlas', territory: 'petal' },
     'BAHRAIN': { collectionType: 'atlas', territory: 'tidal' },
     'SACRED HOJARI': { collectionType: 'relic', format: 'Aged Resin' },

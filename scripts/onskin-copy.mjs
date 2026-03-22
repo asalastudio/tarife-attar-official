@@ -34,8 +34,8 @@ export const ONSKIN_COPY = {
   ],
 
   malabar: [
-    `Balsam and rose open with resinous warmth, while grapefruit adds an unexpected brightness. The heart blooms into vanilla and honeysuckle, with musk and fruity notes weaving through. The base settles into deep musk, resins, and amber.`,
-    `Very beautiful, classic, and long-lasting. A scent that strips away noise and leaves only the essential. Creamy warmth, spice-coast sweetness, the faintest memory of monsoon wind.`,
+    `Vanilla arrives immediately — warm, golden, almost caramelized, the way vanilla meets amber and skin heat. Benzoin deepens the sweetness, adding a soft, balsamic warmth that keeps the vanilla grounded and wearable. Woody notes provide structure while the base settles into creamy amber, musk, and warm resins that cling close to the skin for hours.`,
+    `MALABAR is the one people ask you about. A scent that strips away noise and leaves only the essential — creamy warmth, golden sweetness, the quiet confidence of a fragrance that never raises its voice. It wears as well under linen in August as it does under wool in December.`,
   ],
 
   serengeti: [

@@ -24,7 +24,7 @@ export const EVOCATION_COPY = {
 
   granada: `Beneath the Alhambra's latticed arches, the air holds still. Warm amber pools in the courtyards where Moorish fountains once sang. Orange blossom drifts from the Generalife gardens, settling on sunlit stone. Granada smells the way memory does. Layered, golden, impossible to hold but impossible to forget.`,
 
-  malabar: `The Malabar Coast unfurls like a green ribbon along the Arabian Sea, pepper vines climbing teak forests, cardamom drying on stone terraces, vanilla orchids threading through the canopy. This is where the spice trade began, where Arab and Chinese merchants dropped anchor centuries before the Portuguese rounded the Cape. The air here is heavy with resin and sweetness, vanilla warmed by monsoon rain, balsam carried on salt wind. Malabar is the scent of origin itself, the coast where the world first learned to trade in beauty.`,
+  malabar: `The monsoon has just broken and the coast exhales. Vanilla arrived on these shores centuries ago and never left — it found the warmth it needed, the humidity, the ancient rhythm of harvest and trade. The Malabar Coast invented the spice route, and the golden sweetness of benzoin and amber have been traded here since the Phoenicians first followed the current south. You wear it and the skin warms to something golden: caramelized, soft-edged, the olfactory equivalent of lantern light on warm stone.`,
 
   serengeti: `Night falls fast on the plain. The grass exhales a dark, musky warmth and somewhere a fire crackles low, throwing shadows against acacia trunks. This is the scent of the earth before anything was built on it. Black musk, volcanic resin, the deep gravitational pull of a continent that has never needed to prove itself.`,
 

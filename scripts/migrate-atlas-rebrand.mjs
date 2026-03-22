@@ -1,29 +1,26 @@
 #!/usr/bin/env node
 /**
- * Atlas Collection Rebrand Migration Script
- * 
- * Updates existing Sanity products with new Atlas Collection names,
- * legacy name references, territory assignments, and scent profiles.
- * 
+ * Atlas Collection — Migration Script (Final 28 Waypoints)
+ *
+ * Updates existing Sanity products with new Atlas geographic names,
+ * legacy name references, territory assignments, GPS coordinates,
+ * and scent profiles. Also handles dropped products and new waypoints.
+ *
  * Run with: SANITY_WRITE_TOKEN=your-token node scripts/migrate-atlas-rebrand.mjs
- * 
+ *
  * Options:
  *   --dry-run    Preview changes without writing to Sanity
- *   --create     Create new products (default: update existing only)
+ *   --create     Create new products that don't exist yet
  *   --verbose    Show detailed output
  */
 
 import { createClient } from '@sanity/client';
 import {
   ALL_ATLAS_PRODUCTS,
-  RELIC_PRODUCTS,
+  ARCHIVE_PRODUCTS,
   TERRITORIES,
   COLLECTION_SUMMARY,
 } from './atlas-rebrand-data.mjs';
-
-// ============================================================================
-// CONFIGURATION
-// ============================================================================
 
 const projectId = '8h5l91ut';
 const dataset = 'production';
@@ -34,32 +31,17 @@ const isDryRun = process.argv.includes('--dry-run');
 const shouldCreate = process.argv.includes('--create');
 const isVerbose = process.argv.includes('--verbose');
 
-// ============================================================================
-// SANITY CLIENT
-// ============================================================================
-
 if (!token && !isDryRun) {
-  console.error('❌ ERROR: SANITY_WRITE_TOKEN environment variable is required.');
-  console.error('');
-  console.error('Get a write token from:');
-  console.error(`https://www.sanity.io/manage/project/${projectId}/api`);
-  console.error('');
-  console.error('Or run with --dry-run to preview changes:');
-  console.error('node scripts/migrate-atlas-rebrand.mjs --dry-run');
+  console.error('ERROR: SANITY_WRITE_TOKEN environment variable is required.');
+  console.error(`Get a write token from: https://www.sanity.io/manage/project/${projectId}/api`);
+  console.error('Or run with --dry-run to preview changes.');
   process.exit(1);
 }
 
-const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  token: token || 'dry-run-token',
-  useCdn: false,
-});
+const clientConfig = { projectId, dataset, apiVersion, useCdn: false };
+if (token) clientConfig.token = token;
 
-// ============================================================================
-// HELPERS
-// ============================================================================
+const client = createClient(clientConfig);
 
 function createSlug(name) {
   return name
@@ -70,130 +52,150 @@ function createSlug(name) {
 }
 
 function log(message, type = 'info') {
-  const icons = {
-    info: '📋',
-    success: '✅',
-    warning: '⚠️',
-    error: '❌',
-    update: '🔄',
-    create: '➕',
-    skip: '⏭️',
-  };
-  console.log(`${icons[type] || '•'} ${message}`);
+  const icons = { info: '[i]', success: '[OK]', warning: '[!]', error: '[X]', update: '[~]', create: '[+]', skip: '[.]', drop: '[-]' };
+  console.log(`${icons[type] || '   '} ${message}`);
 }
 
 function verbose(message) {
-  if (isVerbose) {
-    console.log(`   ${message}`);
-  }
+  if (isVerbose) console.log(`     ${message}`);
 }
 
 // ============================================================================
-// QUERY EXISTING PRODUCTS
+// FETCH EXISTING PRODUCTS
 // ============================================================================
 
 async function fetchExistingProducts() {
   log('Fetching existing products from Sanity...');
-  
-  const query = `*[_type == "product"] {
-    _id,
-    _rev,
-    title,
-    internalName,
+  const products = await client.fetch(`*[_type == "product"] {
+    _id, _rev, title, internalName,
     "slugCurrent": slug.current,
     collectionType,
     "atmosphere": atlasData.atmosphere,
-    legacyName,
-    scentProfile
-  }`;
-  
-  const products = await client.fetch(query);
-  log(`Found ${products.length} existing products`, 'info');
+    "gpsCoordinates": atlasData.gpsCoordinates,
+    "latitude": atlasData.latitude,
+    "longitude": atlasData.longitude,
+    legacyName, scentProfile
+  }`);
+  log(`Found ${products.length} existing products`);
   return products;
 }
 
 // ============================================================================
-// MATCH PRODUCTS
+// OLD EVOCATIVE / INTERMEDIATE NAMES
+// Products in Sanity may have been renamed during a previous rebrand.
+// This maps new atlas slug → array of old names/slugs to check.
+// ============================================================================
+
+const OLD_NAMES_MAP = {
+  'aden': ['rogue', 'oud-fire'],
+  'ethiopia': ['devotion', 'frankincense-myrrh', 'frankincense-and-myrrh'],
+  'granada': ['beloved', 'granada-amber'],
+  'oman': ['close', 'nizwa', 'teeb-musk'],
+  'petra': ['caravan', 'honey-oudh'],
+  'serengeti': ['obsidian', 'black-musk'],
+  'zanzibar': ['dune', 'vanilla-sands'],
+  'bahia': ['coconut-jasmine'],
+  'bahrain': ['fathom', 'blue-oud', 'blue-oudh'],
+  'big-sur': ['delmar', 'del-mare'],
+  'kyoto': ['china-rain'],
+  'monaco': [],
+  'tangiers': ['dubai', 'dubai-musk'],
+  'tigris': [],
+  'amer': ['white-amber'],
+  'damascus': ['turkish-rose'],
+  'grasse': ['jasmine', 'arabian-jasmine'],
+  'kandy': ['cherish', 'peach-memoir'],
+  'manali': ['clarity', 'himalayan-musk'],
+  'medina': ['tahara', 'madina', 'musk-tahara'],
+  'siwa': ['ritual', 'white-egyptian-musk'],
+  'astoria': [],
+  'havana': ['oud-tobacco', 'oud-and-tobacco'],
+  'marrakesh': ['marrakesh'],
+  'riyadh': ['black-oud'],
+  'samarkand': ['regalia', 'oud-aura'],
+  'sicily': ['sicilian-oudh'],
+  'tulum': ['spanish-sandalwood'],
+};
+
+// ============================================================================
+// MATCH: find existing Sanity product for a rebrand entry
 // ============================================================================
 
 function findExistingProduct(rebrandProduct, existingProducts) {
-  // Try to match by former name (case-insensitive)
-  const formerNameMatch = existingProducts.find((p) => {
-    const title = (p.title || '').toLowerCase().trim();
-    const formerName = (rebrandProduct.formerName || '').toLowerCase().trim();
-    return title === formerName;
-  });
-  
-  if (formerNameMatch) return formerNameMatch;
-  
-  // Try to match by slug
-  const slugMatch = existingProducts.find((p) => {
-    const existingSlug = (p.slugCurrent || '').toLowerCase();
-    const formerSlug = createSlug(rebrandProduct.formerName || '');
-    return existingSlug === formerSlug;
-  });
-  
-  if (slugMatch) return slugMatch;
-  
-  // Try to match by new name (in case already migrated)
-  const newNameMatch = existingProducts.find((p) => {
-    const title = (p.title || '').toLowerCase().trim();
-    const newName = rebrandProduct.newName.toLowerCase().trim();
-    return title === newName;
-  });
-  
-  return newNameMatch;
+  const checks = [
+    (p) => p.slugCurrent === rebrandProduct.slug,
+    (p) => rebrandProduct.legacyName && (p.title || '').toLowerCase().trim() === rebrandProduct.legacyName.toLowerCase().trim(),
+    (p) => rebrandProduct.legacyName && (p.slugCurrent || '') === createSlug(rebrandProduct.legacyName),
+    (p) => (p.title || '').toLowerCase().trim() === rebrandProduct.atlasName.toLowerCase().trim(),
+  ];
+  for (const check of checks) {
+    const match = existingProducts.find(check);
+    if (match) return match;
+  }
+
+  const oldNames = OLD_NAMES_MAP[rebrandProduct.slug] || [];
+  for (const oldName of oldNames) {
+    const match = existingProducts.find(
+      (p) =>
+        (p.slugCurrent || '') === oldName ||
+        (p.title || '').toLowerCase() === oldName.toLowerCase()
+    );
+    if (match) return match;
+  }
+
+  return null;
 }
 
 // ============================================================================
-// BUILD PATCH OPERATIONS
+// BUILD PATCH
 // ============================================================================
 
-function buildPatchForProduct(rebrandProduct, existingProduct) {
+function buildPatch(rebrandProduct, existing) {
   const patches = {};
   const changes = [];
-  
-  // Update title to new name
-  if (existingProduct.title !== rebrandProduct.newName) {
-    patches.title = rebrandProduct.newName;
-    changes.push(`title: "${existingProduct.title}" → "${rebrandProduct.newName}"`);
+
+  if (existing.title !== rebrandProduct.atlasName) {
+    patches.title = rebrandProduct.atlasName;
+    changes.push(`title: "${existing.title}" -> "${rebrandProduct.atlasName}"`);
   }
-  
-  // Set legacy name if product had a different former name
-  if (rebrandProduct.formerName && rebrandProduct.formerName !== rebrandProduct.newName) {
-    if (existingProduct.legacyName !== rebrandProduct.formerName) {
-      patches.legacyName = rebrandProduct.formerName;
-      patches.showLegacyName = true;
-      patches.legacyNameStyle = 'formerly';
-      changes.push(`legacyName: "${rebrandProduct.formerName}"`);
-    }
+
+  if (rebrandProduct.legacyName && existing.legacyName !== rebrandProduct.legacyName) {
+    patches.legacyName = rebrandProduct.legacyName;
+    patches.showLegacyName = true;
+    patches.legacyNameStyle = 'formerly';
+    changes.push(`legacyName: "${rebrandProduct.legacyName}"`);
   }
-  
-  // Update slug
-  const newSlug = rebrandProduct.slug;
-  if (existingProduct.slugCurrent !== newSlug) {
-    patches.slug = { _type: 'slug', current: newSlug };
-    changes.push(`slug: "${existingProduct.slugCurrent}" → "${newSlug}"`);
+
+  if (existing.slugCurrent !== rebrandProduct.slug) {
+    patches.slug = { _type: 'slug', current: rebrandProduct.slug };
+    changes.push(`slug: "${existing.slugCurrent}" -> "${rebrandProduct.slug}"`);
   }
-  
-  // Set scent profile
-  if (existingProduct.scentProfile !== rebrandProduct.scentProfile) {
-    patches.scentProfile = rebrandProduct.scentProfile;
-    changes.push(`scentProfile: "${rebrandProduct.scentProfile}"`);
+
+  if (existing.scentProfile !== rebrandProduct.scentNotes) {
+    patches.scentProfile = rebrandProduct.scentNotes;
+    changes.push(`scentProfile: "${rebrandProduct.scentNotes}"`);
   }
-  
-  // Set territory (atmosphere)
-  if (existingProduct.atmosphere !== rebrandProduct.territory) {
+
+  if (existing.atmosphere !== rebrandProduct.territory) {
     patches['atlasData.atmosphere'] = rebrandProduct.territory;
-    changes.push(`territory: "${rebrandProduct.territory}"`);
+    changes.push(`territory: "${existing.atmosphere || 'none'}" -> "${rebrandProduct.territory}"`);
   }
-  
-  // Ensure collection type is atlas
-  if (existingProduct.collectionType !== 'atlas') {
+
+  const coordString = `${rebrandProduct.lat}, ${rebrandProduct.long}`;
+  if (existing.gpsCoordinates !== coordString) {
+    patches['atlasData.gpsCoordinates'] = coordString;
+    changes.push(`gps: ${coordString}`);
+  }
+
+  patches['atlasData.latitude'] = rebrandProduct.lat;
+  patches['atlasData.longitude'] = rebrandProduct.long;
+  patches['atlasData.evocationLocation'] = `${rebrandProduct.atlasName}, ${rebrandProduct.mapPin}`;
+
+  if (existing.collectionType !== 'atlas') {
     patches.collectionType = 'atlas';
-    changes.push(`collectionType: "atlas"`);
+    changes.push('collectionType: "atlas"');
   }
-  
+
   return { patches, changes };
 }
 
@@ -201,201 +203,168 @@ function buildPatchForProduct(rebrandProduct, existingProduct) {
 // BUILD NEW PRODUCT DOCUMENT
 // ============================================================================
 
-function buildNewProductDocument(rebrandProduct) {
+function buildNewDocument(rebrandProduct) {
+  const territory = TERRITORIES[rebrandProduct.territory];
   const doc = {
     _type: 'product',
     _id: `product-${rebrandProduct.slug}`,
     collectionType: 'atlas',
     internalName: rebrandProduct.slug.toUpperCase(),
-    title: rebrandProduct.newName,
-    slug: {
-      _type: 'slug',
-      current: rebrandProduct.slug,
-    },
-    scentProfile: rebrandProduct.scentProfile,
-    atlasData: {
-      atmosphere: rebrandProduct.territory,
-    },
+    title: rebrandProduct.atlasName,
+    slug: { _type: 'slug', current: rebrandProduct.slug },
+    scentProfile: rebrandProduct.scentNotes,
+    price: rebrandProduct.price6ml,
+    volume: '6ml',
     productFormat: 'Perfume Oil',
     inStock: true,
-    generationSource: 'manual',
+    atlasData: {
+      atmosphere: rebrandProduct.territory,
+      gpsCoordinates: `${rebrandProduct.lat}, ${rebrandProduct.long}`,
+      latitude: rebrandProduct.lat,
+      longitude: rebrandProduct.long,
+      evocationLocation: `${rebrandProduct.atlasName}, ${rebrandProduct.mapPin}`,
+    },
   };
-  
-  // Add legacy name if different from new name
-  if (rebrandProduct.formerName && rebrandProduct.formerName !== rebrandProduct.newName) {
-    doc.legacyName = rebrandProduct.formerName;
+
+  if (rebrandProduct.legacyName) {
+    doc.legacyName = rebrandProduct.legacyName;
     doc.showLegacyName = true;
     doc.legacyNameStyle = 'formerly';
   }
-  
+
   return doc;
 }
 
 // ============================================================================
-// MAIN MIGRATION
+// MAIN
 // ============================================================================
 
 async function main() {
   console.log('');
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log('  🌿 TARIFE ATTÄR — ATLAS COLLECTION REBRAND MIGRATION');
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log('='.repeat(65));
+  console.log('  TARIFE ATTAR — ATLAS COLLECTION MIGRATION (Final 28)');
+  console.log('='.repeat(65));
   console.log('');
-  
-  if (isDryRun) {
-    log('DRY RUN MODE — No changes will be made', 'warning');
-    console.log('');
-  }
-  
-  console.log(`📊 Migration Summary:`);
-  console.log(`   Total Atlas products to migrate: ${COLLECTION_SUMMARY.atlas.total}`);
-  console.log(`   - Ember: ${COLLECTION_SUMMARY.atlas.ember} products`);
-  console.log(`   - Petal: ${COLLECTION_SUMMARY.atlas.petal} products`);
-  console.log(`   - Tidal: ${COLLECTION_SUMMARY.atlas.tidal} products`);
-  console.log(`   - Terra: ${COLLECTION_SUMMARY.atlas.terra} products`);
+
+  if (isDryRun) log('DRY RUN MODE — No changes will be made', 'warning');
+
+  console.log(`Migration Summary:`);
+  console.log(`  Atlas products: ${COLLECTION_SUMMARY.atlas.total}`);
+  console.log(`    Ember: ${COLLECTION_SUMMARY.atlas.ember} | Tidal: ${COLLECTION_SUMMARY.atlas.tidal}`);
+  console.log(`    Petal: ${COLLECTION_SUMMARY.atlas.petal} | Terra: ${COLLECTION_SUMMARY.atlas.terra}`);
+  console.log(`  Archive: ${ARCHIVE_PRODUCTS.length} products`);
   console.log('');
-  
-  // Fetch existing products
+
   const existingProducts = await fetchExistingProducts();
   console.log('');
-  
-  // Track results
-  const results = {
-    updated: [],
-    created: [],
-    skipped: [],
-    errors: [],
-  };
-  
-  // Process each rebrand product
-  console.log('─────────────────────────────────────────────────────────────────');
-  console.log('  PROCESSING PRODUCTS');
-  console.log('─────────────────────────────────────────────────────────────────');
-  console.log('');
-  
+
+  const results = { updated: [], created: [], skipped: [], dropped: [], errors: [] };
   const transaction = client.transaction();
-  
-  for (const rebrandProduct of ALL_ATLAS_PRODUCTS) {
-    const existing = findExistingProduct(rebrandProduct, existingProducts);
-    
+
+  // --- Process Atlas products ---
+  console.log('-'.repeat(65));
+  console.log('  PROCESSING ATLAS PRODUCTS');
+  console.log('-'.repeat(65));
+  console.log('');
+
+  for (const product of ALL_ATLAS_PRODUCTS) {
+    const existing = findExistingProduct(product, existingProducts);
+
     if (existing) {
-      // Update existing product
-      const { patches, changes } = buildPatchForProduct(rebrandProduct, existing);
-      
-      if (Object.keys(patches).length > 0) {
-        log(`${rebrandProduct.newName} (updating from "${rebrandProduct.formerName}")`, 'update');
-        
-        for (const change of changes) {
-          verbose(change);
-        }
-        
-        if (!isDryRun) {
-          transaction.patch(existing._id, (p) => p.set(patches));
-        }
-        
-        results.updated.push({
-          newName: rebrandProduct.newName,
-          formerName: rebrandProduct.formerName,
-          id: existing._id,
-          changes,
-        });
+      const { patches, changes } = buildPatch(product, existing);
+      if (changes.length > 0) {
+        log(`${product.atlasName} (from "${product.legacyName || 'new'}")`, 'update');
+        for (const c of changes) verbose(c);
+        if (!isDryRun) transaction.patch(existing._id, (p) => p.set(patches));
+        results.updated.push({ atlasName: product.atlasName, legacyName: product.legacyName, id: existing._id, changes });
       } else {
-        log(`${rebrandProduct.newName} — already up to date`, 'skip');
-        results.skipped.push(rebrandProduct.newName);
+        log(`${product.atlasName} — already up to date`, 'skip');
+        results.skipped.push(product.atlasName);
       }
     } else if (shouldCreate) {
-      // Create new product
-      log(`${rebrandProduct.newName} — creating new product`, 'create');
-      
-      const doc = buildNewProductDocument(rebrandProduct);
-      
-      if (!isDryRun) {
-        transaction.createOrReplace(doc);
-      }
-      
-      results.created.push({
-        newName: rebrandProduct.newName,
-        formerName: rebrandProduct.formerName,
-        slug: rebrandProduct.slug,
-      });
+      log(`${product.atlasName} — creating new product`, 'create');
+      const doc = buildNewDocument(product);
+      if (!isDryRun) transaction.createOrReplace(doc);
+      results.created.push({ atlasName: product.atlasName, legacyName: product.legacyName, slug: product.slug });
     } else {
-      // Product not found and --create not specified
-      log(`${rebrandProduct.newName} (was "${rebrandProduct.formerName}") — NOT FOUND`, 'warning');
-      verbose('Use --create flag to create new products');
-      results.skipped.push({
-        newName: rebrandProduct.newName,
-        formerName: rebrandProduct.formerName,
-        reason: 'not found',
-      });
+      log(`${product.atlasName} (was "${product.legacyName || 'N/A'}") — NOT FOUND (use --create)`, 'warning');
+      results.skipped.push({ atlasName: product.atlasName, reason: 'not found' });
     }
   }
-  
-  // Commit transaction
+
+  // --- Handle dropped products ---
   console.log('');
-  console.log('─────────────────────────────────────────────────────────────────');
-  console.log('  MIGRATION RESULTS');
-  console.log('─────────────────────────────────────────────────────────────────');
+  console.log('-'.repeat(65));
+  console.log('  HANDLING DROPPED PRODUCTS');
+  console.log('-'.repeat(65));
   console.log('');
-  
-  if (!isDryRun && (results.updated.length > 0 || results.created.length > 0)) {
+
+  for (const archived of ARCHIVE_PRODUCTS) {
+    const existing = archived.sanityId
+      ? existingProducts.find((p) => p._id === archived.sanityId)
+      : existingProducts.find(
+          (p) => (p.title || '').toUpperCase() === archived.name
+        );
+    if (existing) {
+      log(`${archived.name} (${archived.legacyName || 'N/A'}) — archiving`, 'drop');
+      if (!isDryRun) {
+        transaction.patch(existing._id, (p) =>
+          p.set({ collectionType: 'archive', inStock: false })
+        );
+      }
+      results.dropped.push({ name: archived.name, id: existing._id });
+    } else {
+      log(`${archived.name} — not found in Sanity (already removed?)`, 'skip');
+    }
+  }
+
+  // --- Commit ---
+  console.log('');
+  console.log('-'.repeat(65));
+  console.log('  RESULTS');
+  console.log('-'.repeat(65));
+  console.log('');
+
+  if (!isDryRun && (results.updated.length > 0 || results.created.length > 0 || results.dropped.length > 0)) {
     try {
       log('Committing changes to Sanity...', 'info');
       await transaction.commit();
       log('All changes committed successfully!', 'success');
     } catch (error) {
       log(`Failed to commit: ${error.message}`, 'error');
-      if (error.details) {
-        console.error('Details:', JSON.stringify(error.details, null, 2));
-      }
+      if (error.details) console.error('Details:', JSON.stringify(error.details, null, 2));
       process.exit(1);
     }
   }
-  
+
   console.log('');
-  console.log(`📊 Final Summary:`);
-  console.log(`   ✅ Updated: ${results.updated.length} products`);
-  console.log(`   ➕ Created: ${results.created.length} products`);
-  console.log(`   ⏭️  Skipped: ${results.skipped.length} products`);
-  
+  console.log(`  Updated:  ${results.updated.length}`);
+  console.log(`  Created:  ${results.created.length}`);
+  console.log(`  Dropped:  ${results.dropped.length}`);
+  console.log(`  Skipped:  ${results.skipped.length}`);
+
   if (results.updated.length > 0) {
-    console.log('');
-    console.log('📝 Updated Products:');
-    for (const product of results.updated) {
-      console.log(`   • ${product.newName} (was "${product.formerName}")`);
-    }
+    console.log('\n  Updated Products:');
+    for (const p of results.updated) console.log(`    ${p.atlasName} (was "${p.legacyName}")`);
   }
-  
   if (results.created.length > 0) {
-    console.log('');
-    console.log('🆕 Created Products:');
-    for (const product of results.created) {
-      console.log(`   • ${product.newName} → /product/${product.slug}`);
-    }
+    console.log('\n  Created Products:');
+    for (const p of results.created) console.log(`    ${p.atlasName} -> /product/${p.slug}`);
   }
-  
+  if (results.dropped.length > 0) {
+    console.log('\n  Archived Products:');
+    for (const p of results.dropped) console.log(`    ${p.name} (was /${p.oldSlug})`);
+  }
+
   console.log('');
-  console.log('─────────────────────────────────────────────────────────────────');
-  console.log('  NEXT STEPS');
-  console.log('─────────────────────────────────────────────────────────────────');
-  console.log('');
-  console.log('1. Open Sanity Studio and verify the changes');
-  console.log('2. Publish updated products to make them live');
-  console.log('3. Update Shopify product names/handles to match');
-  console.log('4. Set up URL redirects (already configured in next.config.js)');
-  console.log('5. Test the site to verify legacy names display correctly');
-  console.log('');
-  
   if (isDryRun) {
-    console.log('═══════════════════════════════════════════════════════════════');
-    console.log('  This was a DRY RUN. To apply changes, run without --dry-run:');
-    console.log('  SANITY_WRITE_TOKEN=your-token node scripts/migrate-atlas-rebrand.mjs');
-    console.log('═══════════════════════════════════════════════════════════════');
-    console.log('');
+    console.log('='.repeat(65));
+    console.log('  DRY RUN complete. Run without --dry-run to apply changes.');
+    console.log('='.repeat(65));
   }
 }
 
 main().catch((error) => {
-  console.error('');
   log(`Migration failed: ${error.message}`, 'error');
   console.error(error);
   process.exit(1);

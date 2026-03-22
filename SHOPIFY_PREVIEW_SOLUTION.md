@@ -15,17 +15,17 @@ I've set preview URLs for all 30 products as metafields. Each product now has:
 ### Method 1: Use Metafield (Easiest)
 
 1. **In Shopify Admin:**
-   - Go to **Products** → Select a product (e.g., DUNE)
+   - Go to **Products** → Select a product (e.g., ZANZIBAR)
    - Scroll down to **Metafields** section
    - Find **"Preview URL"** metafield
-   - Copy the URL: `https://www.tarifeattar.com/product/dune`
+   - Copy the URL: `https://www.tarifeattar.com/product/zanzibar`
    - Open in a new tab
 
 ### Method 2: Manual URL Construction
 
 1. **Note the product handle** from Shopify Admin (shown in the URL: `/admin/products/[id]`)
 2. **Construct URL**: `https://www.tarifeattar.com/product/[handle]`
-3. **Example**: Handle is `dune` → URL is `https://www.tarifeattar.com/product/dune`
+3. **Example**: Handle is `zanzibar` → URL is `https://www.tarifeattar.com/product/zanzibar`
 
 ### Method 3: Quick Script
 
@@ -65,7 +65,7 @@ The preview URLs are mapped as follows:
 
 | Shopify Handle | Headless Site URL |
 |----------------|-------------------|
-| `dune` | `https://www.tarifeattar.com/product/dune` |
+| `zanzibar` | `https://www.tarifeattar.com/product/zanzibar` |
 | `cairo` | `https://www.tarifeattar.com/product/cairo` |
 | `jasmine` | `https://www.tarifeattar.com/product/jasmine` |
 | `riyadh` | `https://www.tarifeattar.com/product/riyadh` |
