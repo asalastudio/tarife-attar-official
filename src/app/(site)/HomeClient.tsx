@@ -244,10 +244,10 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                                     Ports of Call
                                 </span>
                                 <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
-                                    The Atlas Community
+                                    The Tarife Attar Community
                                 </h2>
                                 <p className="font-serif text-sm md:text-base text-[#f5f0eb]/50 mt-3 max-w-lg mx-auto">
-                                    Every gold dot marks a city where the Atlas has found a home.
+                                    Every gold dot represents a city where Tarife Attar found a home.
                                 </p>
                             </div>
                             <div className="w-full h-[50vh] md:h-[60vh] rounded-lg overflow-hidden border border-[#C4A265]/10">

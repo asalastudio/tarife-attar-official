@@ -7,9 +7,18 @@
   filter: sepia(0.3) hue-rotate(-10deg) saturate(1.2) brightness(1.0) contrast(1.1);
 }
 
-/* Community Map — Muted land with visible blue ocean */
-.atlas-map-ocean {
-  filter: brightness(0.7) contrast(1.2) saturate(1.4) hue-rotate(-5deg);
+/* Community Map — Dark navy ocean with visible atlas-style continent lines */
+.atlas-map-ocean .leaflet-tile-pane {
+  filter: invert(1) contrast(2) brightness(1.8) saturate(0.15) sepia(0.4);
+  mix-blend-mode: screen;
+  opacity: 0.25;
+}
+
+.atlas-map-ocean .leaflet-overlay-pane,
+.atlas-map-ocean .leaflet-marker-pane,
+.atlas-map-ocean .leaflet-shadow-pane {
+  filter: none;
+  mix-blend-mode: normal;
 }
 
 .leaflet-container {

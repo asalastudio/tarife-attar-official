@@ -5,7 +5,6 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { PortOfCall } from '@/sanity/lib/queries';
 
-// Fix Leaflet default icon path
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -26,10 +25,10 @@ export function CommunityMap({ ports }: CommunityMapProps) {
         touchZoom={false}
         attributionControl={false}
         className="w-full h-full atlas-map-ocean"
-        style={{ background: '#0a1628' }}
+        style={{ background: '#0c1929' }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/voyager_nolabels/{z}/{x}/{y}{r}.png"
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
           maxZoom={10}
           minZoom={2}
         />
@@ -38,20 +37,19 @@ export function CommunityMap({ ports }: CommunityMapProps) {
           <CircleMarker
             key={`${port.city}-${port.country}-${idx}`}
             center={[port.latitude, port.longitude]}
-            radius={3}
+            radius={4}
             pathOptions={{
-              color: '#C4A265',
+              color: '#d4a84b',
               fillColor: '#C4A265',
-              fillOpacity: 0.6,
-              weight: 0.5,
-              opacity: 0.8,
+              fillOpacity: 0.85,
+              weight: 1,
+              opacity: 1,
             }}
           >
           </CircleMarker>
         ))}
       </MapContainer>
 
-      {/* Counter overlay */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] text-center">
         <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#C4A265]/80">
           28 waypoints · {ports.length} {ports.length === 1 ? 'port' : 'ports'} reached · One atlas
