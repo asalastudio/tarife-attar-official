@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, CaretDown, MagnifyingGlass, Sparkle, BookOpen } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
-import { useQuery } from "convex/react";
 import React from "react";
 
 function AccordionItem({

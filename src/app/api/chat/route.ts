@@ -1,4 +1,4 @@
-import { openai } from '@ai-sdk/openai';
+import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
 
 // Allow streaming responses up to 30 seconds
@@ -51,11 +51,11 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // Check for OpenAI API key
-    if (!process.env.OPENAI_API_KEY) {
+    // Check for Google Gemini API key
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
       return new Response(
         JSON.stringify({ 
-          error: 'OpenAI API key not configured. Please add OPENAI_API_KEY to your environment variables.' 
+          error: 'Google API key not configured. Please add GOOGLE_GENERATIVE_AI_API_KEY to your environment variables.' 
         }),
         { 
           status: 500, 
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
     }
 
     const result = streamText({
-      model: openai('gpt-4o-mini'),
+      model: google('gemini-2.5-flash'),
       system: ATLAS_SYSTEM_PROMPT,
       messages,
       temperature: 0.7,

@@ -1,22 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useChat } from "@/context/ChatContext";
 import { Sparkle, X, ChatCircle, ArrowRight, CircleNotch } from "@phosphor-icons/react";
-import { useMutation, useQuery } from "convex/react";
 
 export function ChatPanel() {
   const { isChatOpen, toggleChat, closeChat } = useChat();
   const [message, setMessage] = useState("");
-  const [ticketId, setTicketId] = useState<string | null>(null);
 
-  // 1) Define typical strings for Eleanor (You can rename these in your Convex code)
-  const createTicket = useMutation("tickets:createTicket" as any);
-  const addMessage = useMutation("tickets:addMessage" as any);
-  const serverMessages = useQuery("tickets:getMessages" as any, ticketId ? { ticketId } : "skip");
-
-  // Local fallback state until server resolves
   const [localMessages, setLocalMessages] = useState<{role: "user" | "assistant", content: string}[]>([
     {
       role: "assistant",
@@ -26,10 +18,8 @@ export function ChatPanel() {
 
   const [isSending, setIsSending] = useState(false);
 
-  // Merge the server states and local state in real usage
-  const displayMessages = serverMessages && Array.isArray(serverMessages) && serverMessages.length > 0 
-    ? serverMessages // map to local representation if structural diff exists
-    : localMessages;
+  // Use local state directly for Vercel AI SDK integration
+  const displayMessages = localMessages;
 
   const handleSend = async () => {
     if (!message.trim()) return;
@@ -41,31 +31,66 @@ export function ChatPanel() {
     setIsSending(true);
 
     try {
-      let activeTicketId = ticketId;
-      
-      // If we don't have a ticket yet, create one
-      if (!activeTicketId) {
-        const result = await createTicket({
-          brandId: "tarifeattar",
-          channel: "chat",
-          subject: "Website Widget Customer"
-        });
-        activeTicketId = typeof result === "object" ? result._id : result;
-        setTicketId(activeTicketId);
-      }
-
-      // Add the message
-      await addMessage({
-        brandId: "tarifeattar",
-        ticketId: activeTicketId,
-        senderType: "customer",
-        senderName: "Website Visitor",
-        content,
-        channel: "chat"
+      // 1) Send request to our Next.js API route powered by Gemini/OpenAI
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [...localMessages, { role: 'user', content }]
+        }),
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to fetch response');
+      }
+
+      // 2) Handle the streaming response
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      
+      if (!reader) throw new Error('No reader available');
+
+      // Add a placeholder message for the assistant
+      setLocalMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+      // Scroll to bottom logic
+      setTimeout(() => {
+        const scrollContainer = document.querySelector('.overflow-y-auto');
+        if (scrollContainer) {
+          scrollContainer.scrollTop = scrollContainer.scrollHeight;
+        }
+      }, 50);
+
+      let assistantMessage = "";
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        assistantMessage += chunk;
+        
+        // Update the last message (the assistant's response) with the new chunk
+        setLocalMessages((prev) => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1].content = assistantMessage;
+          return newMessages;
+        });
+
+        // Scroll to bottom logic on each chunk
+        const scrollContainer = document.querySelector('.overflow-y-auto');
+        if (scrollContainer) {
+          scrollContainer.scrollTop = scrollContainer.scrollHeight;
+        }
+      }
+
     } catch (e) {
-      console.error("Failed to push to Eleanor:", e);
+      console.error("Failed to fetch chat response:", e);
+      // Remove the optimistic user message if it failed, or add an error message
+      setLocalMessages((prev) => [
+        ...prev, 
+        { role: "assistant", content: "I apologize, but I am currently unavailable. Please try again later." }
+      ]);
     } finally {
       setIsSending(false);
     }
