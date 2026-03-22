@@ -21,7 +21,7 @@ const nextConfig = {
   },
   // Improve build performance
   experimental: {
-    optimizePackageImports: ["@phosphor-icons/react", "framer-motion"],
+    optimizePackageImports: ["framer-motion"],
   },
   
   // =========================================================================
