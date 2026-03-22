@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, MapPin, User, Navigation } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, User, NavigationArrow } from "@phosphor-icons/react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { PortableText } from '@portabletext/react';
@@ -185,7 +185,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                         onClick={() => router.push('/field-journal')}
                         className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                     >
-                        <ArrowLeft className="w-4 h-4" />
+                        <ArrowLeft weight="thin" className="w-4 h-4" />
                         <span className="hidden sm:inline">Back to Journal</span>
                     </button>
                     <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
@@ -233,7 +233,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                     <>
                                         <span className="text-theme-charcoal/20">•</span>
                                         <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/50">
-                                            <MapPin className="w-3 h-3" />
+                                            <MapPin weight="thin" className="w-3 h-3" />
                                             {entry.expeditionData.locationName}
                                         </span>
                                     </>
@@ -242,7 +242,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                     <>
                                         <span className="text-theme-charcoal/20">•</span>
                                         <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/40">
-                                            <Navigation className="w-3 h-3" />
+                                            <NavigationArrow weight="thin" className="w-3 h-3" />
                                             {entry.expeditionData.gpsCoordinates.display}
                                         </span>
                                     </>
@@ -275,13 +275,13 @@ export function FieldJournalEntryClient({ entry }: Props) {
                         <div className="flex flex-wrap items-center gap-6 text-theme-charcoal/50 pb-8 border-b border-theme-charcoal/10">
                             {entry.author && (
                                 <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
-                                    <User className="w-3.5 h-3.5" />
+                                    <User weight="thin" className="w-3.5 h-3.5" />
                                     {AUTHOR_LABELS[entry.author] || entry.author}
                                 </span>
                             )}
                             {entry.publishedAt && (
                                 <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
-                                    <Calendar className="w-3.5 h-3.5" />
+                                    <Calendar weight="thin" className="w-3.5 h-3.5" />
                                     {formatDate(entry.publishedAt)}
                                 </span>
                             )}
@@ -441,7 +441,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                             href="/field-journal"
                             className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50 hover:text-theme-gold transition-colors"
                         >
-                            <ArrowLeft className="w-4 h-4" />
+                            <ArrowLeft weight="thin" className="w-4 h-4" />
                             Back to Field Journal
                         </Link>
                     </div>

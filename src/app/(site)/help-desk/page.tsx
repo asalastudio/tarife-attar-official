@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ChevronDown, Search, Sparkles, BookOpen } from "lucide-react";
+import { ArrowLeft, CaretDown, MagnifyingGlass, Sparkle, BookOpen } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
 import { useQuery } from "convex/react";
 import React from "react";
@@ -39,7 +39,7 @@ function AccordionItem({
               isOpen ? "text-theme-gold" : "text-theme-industrial"
             }`}
           >
-            <BookOpen className="w-4 h-4" />
+            <BookOpen weight="thin" className="w-4 h-4" />
           </span>
           <h2
             className={`text-xl md:text-2xl font-serif italic tracking-tight transition-colors duration-300 ${
@@ -56,7 +56,7 @@ function AccordionItem({
             isOpen ? "text-theme-gold" : "text-theme-industrial"
           }`}
         >
-          <ChevronDown className="w-5 h-5" />
+          <CaretDown weight="thin" className="w-5 h-5" />
         </motion.div>
       </button>
 
@@ -128,11 +128,11 @@ export default function HelpDeskPage() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
           <span className="font-mono text-[10px] uppercase tracking-[0.6em] opacity-40 flex items-center gap-2">
-            <Sparkles className="w-3 h-3 text-theme-gold" /> Protocol: Elennor
+            <Sparkle weight="thin" className="w-3 h-3 text-theme-gold" /> Protocol: Elennor
           </span>
         </div>
       </header>
@@ -150,7 +150,7 @@ export default function HelpDeskPage() {
               Knowledge Base
             </h1>
             <p className="text-sm font-mono uppercase tracking-[0.3em] opacity-60 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-theme-gold" />
+              <Sparkle weight="thin" className="w-4 h-4 text-theme-gold" />
               Living Archive · Powered by Eleanor
             </p>
           </motion.div>
@@ -162,7 +162,7 @@ export default function HelpDeskPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="relative mb-12"
           >
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 opacity-40" />
+            <MagnifyingGlass weight="thin" className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 opacity-40" />
             <input
               type="text"
               placeholder="Search specific formulations, ingredients, or policies..."
@@ -177,13 +177,13 @@ export default function HelpDeskPage() {
             {articles === undefined ? (
               // Loading State while fetching from Convex
               <div className="py-20 text-center flex flex-col items-center justify-center opacity-50 animate-pulse">
-                <Sparkles className="w-6 h-6 mb-4 text-theme-gold" />
+                <Sparkle weight="thin" className="w-6 h-6 mb-4 text-theme-gold" />
                 <p className="font-mono text-xs uppercase tracking-widest text-theme-charcoal">Consulting Elennor...</p>
               </div>
             ) : dynamicArticles.length === 0 ? (
               // Empty State before any articles are generated
               <div className="py-20 text-center flex flex-col items-center justify-center opacity-60">
-                <BookOpen className="w-10 h-10 mb-4 opacity-20" />
+                <BookOpen weight="thin" className="w-10 h-10 mb-4 opacity-20" />
                 <p className="font-serif text-xl italic mb-2">The archive is currently awaiting new inquiries.</p>
                 <p className="text-sm font-mono opacity-60 uppercase tracking-widest max-w-sm leading-relaxed mx-auto">
                   As our concierge answers novel questions, this repository will autonomously populate. Use the sidecar to ask Eleanor a question.

@@ -1,4 +1,4 @@
-import { BookOpenIcon } from 'lucide-react';
+import { BookOpen } from "@phosphor-icons/react";
 import { sensoryLexiconValidation } from '../validation/sensoryLexicon';
 
 type SanityRule = {
@@ -12,7 +12,7 @@ export const fieldJournalSchema = {
     name: 'fieldJournal',
     title: 'Field Journal',
     type: 'document',
-    icon: BookOpenIcon, // lucide-react
+    icon: BookOpen, // @phosphor-icons/react
     groups: [
         { name: 'content', title: 'Content', default: true },
         { name: 'expedition', title: 'Expedition Data' },

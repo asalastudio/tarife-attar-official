@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Compass, MapPin, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Compass, MapPin, Sparkle } from "@phosphor-icons/react";
 import { GlobalFooter } from '@/components/navigation';
 
 /**
@@ -245,7 +245,7 @@ export function TerritoryQuizClient() {
             onClick={() => router.push('/')}
             className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="hidden sm:inline">Back to Site</span>
           </button>
           
@@ -286,7 +286,7 @@ export function TerritoryQuizClient() {
                   transition={{ delay: 0.2, duration: 0.6 }}
                   className="w-20 h-20 mx-auto mb-8 rounded-full bg-theme-charcoal/5 flex items-center justify-center"
                 >
-                  <Compass className="w-10 h-10 text-theme-gold" strokeWidth={1} />
+                  <Compass weight="thin" className="w-10 h-10 text-theme-gold" strokeWidth={1} />
                 </motion.div>
 
                 <motion.span
@@ -339,7 +339,7 @@ export function TerritoryQuizClient() {
                   className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-sm uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors"
                 >
                   Begin Your Journey
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight weight="thin" className="w-4 h-4" />
                 </motion.button>
               </div>
             </motion.div>
@@ -410,7 +410,7 @@ export function TerritoryQuizClient() {
                     className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-sm uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Continue
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight weight="thin" className="w-4 h-4" />
                   </button>
                 </motion.form>
               </div>
@@ -483,7 +483,7 @@ export function TerritoryQuizClient() {
                     transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
                     className="w-16 h-16 mx-auto mb-6 rounded-full bg-white/20 flex items-center justify-center"
                   >
-                    <MapPin className="w-8 h-8 text-white" strokeWidth={1.5} />
+                    <MapPin weight="thin" className="w-8 h-8 text-white" strokeWidth={1.5} />
                   </motion.div>
 
                   <motion.span
@@ -537,7 +537,7 @@ export function TerritoryQuizClient() {
                     {!emailSubmitted ? (
                       <>
                         <div className="flex items-center justify-center gap-2 mb-4">
-                          <Sparkles className="w-5 h-5 text-theme-gold" />
+                          <Sparkle weight="thin" className="w-5 h-5 text-theme-gold" />
                           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-theme-gold">
                             Save Your Profile
                           </span>
@@ -607,7 +607,7 @@ export function TerritoryQuizClient() {
                       className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-theme-charcoal/20 font-mono text-sm uppercase tracking-[0.15em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-colors"
                     >
                       Explore {resultTerritory.name}
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight weight="thin" className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => {

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ShoppingBag, Trash2, ExternalLink, Bookmark, Check } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Trash, ArrowSquareOut, BookmarkSimple, Check } from "@phosphor-icons/react";
 import { useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
 
@@ -190,7 +190,7 @@ export default function CartPage() {
             onClick={() => router.back()}
             className="flex items-center gap-2 md:gap-3 font-mono text-[10px] uppercase tracking-[0.3em] md:tracking-widest opacity-40 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="hidden sm:inline">Return to Gallery</span>
             <span className="sm:hidden">Back</span>
           </button>
@@ -227,7 +227,7 @@ export default function CartPage() {
 
             {items.length === 0 ? (
               <div className="text-center py-20">
-                <ShoppingBag className="w-16 h-16 mx-auto mb-8 opacity-20" />
+                <ShoppingBag weight="thin" className="w-16 h-16 mx-auto mb-8 opacity-20" />
                 <p className="font-serif italic text-xl opacity-60 mb-8">
                   Your satchel is empty
                 </p>
@@ -302,7 +302,7 @@ export default function CartPage() {
                               className="flex items-center gap-1.5 md:gap-2 font-mono text-[9px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
                               disabled={isLoading}
                             >
-                              <Trash2 className="w-3 h-3" />
+                              <Trash weight="thin" className="w-3 h-3" />
                               Remove
                             </button>
                           </div>
@@ -359,7 +359,7 @@ export default function CartPage() {
                         {isLoading ? "Syncing..." : !checkoutUrl ? "Preparing Checkout..." : (
                           <>
                             Secure Checkout
-                            <ExternalLink className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />
+                            <ArrowSquareOut weight="thin" className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />
                           </>
                         )}
                       </button>
@@ -382,7 +382,7 @@ export default function CartPage() {
                           className="mt-6 p-4 bg-theme-gold/5 border border-theme-gold/20 rounded-lg"
                         >
                           <div className="flex items-center gap-2 mb-3">
-                            <Bookmark className="w-4 h-4 text-theme-gold" />
+                            <BookmarkSimple weight="thin" className="w-4 h-4 text-theme-gold" />
                             <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-gold">
                               Save for Later
                             </span>
@@ -424,7 +424,7 @@ export default function CartPage() {
                           className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg text-center"
                         >
                           <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-green-100 flex items-center justify-center">
-                            <Check className="w-5 h-5 text-green-600" />
+                            <Check weight="thin" className="w-5 h-5 text-green-600" />
                           </div>
                           <p className="font-serif text-sm text-green-800">
                             Satchel saved! We'll send you a reminder.

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, MessageCircle } from "lucide-react";
+import { ArrowLeft, ChatCircle } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
 
 export default function ConsultPage() {
@@ -16,7 +16,7 @@ export default function ConsultPage() {
           onClick={() => router.push("/")}
           className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft weight="thin" className="w-4 h-4" />
           Return to Threshold
         </button>
       </header>
@@ -34,7 +34,7 @@ export default function ConsultPage() {
             transition={{ duration: 3, repeat: Infinity }}
             className="inline-block mb-8"
           >
-            <MessageCircle className="w-16 h-16 text-theme-gold" />
+            <ChatCircle weight="thin" className="w-16 h-16 text-theme-gold" />
           </motion.div>
           
           <span className="font-mono text-[10px] uppercase tracking-[0.8em] opacity-40 mb-6 block">

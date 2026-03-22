@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { X, MapPin, Sparkles, Loader2, Plus, Minus } from 'lucide-react';
+import { X, MapPin, Sparkle, CircleNotch, Plus, Minus } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
@@ -93,7 +93,7 @@ function CustomZoomControl({ isPanelOpen }: { isPanelOpen: boolean }) {
         className="w-8 h-8 flex items-center justify-center text-[#C4A265] hover:bg-[#C4A265]/10 hover:text-[#d4b57e] rounded transition-colors"
         aria-label="Zoom in"
       >
-        <Plus size={18} />
+        <Plus weight="thin" size={18} />
       </button>
       <div className="w-5 h-px bg-[#C4A265]/20 mx-auto"></div>
       <button
@@ -101,7 +101,7 @@ function CustomZoomControl({ isPanelOpen }: { isPanelOpen: boolean }) {
         className="w-8 h-8 flex items-center justify-center text-[#C4A265] hover:bg-[#C4A265]/10 hover:text-[#d4b57e] rounded transition-colors"
         aria-label="Zoom out"
       >
-        <Minus size={18} />
+        <Minus weight="thin" size={18} />
       </button>
     </div>
   );
@@ -284,7 +284,7 @@ export function AtlasMapLeaflet() {
                 onClick={() => setSelectedWaypoint(null)}
                 className="absolute top-6 right-6 text-[#F5F0EB]/50 hover:text-[#C4A265] transition-colors"
               >
-                <X size={24} />
+                <X weight="thin" size={24} />
               </button>
 
               <div className="mt-12 mb-6">
@@ -312,7 +312,7 @@ export function AtlasMapLeaflet() {
 
               <div className="space-y-4 font-mono text-xs tracking-widest text-[#F5F0EB]/60 uppercase mb-10">
                 <div className="flex items-center gap-3">
-                  <MapPin size={14} className="text-[#C4A265]" />
+                  <MapPin weight="thin" size={14} className="text-[#C4A265]" />
                   <span>
                     {Math.abs(selectedWaypoint.lat).toFixed(4)}° {selectedWaypoint.lat >= 0 ? 'N' : 'S'},{' '}
                     {Math.abs(selectedWaypoint.lng).toFixed(4)}° {selectedWaypoint.lng >= 0 ? 'E' : 'W'}
@@ -328,7 +328,7 @@ export function AtlasMapLeaflet() {
               {process.env.NEXT_PUBLIC_GEMINI_API_KEY && (
                 <div className="bg-[#C4A265]/5 border border-[#C4A265]/20 rounded p-5 relative overflow-hidden">
                   <div className="flex items-center gap-2 mb-3">
-                    <Sparkles size={14} className="text-[#C4A265]" />
+                    <Sparkle weight="thin" size={14} className="text-[#C4A265]" />
                     <h3 className="font-serif text-[#C4A265] tracking-widest text-sm uppercase">Ask the Atlas</h3>
                   </div>
 
@@ -348,7 +348,7 @@ export function AtlasMapLeaflet() {
 
                   {isLoadingGemini && (
                     <div className="flex items-center gap-3 text-[#C4A265]/70 py-4">
-                      <Loader2 size={16} className="animate-spin" />
+                      <CircleNotch weight="thin" size={16} className="animate-spin" />
                       <span className="font-serif text-sm">Consulting the archives...</span>
                     </div>
                   )}

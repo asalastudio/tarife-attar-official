@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, User } from 'lucide-react';
+import { ArrowLeft, Calendar, User } from "@phosphor-icons/react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { PortableText } from '@portabletext/react';
@@ -118,7 +118,7 @@ export function JournalEntryClient({ entry }: Props) {
             onClick={() => router.push('/journal')}
             className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="hidden sm:inline">Back to Journal</span>
           </button>
           <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
@@ -181,13 +181,13 @@ export function JournalEntryClient({ entry }: Props) {
             <div className="flex flex-wrap items-center gap-6 text-theme-charcoal/50 pb-8 border-b border-theme-charcoal/10">
               {entry.author && (
                 <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
-                  <User className="w-3.5 h-3.5" />
+                  <User weight="thin" className="w-3.5 h-3.5" />
                   {entry.author}
                 </span>
               )}
               {entry.publishedAt && (
                 <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
-                  <Calendar className="w-3.5 h-3.5" />
+                  <Calendar weight="thin" className="w-3.5 h-3.5" />
                   {formatDate(entry.publishedAt)}
                 </span>
               )}
@@ -264,7 +264,7 @@ export function JournalEntryClient({ entry }: Props) {
               href="/journal"
               className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50 hover:text-theme-gold transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft weight="thin" className="w-4 h-4" />
               Back to Journal
             </Link>
           </div>

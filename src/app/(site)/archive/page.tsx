@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Archive } from "lucide-react";
+import { ArrowLeft, Archive } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
 
 export default function ArchivePage() {
@@ -17,7 +17,7 @@ export default function ArchivePage() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
           <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-theme-gold">
@@ -34,7 +34,7 @@ export default function ArchivePage() {
           transition={{ duration: 0.8 }}
           className="max-w-2xl text-center"
         >
-          <Archive className="w-12 h-12 text-theme-gold mx-auto mb-8" />
+          <Archive weight="thin" className="w-12 h-12 text-theme-gold mx-auto mb-8" />
           
           <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-8">
             The Archive

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "@phosphor-icons/react";
 
 export default function ProductNotFound() {
   return (
@@ -15,7 +15,7 @@ export default function ProductNotFound() {
           href="/atlas"
           className="inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft weight="thin" className="w-4 h-4" />
           Return to Collections
         </Link>
       </div>

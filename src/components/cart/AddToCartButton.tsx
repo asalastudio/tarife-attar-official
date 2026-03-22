@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check } from "@phosphor-icons/react";
 import { useShopifyCart } from "@/context/ShopifyCartContext";
 import { triggerEssenceDrop } from "@/components/cart/Satchel";
 
@@ -95,7 +95,7 @@ export function AddToCartButton({
             exit={{ y: -20, opacity: 0 }}
             className="flex items-center gap-2"
           >
-            <Check className="w-5 h-5" />
+            <Check weight="thin" className="w-5 h-5" />
             <span>Added</span>
           </motion.div>
         ) : (

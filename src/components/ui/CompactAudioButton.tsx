@@ -2,7 +2,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause } from "@phosphor-icons/react";
 
 interface CompactAudioButtonProps {
     isPlaying: boolean;
@@ -58,7 +58,7 @@ export const CompactAudioButton = ({
                         exit={{ scale: 0, opacity: 0 }}
                         transition={{ duration: 0.15 }}
                     >
-                        <Pause className="w-4 h-4" />
+                        <Pause weight="thin" className="w-4 h-4" />
                     </motion.div>
                 ) : (
                     <motion.div
@@ -68,7 +68,7 @@ export const CompactAudioButton = ({
                         exit={{ scale: 0, opacity: 0 }}
                         transition={{ duration: 0.15 }}
                     >
-                        <Play className="w-4 h-4 ml-0.5" />
+                        <Play weight="thin" className="w-4 h-4 ml-0.5" />
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Send, CheckCircle, Mail, Paperclip, X } from "lucide-react";
+import { ArrowLeft, PaperPlaneRight, CheckCircle, Envelope, Paperclip, X } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -160,7 +160,7 @@ export default function SupportPage() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft weight="thin" className="w-5 h-5" />
             Return
           </button>
           <span className="font-mono text-xs font-semibold uppercase tracking-[0.6em] opacity-60">
@@ -193,7 +193,7 @@ export default function SupportPage() {
                   }}
                   className="inline-flex items-center justify-center w-16 h-16 rounded-full border-2 border-theme-gold/30 mb-8"
                 >
-                  <CheckCircle className="w-8 h-8 text-theme-gold" />
+                  <CheckCircle weight="thin" className="w-8 h-8 text-theme-gold" />
                 </motion.div>
                 <h2 className="text-3xl md:text-4xl font-serif italic tracking-tight mb-4">
                   Message Received
@@ -393,13 +393,13 @@ export default function SupportPage() {
                             htmlFor="support-attachment"
                             className="inline-flex items-center gap-2 cursor-pointer font-mono text-xs font-semibold uppercase tracking-wider text-theme-industrial hover:text-theme-charcoal transition-colors p-2 -ml-2 rounded-sm"
                           >
-                            <Paperclip className="w-4 h-4" />
+                            <Paperclip weight="thin" className="w-4 h-4" />
                             Attach an image (Max 3MB)
                           </label>
                         </div>
                       ) : (
                         <div className="inline-flex items-center gap-3 px-3 py-2 bg-theme-charcoal/5 border border-theme-charcoal/10 rounded-sm">
-                          <Paperclip className="w-3.5 h-3.5 text-theme-industrial" />
+                          <Paperclip weight="thin" className="w-3.5 h-3.5 text-theme-industrial" />
                           <span className="font-mono text-xs font-medium text-theme-charcoal/80 max-w-[200px] truncate">
                             {formData.attachmentName}
                           </span>
@@ -409,7 +409,7 @@ export default function SupportPage() {
                             className="p-1 hover:bg-theme-charcoal/10 rounded-[2px] transition-colors"
                             aria-label="Remove attachment"
                           >
-                            <X className="w-3.5 h-3.5 text-theme-charcoal/60" />
+                            <X weight="thin" className="w-3.5 h-3.5 text-theme-charcoal/60" />
                           </button>
                         </div>
                       )}
@@ -441,7 +441,7 @@ export default function SupportPage() {
                       </motion.span>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" />
+                        <PaperPlaneRight weight="thin" className="w-4 h-4" />
                         Send Message
                       </>
                     )}
@@ -456,7 +456,7 @@ export default function SupportPage() {
                   className="mt-12 pt-8 border-t border-theme-charcoal/10"
                 >
                   <div className="flex items-start gap-4 text-theme-charcoal/80">
-                    <Mail className="w-5 h-5 text-theme-gold opacity-80 shrink-0" />
+                    <Envelope weight="thin" className="w-5 h-5 text-theme-gold opacity-80 shrink-0" />
                     <p className="text-base font-medium leading-relaxed">
                       You can also reach us via Etsy messaging or email at{" "}
                       <a

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag } from "@phosphor-icons/react";
 import { useShopifyCart } from '@/context/ShopifyCartContext';
 import { EssenceDrop, SatchelImpact } from './EssenceDrop';
 import { useRouter } from 'next/navigation';
@@ -174,7 +174,7 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
             whileTap={{ scale: 0.95 }}
             aria-label={`Shopping satchel with ${itemCount} items`}
           >
-            <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" />
+            <ShoppingBag weight="thin" className="w-5 h-5 md:w-6 md:h-6" />
 
             {/* Item Count Badge */}
             <AnimatePresence>

@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Search, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowLeft, MagnifyingGlass, ArrowRight, Sparkle } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
 
 // ─── Territory Data ─────────────────────────────────────────────────────────
@@ -37,12 +37,12 @@ const TERRITORIES: Territory[] = [
     textColor: "text-[#D4854A]",
     fragrances: [
       { legacyName: "Oud Fire", atlasName: "ADEN", scentNotes: "Warm oud, fire-roasted amber", inspiredBy: "Yemen" },
-      { legacyName: "Frankincense & Myrrh", atlasName: "ETHIOPIA", scentNotes: "Ethiopian incense, highland spice", inspiredBy: "Ethiopia" },
+      { legacyName: null, atlasName: "BEIRUT", scentNotes: "Blood mandarin, cinnamon, leather, amber", inspiredBy: "Lebanon" },
       { legacyName: "Granada Amber", atlasName: "GRANADA", scentNotes: "Spanish amber, Moorish garden", inspiredBy: "Spain" },
-      { legacyName: "Teeb Musk", atlasName: "NIZWA", scentNotes: "Arabian musk, traditional teeb blend", inspiredBy: "Oman" },
-      { legacyName: "Honey Oudh", atlasName: "PETRA", scentNotes: "Raw honey, aged oud, desert spice", inspiredBy: "Jordan" },
+      { legacyName: "Teeb Musk", atlasName: "TARIFA", scentNotes: "White flowers, jasmine, powdery musk", inspiredBy: "Spain" },
+      { legacyName: "Honey Oud", atlasName: "SAANA", scentNotes: "Honey, cinnamon, leather, oud", inspiredBy: "Yemen" },
       { legacyName: "Black Musk", atlasName: "SERENGETI", scentNotes: "Dark musk, ancient resin, deep gravity", inspiredBy: "Tanzania" },
-      { legacyName: "Vanilla Sands", atlasName: "ZANZIBAR", scentNotes: "Madagascar vanilla, golden sandalwood", inspiredBy: "Tanzania" },
+      { legacyName: "Vanilla Sands", atlasName: "MALABAR", scentNotes: "Vanilla, caramel, warm amber, musk", inspiredBy: "India" },
     ],
   },
   {
@@ -57,7 +57,7 @@ const TERRITORIES: Territory[] = [
       { legacyName: "Coconut Jasmine", atlasName: "BAHIA", scentNotes: "Brazilian coast, jasmine, warm coconut", inspiredBy: "Brazil" },
       { legacyName: "Blue Oud", atlasName: "BAHRAIN", scentNotes: "Pearl diver's musk, gulf breeze", inspiredBy: "Bahrain" },
       { legacyName: "Del Mare", atlasName: "BIG SUR", scentNotes: "Pacific coast, salt mist, wild cliffs", inspiredBy: "California" },
-      { legacyName: "China Rain", atlasName: "KYOTO", scentNotes: "Rain-washed stone, green tea", inspiredBy: "Japan" },
+      { legacyName: "China Rain", atlasName: "MEISHAN", scentNotes: "Green notes, white lily, musk", inspiredBy: "China" },
       { legacyName: null, atlasName: "MONACO", scentNotes: "Mediterranean luxury, coastal elegance", inspiredBy: "Monaco" },
       { legacyName: "Dubai Musk", atlasName: "TANGIERS", scentNotes: "Airy white musk, mustahara", inspiredBy: "Morocco" },
       { legacyName: null, atlasName: "TIGRIS", scentNotes: "Ancient river, flowing aquatic musk", inspiredBy: "Iraq" },
@@ -72,9 +72,9 @@ const TERRITORIES: Territory[] = [
     bgColor: "bg-[#C4788A]",
     textColor: "text-[#C4788A]",
     fragrances: [
-      { legacyName: "White Amber", atlasName: "AMER", scentNotes: "Soft amber, warm skin scent", inspiredBy: "Rajasthan, India" },
+      { legacyName: "White Amber", atlasName: "CARMEL", scentNotes: "Warm amber, clean musk, light skin accord", inspiredBy: "California" },
       { legacyName: "Turkish Rose", atlasName: "DAMASCUS", scentNotes: "Damask rose, Turkish rosewater", inspiredBy: "Syria" },
-      { legacyName: "Arabian Jasmine", atlasName: "GRASSE", scentNotes: "Pure jasmine sambac", inspiredBy: "France" },
+      { legacyName: "Arabian Jasmine", atlasName: "TOBAGO", scentNotes: "Jasmine sambac, sweet floral, soft musk", inspiredBy: "Tobago" },
       { legacyName: "Peach Memoir", atlasName: "KANDY", scentNotes: "Soft peach, velvety musk", inspiredBy: "Sri Lanka" },
       { legacyName: "Himalayan Musk", atlasName: "MANALI", scentNotes: "High-altitude musk, clean skin", inspiredBy: "India" },
       { legacyName: "Musk Tahara", atlasName: "MEDINA", scentNotes: "Traditional purification musk", inspiredBy: "Saudi Arabia" },
@@ -96,7 +96,7 @@ const TERRITORIES: Territory[] = [
       { legacyName: "Black Oud", atlasName: "RIYADH", scentNotes: "Arabian oud, noble wood", inspiredBy: "Saudi Arabia" },
       { legacyName: "Oud Aura", atlasName: "SAMARKAND", scentNotes: "Royal oud, ceremonial wood", inspiredBy: "Uzbekistan" },
       { legacyName: "Sicilian Oudh", atlasName: "SICILY", scentNotes: "Citrus grove, Mediterranean oud", inspiredBy: "Italy" },
-      { legacyName: "Spanish Sandalwood", atlasName: "TULUM", scentNotes: "Creamy sandalwood, smooth skin scent", inspiredBy: "Mexico" },
+      { legacyName: "Spanish Sandalwood", atlasName: "HUDSON", scentNotes: "Sandalwood, cedar, leather, musk", inspiredBy: "New York" },
     ],
   },
 ];
@@ -138,7 +138,7 @@ export default function NameChangePage() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft weight="thin" className="w-5 h-5" />
             Return
           </button>
           <span className="font-mono text-xs font-semibold uppercase tracking-[0.6em] opacity-60">
@@ -179,7 +179,7 @@ export default function NameChangePage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="relative"
             >
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-theme-industrial" />
+              <MagnifyingGlass weight="thin" className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-theme-industrial" />
               <input
                 type="text"
                 placeholder="Search by old name, new name, or scent notes..."
@@ -279,7 +279,7 @@ export default function NameChangePage() {
                               <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider leading-tight font-semibold"
                                 style={{ color: territory.color }}
                               >
-                                <Sparkles className="w-3.5 h-3.5" />
+                                <Sparkle weight="thin" className="w-3.5 h-3.5" />
                                 New to the Atlas
                               </span>
                             )}
@@ -288,7 +288,7 @@ export default function NameChangePage() {
                           {/* Arrow + Atlas Name */}
                           <div className="flex items-center gap-3 mb-3">
                             {fragrance.legacyName && (
-                              <ArrowRight className="w-4 h-4 text-theme-gold opacity-80" />
+                              <ArrowRight weight="thin" className="w-4 h-4 text-theme-gold opacity-80" />
                             )}
                             <h3 className="text-3xl font-serif italic tracking-wide">
                               {fragrance.atlasName}
@@ -331,7 +331,7 @@ export default function NameChangePage() {
                 className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-mono text-xs font-semibold uppercase tracking-[0.3em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
               >
                 Browse the Atlas
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight weight="thin" className="w-5 h-5" />
               </button>
             </div>
           </motion.div>

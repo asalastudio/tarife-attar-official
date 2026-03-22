@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, MapPin, Compass } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, Compass } from "@phosphor-icons/react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
@@ -90,7 +90,7 @@ export function FieldJournalClient({ entries }: Props) {
                         onClick={() => router.push('/')}
                         className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                     >
-                        <ArrowLeft className="w-4 h-4" />
+                        <ArrowLeft weight="thin" className="w-4 h-4" />
                         <span className="hidden sm:inline">Back to Site</span>
                     </button>
                     <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
@@ -148,7 +148,7 @@ export function FieldJournalClient({ entries }: Props) {
                 <div className="max-w-[1400px] mx-auto">
                     {filteredEntries.length === 0 ? (
                         <div className="py-20 text-center">
-                            <Compass className="w-12 h-12 mx-auto mb-4 opacity-20" />
+                            <Compass weight="thin" className="w-12 h-12 mx-auto mb-4 opacity-20" />
                             <p className="font-serif italic text-xl text-theme-charcoal/40">
                                 No dispatches from this territory yet.
                             </p>
@@ -226,13 +226,13 @@ export function FieldJournalClient({ entries }: Props) {
                                                 <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-theme-charcoal/5 text-theme-charcoal/40">
                                                     {entry.locationName && (
                                                         <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest">
-                                                            <MapPin className="w-3 h-3" />
+                                                            <MapPin weight="thin" className="w-3 h-3" />
                                                             {entry.locationName}
                                                         </span>
                                                     )}
                                                     {entry.publishedAt && (
                                                         <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest">
-                                                            <Calendar className="w-3 h-3" />
+                                                            <Calendar weight="thin" className="w-3 h-3" />
                                                             {formatDate(entry.publishedAt)}
                                                         </span>
                                                     )}

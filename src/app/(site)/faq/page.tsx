@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ChevronDown, Package, Truck, RotateCcw, Map, HelpCircle, Droplets } from "lucide-react";
+import { ArrowLeft, CaretDown, Package, Truck, ArrowCounterClockwise, MapTrifold, Question, Drop } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
 
 // ─── FAQ Data ───────────────────────────────────────────────────────────────
@@ -19,7 +19,7 @@ const FAQ_SECTIONS: FAQSection[] = [
   {
     id: "shipping",
     title: "Shipping",
-    icon: <Truck className="w-4 h-4" />,
+    icon: <Truck weight="thin" className="w-4 h-4" />,
     content: (
       <div className="space-y-4">
         <p className="text-lg opacity-90">Orders ship within 1–2 business days via USPS.</p>
@@ -61,7 +61,7 @@ const FAQ_SECTIONS: FAQSection[] = [
   {
     id: "tracking",
     title: "Order Tracking",
-    icon: <Package className="w-4 h-4" />,
+    icon: <Package weight="thin" className="w-4 h-4" />,
     content: (
       <div className="space-y-4">
         <p className="text-lg opacity-90">
@@ -95,7 +95,7 @@ const FAQ_SECTIONS: FAQSection[] = [
   {
     id: "returns",
     title: "Returns & Exchanges",
-    icon: <RotateCcw className="w-4 h-4" />,
+    icon: <ArrowCounterClockwise weight="thin" className="w-4 h-4" />,
     content: (
       <div className="space-y-4">
         <ul className="space-y-3 text-lg opacity-90">
@@ -136,7 +136,7 @@ const FAQ_SECTIONS: FAQSection[] = [
   {
     id: "territories",
     title: "What Are the Territories?",
-    icon: <Map className="w-4 h-4" />,
+    icon: <MapTrifold weight="thin" className="w-4 h-4" />,
     content: (
       <div className="space-y-5">
         <p className="text-lg opacity-90">
@@ -208,7 +208,7 @@ const FAQ_SECTIONS: FAQSection[] = [
   {
     id: "name-change",
     title: "Why Did the Names Change?",
-    icon: <HelpCircle className="w-4 h-4" />,
+    icon: <Question weight="thin" className="w-4 h-4" />,
     content: (
       <div className="space-y-4">
         <p className="text-lg opacity-90 leading-relaxed">
@@ -229,7 +229,7 @@ const FAQ_SECTIONS: FAQSection[] = [
   {
     id: "application",
     title: "How to Apply Perfume Oil",
-    icon: <Droplets className="w-4 h-4" />,
+    icon: <Drop weight="thin" className="w-4 h-4" />,
     content: (
       <div className="space-y-4">
         <ul className="space-y-3 text-lg opacity-90">
@@ -307,7 +307,7 @@ function AccordionItem({
             isOpen ? "text-theme-gold" : "text-theme-industrial"
           }`}
         >
-          <ChevronDown className="w-5 h-5" />
+          <CaretDown weight="thin" className="w-5 h-5" />
         </motion.div>
       </button>
 
@@ -357,7 +357,7 @@ export default function FAQPage() {
             onClick={() => router.push("/")}
             className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
           <span className="font-mono text-[10px] uppercase tracking-[0.6em] opacity-40">

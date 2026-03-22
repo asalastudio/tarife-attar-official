@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "@/context/ChatContext";
-import { Sparkles, X, MessageSquare, ArrowRight, Loader2 } from "lucide-react";
+import { Sparkle, X, ChatCircle, ArrowRight, CircleNotch } from "@phosphor-icons/react";
 import { useMutation, useQuery } from "convex/react";
 
 export function ChatPanel() {
@@ -96,7 +96,7 @@ export function ChatPanel() {
       <div className="flex items-center justify-between p-6 border-b border-theme-charcoal/5 bg-white/40 backdrop-blur-md shrink-0">
         <div>
           <h2 className="text-2xl font-serif italic tracking-wide text-theme-charcoal flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-theme-gold" />
+            <Sparkle weight="thin" className="w-4 h-4 text-theme-gold" />
             The Guide
           </h2>
           <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-theme-charcoal/50 mt-1">
@@ -107,7 +107,7 @@ export function ChatPanel() {
           onClick={closeChat}
           className="p-2 hover:bg-theme-charcoal/5 rounded-full transition-colors"
         >
-          <X className="w-5 h-5 opacity-60 hover:opacity-100" />
+          <X weight="thin" className="w-5 h-5 opacity-60 hover:opacity-100" />
         </button>
       </div>
 
@@ -117,7 +117,7 @@ export function ChatPanel() {
           <div key={i} className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
             {msg.role === "assistant" ? (
               <div className="w-8 h-8 rounded-full bg-theme-charcoal text-theme-gold flex items-center justify-center shrink-0">
-                <Sparkles className="w-4 h-4" />
+                <Sparkle weight="thin" className="w-4 h-4" />
               </div>
             ) : (
               <div className="w-8 h-8 rounded-full bg-theme-charcoal/10 text-theme-charcoal flex items-center justify-center shrink-0 font-serif text-xs">
@@ -164,14 +164,14 @@ export function ChatPanel() {
             className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-theme-charcoal text-theme-gold rounded-full flex items-center justify-center hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSending ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <CircleNotch weight="thin" className="w-4 h-4 animate-spin" />
             ) : (
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight weight="thin" className="w-4 h-4" />
             )}
           </button>
         </div>
         <div className="mt-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/40">
-          <MessageSquare className="w-3 h-3" />
+          <ChatCircle weight="thin" className="w-3 h-3" />
           Powered by Eleanor
         </div>
       </div>

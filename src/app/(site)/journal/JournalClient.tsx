@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar } from 'lucide-react';
+import { ArrowLeft, Calendar } from "@phosphor-icons/react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { urlForImage } from '@/sanity/lib/image';
@@ -69,7 +69,7 @@ export function JournalClient({ entries }: Props) {
             onClick={() => router.push('/')}
             className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="hidden sm:inline">Back to Site</span>
           </button>
           <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
@@ -171,7 +171,7 @@ export function JournalClient({ entries }: Props) {
                   <div className="flex items-center gap-4 text-theme-charcoal/40">
                     {featuredEntry.publishedAt && (
                       <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest">
-                        <Calendar className="w-3 h-3" />
+                        <Calendar weight="thin" className="w-3 h-3" />
                         {formatDate(featuredEntry.publishedAt)}
                       </span>
                     )}

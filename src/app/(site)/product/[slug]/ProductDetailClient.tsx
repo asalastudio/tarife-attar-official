@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Droplets, Check, AlertCircle, Map as MapIcon, Flame, Flower2, Waves, TreePine, Volume2, Play, Pause, Compass } from "lucide-react";
+import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Drop, Check, WarningCircle, MapTrifold as MapIcon, Flame, Flower, Waves, TreeEvergreen, SpeakerHigh, Play, Pause, Compass } from "@phosphor-icons/react";
 import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { useShopifyCart } from "@/context";
@@ -22,7 +22,7 @@ const WaypointMiniMap = dynamic(
     ssr: false,
     loading: () => (
       <div className="aspect-[16/9] bg-theme-charcoal/[0.03] border border-theme-charcoal/10 flex items-center justify-center">
-        <MapIcon className="w-12 h-12 opacity-[0.06]" />
+        <MapIcon weight="thin" className="w-12 h-12 opacity-[0.06]" />
       </div>
     ),
   }
@@ -151,7 +151,7 @@ const CollapsibleSection = ({
         <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold">
           {title}
         </span>
-        <Plus
+        <Plus weight="thin"
           className={`w-4 h-4 opacity-40 group-hover:opacity-70 transition-all ${isOpen ? "rotate-45" : ""}`}
         />
       </button>
@@ -291,7 +291,7 @@ const AudioNarrativeDesktop = ({
               onClick={() => handleTrackChange('journey')}
               className={`flex items-center gap-2 transition-opacity ${activeTrack === 'journey' ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
             >
-              <Compass className="w-3 h-3" />
+              <Compass weight="thin" className="w-3 h-3" />
               <span className="font-mono text-[9px] uppercase tracking-widest">The Journey</span>
             </button>
           )}
@@ -300,7 +300,7 @@ const AudioNarrativeDesktop = ({
               onClick={() => handleTrackChange('skin')}
               className={`flex items-center gap-2 transition-opacity ${activeTrack === 'skin' ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
             >
-              <Droplets className="w-3 h-3" />
+              <Drop weight="thin" className="w-3 h-3" />
               <span className="font-mono text-[9px] uppercase tracking-widest">On Skin</span>
             </button>
           )}
@@ -312,7 +312,7 @@ const AudioNarrativeDesktop = ({
           onClick={handlePlayPause}
           className="w-10 h-10 flex items-center justify-center bg-theme-charcoal text-theme-alabaster rounded-full hover:scale-105 transition-transform flex-shrink-0"
         >
-          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+          {isPlaying ? <Pause weight="thin" className="w-4 h-4" /> : <Play weight="thin" className="w-4 h-4 ml-0.5" />}
         </button>
 
         <div className="flex-1 min-w-0">
@@ -337,7 +337,7 @@ const AudioNarrativeDesktop = ({
           </div>
         </div>
 
-        <Volume2 className="w-4 h-4 opacity-40 flex-shrink-0" />
+        <SpeakerHigh weight="thin" className="w-4 h-4 opacity-40 flex-shrink-0" />
 
         <audio
           ref={audioRef}
@@ -395,7 +395,7 @@ const FieldReportImage = ({
             <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/hotspot:opacity-100 transition-all transform translate-y-2 group-hover/hotspot:translate-y-0 pointer-events-none">
               <div className="bg-theme-charcoal text-theme-alabaster px-3 py-1.5 text-[10px] uppercase tracking-widest font-mono shadow-md flex items-center gap-2">
                 <span>{hotspot.note || hotspot.product?.title}</span>
-                {hotspot.product ? <ArrowLeft className="w-2 h-2 rotate-180" /> : null}
+                {hotspot.product ? <ArrowLeft weight="thin" className="w-2 h-2 rotate-180" /> : null}
               </div>
               {/* Arrow tip */}
               <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-theme-charcoal absolute left-1/2 -translate-x-1/2 top-full" />
@@ -449,7 +449,7 @@ const TerritoryBadge = ({ territory }: { territory: string }) => {
       bg: 'bg-rose-50/80',
       border: 'border-rose-200/60',
       iconColor: 'text-rose-500',
-      Icon: Flower2
+      Icon: Flower
     },
     tidal: {
       bg: 'bg-cyan-50/80',
@@ -461,7 +461,7 @@ const TerritoryBadge = ({ territory }: { territory: string }) => {
       bg: 'bg-emerald-50/80',
       border: 'border-emerald-200/60',
       iconColor: 'text-emerald-600',
-      Icon: TreePine
+      Icon: TreeEvergreen
     },
   };
 
@@ -757,7 +757,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             href={isAtlas ? "/atlas" : "/relic"}
             className="flex items-center gap-3 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft weight="thin" className="w-4 h-4" />
             Return to {isAtlas ? "Atlas" : "Relic"}
           </Link>
           <span className="font-mono text-xs md:text-sm uppercase tracking-[0.6em] text-theme-gold">
@@ -1054,7 +1054,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       ? 'border-theme-gold bg-theme-gold/5'
                       : 'border-theme-charcoal/20 bg-theme-charcoal/[0.02]'
                       }`}>
-                      <MapPin className={`w-4 h-4 transition-colors ${showMap ? 'text-theme-gold' : 'text-theme-charcoal/50'}`} />
+                      <MapPin weight="thin" className={`w-4 h-4 transition-colors ${showMap ? 'text-theme-gold' : 'text-theme-charcoal/50'}`} />
                     </div>
                     <div className="flex-1">
                       <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-theme-gold/80 block mb-0.5">
@@ -1064,7 +1064,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         {product.atlasData.gpsCoordinates}
                       </span>
                     </div>
-                    <Plus className={`w-4 h-4 opacity-40 transition-transform ${showMap ? 'rotate-45' : ''}`} />
+                    <Plus weight="thin" className={`w-4 h-4 opacity-40 transition-transform ${showMap ? 'rotate-45' : ''}`} />
                   </button>
 
                   <AnimatePresence>
@@ -1090,7 +1090,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             />
                           ) : (
                           <div className="aspect-[16/9] bg-theme-charcoal/[0.03] border border-theme-charcoal/10 flex items-center justify-center relative">
-                            <MapIcon className="w-16 h-16 opacity-[0.06]" />
+                            <MapIcon weight="thin" className="w-16 h-16 opacity-[0.06]" />
                             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-theme-alabaster/80 to-transparent">
                               <span className="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 block">
                                 Origin · {TERRITORY_NAMES[territory || ''] || 'Unknown'} Territory
@@ -1116,7 +1116,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       className="flex flex-col gap-1 items-start font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-theme-gold transition-all"
                     >
                       <div className="flex items-center gap-2">
-                        <MapPin className={`w-4 h-4 transition-transform ${showMap ? 'scale-110 text-theme-gold' : ''}`} />
+                        <MapPin weight="thin" className={`w-4 h-4 transition-transform ${showMap ? 'scale-110 text-theme-gold' : ''}`} />
                         <span>{product.relicData.originRegion || "Rare Origin"}</span>
                       </div>
                       {product.relicData.gpsCoordinates && (
@@ -1135,7 +1135,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                           className="overflow-hidden"
                         >
                           <div className="aspect-video bg-theme-charcoal/5 border border-theme-charcoal/10 flex items-center justify-center relative group/map">
-                            <MapIcon className="w-8 h-8 opacity-10 group-hover/map:scale-110 transition-transform duration-700" />
+                            <MapIcon weight="thin" className="w-8 h-8 opacity-10 group-hover/map:scale-110 transition-transform duration-700" />
                             <div className="absolute inset-0 flex items-center justify-center">
                               <span className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-40 text-center px-6">
                                 [ Curatorial Geographic Archive Data Pending ]
@@ -1149,14 +1149,14 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 )}
                 {product.relicData.distillationYear && (
                   <div className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
-                    <Calendar className="w-4 h-4" />
+                    <Calendar weight="thin" className="w-4 h-4" />
                     Distilled {product.relicData.distillationYear}
                   </div>
                 )}
                 {product.relicData.viscosity !== undefined && (
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
-                      <Droplets className="w-4 h-4" />
+                      <Drop weight="thin" className="w-4 h-4" />
                       Viscosity: {product.relicData.viscosity}/100
                     </div>
                     {/* Visual Viscosity Meter */}
@@ -1189,7 +1189,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   className="px-4 py-3 transition-colors"
                   disabled={quantity <= 1}
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus weight="thin" className="w-4 h-4" />
                 </motion.button>
                 <span className="px-6 py-3 font-mono text-sm tabular-nums min-w-[3rem] text-center">
                   {quantity}
@@ -1200,7 +1200,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   onClick={() => setQuantity(quantity + 1)}
                   className="px-4 py-3 transition-colors"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus weight="thin" className="w-4 h-4" />
                 </motion.button>
               </div>
             </div>
@@ -1231,7 +1231,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     exit={{ y: -20, opacity: 0 }}
                     className="flex items-center gap-2"
                   >
-                    <Check className="w-5 h-5" />
+                    <Check weight="thin" className="w-5 h-5" />
                     <span>Added</span>
                   </motion.div>
                 ) : (
@@ -1274,7 +1274,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 animate={{ opacity: 0.5 }}
                 className="flex items-center gap-2"
               >
-                <AlertCircle className="w-3 h-3" />
+                <WarningCircle weight="thin" className="w-3 h-3" />
                 <span className="font-mono text-[9px] uppercase tracking-widest">
                   {product.scarcityNote || "Limited Batch Production — Small Volume Reserve"}
                 </span>
@@ -1286,7 +1286,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               whileHover={{ x: 5 }}
               className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-all hover:text-theme-gold"
             >
-              <Gift className="w-4 h-4" />
+              <Gift weight="thin" className="w-4 h-4" />
               Make it a gift
             </motion.button>
 
@@ -1367,7 +1367,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 className="w-full flex items-center justify-between py-4 font-mono text-xs md:text-sm uppercase tracking-widest opacity-90 hover:opacity-100 transition-opacity"
               >
                 <span>Scent Architecture</span>
-                <Plus
+                <Plus weight="thin"
                   className={`w-4 h-4 transition-transform ${expandedSections.notes ? "rotate-45" : ""
                     }`}
                 />
@@ -1540,7 +1540,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   className={`px-2 py-1.5 ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors`}
                   disabled={quantity <= 1}
                 >
-                  <Minus className="w-3 h-3" />
+                  <Minus weight="thin" className="w-3 h-3" />
                 </button>
                 <span className="px-2 py-1.5 font-mono text-xs tabular-nums min-w-[1.5rem] text-center">
                   {quantity}
@@ -1549,7 +1549,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   onClick={() => setQuantity(quantity + 1)}
                   className={`px-2 py-1.5 ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors`}
                 >
-                  <Plus className="w-3 h-3" />
+                  <Plus weight="thin" className="w-3 h-3" />
                 </button>
               </div>
 
@@ -1576,7 +1576,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       exit={{ y: -20, opacity: 0 }}
                       className="flex items-center justify-center gap-2"
                     >
-                      <Check className="w-4 h-4" />
+                      <Check weight="thin" className="w-4 h-4" />
                       <span>Added</span>
                     </motion.div>
                   ) : (

@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react";
 
 // Map projection calibrated to atlas-map.jpg
 // The parchment border takes ~4% on each side
@@ -336,7 +336,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
                 <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#c9a96e]">
                   Explore Waypoint
                 </span>
-                <ArrowRight className="w-4 h-4 text-[#c9a96e] group-hover:translate-x-1 transition-transform" />
+                <ArrowRight weight="thin" className="w-4 h-4 text-[#c9a96e] group-hover:translate-x-1 transition-transform" />
               </Link>
               <button
                 onClick={() => setSelectedWaypoint(null)}
