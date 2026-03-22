@@ -8,6 +8,7 @@ import { GhostLabels } from '@/components/ui/GhostLabels';
 import { Satchel } from '@/components/cart/Satchel';
 import { ReactNode, useEffect, useState, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useChat } from "@/context/ChatContext";
 
 interface CompassProviderProps {
   children: ReactNode;
@@ -41,6 +42,8 @@ export function CompassProvider({ children }: CompassProviderProps) {
   const [currentTheme, setCurrentTheme] = useState<'atlas' | 'relic'>('atlas');
   const [curatorOpen, setCuratorOpen] = useState(false);
   const [compassPosition, setCompassPosition] = useState({ x: 0, y: 0 });
+  
+  const { isChatOpen } = useChat();
 
   // Page detection
   const isSplitEntryPage = pathname === '/';
@@ -172,10 +175,16 @@ export function CompassProvider({ children }: CompassProviderProps) {
       <AnimatePresence>
         {showCornerCompass && !curatorOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, x: 0 }}
+            animate={{ 
+              opacity: 1, 
+              x: isChatOpen ? -400 : 0 
+            }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ 
+              duration: 0.5, 
+              ease: [0.85, 0, 0.15, 1] // Synced with ChatPanel slide animation
+            }}
             className="fixed z-[2999] pointer-events-none"
           >
             <RealisticCompass

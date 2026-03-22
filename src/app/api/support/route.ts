@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
  * POST /api/support
  *
  * Receives support form submissions from the /support page.
- * Primary path: Forward to Eleanor (Convex) at admire-duck-737.convex.site
+ * Primary path: Forward to Eleanor (Convex) at admired-duck-737.convex.site
  * Fallback: Log to console (visible in Vercel logs) if Convex is unreachable
  */
 
-const CONVEX_SITE_URL = "https://admire-duck-737.convex.site";
+const CONVEX_SITE_URL = "https://admired-duck-737.convex.site";
 const BRAND_SLUG = "tarifeattar";
 
 interface SupportFormData {
