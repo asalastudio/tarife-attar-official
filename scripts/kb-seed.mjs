@@ -374,6 +374,12 @@ WRITING RULES:
 6. The article will be read by customers on the Help Desk page, so write directly to them
 7. NEVER use salesy language or urgency tactics
 
+TWO ROADS VOCABULARY (CRITICAL — NEVER MIX):
+- Atlas products are "waypoints," "perfume oils," "compositions," or "fragrances" — NEVER call them "specimens" or "liquid specimens"
+- Only Relic products (not yet available) are called "specimens," "materials," or "heritage distillations"
+- The word "specimen" must NEVER appear in any article about Atlas products, application, shipping, returns, territories, or general brand content
+- Use "perfume oil" or "fragrance" when referring to what the customer receives
+
 RESPOND ONLY with this JSON (no markdown, no code fences):
 {
   "title": "${article.title}",
