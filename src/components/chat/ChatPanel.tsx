@@ -1,98 +1,127 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "@/context/ChatContext";
-import { Sparkle, X, ChatCircle, ArrowRight, CircleNotch } from "@phosphor-icons/react";
+import { Sparkle, X, ChatCircle, ArrowRight, CircleNotch, Compass, Drop, Palette, Package, ArrowsClockwise } from "@phosphor-icons/react";
+
+const QUICK_CHIPS = [
+  {
+    label: "Help me find a scent",
+    message: "I'm looking for a fragrance but I'm not sure where to start. Can you help me find something based on what I like?",
+    icon: Compass,
+  },
+  {
+    label: "What are the territories?",
+    message: "Can you explain the four territories and what kind of scents are in each one?",
+    icon: Palette,
+  },
+  {
+    label: "How do I apply perfume oil?",
+    message: "How should I apply your perfume oils for the best experience?",
+    icon: Drop,
+  },
+  {
+    label: "Shipping & returns",
+    message: "What are your shipping options and return policy?",
+    icon: Package,
+  },
+  {
+    label: "Names changed — find mine",
+    message: "I used to buy from you but the names have changed. Can you help me find my old favorite fragrance under its new name?",
+    icon: ArrowsClockwise,
+  },
+];
+
+const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive — a living collection of rare and artisan perfume oils organized by territory and memory.
+
+I can help you discover a fragrance, navigate the new Atlas names, answer questions about your order, or explain how our oils are crafted.
+
+Where shall we begin?`;
 
 export function ChatPanel() {
   const { isChatOpen, toggleChat, closeChat } = useChat();
   const [message, setMessage] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [localMessages, setLocalMessages] = useState<{role: "user" | "assistant", content: string}[]>([
-    {
-      role: "assistant",
-      content: "Welcome to the Atlas. I am your guide—here to answer questions about specific formulations, assist with orders, or navigate the new territories.\n\nHow may I direct your journey today?"
-    }
+    { role: "assistant", content: WELCOME_MESSAGE }
   ]);
 
   const [isSending, setIsSending] = useState(false);
+  const [chipsUsed, setChipsUsed] = useState(false);
 
-  // Use local state directly for Vercel AI SDK integration
-  const displayMessages = localMessages;
+  const showChips = !chipsUsed && localMessages.length === 1;
 
-  const handleSend = async () => {
-    if (!message.trim()) return;
-    const content = message.trim();
-    
-    // Optimistic UI update
-    setLocalMessages((prev) => [...prev, { role: "user", content }]);
+  const scrollToBottom = () => {
+    requestAnimationFrame(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (isChatOpen) {
+      setTimeout(() => inputRef.current?.focus(), 500);
+    }
+  }, [isChatOpen]);
+
+  const handleSend = async (content?: string) => {
+    const text = (content || message).trim();
+    if (!text) return;
+
+    setLocalMessages((prev) => [...prev, { role: "user", content: text }]);
     setMessage("");
+    setChipsUsed(true);
     setIsSending(true);
+    scrollToBottom();
 
     try {
-      // 1) Send request to our Next.js API route powered by Gemini/OpenAI
+      const currentMessages = [...localMessages, { role: "user" as const, content: text }];
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [...localMessages, { role: 'user', content }]
-        }),
+        body: JSON.stringify({ messages: currentMessages }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch response');
-      }
+      if (!response.ok) throw new Error('Failed to fetch response');
 
-      // 2) Handle the streaming response
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      
       if (!reader) throw new Error('No reader available');
 
-      // Add a placeholder message for the assistant
       setLocalMessages((prev) => [...prev, { role: "assistant", content: "" }]);
-
-      // Scroll to bottom logic
-      setTimeout(() => {
-        const scrollContainer = document.querySelector('.overflow-y-auto');
-        if (scrollContainer) {
-          scrollContainer.scrollTop = scrollContainer.scrollHeight;
-        }
-      }, 50);
+      scrollToBottom();
 
       let assistantMessage = "";
-      
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
+
         const chunk = decoder.decode(value, { stream: true });
         assistantMessage += chunk;
-        
-        // Update the last message (the assistant's response) with the new chunk
-        setLocalMessages((prev) => {
-          const newMessages = [...prev];
-          newMessages[newMessages.length - 1].content = assistantMessage;
-          return newMessages;
-        });
 
-        // Scroll to bottom logic on each chunk
-        const scrollContainer = document.querySelector('.overflow-y-auto');
-        if (scrollContainer) {
-          scrollContainer.scrollTop = scrollContainer.scrollHeight;
-        }
+        setLocalMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1].content = assistantMessage;
+          return updated;
+        });
+        scrollToBottom();
       }
 
     } catch (e) {
-      console.error("Failed to fetch chat response:", e);
-      // Remove the optimistic user message if it failed, or add an error message
+      console.error("Chat error:", e);
       setLocalMessages((prev) => [
-        ...prev, 
-        { role: "assistant", content: "I apologize, but I am currently unavailable. Please try again later." }
+        ...prev,
+        { role: "assistant", content: "I'm momentarily unavailable. Please try again in a moment." }
       ]);
     } finally {
       setIsSending(false);
+      scrollToBottom();
     }
   };
 
@@ -103,7 +132,7 @@ export function ChatPanel() {
       transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
       className="fixed top-0 right-0 bottom-0 w-[400px] bg-theme-alabaster border-l border-theme-charcoal/10 shadow-2xl z-50 flex flex-col"
     >
-      {/* ─── The Protruding Tab (Visible when closed) ─── */}
+      {/* ─── Protruding Tab ─── */}
       <motion.button
         animate={{ opacity: isChatOpen ? 0 : 1, x: isChatOpen ? 20 : 0 }}
         transition={{ duration: 0.3 }}
@@ -137,44 +166,111 @@ export function ChatPanel() {
       </div>
 
       {/* ─── Chat Stream ─── */}
-      <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
-        {displayMessages.map((msg: any, i: number) => (
-          <div key={i} className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : ""}`}>
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 flex flex-col gap-5">
+        {localMessages.map((msg: any, i: number) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: i === 0 ? 0.2 : 0 }}
+            className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
+          >
             {msg.role === "assistant" ? (
-              <div className="w-8 h-8 rounded-full bg-theme-charcoal text-theme-gold flex items-center justify-center shrink-0">
-                <Sparkle weight="thin" className="w-4 h-4" />
+              <div className="w-7 h-7 rounded-full bg-theme-charcoal text-theme-gold flex items-center justify-center shrink-0 mt-1">
+                <Sparkle weight="thin" className="w-3.5 h-3.5" />
               </div>
             ) : (
-              <div className="w-8 h-8 rounded-full bg-theme-charcoal/10 text-theme-charcoal flex items-center justify-center shrink-0 font-serif text-xs">
-                U
+              <div className="w-7 h-7 rounded-full bg-theme-charcoal/10 text-theme-charcoal flex items-center justify-center shrink-0 font-serif text-[10px] mt-1">
+                You
               </div>
             )}
             <div
-              className={`border border-theme-charcoal/10 shadow-sm text-sm font-serif leading-relaxed text-theme-charcoal/90 p-4 ${
+              className={`text-[13px] font-serif leading-relaxed text-theme-charcoal/90 px-4 py-3 max-w-[85%] ${
                 msg.role === "assistant"
-                  ? "bg-white rounded-2xl rounded-tl-sm"
-                  : "bg-theme-alabaster rounded-2xl rounded-tr-sm"
+                  ? "bg-white border border-theme-charcoal/8 rounded-2xl rounded-tl-sm shadow-sm"
+                  : "bg-theme-charcoal/[0.04] border border-theme-charcoal/8 rounded-2xl rounded-tr-sm"
               }`}
             >
-              {msg.content.split('\n').map((line: string, j: number) => (
+              {msg.content ? msg.content.split('\n').map((line: string, j: number) => (
                 <React.Fragment key={j}>
                   {line}
                   {j < msg.content.split('\n').length - 1 && <br/>}
                 </React.Fragment>
-              ))}
+              )) : (
+                <span className="flex items-center gap-2 text-theme-charcoal/40 italic text-xs">
+                  <CircleNotch weight="thin" className="w-3 h-3 animate-spin" />
+                  Composing...
+                </span>
+              )}
             </div>
-          </div>
+          </motion.div>
         ))}
+
+        {/* ─── Quick-Action Chips ─── */}
+        <AnimatePresence>
+          {showChips && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+              className="mt-2 flex flex-col gap-2"
+            >
+              <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-theme-charcoal/35 mb-1">
+                Common starting points
+              </p>
+              {QUICK_CHIPS.map((chip) => {
+                const Icon = chip.icon;
+                return (
+                  <button
+                    key={chip.label}
+                    onClick={() => handleSend(chip.message)}
+                    disabled={isSending}
+                    className="group flex items-center gap-3 text-left px-4 py-3 bg-white border border-theme-charcoal/8 rounded-xl hover:border-theme-gold/40 hover:shadow-sm transition-all duration-300 disabled:opacity-50"
+                  >
+                    <span className="w-6 h-6 rounded-full bg-theme-charcoal/[0.04] flex items-center justify-center shrink-0 group-hover:bg-theme-gold/10 transition-colors">
+                      <Icon weight="thin" className="w-3.5 h-3.5 text-theme-charcoal/50 group-hover:text-theme-gold transition-colors" />
+                    </span>
+                    <span className="font-serif text-[12px] text-theme-charcoal/70 group-hover:text-theme-charcoal transition-colors">
+                      {chip.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Typing indicator when waiting for first chunk */}
+        {isSending && localMessages[localMessages.length - 1]?.role === "user" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex gap-3"
+          >
+            <div className="w-7 h-7 rounded-full bg-theme-charcoal text-theme-gold flex items-center justify-center shrink-0">
+              <Sparkle weight="thin" className="w-3.5 h-3.5" />
+            </div>
+            <div className="bg-white border border-theme-charcoal/8 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 bg-theme-charcoal/30 rounded-full animate-bounce [animation-delay:0ms]" />
+                <span className="w-1.5 h-1.5 bg-theme-charcoal/30 rounded-full animate-bounce [animation-delay:150ms]" />
+                <span className="w-1.5 h-1.5 bg-theme-charcoal/30 rounded-full animate-bounce [animation-delay:300ms]" />
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
 
       {/* ─── Input Area ─── */}
       <div className="p-4 border-t border-theme-charcoal/10 bg-white/60 shrink-0">
         <div className="relative">
           <input
+            ref={inputRef}
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Ask The Guide..."
+            placeholder="Ask about scents, orders, or anything..."
             className="w-full bg-white border border-theme-charcoal/20 px-4 py-3.5 pr-12 font-serif text-sm placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold focus:ring-1 focus:ring-theme-gold/30 rounded-full shadow-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter" && message.trim() && !isSending) {
@@ -184,7 +280,7 @@ export function ChatPanel() {
             }}
           />
           <button
-            onClick={handleSend}
+            onClick={() => handleSend()}
             disabled={isSending || !message.trim()}
             className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-theme-charcoal text-theme-gold rounded-full flex items-center justify-center hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

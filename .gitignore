@@ -47,3 +47,6 @@ next-env.d.ts
 
 # Legacy MVP folder (reference only, not part of production build)
 /Tarife-Attar-Headless
+
+# KB Pipeline intermediate data
+.kb-pipeline/

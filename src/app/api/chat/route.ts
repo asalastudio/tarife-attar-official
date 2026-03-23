@@ -1,14 +1,13 @@
 import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
+import { ConvexHttpClient } from 'convex/browser';
 
-// Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-/**
- * Tori - The Curator's System Prompt
- * Grounded, Articulate, Warm. Never uses marketing jargon.
- */
-const ATLAS_SYSTEM_PROMPT = `You are Atlas, the intelligent guide of Tarife Attär — a living archive of rare, vintage, and artisan fragrances.
+const convex = new ConvexHttpClient("https://admired-duck-737.convex.cloud");
+const BRAND_SLUG = "tarife-attar";
+
+const BASE_SYSTEM_PROMPT = `You are Atlas, the intelligent guide of Tarife Attär — a living archive of rare, vintage, and artisan fragrances.
 
 PERSONA:
 - Tone: Grounded, Articulate, Warm — like a knowledgeable museum curator
@@ -35,38 +34,78 @@ SCENT PIVOTS (Negative Constraints):
 - If asked about "fresh" or "clean": "We interpret freshness through aromatic herbs and petrichor — the scent of rain on stone, not synthetic ozones."
 - If asked about "cheap" or "affordable": "Every specimen in our archive represents years of sourcing. I can guide you to concentrated formats that offer the same olfactory depth at smaller volumes."
 
-EXAMPLE RESPONSES:
-User: "What do you have that smells like rain?"
-Atlas: "The petrichor you seek lives in our Atlas collection — specifically in 'Stone Orchard', where dry earth meets the first drops. It's structured around geosmin and wet mineral notes."
-
-User: "Something for a first date"
-Atlas: "Consider the tension between vulnerability and confidence. 'Amber Protocol' from The Relic offers warmth without sweetness — a single-origin amber that reads as intimate, not loud."
-
-User: "I want something unique"
-Atlas: "Uniqueness here is measured in provenance. Our Heritage Distillations are sourced from single harvests — the 2019 Mysore sandalwood, for instance, exists in fewer than 200 bottles worldwide."
-
 Remember: You are not a salesperson. You are a guide through an olfactory archive. Your role is to educate and curate, not to push products.`;
+
+async function fetchKnowledgeContext(): Promise<string> {
+  try {
+    const brand: any = await convex.query("brands:getBrandBySlug" as any, { slug: BRAND_SLUG });
+    if (!brand?._id) return "";
+
+    const brandId = brand._id;
+
+    const [articles, constitution] = await Promise.all([
+      convex.query("knowledge:listPublished" as any, { brandId }).catch(() => []),
+      convex.query("constitution:getByBrand" as any, { brandId }).catch(() => null),
+    ]);
+
+    let context = "";
+
+    if (constitution) {
+      context += "\n\n--- BRAND CONSTITUTION (You must follow these rules) ---\n";
+      if (constitution.missionStatement) {
+        context += `\nMISSION: ${constitution.missionStatement}`;
+      }
+      if (constitution.agentPersonality) {
+        context += `\nPERSONALITY: ${constitution.agentPersonality}`;
+      }
+      if (constitution.agentInstructions) {
+        context += `\nINSTRUCTIONS: ${constitution.agentInstructions}`;
+      }
+      if (constitution.doNotDo?.length) {
+        context += `\nNEVER DO:\n${constitution.doNotDo.map((r: string) => `- ${r}`).join("\n")}`;
+      }
+      if (constitution.policies?.length) {
+        context += `\n\nPOLICIES:\n${constitution.policies.map((p: any) => `${p.topic}: ${p.content}`).join("\n\n")}`;
+      }
+      if (constitution.faqEntries?.length) {
+        context += `\n\nFAQ:\n${constitution.faqEntries.map((f: any) => `Q: ${f.question}\nA: ${f.answer}`).join("\n\n")}`;
+      }
+    }
+
+    const articleList = Array.isArray(articles) ? articles : [];
+    if (articleList.length > 0) {
+      context += "\n\n--- KNOWLEDGE BASE ARTICLES (Use these to answer questions accurately) ---\n";
+      for (const article of articleList) {
+        context += `\n[${article.category?.toUpperCase() || "GENERAL"}] ${article.title}\n${article.content}\n`;
+      }
+    }
+
+    return context;
+  } catch (err) {
+    console.error("Failed to fetch Eleanor knowledge context:", err);
+    return "";
+  }
+}
 
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    // Check for Google Gemini API key
     if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
       return new Response(
         JSON.stringify({ 
           error: 'Google API key not configured. Please add GOOGLE_GENERATIVE_AI_API_KEY to your environment variables.' 
         }),
-        { 
-          status: 500, 
-          headers: { 'Content-Type': 'application/json' } 
-        }
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
+    const knowledgeContext = await fetchKnowledgeContext();
+    const systemPrompt = BASE_SYSTEM_PROMPT + knowledgeContext;
+
     const result = streamText({
       model: google('gemini-2.5-flash'),
-      system: ATLAS_SYSTEM_PROMPT,
+      system: systemPrompt,
       messages,
       temperature: 0.7,
     });
@@ -79,10 +118,7 @@ export async function POST(req: Request) {
       JSON.stringify({ 
         error: 'An error occurred while processing your request. Please try again.' 
       }),
-      { 
-        status: 500, 
-        headers: { 'Content-Type': 'application/json' } 
-      }
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }
