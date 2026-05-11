@@ -1,0 +1,72 @@
+{
+  "type": "webhook",
+  "name": "send_tracking_sms",
+  "description": "Send a transactional order status/tracking text message to the phone number already on the verified Shopify order. Only call after the caller asks for a text or agrees to receive the order update by SMS.",
+  "api_schema": {
+    "url": "https://www.tarifeattar.com/api/voice/send-tracking-sms",
+    "method": "POST",
+    "path_params_schema": [],
+    "query_params_schema": [],
+    "request_body_schema": {
+      "id": "request_body",
+      "description": "Verified order details for sending a transactional SMS",
+      "type": "object",
+      "required": true,
+      "properties": [
+        {
+          "id": "order_number",
+          "name": "order_number",
+          "type": "string",
+          "description": "The Shopify order number, e.g. #1234.",
+          "required": true,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "customer_email",
+          "name": "customer_email",
+          "type": "string",
+          "description": "The email address used at checkout. Required unless customer_phone is provided.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "customer_phone",
+          "name": "customer_phone",
+          "type": "string",
+          "description": "The phone number used at checkout. Required unless customer_email is provided. This is for verification only; the API sends only to the phone number already on the order.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "conversation_id",
+          "name": "conversation_id",
+          "type": "string",
+          "description": "Optional ElevenLabs conversation identifier if available.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        }
+      ]
+    },
+    "request_headers": [],
+    "content_type": "application/json",
+    "auth_connection": null
+  },
+  "response_timeout_secs": 25,
+  "dynamic_variables": { "dynamic_variable_placeholders": {} },
+  "assignments": [],
+  "disable_interruptions": false,
+  "pre_tool_speech": "auto",
+  "tool_call_sound": null,
+  "tool_call_sound_behavior": "auto",
+  "execution_mode": "immediate",
+  "tool_error_handling_mode": "auto",
+  "response_mocks": []
+}

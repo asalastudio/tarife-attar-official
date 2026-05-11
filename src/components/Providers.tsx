@@ -5,6 +5,7 @@ import { ShopifyCartProvider, WishlistProvider } from "@/context";
 import { CompassProvider } from "@/components/navigation/CompassProvider";
 import { ChatProvider } from "@/context/ChatContext";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ElevenLabsVoiceWidget } from "@/components/voice/ElevenLabsVoiceWidget";
 
 // Initialize to your Eleanor instance
 const convex = new ConvexReactClient("https://admired-duck-737.convex.site");
@@ -21,6 +22,7 @@ export function Providers({ children }: ProvidersProps) {
           <WishlistProvider>
             <CompassProvider>
               {children}
+              <ElevenLabsVoiceWidget />
             </CompassProvider>
           </WishlistProvider>
         </ShopifyCartProvider>

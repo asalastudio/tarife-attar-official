@@ -1,0 +1,122 @@
+{
+  "type": "webhook",
+  "name": "escalate_to_human",
+  "description": "Escalate a caller to the Tarife Attar team in Slack with a structured summary. Call when the caller is upset, VIP, high-intent, blocked, or needs a human follow-up.",
+  "api_schema": {
+    "url": "https://www.tarifeattar.com/api/voice/escalate",
+    "method": "POST",
+    "path_params_schema": [],
+    "query_params_schema": [],
+    "request_body_schema": {
+      "id": "request_body",
+      "description": "Human escalation details",
+      "type": "object",
+      "required": true,
+      "properties": [
+        {
+          "id": "customer_name",
+          "name": "customer_name",
+          "type": "string",
+          "description": "Caller name if known.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "customer_email",
+          "name": "customer_email",
+          "type": "string",
+          "description": "Caller email if known.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "customer_phone",
+          "name": "customer_phone",
+          "type": "string",
+          "description": "Caller phone if known.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "order_number",
+          "name": "order_number",
+          "type": "string",
+          "description": "Order number if relevant.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "reason",
+          "name": "reason",
+          "type": "string",
+          "description": "Short reason for escalation, e.g. delivery issue, VIP support, checkout help.",
+          "required": true,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "urgency",
+          "name": "urgency",
+          "type": "string",
+          "description": "Escalation urgency: low, normal, high, or critical.",
+          "required": true,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "conversation_summary",
+          "name": "conversation_summary",
+          "type": "string",
+          "description": "Concise but useful summary for the human team.",
+          "required": true,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "conversation_id",
+          "name": "conversation_id",
+          "type": "string",
+          "description": "Optional ElevenLabs conversation identifier if available.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "requested_channel",
+          "name": "requested_channel",
+          "type": "string",
+          "description": "Optional Slack route: alerts, sales, summaries, or vip. Leave blank unless clearly needed.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        }
+      ]
+    },
+    "request_headers": [],
+    "content_type": "application/json",
+    "auth_connection": null
+  },
+  "response_timeout_secs": 15,
+  "dynamic_variables": { "dynamic_variable_placeholders": {} },
+  "assignments": [],
+  "disable_interruptions": false,
+  "pre_tool_speech": "auto",
+  "tool_call_sound": null,
+  "tool_call_sound_behavior": "auto",
+  "execution_mode": "immediate",
+  "tool_error_handling_mode": "auto",
+  "response_mocks": []
+}

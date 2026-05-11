@@ -59,18 +59,18 @@ const nextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
+            value: 'camera=(), microphone=(self), geolocation=()'
           },
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.shopify.com https://js.sentry.io",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.shopify.com https://js.sentry.io https://unpkg.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://api.sentry.io",
-              "frame-src 'self' https://*.myshopify.com",
+              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://api.sentry.io https://*.elevenlabs.io wss://*.elevenlabs.io",
+              "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

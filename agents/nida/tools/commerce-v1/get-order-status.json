@@ -1,0 +1,72 @@
+{
+  "type": "webhook",
+  "name": "get_order_status",
+  "description": "Look up a Shopify order after verifying the caller with the order number plus the email or phone used at checkout. Call this when the caller asks where their order is, whether it shipped, or whether tracking is available.",
+  "api_schema": {
+    "url": "https://www.tarifeattar.com/api/voice/order-status",
+    "method": "POST",
+    "path_params_schema": [],
+    "query_params_schema": [],
+    "request_body_schema": {
+      "id": "request_body",
+      "description": "Verified order lookup details",
+      "type": "object",
+      "required": true,
+      "properties": [
+        {
+          "id": "order_number",
+          "name": "order_number",
+          "type": "string",
+          "description": "The Shopify order number the caller gives, e.g. #1234. Ask for this before calling.",
+          "required": true,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "customer_email",
+          "name": "customer_email",
+          "type": "string",
+          "description": "The email address used at checkout. Required unless the caller provides the checkout phone number.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "customer_phone",
+          "name": "customer_phone",
+          "type": "string",
+          "description": "The phone number used at checkout. Required unless the caller provides the checkout email address.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        },
+        {
+          "id": "conversation_id",
+          "name": "conversation_id",
+          "type": "string",
+          "description": "Optional ElevenLabs conversation identifier if available.",
+          "required": false,
+          "dynamic_variable": "",
+          "constant_value": "",
+          "value_type": "llm_prompt"
+        }
+      ]
+    },
+    "request_headers": [],
+    "content_type": "application/json",
+    "auth_connection": null
+  },
+  "response_timeout_secs": 20,
+  "dynamic_variables": { "dynamic_variable_placeholders": {} },
+  "assignments": [],
+  "disable_interruptions": false,
+  "pre_tool_speech": "auto",
+  "tool_call_sound": null,
+  "tool_call_sound_behavior": "auto",
+  "execution_mode": "immediate",
+  "tool_error_handling_mode": "auto",
+  "response_mocks": []
+}
