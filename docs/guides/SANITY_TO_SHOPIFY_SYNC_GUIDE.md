@@ -52,7 +52,7 @@ node scripts/sync-skus-to-shopify.mjs
 node scripts/generate-shopify-import-csv.mjs
 ```
 
-This creates `shopify-import-products.csv` with:
+This creates `marketing/catalog/shopify-import-products.csv` with:
 - All 23 products that don't exist in Shopify
 - Product titles (new names)
 - Legacy names in description
@@ -64,7 +64,7 @@ This creates `shopify-import-products.csv` with:
 ### Step 3: Import CSV to Shopify
 
 1. **Go to Shopify Admin** → **Products** → **Import**
-2. **Click "Add file"** and select `shopify-import-products.csv`
+2. **Click "Add file"** and select `marketing/catalog/shopify-import-products.csv`
 3. **Review the import preview:**
    - Check product titles
    - Verify SKUs match Sanity

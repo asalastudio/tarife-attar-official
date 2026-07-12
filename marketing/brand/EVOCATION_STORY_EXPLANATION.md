@@ -81,7 +81,7 @@ This document explains how **Evocation Story** and **On Skin Story** flow throug
 **Usage:**
 ```bash
 node scripts/generate-shopify-import-csv.mjs
-# Then import shopify-import-products.csv in Shopify Admin
+# Then import marketing/catalog/shopify-import-products.csv in Shopify Admin
 ```
 
 ### Solution 2: Sync Script (Existing Products)
@@ -194,7 +194,7 @@ After sync, Shopify product descriptions will have:
 
 3. **Import to Shopify**
    - Shopify Admin → Products → Import
-   - Upload `shopify-import-products.csv`
+   - Upload `marketing/catalog/shopify-import-products.csv`
    - Descriptions will include all story content
 
 ### When Updating Existing Products

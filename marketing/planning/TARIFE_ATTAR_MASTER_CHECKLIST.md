@@ -19,7 +19,7 @@
 - [ ] Clean up 40+ orphaned Shopify-synced products in Sanity (null title, null slug)
 - [ ] Fix duplicate RIYADH document (delete the one without image)
 - [ ] Import Shopify spreadsheet (Admin > Products > Import)
-- [ ] Copy/paste all 28 Etsy listings from ETSY_ATLAS_LISTINGS.md
+- [ ] Copy/paste all 28 Etsy listings from marketing/channels/ETSY_ATLAS_LISTINGS.md
 - [ ] Create Etsy shop sections: Ember, Tidal, Petal, Terra, The Archive
 - [ ] Move CAIRO, KALAHARI, ETHIOPIA to The Archive section on Etsy
 - [ ] Verify build compiles (npx tsc --noEmit)
@@ -139,9 +139,10 @@
 
 | File | Location |
 |---|---|
-| Master Reference (28 waypoints) | ATLAS_MASTER_28.md |
-| Etsy Listings | ETSY_ATLAS_LISTINGS.md |
-| Shopify Import Spreadsheet | Tarife_Attar_Atlas_Shopify_Import_v3.xlsx |
+| Marketing Hub Index | marketing/README.md |
+| Master Reference (28 waypoints) | marketing/catalog/ATLAS_MASTER_28.md |
+| Etsy Listings | marketing/channels/ETSY_ATLAS_LISTINGS.md |
+| Shopify Import Spreadsheet | marketing/catalog/Tarife_Attar_Atlas_Shopify_Import_v4.csv |
 | Sanity Ingest Script | scripts/ingest-fragrances.mjs |
 | Image Patch Script | scripts/patch-images.mjs |
 | Evocation Copy | scripts/evocation-copy.mjs |

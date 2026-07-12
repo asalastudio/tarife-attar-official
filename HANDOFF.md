@@ -50,13 +50,14 @@
 
 | Document | Path | Purpose |
 |----------|------|---------|
-| **Atlas Master Reference** | `ATLAS_MASTER_28.md` | Source of truth — 28 waypoints, territories, notes, pricing |
-| **Master Catalog** | `Tarife_Attar_MASTER_CATALOG.xlsx` | Copy-paste reference for Etsy + Shopify (building) |
-| **Shopify Import** | `Tarife_Attar_Atlas_Shopify_Import_v4.csv` | Shopify product import — imported |
-| **Etsy Listings** | `ETSY_ATLAS_LISTINGS.md` | Ready-to-paste Etsy copy (28 Atlas + 3 Archive) |
-| **Checklist** | `TARIFE_ATTAR_MASTER_CHECKLIST.md` | Full task tracker |
+| **Marketing Hub Index** | `marketing/README.md` | Start here — map of all marketing assets, status, gaps |
+| **Atlas Master Reference** | `marketing/catalog/ATLAS_MASTER_28.md` | Source of truth — 28 waypoints, territories, notes, pricing |
+| **Master Catalog** | `Tarife_Attar_MASTER_CATALOG.xlsx` | Copy-paste reference for Etsy + Shopify (building — not in repo yet) |
+| **Shopify Import** | `marketing/catalog/Tarife_Attar_Atlas_Shopify_Import_v4.csv` | Shopify product import — imported |
+| **Etsy Listings** | `marketing/channels/ETSY_ATLAS_LISTINGS.md` | Ready-to-paste Etsy copy (28 Atlas + 3 Archive) |
+| **Checklist** | `marketing/planning/TARIFE_ATTAR_MASTER_CHECKLIST.md` | Full task tracker |
 | **Handoff** | `HANDOFF.md` | This file |
-| **Brand Agent** | `BRAND_AGENT_SYSTEM_PROMPT.md` | Voice rules, sensory lexicon |
+| **Brand Agent** | `marketing/brand/BRAND_AGENT_SYSTEM_PROMPT.md` | Voice rules, sensory lexicon |
 
 ---
 
@@ -211,4 +212,4 @@ All 28 waypoints, all 4 territories.
 
 ---
 
-*To continue: "Continue Tarife Attar. Check HANDOFF.md for context, ATLAS_MASTER_28.md for source of truth."*
+*To continue: "Continue Tarife Attar. Check HANDOFF.md for context, marketing/catalog/ATLAS_MASTER_28.md for source of truth, marketing/README.md for the marketing asset map."*

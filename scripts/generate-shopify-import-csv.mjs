@@ -498,7 +498,7 @@ async function main() {
   
   // Write CSV file
   const csvContent = csvRows.join('\n');
-  const outputPath = join(__dirname, '..', 'shopify-import-products.csv');
+  const outputPath = join(__dirname, '..', 'marketing', 'catalog', 'shopify-import-products.csv');
   writeFileSync(outputPath, csvContent, 'utf-8');
   
   console.log('═'.repeat(70));
@@ -508,7 +508,7 @@ async function main() {
   console.log(`   Total rows: ${csvRows.length - 1} (including header)\n`);
   
   console.log('📋 NEXT STEPS:\n');
-  console.log('   1. Review the CSV file: shopify-import-products.csv');
+  console.log('   1. Review the CSV file: marketing/catalog/shopify-import-products.csv');
   console.log('   2. Go to Shopify Admin → Products → Import');
   console.log('   3. Upload the CSV file');
   console.log('   4. Review the import preview');

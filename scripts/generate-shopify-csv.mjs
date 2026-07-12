@@ -4,7 +4,7 @@
  * Generate Shopify Import CSV from Atlas Collection data.
  *
  * Usage: node scripts/generate-shopify-csv.mjs
- * Output: shopify-import-products.csv in project root
+ * Output: marketing/catalog/shopify-import-products.csv
  */
 
 import { writeFileSync } from 'fs';
@@ -14,7 +14,7 @@ import { fileURLToPath } from 'url';
 import { ALL_ATLAS_PRODUCTS, TERRITORIES } from './atlas-rebrand-data.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const outputPath = resolve(__dirname, '..', 'shopify-import-products.csv');
+const outputPath = resolve(__dirname, '..', 'marketing', 'catalog', 'shopify-import-products.csv');
 
 function escapeCSV(val) {
   if (val === null || val === undefined) return '';

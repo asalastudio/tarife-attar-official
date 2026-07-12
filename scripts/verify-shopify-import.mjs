@@ -237,7 +237,7 @@ async function main() {
   console.log('\n📄 Reading CSV file...');
   let csvProducts = [];
   try {
-    csvProducts = parseCSV('shopify-import-products.csv');
+    csvProducts = parseCSV(join(__dirname, '..', 'marketing', 'catalog', 'shopify-import-products.csv'));
     console.log(`   Found ${csvProducts.length} products in CSV`);
   } catch (error) {
     console.error(`   ❌ Error reading CSV: ${error.message}`);

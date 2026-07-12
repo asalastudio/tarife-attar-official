@@ -59,7 +59,7 @@ If you're adding new products:
 # Generate CSV with full descriptions
 node scripts/generate-shopify-import-csv.mjs
 
-# Then import shopify-import-products.csv in Shopify Admin
+# Then import marketing/catalog/shopify-import-products.csv in Shopify Admin
 ```
 
 ## Detailed Steps

@@ -7,13 +7,14 @@
  * synthesizes it into polished KB articles via Gemini (in brand voice),
  * and publishes them to Eleanor via Convex.
  * 
- * Sources:
- *   - BRAND_BRAIN.md (brand essence, philosophy, Two Roads, territories)
- *   - ATLAS_MASTER_28.md (product catalog, pricing, notes)
- *   - Etsy-FAQ-Formatted.md (shipping, tracking, application, territories)
- *   - Return-Policy-Formatted.md (return/exchange policy)
- *   - THE_CARTOGRAPHER_NARRATIVE.md (brand story)
- *   - BRAND_AGENT_SYSTEM_PROMPT.md (voice/tone rules)
+ * Sources (resolved from marketing/knowledge-base, marketing/brand,
+ * marketing/catalog, marketing/channels, then project root):
+ *   - marketing/brand/BRAND_BRAIN.md (brand essence, philosophy, Two Roads, territories)
+ *   - marketing/catalog/ATLAS_MASTER_28.md (product catalog, pricing, notes)
+ *   - Etsy-FAQ-Formatted.md (shipping, tracking, application — NOT YET IN REPO, drop into marketing/knowledge-base/)
+ *   - Return-Policy-Formatted.md (return/exchange policy — NOT YET IN REPO, drop into marketing/knowledge-base/)
+ *   - THE_CARTOGRAPHER_NARRATIVE.md (brand story — NOT YET IN REPO, drop into marketing/knowledge-base/)
+ *   - marketing/brand/BRAND_AGENT_SYSTEM_PROMPT.md (voice/tone rules)
  *   - scripts/evocation-copy.mjs (scent storytelling)
  *   - scripts/onskin-copy.mjs (wear experience)
  *   - scripts/atlas-rebrand-data.mjs (product data truth)
@@ -54,13 +55,23 @@ if (!GEMINI_KEY && !dryRun) {
 
 const convex = new ConvexHttpClient(CONVEX_URL);
 
+// Directories searched (in order) for KB source documents.
+// Marketing docs live under marketing/ — see marketing/README.md.
+const SOURCE_DIRS = [
+  "marketing/knowledge-base",
+  "marketing/brand",
+  "marketing/catalog",
+  "marketing/channels",
+  "",
+];
+
 function readSource(filename) {
-  const path = resolve(PROJECT_ROOT, filename);
-  if (!existsSync(path)) {
-    console.warn(`  ⚠ Source not found: ${filename}`);
-    return "";
+  for (const dir of SOURCE_DIRS) {
+    const path = resolve(PROJECT_ROOT, dir, filename);
+    if (existsSync(path)) return readFileSync(path, "utf-8");
   }
-  return readFileSync(path, "utf-8");
+  console.warn(`  ⚠ Source not found: ${filename}`);
+  return "";
 }
 
 function truncate(text, maxLen = 6000) {

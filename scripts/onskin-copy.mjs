@@ -5,7 +5,7 @@
  * First paragraph: opening notes, heart, dry-down.
  * Second paragraph: mood, character, who it's for.
  *
- * Source of truth: ATLAS_MASTER_28.md / ingest-fragrances.mjs
+ * Source of truth: marketing/catalog/ATLAS_MASTER_28.md / ingest-fragrances.mjs
  *
  * Updated: March 18, 2026
  * Changes: Renamed waypoints (petra→saana, zanzibar→malabar, oman→tarifa,

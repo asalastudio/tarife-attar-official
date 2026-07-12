@@ -5,7 +5,7 @@
  * 28 waypoints = 28 letters of the Arabic alphabet.
  * Four territories, 7 oils each.
  *
- * Source of truth: ATLAS_MASTER_28.md (March 18, 2026)
+ * Source of truth: marketing/catalog/ATLAS_MASTER_28.md (March 18, 2026)
  *
  * Used by: migration scripts, redirect generation, Shopify CSV, Sanity sync.
  */

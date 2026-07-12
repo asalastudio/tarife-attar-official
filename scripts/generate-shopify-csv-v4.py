@@ -2,8 +2,9 @@
 """Generate Shopify product import CSV for Atlas Collection — 28 waypoints, 56 rows."""
 
 import csv
+from pathlib import Path
 
-OUTPUT = "/Users/jordanrichter/Projects/Tarife Attar/Tarife-Attar-Site-Redesign/Tarife_Attar_Atlas_Shopify_Import_v4.csv"
+OUTPUT = str(Path(__file__).resolve().parent.parent / "marketing" / "catalog" / "Tarife_Attar_Atlas_Shopify_Import_v4.csv")
 
 COLUMNS = [
     "Handle", "Title", "Body (HTML)", "Vendor", "Product Category", "Type",
