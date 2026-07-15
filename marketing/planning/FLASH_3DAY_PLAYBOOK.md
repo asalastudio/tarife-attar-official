@@ -8,15 +8,21 @@
 
 ## The Offer
 
-**A free surprise 3ml waypoint with every order. No minimum. Through Friday 11:59pm PT.**
+**Spend $50, get a free 3ml — a discovery vial, chosen for you. While they last. Through Friday 11:59pm PT.**
 
-- A random 3ml vial (glass wand applicator), chosen by us, one of the 28 Atlas waypoints.
-- On-brand (a "mystery waypoint" fits the cartographer story), margin-friendly (no discount), and a genuine reason to open + act now.
+- A $50 threshold (AOV is $48.51) nudges order value up and rations the gift so limited 3ml stock stretches further.
+- Margin-friendly (no discount), honest, and a real reason to act now.
+
+### Inventory reality (checked July 14)
+- **Only ~99 pre-filled 3ml exist, across 2 scents:** HUDSON (70) and MARRAKESH (29). Every other waypoint sells only in 6ml/12ml.
+- So the gift is framed as "a free 3ml, chosen for you, while they last" — **not** "surprise waypoint / one of 28" (that would overpromise with only 2 scents).
+- **~99 covers Wave 1 and part of Wave 2.** If it converts well you run dry — restock 3ml, fill from bulk, or cap at "first 99 orders."
+- Also flagged: ~11 waypoints are fully sold out (BEIRUT, TARIFA, MEISHAN, CARMEL, ASTORIA, BAHIA, TIGRIS + Relic oils). Featured heroes GRANADA/MEDINA/SAANA are in stock. Restock review after the flash.
 
 ### Mechanics (works on Basic plan, no app needed)
 - No discount code. The gift is added at fulfillment.
-- **Fulfillment instruction for the flash window:** *"Every order placed July 14–17 gets one random 3ml waypoint vial added to the package. Vary the waypoint. Do not include a scent the customer already ordered if it's obvious."*
-- **Before launch:** confirm you have enough 3ml stock to cover expected order volume (assume 150–300 orders across the flash).
+- **Fulfillment instruction for the flash window:** *"Any order of $50 or more placed July 14–17 gets one free 3ml (HUDSON or MARRAKESH) added to the package, while the ~99 vials last."*
+- If you can hand-fill 3ml from bulk oil, you can lift the ~99 cap and widen the scent choice — upgrade the copy to "a surprise waypoint" if so.
 
 ---
 
@@ -69,24 +75,24 @@ All three are `email_subscription_status = SUBSCRIBED` (legally emailable). Unsu
 ### WAVE 1 — Recent Buyers (send today)
 
 **Subject:** your Vasana favorites, with a gift inside
-**Preheader:** A free surprise 3ml travels with every order through Friday.
+**Preheader:** Spend $50 this week and a free 3ml comes with it.
 
-> You may know us as Vasana. The name is now Tarife Attär. The oils are the same ones you reached for, and this week we are sending you back to them with something extra.
+> You may know us as Vasana. The name is now Tarife Attär. The oils are the same ones you reached for, and this week there is a reason to return.
 >
-> Through Friday, every order carries a free surprise: a 3ml waypoint in a glass wand applicator, chosen for you, sealed and unnamed until you open it. One of twenty-eight.
+> Through Friday, any order of $50 or more carries a free 3ml — a discovery vial in a glass wand applicator, chosen for you and tucked beside the bottle you came for. While they last.
 >
 > Your favorites are still here, wearing new names:
 > - **GRANADA** (once Granada Amber) — warm amber and resin, a long golden hour
 > - **MEDINA** (once Musk Tahara) — clean white musk, soft and close to the skin
 > - **SAANA** (once Honey Oud) — honey drawn over oud, dark and quiet
 >
-> Return to the one you have been missing. We will tuck a surprise beside it.
+> Reach $50 and the gift is yours.
 >
 > **[ Return to your waypoint → ]**  (https://tarifeattar.com)
 >
 > Tarife Attär (formerly Vasana)
 
-**Resend subject (Wed, to non-openers):** the surprise is still traveling
+**Resend subject (Wed, to non-openers):** your gift is still waiting
 
 ---
 
@@ -97,7 +103,7 @@ All three are `email_subscription_status = SUBSCRIBED` (legally emailable). Unsu
 
 > It has been a while. A few things changed while you were away. Vasana is now Tarife Attär. The 28 oils were renamed for the places they carry you to. The oils themselves did not change.
 >
-> This week is a good week to come back. Every order through Friday leaves with a free surprise 3ml waypoint, chosen for you, one of the twenty-eight, sealed until you open it.
+> This week is a good week to come back. Through Friday, any order of $50 or more leaves with a free 3ml, a discovery vial chosen for you, while they last.
 >
 > Start where you left off. **GRANADA** (once Granada Amber), **MEDINA** (once Musk Tahara), and **SAANA** (once Honey Oud) are still the ones people reach for first.
 >
@@ -109,12 +115,12 @@ All three are `email_subscription_status = SUBSCRIBED` (legally emailable). Unsu
 
 ### WAVE 3 — Subscribers, No Purchase (send Thu)
 
-**Subject:** your first waypoint comes with a second, free
-**Preheader:** Two oils, one order. Through Friday only.
+**Subject:** your first waypoint, with a gift
+**Preheader:** Spend $50 through Friday and a free 3ml comes with it.
 
 > You signed up. You never chose your first waypoint. This is the week to fix that.
 >
-> Through Friday, every order carries a free surprise 3ml, chosen for you, one of twenty-eight scents in glass wand applicators. You choose one. We choose your second. You leave with two.
+> Through Friday, any order of $50 or more carries a free 3ml, a discovery vial chosen for you, in a glass wand applicator. While they last.
 >
 > Where most people begin:
 > - **GRANADA** — warm amber and resin
@@ -129,14 +135,14 @@ All three are `email_subscription_status = SUBSCRIBED` (legally emailable). Unsu
 
 ### LAST CALL — Openers + Clickers (send Fri afternoon)
 
-**Subject:** the surprise ends tonight
-**Preheader:** Midnight PT. Then the free waypoint is gone.
+**Subject:** the gift ends tonight
+**Preheader:** Midnight PT. Then the free 3ml is gone.
 
-> This is the last of it. Every order placed before midnight tonight carries a free 3ml waypoint, sealed and unnamed, chosen for you. After that the offer closes.
+> This is the last of it. Any order of $50 or more placed before midnight tonight carries a free 3ml, chosen for you, while they last. After that the offer closes.
 >
-> You came for one. Leave with two.
+> You came for one. Leave with a little more.
 >
-> **[ Claim the surprise → ]**  (https://tarifeattar.com)
+> **[ Claim the gift → ]**  (https://tarifeattar.com)
 >
 > Tarife Attär
 
@@ -146,8 +152,8 @@ All three are `email_subscription_status = SUBSCRIBED` (legally emailable). Unsu
 
 Send via Shopify (if SMS consent is captured) or your SMS tool. Keep to 2 sends.
 
-- **Launch (Tue/Wed):** Tarife Attär: for a few days, a free surprise waypoint travels with every order. One of 28, chosen for you. → https://tarifeattar.com  Reply STOP to opt out.
-- **Last call (Fri PM):** Tarife Attär: the free surprise waypoint ends at midnight tonight. You came for one, leave with two → https://tarifeattar.com  STOP to opt out.
+- **Launch (Tue/Wed):** Tarife Attär: this week, spend $50 and a free 3ml comes with it, chosen for you, while they last. → https://tarifeattar.com  Reply STOP to opt out.
+- **Last call (Fri PM):** Tarife Attär: last call. Orders $50+ get a free 3ml, ends midnight tonight → https://tarifeattar.com  STOP to opt out.
 
 ---
 
@@ -155,7 +161,7 @@ Send via Shopify (if SMS consent is captured) or your SMS tool. Keep to 2 sends.
 
 Add to the storefront for the flash window:
 
-> **Free surprise 3ml with every order. Through Friday.** A waypoint chosen for you, one of the 28.
+> **Spend $50, get a free 3ml. Through Friday.** A discovery vial chosen for you, while they last.
 
 ---
 
