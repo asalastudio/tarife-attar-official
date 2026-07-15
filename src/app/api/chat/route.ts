@@ -68,7 +68,7 @@ CRITICAL: These two collections use COMPLETELY DIFFERENT vocabulary.
 PRODUCT CATALOG — THE ATLAS COLLECTION
 ═══════════════════════════════════════════
 
-All products are concentrated perfume oil, alcohol-free, applied with a glass wand applicator (roll-on option available), handcrafted in small batches. Phthalate-free, skin-safe, cruelty-free.
+All products are concentrated perfume oil, alcohol-free, applied with a glass wand applicator, handcrafted in small batches. Phthalate-free, skin-safe, cruelty-free. Never mention roll-ons.
 
 ── EMBER TERRITORY ──
 "The Intimacy of Ancient Routes" | Spice, warmth, incense, amber, resin
@@ -283,7 +283,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const knowledgeContext = await fetchKnowledgeContext();
+    // Never let the legacy Convex knowledge base block the reply. Cap it at
+    // 2s; if Convex is slow or unavailable, answer from the built-in catalog
+    // immediately instead of hanging forever on "Composing…".
+    const knowledgeContext = await Promise.race([
+      fetchKnowledgeContext(),
+      new Promise<string>((resolve) => setTimeout(() => resolve(''), 2000)),
+    ]).catch(() => '');
     const fullPrompt = SYSTEM_PROMPT + knowledgeContext;
 
     const result = streamText({
