@@ -10,7 +10,7 @@
 
 ### The one-paragraph diagnosis
 
-Tarife Attar is not a struggling brand. It is a **fully-built, professionally-designed brand whose engine was never turned on.** The store did ~$363K in lifetime sales and peaked at **$11,645/month in November 2025** — then revenue collapsed to ~$1,000–2,000/month in 2026, not because customers left (39.7% of customers are repeat buyers — an elite retention number for fragrance), but because the rebrand stalled mid-transition: **the Etsy shop — the brand's historical engine, with 42,770 lifetime sales and ~11,800 five-star reviews — is currently frozen ("not selling on Etsy")**, best-sellers went out of stock, the email list has **never received a single campaign** (six are sitting in draft, including a complete 5-part rebrand announcement written in March), social media has produced exactly **2 orders in 12 months**, and analytics went dark when the new headless site launched. The product is proven. The brand system is world-class. The work now is distribution, not construction.
+Tarife Attar is not a struggling brand. It is a **fully-built, professionally-designed brand whose engine was never turned on.** The store did ~$363K in lifetime sales and peaked at **$11,645/month in November 2025** — then revenue collapsed to ~$1,000–2,000/month in 2026, not because customers left (39.7% of customers are repeat buyers — an elite retention number for fragrance), but because the rebrand stalled mid-transition: **the Etsy shop — the brand's historical engine, with 42,770 lifetime sales and ~11,800 five-star reviews — was permanently suspended (appeal pending; see ETSY_APPEAL_DRAFT.md)**, best-sellers went out of stock, the email list has **never received a single campaign** (six are sitting in draft, including a complete 5-part rebrand announcement written in March), social media has produced exactly **2 orders in 12 months**, and analytics went dark when the new headless site launched. The product is proven. The brand system is world-class. The work now is distribution, not construction.
 
 ### The three numbers that matter
 
@@ -19,11 +19,11 @@ Tarife Attar is not a struggling brand. It is a **fully-built, professionally-de
 | Returning-customer rate (12 mo) | **39.7%** | People who try it, rebuy it. The product is not the problem. |
 | Revenue from email + social (12 mo) | **$133 total** (3 orders) | The two highest-ROI channels in fragrance e-commerce are at zero. Pure upside. |
 | Proven peak | **$11.6K/mo (Nov 2025)** | The store has already demonstrated ~6× current run-rate with no marketing engine. |
-| Frozen Etsy social proof | **42,770 sales · ~11.8K five-star reviews** | The largest acquisition + trust engine in brand history is switched off, and brand searches route to dead listings. Reactivating it is priority #1. |
+| Suspended Etsy social proof | **42,770 sales · ~11.8K five-star reviews** | The largest acquisition + trust engine in brand history is permanently suspended, and brand searches route to dead listings. Priority #1: send the appeal AND run Plan B in parallel. |
 
 ### The path (summary)
 
-- **Stage 0 — Turn the key (Weeks 1–2):** Resolve and reactivate the frozen Etsy shop (or consciously replace it). Send the five warm-up emails that are already written. Restock the proven best-sellers that are at zero inventory. Install unified analytics. Launch a low-cost discovery set. Target: back to **$5–8K/mo** using only what already exists.
+- **Stage 0 — Turn the key (Weeks 1–2):** Send the Etsy suspension appeal (drafted in ETSY_APPEAL_DRAFT.md) and start the Plan B marketplace pivot in parallel. Send the five warm-up emails that are already written. Restock the proven best-sellers that are at zero inventory. Install unified analytics. Launch a low-cost discovery set. Target: back to **$5–8K/mo** using only what already exists.
 - **Stage 1 — Organic engine (Months 1–3):** Daily short-form video built on the brand's genuinely unique "Scent as Destination" angle, a 100-creator seeding program, 2–3 emails/week, quiz-driven list growth, Etsy migration executed. Target: **$12–18K/mo.**
 - **Stage 2 — Paid amplification (Months 3–6):** Meta + TikTok ads scaled on proven organic creative, Google capture of high-intent searches (the store already earns $6.5K/yr from search with zero SEO effort), reviews engine live. Target: **$25–45K/mo.**
 - **Stage 3 — Scale & diversify (Months 6–12):** TikTok Shop, wholesale via Faire, pop-up Field Stations, the Collector program, quarterly Relic drops as hype events. Target: **$50–100K/mo.**
@@ -138,7 +138,7 @@ Two conclusions: (1) the brand already wins high-intent search for its note keyw
 4. Stockouts on the exact products that historically sell.
 5. No reviews/social proof anywhere on the funnel.
 6. No sub-$30 entry offer (Traveler Set at $95 is a step-2 product, not step-1).
-7. Etsy shop frozen with 42,770 sales / ~11.8K reviews inside; new listings written but never published; brand SERPs land on dead listings.
+7. Etsy shop permanently suspended (appeal not yet sent) with 42,770 sales / ~11.8K reviews inside; new listings written but never published; brand SERPs land on dead listings.
 8. Product photography is placeholder-grade.
 9. No founder narrative anywhere (and "Jordan at TARIFE ATTAR" already signs the emails — the asset exists, unused).
 10. Relic (the high-margin, high-story tier) unlaunched.
@@ -153,9 +153,9 @@ Two conclusions: (1) the brand already wins high-intent search for its note keyw
 
 ### 3.1 THE finding: the Etsy engine is switched off
 
-The brand's historical core channel — **Etsy, with 42,770 lifetime sales and ~11,800 five-star reviews ("Star Seller," 5.0 displayed rating)** — currently shows **"TarifeAttar is currently not selling on Etsy."** The shop is frozen. This single fact explains most of the 2026 revenue collapse: the store's largest acquisition engine and its entire social-proof archive went dark simultaneously with the DTC rebrand. Worse, Google brand searches still route to dead Etsy listings showing "Sold / Email me when they're back."
+The brand's historical core channel — **Etsy, with 42,770 lifetime sales and ~11,800 five-star reviews ("Star Seller," 5.0 displayed rating)** — currently shows **"TarifeAttar is currently not selling on Etsy."** This single fact explains most of the 2026 revenue collapse: the store's largest acquisition engine and its entire social-proof archive went dark simultaneously with the DTC rebrand. Worse, Google brand searches still route to dead Etsy listings showing "Sold / Email me when they're back."
 
-**Implication: reactivating (or consciously replacing) the Etsy presence is the #1 commercial priority — above every other channel in this document.** If the freeze is voluntary (migration to DTC), reopen it as the funnel's trust layer and route its traffic to DTC over time. If it's a suspension, resolving it is worth days of effort — 11,800 reviews cannot be rebuilt.
+**Confirmed (July 2026): the shop was permanently suspended by Etsy, and the appeal/follow-up has not yet been sent (~2 weeks elapsed).** The play is now two-track: (1) **appeal immediately and persistently** — a ready-to-send appeal letter with a follow-up cadence and evidence checklist is in `ETSY_APPEAL_DRAFT.md`; appeals succeed weeks after suspension, and 11,800 reviews justify exhausting every avenue; (2) **plan as if Etsy is gone** — the rest of this document's channel mix does not depend on Etsy, and the Plan B in §8.6 reallocates its role to TikTok Shop, Amazon, and DTC trust assets. Do **not** open a new Etsy shop while permanently suspended — Etsy treats that as ban evasion, links accounts by identity/payment details, and it can poison the appeal.
 
 ### 3.2 What customers say they love (verified quotes)
 
@@ -403,7 +403,9 @@ Search already produces $6.5K/yr with zero effort. The note-name keywords (egypt
 
 ### 8.6 Marketplaces — borrowed trust
 
-- **Etsy (Week 1 — this outranks everything else in this section):** The shop is **frozen** with 42,770 sales and ~11,800 five-star reviews locked inside it. Step 1: determine why (voluntary pause vs. suspension) and resolve it — call Etsy support daily if needed; this is worth more than any campaign in this document. Step 2: once live, paste in the 28 rewritten listings from ETSY_ATLAS_LISTINGS.md (legacy names kept in titles for search equity), build the 5 sections, move retired scents to "The Archive." Step 3: Etsy Ads at $10–15/day on the hero cluster; review-ask insert in every order; a small "visit tarifeattar.com" card migrates buyers to DTC over time. Historical run-rate proves this channel alone can carry $5–15K/mo. If reactivation is truly impossible, open a fresh shop immediately and aggressively port social proof ("42,000 orders shipped" is a claimable fact in the shop story) — but exhaust reactivation first.
+- **Etsy — status: PERMANENTLY SUSPENDED, appeal pending (see ETSY_APPEAL_DRAFT.md).**
+  - **Track 1 — the appeal (send within 24h):** submit the prepared appeal from the email on file, reference the case number, address Etsy's exact stated reason with remediation and evidence, then follow up on the same thread every 5–7 business days. Do not open duplicate cases, and do not open a new shop under any identity while suspended (ban evasion — Etsy links accounts and it can sink the appeal). If reinstated: paste in the 28 rewritten listings from ETSY_ATLAS_LISTINGS.md, build the 5 sections, run Etsy Ads at $10–15/day on the hero cluster; the channel can carry $5–15K/mo.
+  - **Track 2 — Plan B (start in parallel, don't wait for Etsy):** assume the channel is gone and replace its three functions elsewhere. *Trust:* the review archive is quotable — screenshot/export the shop rating and best reviews now (before any delisting changes), and put "42,000+ orders · 11,800+ five-star reviews" on the homepage, PDPs, ads, and packaging inserts; it is a verifiable historical fact of the business regardless of the shop's status. *Marketplace search demand:* shift to TikTok Shop (accelerate to Month 2 — see below) and Amazon (accelerate to Month 3–4; brand + legacy-name terms, FBM). *The dead SERPs:* since the listings won't come back on their own, outrank them — the note-keyword landing pages in §8.5 plus Fragrantica/Parfumo brand pages plus Google Business Profile push the dead Etsy results down the brand SERP within a few months.
 - **TikTok Shop (Month 4+):** list the sampler + 3ml minis + Traveler Set; open the affiliate program to Shop creators (they take 10–20% and make the videos for you). This is currently the fastest-growing surface for indie fragrance.
 - **Amazon (Month 6+, optional):** Handmade or standard FBM for brand-name + legacy-name searches only; defend the brand term before a reseller squats it.
 
@@ -449,7 +451,7 @@ Scent × adjacent-taste collabs that fit the atlas: a specialty coffee roaster (
 ## PART X — 90-DAY EXECUTION CALENDAR
 
 ### Weeks 1–2 — IGNITION (goal: engine on, $0 ad spend)
-- [ ] **Etsy: diagnose the freeze and start reactivation** (support ticket + daily follow-up). Nothing on this list matters more.
+- [ ] **Etsy: send the suspension appeal (ETSY_APPEAL_DRAFT.md) within 24h**; set a 5–7-day follow-up cadence; screenshot/export the review archive today. Start Plan B in parallel — do not block anything on Etsy's answer.
 - [ ] Send Warm-Up 1–5 on the 10-day cadence (after the 90-day-opener deliverability split).
 - [ ] Enable Atlas welcome series + Abandoned Cart; wire welcome to quiz + forms.
 - [ ] Restock: MEISHAN (China Rain), CARMEL, BAHIA, KANDY, MANALI, DAMASCUS + top Ember stock depth.
@@ -627,7 +629,7 @@ Scent × adjacent-taste collabs that fit the atlas: a specialty coffee roaster (
 **What's broken:** Nothing about the product. The brand's three engines (Etsy, email, social) are all off simultaneously while a world-class brand system sits idle.
 
 **The seven moves that matter, in order:**
-1. **Unfreeze Etsy** (42.7K sales, 11.8K reviews). Days of effort, immediate revenue floor.
+1. **Appeal the Etsy suspension now** (42.7K sales, 11.8K reviews at stake — letter is written, in ETSY_APPEAL_DRAFT.md) while executing Plan B in parallel: preserve the review archive as marketing proof, accelerate TikTok Shop and Amazon, outrank the dead listings.
 2. **Send the emails that are already written.** Five drafts + two disabled flows = a re-launch narrative sitting in a drawer since March.
 3. **Restock the hero cluster** (SAANA, SIWA, MEISHAN, GRANADA, MEDINA, SERENGETI, CARMEL) and never let them stock out again.
 4. **Ship the $22 First Expedition sampler** with a bottle voucher inside — the missing first rung of the funnel.
