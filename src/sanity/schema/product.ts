@@ -139,13 +139,38 @@ export const productSchema = {
       ],
     },
 
+    // Voiceover — Eleven Labs narration files
+    {
+      name: 'voiceoverJourney',
+      title: 'Voiceover: The Journey (Evocation)',
+      type: 'file',
+      group: 'media',
+      description: 'Eleven Labs narration of the Evocation story (60-90s). Upload MP4, MP3, WAV, or WebM.',
+    },
+    {
+      name: 'voiceoverOnSkin',
+      title: 'Voiceover: On Skin',
+      type: 'file',
+      group: 'media',
+      description: 'Eleven Labs narration of the On Skin experience (30-45s). Upload MP4, MP3, WAV, or WebM.',
+    },
+
     // Price
     {
       name: 'price',
       title: 'Price',
       type: 'number',
       group: 'commerce',
-      description: 'Price in USD',
+      description: 'Price in USD. For multi-variant products this is the low (6ml) price.',
+      validation: (Rule: SanityRule) => Rule.min(0),
+    },
+    {
+      name: 'priceMax',
+      title: 'Price (High Variant)',
+      type: 'number',
+      group: 'commerce',
+      description:
+        'Price in USD of the highest variant (e.g. 12ml). Leave empty for single-variant products. Backfilled from Shopify by scripts/backfill-prices-from-shopify.mjs — the store.priceRange mirror below is populated by the Shopify Connect app, which is not currently syncing.',
       validation: (Rule: SanityRule) => Rule.min(0),
     },
 
@@ -492,17 +517,15 @@ export const productSchema = {
         },
         {
           name: 'audioJourney',
-          title: 'Audio: The Journey',
+          title: 'Audio: The Journey (legacy — use Media tab)',
           type: 'file',
-          options: { accept: 'audio/*' },
-          description: 'Narration of the Evocation story (60-90s)',
+          description: 'Legacy field — upload new voiceovers in the Media tab instead.',
         },
         {
           name: 'audioOnSkin',
-          title: 'Audio: On Skin',
+          title: 'Audio: On Skin (legacy — use Media tab)',
           type: 'file',
-          options: { accept: 'audio/*' },
-          description: 'Intimate narration of the On Skin experience (30-45s)',
+          description: 'Legacy field — upload new voiceovers in the Media tab instead.',
         },
         {
           name: 'displayFieldReportConcept',

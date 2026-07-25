@@ -182,7 +182,7 @@ export const productBySlugQuery = groq`
     internalName,
     collectionType,
     "price": coalesce(price, store.priceRange.minVariantPrice),
-    "priceMax": coalesce(store.priceRange.maxVariantPrice, price),
+    "priceMax": coalesce(priceMax, store.priceRange.maxVariantPrice, price),
     volume,
     productFormat,
     mainImage,
