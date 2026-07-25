@@ -43,6 +43,10 @@ interface Product {
   inspiredBy?: string;
   collectionType: "atlas" | "relic";
   price?: number;
+  priceMax?: number;
+  sku?: string;
+  sku6ml?: string;
+  sku12ml?: string;
   volume?: string;
   productFormat?: string;
   mainImage?: unknown;
@@ -56,6 +60,7 @@ interface Product {
   shopifyVariant12mlId?: string;
   shopifyProductId?: string;
   scarcityNote?: string;
+  reviews?: number[];
   relatedProducts?: Array<{
     _id: string;
     title: string;
@@ -70,6 +75,8 @@ interface Product {
     heart?: string[];
     base?: string[];
   };
+  voiceoverJourney?: string;
+  voiceoverOnSkin?: string;
   perfumer?: string;
   year?: number;
   atlasData?: {
@@ -414,8 +421,13 @@ const TERRITORY_NAMES: Record<string, string> = {
   terra: "Terra",
 };
 
-// Territory-based pricing for Atlas Collection
-const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
+// Estimate-only fallback: used ONLY when a product has no real price data
+// (product.price / product.priceMax, sourced from Sanity's store.priceRange
+// mirror of Shopify). As of 2026-07-25, 28/34 live products have neither —
+// the Shopify Connect price sync into Sanity does not appear to be running
+// (see TARIFE_ATTAR plan). This table exists so the page never shows "$0"
+// while that root cause is unresolved; it is NOT a source of truth.
+const ESTIMATE_FALLBACK_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
   ember: { '6ml': 28, '12ml': 48 },
   petal: { '6ml': 30, '12ml': 50 },
   tidal: { '6ml': 30, '12ml': 50 },
@@ -612,11 +624,31 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     }
   }, []);
 
-  // Get territory-based pricing for Atlas products
+  // Prefer real per-size pricing from the product's own price/priceMax fields;
+  // fall back to the territory estimate only when real data is missing (see
+  // ESTIMATE_FALLBACK_PRICING above for why that's still needed today).
   const territory = product.atlasData?.atmosphere;
-  const territoryPricing = territory ? TERRITORY_PRICING[territory] : null;
   const territoryTagline = territory ? TERRITORY_TAGLINES[territory] : null;
-  const currentPrice = territoryPricing ? territoryPricing[selectedVariant] : product.price;
+  const hasRealPrice = typeof product.price === 'number' && product.price > 0;
+  const hasRealPriceMax = typeof product.priceMax === 'number' && product.priceMax > 0;
+  const fallbackPricing = territory ? ESTIMATE_FALLBACK_PRICING[territory] : null;
+
+  const variantPricing = hasRealPrice
+    ? { '6ml': product.price as number, '12ml': hasRealPriceMax ? (product.priceMax as number) : (product.price as number) }
+    : fallbackPricing;
+  // Only show the 6ml/12ml selector when there's actually a 12ml Shopify variant to sell.
+  const dualVariantPricing = product.shopifyVariant12mlId ? variantPricing : null;
+  const currentPrice = variantPricing
+    ? variantPricing[selectedVariant]
+    : (hasRealPrice ? (product.price as number) : null);
+
+  // Backs the AggregateRating JSON-LD in page.tsx — that markup requires a
+  // matching visible rating on the page, so this line is not cosmetic.
+  const reviewRatings = product.reviews || [];
+  const reviewCount = reviewRatings.length;
+  const ratingValue = reviewCount > 0
+    ? Math.round((reviewRatings.reduce((sum, r) => sum + r, 0) / reviewCount) * 10) / 10
+    : null;
 
   const addButtonRef = useRef<HTMLButtonElement>(null);
   const mobileAddButtonRef = useRef<HTMLButtonElement>(null);
@@ -652,10 +684,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     footerTheme: isRelic ? 'dark' : 'light' as 'dark' | 'light',
   };
 
-  // Audio narrative state - shared between mobile compact button and desktop full player
+  // Audio narrative state — prefer top-level voiceover fields, fall back to legacy atlasData
   const audioState = useAudioNarrative(
-    product.atlasData?.audioJourney,
-    product.atlasData?.audioOnSkin
+    product.voiceoverJourney ?? product.atlasData?.audioJourney,
+    product.voiceoverOnSkin ?? product.atlasData?.audioOnSkin
   );
 
   const handleAddToSatchel = async (source: 'desktop' | 'mobile' = 'desktop') => {
@@ -928,7 +960,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 {product.title}
               </h1>
               {/* Mobile-only compact audio button */}
-              {isAtlas && audioState.hasAudio && (
+              {audioState.hasAudio && (
                 <div className="md:hidden absolute right-0 top-1/2 -translate-y-1/2">
                   <CompactAudioButton
                     isPlaying={audioState.isPlaying}
@@ -959,6 +991,14 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </p>
             )}
 
+            {/* Review Rating — visible counterpart to the AggregateRating JSON-LD */}
+            {reviewCount > 0 && (
+              <p className="font-mono text-xs md:text-sm tracking-widest opacity-70 mt-2">
+                {"★".repeat(Math.round(ratingValue || 0))}{"☆".repeat(5 - Math.round(ratingValue || 0))}
+                {" "}{ratingValue} · {reviewCount} review{reviewCount === 1 ? '' : 's'}
+              </p>
+            )}
+
             {/* Territory Accent (Atlas only) — colored bar representing territory */}
             {isAtlas && territory && territoryTagline && (
               <div className="py-4 border-y border-theme-charcoal/10 space-y-3">
@@ -980,8 +1020,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </div>
             )}
 
-            {/* Variant Selector (Atlas with territory pricing) */}
-            {isAtlas && territoryPricing ? (
+            {/* Variant Selector (Atlas with 6ml/12ml pricing) */}
+            {isAtlas && dualVariantPricing ? (
               <div className="space-y-4">
                 <span className="font-mono text-xs uppercase tracking-widest opacity-60">
                   Select Size
@@ -1004,7 +1044,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         </div>
                         <div className={`text-2xl font-serif tracking-tighter ${selectedVariant === size ? 'text-theme-alabaster' : ''
                           }`}>
-                          ${territoryPricing[size]}
+                          ${dualVariantPricing[size]}
                         </div>
                       </div>
                     </motion.button>
@@ -1291,10 +1331,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             </motion.button>
 
             {/* Audio Narrative - Desktop Only */}
-            {isAtlas && audioState.hasAudio && (
+            {audioState.hasAudio && (
               <AudioNarrativeDesktop
-                audioJourney={product.atlasData?.audioJourney}
-                audioOnSkin={product.atlasData?.audioOnSkin}
+                audioJourney={product.voiceoverJourney ?? product.atlasData?.audioJourney}
+                audioOnSkin={product.voiceoverOnSkin ?? product.atlasData?.audioOnSkin}
                 audioState={audioState}
               />
             )}
@@ -1509,7 +1549,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               <div className="text-xl font-serif tracking-tighter">
                 ${currentPrice || 0}
               </div>
-              {isAtlas && territoryPricing ? (
+              {isAtlas && dualVariantPricing ? (
                 <div className="flex gap-1 mt-0.5">
                   {(['6ml', '12ml'] as VariantSize[]).map((size) => (
                     <button

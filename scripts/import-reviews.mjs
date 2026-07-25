@@ -242,7 +242,10 @@ async function main() {
     csvPath = resolve(process.env.HOME, 'Downloads', 'reviews.N1-5kmLv2c (2).csv');
   }
 
-  const csvContent = readFileSync(csvPath, 'utf-8');
+  // Strip a leading UTF-8 BOM — otherwise the first header ("id") is read as
+  // "﻿id", so every row.id is undefined and every review collapses onto
+  // the same "review-undefined" document via createOrReplace.
+  const csvContent = readFileSync(csvPath, 'utf-8').replace(/^﻿/, '');
   const rows = parseCSV(csvContent);
   console.log(`  CSV loaded: ${rows.length} total reviews`);
 
@@ -284,9 +287,14 @@ async function main() {
 
     const displayName = HANDLE_TO_DISPLAY_NAME[handle] || handle.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
+    // Loox review IDs can contain characters (e.g. apostrophes) that aren't
+    // valid in a Sanity document ID — sanitize for _id, keep the raw value
+    // in looxId below for dedup/reference.
+    const safeId = String(row.id).replace(/[^A-Za-z0-9._-]/g, '-');
+
     const doc = {
       _type: 'review',
-      _id: `review-${row.id}`,
+      _id: `review-${safeId}`,
       reviewerName: row.nickname || row.full_name || 'Anonymous',
       rating: parseInt(row.rating, 10),
       body: row.review || '',

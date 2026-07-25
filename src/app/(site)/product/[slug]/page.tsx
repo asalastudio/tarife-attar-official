@@ -10,14 +10,6 @@ interface ProductPageProps {
   }>;
 }
 
-// Territory pricing for structured data
-const territoryPricing: Record<string, { min: number; max: number }> = {
-  ember: { min: 28, max: 48 },
-  tidal: { min: 30, max: 50 },
-  petal: { min: 30, max: 50 },
-  terra: { min: 33, max: 55 },
-};
-
 function buildScentDescription(product: any): string {
   const parts: string[] = [];
   if (product.title) parts.push(`${product.title} by Tarife Attar`);
@@ -126,10 +118,50 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  // Build JSON-LD Product structured data
-  const territory = product.atlasData?.atmosphere || 'ember';
-  const pricing = territoryPricing[territory] || { min: 28, max: 48 };
+  // Build JSON-LD Product structured data — priced from the product's actual
+  // Sanity/Shopify-synced price fields, not a hardcoded territory lookup.
   const notesStr = buildNotesString(product.notes);
+
+  const priceLow = typeof product.price === 'number' ? product.price : Number(product.price);
+  const priceHigh = typeof product.priceMax === 'number' ? product.priceMax : Number(product.priceMax ?? priceLow);
+  const hasValidPrice = Number.isFinite(priceLow) && priceLow > 0;
+  const hasDualVariant = !!product.shopifyVariant12mlId && Number.isFinite(priceHigh) && priceHigh !== priceLow;
+
+  const availability = product.inStock !== false
+    ? 'https://schema.org/InStock'
+    : 'https://schema.org/OutOfStock';
+
+  const makeOffer = (name: string, price: number, sku?: string) => ({
+    '@type': 'Offer',
+    name,
+    price,
+    priceCurrency: 'USD',
+    availability,
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: {
+      '@type': 'Organization',
+      name: 'Tarife Attar',
+    },
+    ...(sku ? { sku } : {}),
+  });
+
+  const offers = !hasValidPrice
+    ? undefined
+    : hasDualVariant
+      ? [
+          makeOffer('6ml Glass Wand Applicator', priceLow, product.sku6ml),
+          makeOffer('12ml Glass Wand Applicator', priceHigh, product.sku12ml),
+        ]
+      : [makeOffer(`${product.volume || ''} Glass Wand Applicator`.trim(), priceLow, product.sku)];
+
+  // AggregateRating — only emitted when there's real review data AND a
+  // matching visible rating is rendered on the page (see ProductDetailClient),
+  // per Google's structured-data policy against invisible review markup.
+  const ratings: number[] = product.reviews || [];
+  const reviewCount = ratings.length;
+  const ratingValue = reviewCount > 0
+    ? Math.round((ratings.reduce((sum: number, r: number) => sum + r, 0) / reviewCount) * 10) / 10
+    : null;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -142,36 +174,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
     },
     category: 'Perfume Oil',
     url: `https://tarifeattar.com/product/${slug}`,
-    offers: [
-      {
-        '@type': 'Offer',
-        name: '6ml Glass Wand Applicator',
-        price: pricing.min,
-        priceCurrency: 'USD',
-        availability: product.inStock !== false
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: {
-          '@type': 'Organization',
-          name: 'Tarife Attar',
-        },
+    ...(offers ? { offers } : {}),
+    ...(reviewCount > 0 ? {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue,
+        reviewCount,
+        bestRating: 5,
+        worstRating: 1,
       },
-      {
-        '@type': 'Offer',
-        name: '12ml Glass Wand Applicator',
-        price: pricing.max,
-        priceCurrency: 'USD',
-        availability: product.inStock !== false
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: {
-          '@type': 'Organization',
-          name: 'Tarife Attar',
-        },
-      },
-    ],
+    } : {}),
     additionalProperty: [
       ...(product.sillage ? [{ '@type': 'PropertyValue', name: 'Sillage', value: product.sillage }] : []),
       ...(product.longevity ? [{ '@type': 'PropertyValue', name: 'Longevity', value: product.longevity }] : []),

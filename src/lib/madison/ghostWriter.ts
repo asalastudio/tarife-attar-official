@@ -16,7 +16,7 @@ interface MadisonPayload {
   title: string;
   internalName: string;
   collectionType: 'atlas' | 'relic';
-  description?: string; // Markdown or HTML
+  description?: string; // Markdown or HTML — not persisted, see pushDraft()
   imageUrl?: string;
   price?: number;
   volume?: string;
@@ -26,6 +26,8 @@ interface MadisonPayload {
     atmosphere: 'tidal' | 'ember' | 'petal' | 'terra';
     gpsCoordinates?: string;
     travelLog?: string; // Markdown
+    evocationStory?: string | string[]; // Markdown (split on blank lines) or pre-split paragraphs
+    onSkinStory?: string | string[]; // Markdown (split on blank lines) or pre-split paragraphs
   };
   // Relic-specific
   relicData?: {
@@ -39,6 +41,19 @@ interface MadisonPayload {
     heart?: string[];
     base?: string[];
   };
+  // Shopify linkage — optional. Without these, Add-to-Cart stays disabled until
+  // a human connects the product to Shopify (see TROUBLESHOOTING_PRODUCTS.md).
+  shopifyProductId?: string;
+  shopifyHandle?: string;
+  shopifyVariantId?: string;
+  shopifyVariant6mlId?: string;
+  shopifyVariant12mlId?: string;
+  sku?: string;
+  sku6ml?: string;
+  sku12ml?: string;
+  // When true, publish immediately instead of leaving a Sanity draft — gated
+  // by checkPublishReadiness() below. Defaults to false (current behavior).
+  publish?: boolean;
 }
 
 interface PortableTextBlock {
@@ -96,6 +111,46 @@ function markdownToBlocks(text: string): PortableTextBlock[] {
   });
 }
 
+/**
+ * Normalizes markdown/raw text or a pre-split array into an array of paragraph
+ * strings, matching the schema's `array of string` shape for evocationStory/onSkinStory
+ * (these are NOT Portable Text — no markdownToBlocks() conversion here).
+ */
+function toParagraphArray(input: string | string[] | undefined): string[] | undefined {
+  if (!input) return undefined;
+  if (Array.isArray(input)) {
+    const paragraphs = input.map((p) => p.trim()).filter(Boolean);
+    return paragraphs.length > 0 ? paragraphs : undefined;
+  }
+  const paragraphs = input
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  return paragraphs.length > 0 ? paragraphs : undefined;
+}
+
+/**
+ * Checks whether a document has the minimum fields the live site requires
+ * before it's safe to publish immediately instead of landing as a draft.
+ * This is the safety net behind MadisonPayload.publish — see pushDraft().
+ */
+function checkPublishReadiness(doc: Record<string, unknown>): { ready: boolean; issues: string[] } {
+  const issues: string[] = [];
+
+  if (!doc.title) issues.push('Missing title');
+  if (!doc.internalName) issues.push('Missing internalName');
+  if (!doc.collectionType) issues.push('Missing collectionType');
+  if (!(doc.slug as { current?: string } | undefined)?.current) issues.push('Missing slug');
+  if (!doc.shopifyVariantId) issues.push('Missing shopifyVariantId — product would publish live but not be purchasable');
+
+  if (doc.collectionType === 'atlas') {
+    const atlasData = doc.atlasData as { atmosphere?: string } | undefined;
+    if (!atlasData?.atmosphere) issues.push('Missing atlasData.atmosphere (required for Atlas products)');
+  }
+
+  return { ready: issues.length === 0, issues };
+}
+
 type SanityClientWithAssets = ReturnType<typeof createClient> & {
   assets: {
     upload: (type: 'image' | 'file', buffer: Buffer, options?: { filename?: string }) => Promise<{ _id: string }>;
@@ -151,7 +206,9 @@ async function uploadImageFromUrl(
 /**
  * Main function to push a draft document to Sanity
  */
-export async function pushDraft(data: MadisonPayload): Promise<string> {
+export async function pushDraft(
+  data: MadisonPayload
+): Promise<{ id: string; published: boolean; issues: string[] }> {
   // Initialize Sanity client with write token
   const writeToken = process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_WRITE_TOKEN;
   if (!writeToken) {
@@ -172,8 +229,10 @@ export async function pushDraft(data: MadisonPayload): Promise<string> {
     useCdn: false, // Always use the API for writes
   }) as SanityClientWithAssets;
 
-  // Generate draft ID
-  const draftId = `drafts.${uuidv4()}`;
+  // Generate the document's base ID. Drafts are stored as `drafts.${baseId}`;
+  // publishing (see readiness check below) is just dropping that prefix.
+  const baseId = uuidv4();
+  const draftId = `drafts.${baseId}`;
 
   // Handle image upload if provided
   let mainImageAssetId: string | undefined;
@@ -218,6 +277,17 @@ export async function pushDraft(data: MadisonPayload): Promise<string> {
     document.productFormat = data.productFormat;
   }
 
+  // Add Shopify linkage fields (optional — without these, Add-to-Cart stays
+  // disabled until a human connects the product to Shopify)
+  if (data.shopifyProductId) document.shopifyProductId = data.shopifyProductId;
+  if (data.shopifyHandle) document.shopifyHandle = data.shopifyHandle;
+  if (data.shopifyVariantId) document.shopifyVariantId = data.shopifyVariantId;
+  if (data.shopifyVariant6mlId) document.shopifyVariant6mlId = data.shopifyVariant6mlId;
+  if (data.shopifyVariant12mlId) document.shopifyVariant12mlId = data.shopifyVariant12mlId;
+  if (data.sku) document.sku = data.sku;
+  if (data.sku6ml) document.sku6ml = data.sku6ml;
+  if (data.sku12ml) document.sku12ml = data.sku12ml;
+
   // Add notes
   if (data.notes) {
     document.notes = {
@@ -235,6 +305,8 @@ export async function pushDraft(data: MadisonPayload): Promise<string> {
       travelLog: data.atlasData.travelLog
         ? markdownToBlocks(data.atlasData.travelLog)
         : undefined,
+      evocationStory: toParagraphArray(data.atlasData.evocationStory),
+      onSkinStory: toParagraphArray(data.atlasData.onSkinStory),
     };
   }
 
@@ -249,17 +321,33 @@ export async function pushDraft(data: MadisonPayload): Promise<string> {
     };
   }
 
-  // Add general description if provided
-  if (data.description) {
-    document.description = markdownToBlocks(data.description);
+  // data.description is intentionally not persisted — there is no matching
+  // `description` field on the product schema, so writing it produced an
+  // orphaned value invisible in Studio and read by no query. Use
+  // atlasData.evocationStory/onSkinStory or relicData.museumDescription instead.
+
+  // Gated auto-publish: only skip the draft prefix if the document already
+  // has what the live site needs to render and be purchasable. Otherwise it
+  // lands as a draft exactly like before, with the reasons why in `issues`.
+  let published = false;
+  let issues: string[] = [];
+  if (data.publish) {
+    const readiness = checkPublishReadiness(document);
+    issues = readiness.issues;
+    if (readiness.ready) {
+      document._id = baseId;
+      published = true;
+    }
   }
 
   // Create the document
   try {
-    console.log(`[Madison] Creating product draft in Sanity...`);
+    console.log(
+      `[Madison] Creating product ${published ? 'as published' : 'as draft'} in Sanity...`
+    );
     const result = await client.create(document as { _type: string; _id: string; [key: string]: unknown });
-    console.log(`✅ [Madison] Draft created: ${result._id}`);
-    return result._id;
+    console.log(`✅ [Madison] Product ${published ? 'published' : 'draft'} created: ${result._id}`);
+    return { id: result._id, published, issues };
   } catch (error) {
     console.error('[Madison] Sanity creation failed:', error);
     if (typeof error === 'object' && error !== null && 'details' in error) {

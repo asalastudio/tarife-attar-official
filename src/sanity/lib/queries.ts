@@ -30,8 +30,8 @@ export const atlasProductsByTerritoryQuery = groq`
     "evocationLocation": atlasData.evocationLocation,
     "evocationStory": atlasData.evocationStory,
     "onSkinStory": atlasData.onSkinStory,
-    "audioJourney": atlasData.audioJourney.asset->url,
-    "audioOnSkin": atlasData.audioOnSkin.asset->url,
+    "audioJourney": coalesce(voiceoverJourney.asset->url, atlasData.audioJourney.asset->url),
+    "audioOnSkin": coalesce(voiceoverOnSkin.asset->url, atlasData.audioOnSkin.asset->url),
     "displayFieldReportConcept": atlasData.displayFieldReportConcept,
     "travelLog": atlasData.travelLog,
     "fieldReport": atlasData.fieldReport {
@@ -182,6 +182,7 @@ export const productBySlugQuery = groq`
     internalName,
     collectionType,
     "price": coalesce(price, store.priceRange.minVariantPrice),
+    "priceMax": coalesce(store.priceRange.maxVariantPrice, price),
     volume,
     productFormat,
     mainImage,
@@ -194,7 +195,11 @@ export const productBySlugQuery = groq`
     shopifyVariant6mlId,
     shopifyVariant12mlId,
     "shopifyProductId": coalesce(shopifyProductId, store.id),
+    sku,
+    sku6ml,
+    sku12ml,
     scarcityNote,
+    "reviews": *[_type == "review" && status == "published" && references(^._id)].rating,
     relatedProducts[]-> {
       _id,
       "title": coalesce(title, store.title),
@@ -209,6 +214,8 @@ export const productBySlugQuery = groq`
     perfumer,
     year,
     // Atlas-specific fields
+    "voiceoverJourney": voiceoverJourney.asset->url,
+    "voiceoverOnSkin": voiceoverOnSkin.asset->url,
     atlasData {
       atmosphere,
       gpsCoordinates,
@@ -595,7 +602,8 @@ export const heroBackgroundsQuery = groq`
     atlasOverlayOpacity,
     "relicBackground": relicBackground.asset->url,
     "relicHotspot": relicBackground.hotspot,
-    relicOverlayOpacity
+    relicOverlayOpacity,
+    "relicBackgroundVideo": relicBackgroundVideo.asset->url
   }
 `;
 
@@ -607,6 +615,7 @@ export interface HeroBackgroundsQueryResult {
   relicBackground?: string;
   relicHotspot?: { _type?: string; x: number; y: number; width?: number; height?: number };
   relicOverlayOpacity?: number;
+  relicBackgroundVideo?: string;
 }
 
 /**

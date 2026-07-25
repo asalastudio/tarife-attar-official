@@ -79,15 +79,21 @@ export async function POST(req: NextRequest) {
         }
 
         let draftId: string;
+        let published: boolean | undefined;
+        let readinessIssues: string[] | undefined;
 
         // 2. Route to appropriate push function
         switch (type) {
             case 'product':
             case 'atlas':
-            case 'relic':
+            case 'relic': {
                 console.log('[Madison] Routing to pushDraft');
-                draftId = await pushDraft(data as MadisonPayload);
+                const result = await pushDraft(data as MadisonPayload);
+                draftId = result.id;
+                published = result.published;
+                readinessIssues = result.issues;
                 break;
+            }
 
             case 'journal':
             case 'blog':
@@ -112,11 +118,20 @@ export async function POST(req: NextRequest) {
         }
 
         // 3. Success Response
-        console.log(`[Madison] Request processed successfully. Draft ID: ${draftId}`);
+        console.log(
+            `[Madison] Request processed successfully. ID: ${draftId}` +
+            (published !== undefined ? ` (published: ${published})` : '')
+        );
         return NextResponse.json({
             success: true,
-            message: `${type} draft created successfully`,
+            message: published
+                ? `${type} published successfully`
+                : `${type} draft created successfully`,
             draftId,
+            // Only meaningful for product/atlas/relic — undefined for journal/fieldJournal pushes
+            published,
+            reviewRequired: published === undefined ? undefined : !published,
+            readinessIssues,
             studioUrl: `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.sanity.studio/desk/inbox;${draftId}`
         }, { headers: CORS_HEADERS });
 

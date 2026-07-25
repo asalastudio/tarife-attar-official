@@ -100,5 +100,29 @@ export default async function RelicPage() {
 
   const totalCount = (products || []).length;
 
-  return <RelicClient categories={categories} totalCount={totalCount} placeholderImages={placeholderImages} />;
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'The Relic — Rare Oud Oils & Vintage Attars',
+    url: 'https://tarifeattar.com/relic',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: products.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `https://tarifeattar.com/product/${p.slug.current}`,
+        name: p.title,
+      })),
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <RelicClient categories={categories} totalCount={totalCount} placeholderImages={placeholderImages} />
+    </>
+  );
 }
