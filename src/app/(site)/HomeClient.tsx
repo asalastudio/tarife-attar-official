@@ -26,9 +26,22 @@ const CommunityMap = dynamic(
   }
 );
 
+interface GiftProduct {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  price?: number;
+  compareAtPrice?: number;
+  mainImage?: unknown;
+  shopifyPreviewImageUrl?: string;
+  shopifyImage?: string;
+  setSize?: number;
+  inStock?: boolean;
+}
+
 interface HomeClientProps {
-    featuredProducts: (Product & { 
-      atlasImage?: unknown; 
+    featuredProducts: (Product & {
+      atlasImage?: unknown;
       relicImage?: unknown;
       shopifyPreviewImageUrl?: string;
       shopifyImage?: string;
@@ -36,9 +49,10 @@ interface HomeClientProps {
     heroBackgrounds?: HeroBackgroundsQueryResult;
     placeholderImages?: PlaceholderImagesQueryResult | null;
     portsOfCall?: PortOfCall[];
+    giftProducts?: GiftProduct[];
 }
 
-export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImages, portsOfCall = [] }: HomeClientProps) {
+export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImages, portsOfCall = [], giftProducts = [] }: HomeClientProps) {
     const router = useRouter();
     const [showLoader, setShowLoader] = useState(true); // Enable intro loader with animations
     
@@ -70,10 +84,14 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
             router.push('/relic');
         } else if (path === 'quiz') {
             router.push('/quiz');
+        } else if (path === 'gift') {
+            router.push('/gift');
         } else {
             router.push(`/${path}`);
         }
     };
+
+    const giftHighlight = giftProducts.find((p) => p.inStock !== false) ?? giftProducts[0];
 
     const handleLoaderComplete = useCallback(() => {
         setShowLoader(false);
@@ -234,6 +252,62 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                         </button>
                     </div>
                 </section>
+
+                {/* Gift Sets CTA */}
+                {giftHighlight && (
+                    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-24 bg-theme-charcoal/[0.02]">
+                        <div className="max-w-4xl mx-auto">
+                            <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+                                {/* Product thumbnail */}
+                                <div className="relative w-48 h-48 md:w-64 md:h-64 flex-shrink-0 bg-[#F8F7F2] overflow-hidden border border-theme-charcoal/5 shadow-sm">
+                                    {giftHighlight.compareAtPrice && giftHighlight.price && giftHighlight.compareAtPrice > giftHighlight.price && (
+                                        <div className="absolute top-2 left-2 z-10 bg-theme-charcoal text-theme-alabaster px-2 py-1">
+                                            <span className="font-mono text-[9px] uppercase tracking-widest">
+                                                {Math.round((1 - giftHighlight.price / giftHighlight.compareAtPrice) * 100)}% Off
+                                            </span>
+                                        </div>
+                                    )}
+                                    {(() => {
+                                        const imageUrl = giftHighlight.mainImage ? urlForImage(giftHighlight.mainImage as any)?.width(500)?.height(500)?.url() : null;
+                                        const shopifyImageUrl = giftHighlight.shopifyPreviewImageUrl || giftHighlight.shopifyImage;
+                                        const src = imageUrl || shopifyImageUrl || getPlaceholderImageUrl('gift', placeholderImages);
+                                        return (
+                                            <Image
+                                                src={src}
+                                                alt={giftHighlight.title}
+                                                fill
+                                                sizes="(max-width: 768px) 192px, 256px"
+                                                className="object-cover"
+                                            />
+                                        );
+                                    })()}
+                                </div>
+
+                                {/* Copy */}
+                                <div className="text-center md:text-left flex-1">
+                                    <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold block mb-4">
+                                        A Third Path
+                                    </span>
+                                    <h2 className="text-3xl md:text-5xl font-serif italic tracking-tight text-theme-charcoal leading-tight mb-4">
+                                        Give the Whole Journey
+                                    </h2>
+                                    <p className="font-serif text-lg md:text-xl text-theme-charcoal/60 mb-8 max-w-xl mx-auto md:mx-0">
+                                        {giftHighlight.setSize
+                                            ? `A ${giftHighlight.setSize}-piece mystery box for the curious wanderer — every territory, one gift.`
+                                            : 'Curated sets and travel collections, bundled and ready to give.'}
+                                    </p>
+                                    <button
+                                        onClick={() => handleNavigate('gift')}
+                                        className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-xs uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors"
+                                    >
+                                        Shop Gift Sets
+                                        <span>→</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
 
                 {/* Ports of Call — Community Map */}
                 {portsOfCall.length > 0 && (

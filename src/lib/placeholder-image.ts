@@ -27,12 +27,12 @@ export const PLACEHOLDER_RELIC_IMAGE =
  * Get placeholder image URL based on collection type
  * Checks Sanity first, then falls back to hardcoded placeholder
  * 
- * @param collectionType - 'relic' | 'atlas' | undefined
+ * @param collectionType - 'relic' | 'atlas' | 'gift' | undefined
  * @param sanityPlaceholders - Optional placeholder images from Sanity query
  * @returns Placeholder image URL for the specified collection
  */
 export function getPlaceholderImageUrl(
-  collectionType?: 'relic' | 'atlas',
+  collectionType?: 'relic' | 'atlas' | 'gift',
   sanityPlaceholders?: PlaceholderImagesQueryResult | null
 ): string {
   // Priority 1: Check Sanity-managed placeholder
@@ -61,7 +61,7 @@ export function getPlaceholderImageUrl(
  * Useful when you need to apply Sanity image transformations
  */
 export function getPlaceholderImageSource(
-  collectionType?: 'relic' | 'atlas',
+  collectionType?: 'relic' | 'atlas' | 'gift',
   sanityPlaceholders?: PlaceholderImagesQueryResult | null
 ): { asset: { _ref: string } } | null {
   if (!sanityPlaceholders) return null;

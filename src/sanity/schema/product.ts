@@ -40,6 +40,7 @@ export const productSchema = {
         list: [
           { title: 'The Atlas (Voyage)', value: 'atlas' },
           { title: 'The Relic (Vault)', value: 'relic' },
+          { title: 'The Gift (Sets & Bundles)', value: 'gift' },
         ],
         layout: 'radio',
       },
@@ -146,6 +147,16 @@ export const productSchema = {
       type: 'number',
       group: 'commerce',
       description: 'Price in USD',
+      validation: (Rule: SanityRule) => Rule.min(0),
+    },
+
+    // Compare-At Price (for sale/discount display)
+    {
+      name: 'compareAtPrice',
+      title: 'Compare-At Price',
+      type: 'number',
+      group: 'commerce',
+      description: 'Original price to show struck through when this product is on sale. Leave empty when not on sale.',
       validation: (Rule: SanityRule) => Rule.min(0),
     },
 
@@ -618,6 +629,63 @@ export const productSchema = {
       ],
     },
 
+    // ===== THE GIFT DATA (Hidden if collectionType != 'gift') =====
+    {
+      name: 'giftData',
+      title: 'Gift Data',
+      type: 'object',
+      group: 'data',
+      description: 'Set/bundle-specific data for The Gift collection',
+      hidden: ({ parent }: { parent?: { collectionType?: string } }) =>
+        parent?.collectionType !== 'gift',
+      fields: [
+        {
+          name: 'setSize',
+          title: 'Set Size',
+          type: 'number',
+          description: 'Number of pieces included in the set (e.g., 10)',
+          validation: (Rule: SanityRule) => Rule.min(1),
+        },
+        {
+          name: 'pieceFormat',
+          title: 'Piece Format',
+          type: 'string',
+          description: 'e.g., "3ml Assorted Vials", "6ml Rollerballs"',
+        },
+        {
+          name: 'includedItems',
+          title: 'Included Items',
+          type: 'array',
+          of: [{ type: 'string' }],
+          description: 'List specific fragrances included, if the set is fixed. Leave empty for a curated/assorted selection.',
+        },
+        {
+          name: 'giftNote',
+          title: 'Gift Note',
+          type: 'array',
+          of: [{ type: 'block' }],
+          description: 'Curatorial description of what the set contains and who it is for',
+          validation: (Rule: SanityRule) =>
+            sensoryLexiconValidation(Rule, 'Gift Note'),
+        },
+        {
+          name: 'badges',
+          title: 'Trust Badges',
+          type: 'array',
+          of: [{ type: 'string' }],
+          description: 'Distinguishing factors for this Gift product',
+          options: {
+            list: [
+              { title: 'Best Seller', value: 'Best Seller' },
+              { title: 'Limited Edition', value: 'Limited Edition' },
+              { title: 'Assorted Selection', value: 'Assorted Selection' },
+              { title: 'Gift-Ready Packaging', value: 'Gift-Ready Packaging' },
+            ],
+          },
+        },
+      ],
+    },
+
     // Shared: Notes (Top, Heart, Base)
     {
       name: 'notes',
@@ -705,6 +773,7 @@ export const productSchema = {
       shopifyImage: 'store.previewImageUrl',
       atlasAtmosphere: 'atlasData.atmosphere',
       relicViscosity: 'relicData.viscosity',
+      giftSetSize: 'giftData.setSize',
       shopifyPrice: 'store.priceRange.minVariantPrice',
       shopifyStatus: 'store.status',
     },
@@ -718,6 +787,7 @@ export const productSchema = {
       shopifyImage?: string;
       atlasAtmosphere?: string;
       relicViscosity?: number;
+      giftSetSize?: number;
       shopifyPrice?: number;
       shopifyStatus?: string;
     }) {
@@ -731,6 +801,7 @@ export const productSchema = {
         shopifyImage,
         atlasAtmosphere,
         relicViscosity,
+        giftSetSize,
         shopifyPrice,
         shopifyStatus,
       } = selection;
@@ -757,6 +828,8 @@ export const productSchema = {
           subtitleParts.push(`Atlas: ${atlasAtmosphere}`);
         } else if (collectionType === 'relic' && relicViscosity !== undefined) {
           subtitleParts.push(`Relic: Viscosity ${relicViscosity}`);
+        } else if (collectionType === 'gift') {
+          subtitleParts.push(giftSetSize ? `Gift: ${giftSetSize}-Piece Set` : 'Gift Set');
         }
       }
 

@@ -58,6 +58,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
     { label: 'Threshold', href: '/' },
     { label: 'Atlas Collection', href: '/atlas' },
     { label: 'Relic Vault', href: '/relic' },
+    { label: 'Gift Sets', href: '/gift' },
     ...(!hideQuiz ? [{ label: 'Territory Quiz', href: '/quiz' }] : []),
   ];
 
