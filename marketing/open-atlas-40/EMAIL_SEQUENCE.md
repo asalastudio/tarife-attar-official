@@ -7,27 +7,25 @@ Subject line **A** variants follow the voice of the existing warm-up drafts (low
 
 ---
 
-## §1 · Warm-up patch (Tue–Wed, existing Omnisend drafts)
+## §1 · Warm-up send (today — Mon Aug 10)
 
-**Tue Aug 11, 8am — send WARM-UP 2 ("which one are you?") exactly as drafted.** No sale mention. Its job is engagement data and bounce-flushing.
+**Today, ~11 AM PT — WARM-UP 4 ("your favorite scent has a new name") + append this closing paragraph before the sign-off.** The draft lives in Omnisend — rebuild it as a plain-text-style email in your sending platform. Story only; the tease below is the only sale mention. Its job is engagement data and bounce-flushing a few hours ahead of tomorrow's announcement. *(WARM-UP 2, the quiz email, is optional — slot it Wednesday as a non-promo mid-week touch.)*
 
-**Wed Aug 12, 8am — WARM-UP 4 ("your favorite scent has a new name") + append this closing paragraph before the sign-off:**
-
-> One more thing. Renaming twenty-eight oils felt like finishing a map we'd been drawing for years — and a finished map deserves an occasion. Tomorrow morning, for four days only, we're opening the whole Atlas. Watch for the morning post.
+> One more thing. Renaming twenty-eight oils felt like finishing a map we'd been drawing for years — and a finished map deserves an occasion. Tomorrow morning, for six days only, we're opening the whole Atlas. Watch for the morning post.
 
 ---
 
-## §2 · E1 — The Atlas, Open (Thu Aug 13, 8:00 AM PT)
+## §2 · E1 — The Atlas, Open (Tue Aug 11, 8:00 AM PT)
 
 HTML: `emails/01-the-atlas-opens.html` · Audience: full emailable list minus bounces/complaints
 
 - **Subject A:** the atlas opens today
-- **Subject B:** The Atlas, Open — 40% off every waypoint, four days
-- **Preheader:** Four days. Twenty-eight waypoints. Forty percent. Through Sunday night.
+- **Subject B:** The Atlas, Open — 30% off every waypoint, six days
+- **Preheader:** Six days. Twenty-eight waypoints. Thirty percent. Through Sunday night.
 
 **Body copy** (as built in the HTML):
 
-> THE ARCHIVE OPENS · AUGUST 13–16
+> THE ARCHIVE OPENS · AUGUST 11–16
 >
 > # *The Atlas, Open.*
 >
@@ -35,11 +33,11 @@ HTML: `emails/01-the-atlas-opens.html` · Audience: full emailable list minus bo
 >
 > This year we did something irreversible. Twenty-eight oils were renamed, four territories were mapped, and the collection you knew became the Atlas — the same formulations, finally wearing their true coordinates.
 >
-> A finished map deserves an occasion. So, for four days, the entire Atlas is open:
+> A finished map deserves an occasion. So, for six days, the entire Atlas is open:
 >
-> **40% OFF EVERY WAYPOINT**
+> **30% OFF EVERY WAYPOINT**
 > **EVERY TERRITORY · BOTH FORMATS**
-> Applied automatically at checkout · Code **VOYAGE40** also honored
+> Applied automatically at checkout · Code **VOYAGE30** also honored
 > Through Sunday, August 16, 11:59 PM Pacific
 >
 > [ ENTER THE ATLAS → tarifeattar.com/atlas ]
@@ -47,25 +45,25 @@ HTML: `emails/01-the-atlas-opens.html` · Audience: full emailable list minus bo
 > ---
 >
 > **THE FOUR TERRITORIES**
-> - **EMBER** — Spice. Warmth. The intimacy of ancient routes. · from $28 → **$16.80**
-> - **TIDAL** — Salt. Mist. The pull of open water. · from $23 → **$13.80**
-> - **PETAL** — Bloom. Herb. The exhale of living gardens. · from $23 → **$13.80**
-> - **TERRA** — Wood. Oud. The gravity of deep forests. · from $25 → **$15.00**
+> - **EMBER** — Spice. Warmth. The intimacy of ancient routes. · from $28 → **$19.60**
+> - **TIDAL** — Salt. Mist. The pull of open water. · from $23 → **$16.10**
+> - **PETAL** — Bloom. Herb. The exhale of living gardens. · from $23 → **$16.10**
+> - **TERRA** — Wood. Oud. The gravity of deep forests. · from $25 → **$17.50**
 >
 > ---
 >
 > **FOUR WAYPOINTS TO BEGIN**
 > *(one per territory — the season's most-claimed, and ours)*
 >
-> - **GRANADA** · Ember — Warm amber, sweet resin, vanilla depth. The most-claimed waypoint of the season. 6ml $28 → **$16.80**
-> - **BIG SUR** · Tidal — Del Mar: bergamot, salt air, morning light on open water. 6ml $30 → **$18.00**
-> - **MEDINA** · Petal — Musk Tahara: powdery white musk, immaculate and close. 6ml $30 → **$18.00**
-> - **HAVANA** · Terra — Oud and tobacco leaf, whiskey warmth, evening gravity. 6ml $33 → **$19.80**
+> - **GRANADA** · Ember — Warm amber, sweet resin, vanilla depth. The most-claimed waypoint of the season. 6ml $28 → **$19.60**
+> - **BIG SUR** · Tidal — Del Mar: bergamot, salt air, morning light on open water. 6ml $30 → **$21.00**
+> - **MEDINA** · Petal — Musk Tahara: powdery white musk, immaculate and close. 6ml $30 → **$21.00**
+> - **HAVANA** · Terra — Oud and tobacco leaf, whiskey warmth, evening gravity. 6ml $33 → **$23.10**
 >
 > ---
 >
 > *(dark band)* **THE TRAVELER SET** — Five waypoints, one satchel. The Atlas in miniature.
-> $95 → **$57** during the opening · [ CLAIM THE SET ]
+> $95 → **$66.50** during the opening · [ CLAIM THE SET ]
 >
 > ---
 >
@@ -77,12 +75,12 @@ HTML: `emails/01-the-atlas-opens.html` · Audience: full emailable list minus bo
 
 ---
 
-## §3 · E2 — Four Territories, One Decision (Fri Aug 14, 9:00 AM PT)
+## §3 · E2 — Four Territories, One Decision (Thu Aug 13, 9:00 AM PT)
 
 Reuses the E1 template — swap map in §9. Audience: emailable minus event purchasers.
 
 - **Subject A:** for the undecided
-- **Subject B:** Four territories. One decision. Three days.
+- **Subject B:** Four territories. One decision. Four days.
 - **Preheader:** A field guide to choosing your first waypoint — while the Atlas is open.
 
 **Body copy:**
@@ -109,7 +107,7 @@ Reuses the E1 template — swap map in §9. Audience: emailable minus event purc
 >
 > Still unsorted? **The quiz decides in two minutes** → tarifeattar.com/quiz
 >
-> Every waypoint above — every waypoint, full stop — is 40% off through Sunday night. Applied at checkout.
+> Every waypoint above — every waypoint, full stop — is 30% off through Sunday night. Applied at checkout.
 >
 > [ ENTER THE ATLAS ]
 
@@ -120,7 +118,7 @@ Reuses the E1 template — swap map in §9. Audience: emailable minus event purc
 Reuses the E1 template — swap map in §9. Audience: emailable minus event purchasers.
 
 - **Subject A:** what travelers are claiming
-- **Subject B:** The Traveler Set at $57 — and this season's log
+- **Subject B:** The Traveler Set at $66.50 — and this season's log
 - **Preheader:** The most-claimed waypoints of the season, and the whole Atlas in one satchel.
 
 **Body copy:**
@@ -137,19 +135,19 @@ Reuses the E1 template — swap map in §9. Audience: emailable minus event purc
 > **2. SAANA** — Ember · honey oud. Comfort with a spine.
 > **3. MEDINA** — Petal · musk tahara. The cleanest thing we stabilize.
 >
-> All three remain stocked. All three are 40% off until tomorrow night.
+> All three remain stocked. All three are 30% off until tomorrow night.
 >
 > ---
 >
 > **If you can't choose five, carry five.**
 >
 > *(dark band)* **THE TRAVELER SET** — five waypoints, one satchel. The Atlas in miniature, for the desk drawer, the carry-on, the undecided heart.
-> **$95 → $57** while the Atlas is open. Seventeen sets existed at last count.
+> **$95 → $66.50** while the Atlas is open. Seventeen sets existed at last count.
 > [ CLAIM THE SET → /product/the-traveler-set ]
 >
 > ---
 >
-> **FIELD FORMAT** — Several waypoints travel in 3ml: **BIG SUR, SICILY, SAMARKAND, TOBAGO, HUDSON, MARRAKESH** — from $23 → **$13.80**. The lowest-stakes way to test a territory on skin, which is the only place a territory can be tested.
+> **FIELD FORMAT** — Several waypoints travel in 3ml: **BIG SUR, SICILY, SAMARKAND, TOBAGO, HUDSON, MARRAKESH** — from $23 → **$16.10**. The lowest-stakes way to test a territory on skin, which is the only place a territory can be tested.
 >
 > [ ENTER THE ATLAS ]
 >
@@ -177,8 +175,8 @@ Reuses the E1 template — swap map in §9. Audience: all emailable non-purchase
 >
 > What remains, plainly:
 >
-> - **Every waypoint, 40% off** — applied at checkout, or code **VOYAGE40**
-> - **The Traveler Set** — $95 → **$57**, low double digits remaining
+> - **Every waypoint, 30% off** — applied at checkout, or code **VOYAGE30**
+> - **The Traveler Set** — $95 → **$66.50**, low double digits remaining
 > - **Field notes on stock:** small batches ran small. ⚠️ *Verify against live inventory the morning of send — as of Aug 10:* **MANALI is down to its final bottle. KANDY and DAMASCUS are in final units. RIYADH remains in 6ml only.** When a batch is gone, the waypoint waits for the next distillation.
 >
 > [ ENTER THE ATLAS — OPEN UNTIL MIDNIGHT ]
@@ -205,10 +203,10 @@ HTML: `emails/05-final-hours.html` (dark variant) · Audience: non-purchasers wh
 >
 > Traveler —
 >
-> No persuasion at this hour — just the clock. At 11:59 PM Pacific the Atlas closes, and 40% returns to the map drawer until the next opening.
+> No persuasion at this hour — just the clock. At 11:59 PM Pacific the Atlas closes, and 30% returns to the map drawer until the next opening.
 >
-> **40% OFF · EVERY WAYPOINT · UNTIL 11:59 PM PT**
-> Applied automatically · code **VOYAGE40** honored
+> **30% OFF · EVERY WAYPOINT · UNTIL 11:59 PM PT**
+> Applied automatically · code **VOYAGE30** honored
 >
 > [ ENTER THE ATLAS ]
 >
@@ -221,25 +219,25 @@ HTML: `emails/05-final-hours.html` (dark variant) · Audience: non-purchasers wh
 
 ## §7 · Site copy
 
-**Announcement bar (live Thu 7:45 AM → Sun 11:59 PM):**
-> THE OPEN ATLAS — 40% off every waypoint through Sunday · applied at checkout
+**Announcement bar (live Tue 7:45 AM → Sun 11:59 PM):**
+> THE OPEN ATLAS — 30% off every waypoint through Sunday · applied at checkout
 
 **Homepage hero eyebrow (optional swap, Atlas side of the split):**
 > THE ARCHIVE IS OPEN · AUG 13–16
 
 **Exit-intent popup (Omnisend Forms, event week only):**
 - Headline: *Leaving mid-voyage?*
-- Body: The Atlas is open — 40% off every waypoint until Sunday night. Leave an address and we'll hold the map for you.
+- Body: The Atlas is open — 30% off every waypoint until Sunday night. Leave an address and we'll hold the map for you.
 - Field: email · Button: **SEND ME THE CODE**
-- Success state: Code **VOYAGE40** — honored through Sunday, 11:59 PM PT. *(Also fires instant email with the code + /atlas link — one paragraph, E1's offer block.)*
+- Success state: Code **VOYAGE30** — honored through Sunday, 11:59 PM PT. *(Also fires instant email with the code + /atlas link — one paragraph, E1's offer block.)*
 
 ## §8 · Abandoned Satchel override (automation, event week)
 
-Trigger: checkout abandoned, wait **1 hour** (not 24 — the window is four days).
+Trigger: checkout abandoned, wait **1 hour** (not 24 — the window is six days).
 
 - **Subject:** your satchel is holding its shape
 - **Body:**
-> Traveler — the waypoints you gathered are still in your satchel, and while the Atlas is open they carry 40% off at checkout, no code needed. One thing worth knowing: batches are small, and the satchel doesn't reserve them.
+> Traveler — the waypoints you gathered are still in your satchel, and while the Atlas is open they carry 30% off at checkout, no code needed. One thing worth knowing: batches are small, and the satchel doesn't reserve them.
 > [ RETURN TO YOUR SATCHEL ]
 > *The Atlas closes Sunday, 11:59 PM Pacific.*
 
@@ -259,9 +257,9 @@ Trigger: checkout abandoned, wait **1 hour** (not 24 — the window is four days
 
 ## §10 · Instagram (@tarifeattar), mirrors email mornings
 
-1. **Thu (feed + story):** The Atlas, Open. Four days, twenty-eight waypoints, forty percent. The rebrand is complete — this is its occasion. Link in bio. *(story: territory cards, swipe-up to /atlas)*
-2. **Fri:** Four territories, one decision. Which way does your compass settle? Quiz in bio.
-3. **Sat:** The travelers' log — GRANADA, SAANA, MEDINA lead the season. The Traveler Set: five waypoints, $57 while the Atlas is open.
+1. **Tue (feed + story):** The Atlas, Open. Six days, twenty-eight waypoints, thirty percent. The rebrand is complete — this is its occasion. Link in bio. *(story: territory cards, swipe-up to /atlas)*
+2. **Thu:** Four territories, one decision. Which way does your compass settle? Quiz in bio.
+3. **Sat:** The travelers' log — GRANADA, SAANA, MEDINA lead the season. The Traveler Set: five waypoints, $66.50 while the Atlas is open.
 4. **Sun AM:** The Atlas closes tonight, 11:59 PM PT. Plainly: this is the last morning.
 5. **Sun 8 PM (story only):** Final hours. The archive seals at midnight.
 
