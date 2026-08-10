@@ -62,7 +62,7 @@ HTML: `emails/01-the-atlas-opens.html` · Audience: full emailable list minus bo
 >
 > ---
 >
-> *(dark band)* **THE TRAVELER SET** — Five waypoints, one satchel. The Atlas in miniature.
+> *(dark band)* **THE TRAVELER SET** — Ten waypoints, one satchel. The Atlas in miniature.
 > $95 → **$66.50** during the opening · [ CLAIM THE SET ]
 >
 > ---
@@ -139,9 +139,9 @@ Reuses the E1 template — swap map in §9. Audience: emailable minus event purc
 >
 > ---
 >
-> **If you can't choose five, carry five.**
+> **If you can't choose one, carry ten.**
 >
-> *(dark band)* **THE TRAVELER SET** — five waypoints, one satchel. The Atlas in miniature, for the desk drawer, the carry-on, the undecided heart.
+> *(dark band)* **THE TRAVELER SET** — ten waypoints, one satchel. The Atlas in miniature, for the desk drawer, the carry-on, the undecided heart.
 > **$95 → $66.50** while the Atlas is open. Seventeen sets existed at last count.
 > [ CLAIM THE SET → /product/the-traveler-set ]
 >
@@ -259,7 +259,7 @@ Trigger: checkout abandoned, wait **1 hour** (not 24 — the window is six days)
 
 1. **Tue (feed + story):** The Atlas, Open. Six days, twenty-eight waypoints, thirty percent. The rebrand is complete — this is its occasion. Link in bio. *(story: territory cards, swipe-up to /atlas)*
 2. **Thu:** Four territories, one decision. Which way does your compass settle? Quiz in bio.
-3. **Sat:** The travelers' log — GRANADA, SAANA, MEDINA lead the season. The Traveler Set: five waypoints, $66.50 while the Atlas is open.
+3. **Sat:** The travelers' log — GRANADA, SAANA, MEDINA lead the season. The Traveler Set: ten waypoints, $66.50 while the Atlas is open.
 4. **Sun AM:** The Atlas closes tonight, 11:59 PM PT. Plainly: this is the last morning.
 5. **Sun 8 PM (story only):** Final hours. The archive seals at midnight.
 

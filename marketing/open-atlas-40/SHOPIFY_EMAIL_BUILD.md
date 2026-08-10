@@ -32,7 +32,7 @@ Build top to bottom; copy text verbatim from `EMAIL_SEQUENCE.md` §2.
 | 8 | Button | bg `#C9A227`, text `#1A1A1A`, link `https://www.tarifeattar.com/atlas` | `ENTER THE ATLAS` |
 | 9 | Text | four short rows, each territory name bold + essence line italic + `from $X → $Y`; link each name to `…/atlas?territory=ember` etc. | Territory index (copy deck §2) |
 | 10 | **Product blocks** | 2-column layout; select GRANADA, BIG SUR, MEDINA, HAVANA; show price + compare-at so the strikethrough renders | The featured quartet (notes lines from copy deck if the block allows custom description text; otherwise the product titles + prices carry it) |
-| 11 | Image-with-text or Text | section background `#0D0D0D`, text `#FAF9F6`, accent `#C9A227`; button style outlined gold, link `https://www.tarifeattar.com/gift` | Traveler Set band: `Five waypoints, one satchel.` · `$95 → $66.50` · `CLAIM THE SET` |
+| 11 | Image-with-text or Text | section background `#0D0D0D`, text `#FAF9F6`, accent `#C9A227`; button style outlined gold, link `https://www.tarifeattar.com/gift` | Traveler Set band: `Ten waypoints, one satchel.` · `$95 → $66.50` · `CLAIM THE SET` |
 | 12 | Text | centered, Georgia italic + gold link to `/quiz` | Quiz line |
 | 13 | Text | centered, Arial 10px, 50% opacity | Fine print (deadline · while stocked · Relic at archive pricing) |
 | 14 | Footer | auto | unsubscribe + address (automatic) |

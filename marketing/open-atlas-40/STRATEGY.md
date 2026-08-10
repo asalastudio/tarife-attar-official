@@ -24,7 +24,7 @@ These numbers came from the connected Shopify store (`vasana-perfumes.myshopify.
 - **Top sellers (90d):** GRANADA (27 orders), SAANA (19), MEDINA (19), then MALABAR / SICILY / HAVANA / HUDSON / DAMASCUS (~7 each)
 - **The email list has never been sent a campaign.** Contacts were imported from Klaviyo in late January 2026. Six drafts exist in Omnisend (WARM-UP 1–5 rebrand arc + Welcome W1) — none were ever sent. No segments exist.
 - **Inventory (live):** 21 of 28 waypoints in stock. **Out of stock: ASTORIA, BAHIA, BEIRUT, CARMEL, MEISHAN, TARIFA, TIGRIS.** Nearly depleted: MANALI (1 unit), KANDY (5), DAMASCUS (6), RIYADH (8, 6ml only). Deep stock in 3ml minis: BIG SUR (99), SICILY (88), SAMARKAND (80), TOBAGO (79), HUDSON (70).
-- **The Traveler Set** (5-piece set, $95, 17 in stock) is the AOV weapon: $66.50 at 30% off.
+- **The Traveler Set** (10-piece set, $95, 17 in stock) is the AOV weapon: $66.50 at 30% off.
 - **Relic collection:** effectively out of stock ($40–65 items, all zero inventory) — excluding it from the sale costs nothing and protects the vault's collector positioning.
 
 **The three constraints that shape everything below:**
