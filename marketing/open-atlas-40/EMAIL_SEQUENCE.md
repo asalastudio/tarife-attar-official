@@ -35,7 +35,7 @@ HTML: `emails/01-the-atlas-opens.html` · Audience: full emailable list minus bo
 >
 > **40% OFF EVERY WAYPOINT**
 > **EVERY TERRITORY · BOTH FORMATS**
-> Applied automatically at checkout · Code **VOYAGE40** also honored
+> Applied automatically at checkout — no code needed
 > Ends tonight, 11:59 PM Pacific
 >
 > [ ENTER THE ATLAS → tarifeattar.com/atlas ]
@@ -204,7 +204,7 @@ HTML: `emails/05-final-hours.html` (dark variant) · Audience: non-purchasers wh
 > No persuasion at this hour — just the clock. At 11:59 PM Pacific the Atlas closes, and 40% returns to the map drawer until the next opening.
 >
 > **40% OFF · EVERY WAYPOINT · UNTIL 11:59 PM PT**
-> Applied automatically · code **VOYAGE40** honored
+> Applied automatically at checkout — no code needed
 >
 > [ ENTER THE ATLAS ]
 >
@@ -227,7 +227,7 @@ HTML: `emails/05-final-hours.html` (dark variant) · Audience: non-purchasers wh
 - Headline: *Leaving mid-voyage?*
 - Body: The Atlas is open — 40% off every waypoint until midnight tonight. Leave an address and we'll hold the map for you.
 - Field: email · Button: **SEND ME THE CODE**
-- Success state: Code **VOYAGE40** — honored until 11:59 PM PT tonight. *(Also fires instant email with the code + /atlas link — one paragraph, E1's offer block.)*
+- Success state: 40% applies automatically at checkout — until 11:59 PM PT tonight. *(Also fires instant email with the code + /atlas link — one paragraph, E1's offer block.)*
 
 ## §8 · Abandoned Satchel override (automation, today)
 
