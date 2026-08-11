@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ShoppingBag, Trash, ArrowSquareOut, BookmarkSimple, Check } from "@phosphor-icons/react";
 import { useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
+import { appendAttributionToUrl } from "@/lib/attribution";
 
 export default function CartPage() {
   const router = useRouter();
@@ -176,6 +177,12 @@ export default function CartPage() {
     } catch (error) {
       console.warn('Could not add return URL parameters:', error);
     }
+
+    // Re-attach campaign attribution captured on landing (utm_*, click ids).
+    // Checkout completes on the Shopify domain, which otherwise never sees
+    // the email/campaign parameters — without this, email orders report as
+    // direct traffic and campaign attribution is lost.
+    finalCheckoutUrl = appendAttributionToUrl(finalCheckoutUrl);
 
     console.log('✅ Redirecting to checkout:', finalCheckoutUrl);
     window.location.href = finalCheckoutUrl;

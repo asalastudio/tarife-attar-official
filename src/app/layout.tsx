@@ -1,5 +1,7 @@
 import "./globals.css";
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import AttributionCapture from '@/components/AttributionCapture';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://tarifeattar.com'),
@@ -76,6 +78,9 @@ export default function RootLayout({
                 />
             </head>
             <body>
+                <Suspense fallback={null}>
+                    <AttributionCapture />
+                </Suspense>
                 {children}
             </body>
         </html>
