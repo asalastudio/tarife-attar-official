@@ -278,7 +278,7 @@ The first creative audit prioritizes BIG SUR, TOBAGO, SAMARKAND, SICILY, SERENGE
 
 ## 12. ClickUp design
 
-Use the existing Tarifé Attär Marketing folder and existing lists.
+Use the existing Tarifé Attär Marketing lists for campaign and lifecycle work, plus Operations > Infrastructure & Fixes for recurring channel health.
 
 ### Campaigns list
 
@@ -318,7 +318,7 @@ Track:
 
 Each automation must document eligibility, suppression, frequency, measurement, and current live status.
 
-### Operational Notifications list
+### Operations > Infrastructure & Fixes list
 
 Track recurring or exception-driven work:
 
@@ -329,7 +329,7 @@ Track recurring or exception-driven work:
 - Broken URLs
 - Email deliverability warnings
 
-No software implementation task is duplicated into ClickUp. Code changes remain in the software-build tracking lane. ClickUp owns marketing and operational execution.
+Keep the Operational Notifications list reserved for transactional customer notices. No software implementation task is duplicated into ClickUp. Code changes remain in the software-build tracking lane. ClickUp owns marketing and operational execution.
 
 ## 13. Command-center visual
 

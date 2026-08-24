@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the approved 30-day Revenue Bridge command center and create the complete execution structure in the existing Tarifé Attär ClickUp Marketing folder.
+**Goal:** Build the approved 30-day Revenue Bridge command center and create the complete execution structure across the existing Tarifé Attär ClickUp Marketing and Operations folders.
 
-**Architecture:** Shopify remains the commerce source of truth. An inline command-center visualization presents the reconciled inventory, revenue targets, weekly plan, channel readiness, and paid-spend gate. ClickUp stores campaign execution in the existing Campaigns, Lifecycle Automations, and Operational Notifications lists without duplicating software-build tasks.
+**Architecture:** Shopify remains the commerce source of truth. An inline command-center visualization presents the reconciled inventory, revenue targets, weekly plan, channel readiness, and paid-spend gate. ClickUp stores campaign execution in the existing Campaigns and Lifecycle Automations lists, with recurring channel-health checks in Operations > Infrastructure & Fixes. Operational Notifications remains reserved for transactional customer notices. Software-build tasks are not duplicated.
 
 **Tech Stack:** Shopify Admin GraphQL API, ClickUp connector, inline HTML visualization, Markdown specifications, Git.
 
@@ -81,14 +81,14 @@ Retrieve these list IDs:
 ```text
 Campaigns: 901419339579
 Lifecycle Automations: 901419339581
-Operational Notifications: 901419339582
+Operations > Infrastructure & Fixes: 901419341809
 ```
 
-Expected: each list resolves inside the Tarifé Attär Marketing folder.
+Expected: Campaigns and Lifecycle Automations resolve inside Marketing, while Infrastructure & Fixes resolves inside Operations.
 
 - [ ] **Step 2: Search for existing implementation items**
 
-Search the Tarifé Attär space and the three lists for:
+Search the Tarifé Attär space and the three execution lists for:
 
 ```text
 30-Day Revenue Bridge
@@ -321,7 +321,7 @@ Require confirmation that the showroom qualifies for a Business Profile before r
 - Read: `docs/specs/2026-08-24-revenue-bridge-marketing-os-design.md`
 
 **Interfaces:**
-- Consumes: Operational Notifications list ID `901419339582`.
+- Consumes: Operations > Infrastructure & Fixes list ID `901419341809`.
 - Produces: Weekly exception and health-review tasks.
 
 - [ ] **Step 1: Create Merchant Center health review**
