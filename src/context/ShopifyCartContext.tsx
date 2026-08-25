@@ -1,22 +1,39 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
-  shopifyFetch,
+  ADD_LINES_MUTATION,
+  CART_ATTRIBUTES_UPDATE_MUTATION,
   CREATE_CART_MUTATION,
   GET_CART_QUERY,
-  ADD_LINES_MUTATION,
-  UPDATE_LINES_MUTATION,
   REMOVE_LINES_MUTATION,
+  UPDATE_LINES_MUTATION,
   formatVariantId,
-  SHOPIFY_STORE_DOMAIN
+  shopifyFetch,
 } from '@/lib/shopify';
+import { useAttribution } from '@/context/AttributionContext';
+import {
+  buildAttributionAttributePatch,
+  getAttributionAttributeFingerprint,
+  ShopifyCartAttribute,
+} from '@/lib/shopify/cart-attributes';
+import { assertCartMutationSuccess } from '@/lib/shopify/cart-errors';
+
+const TRACKING_SYNC_ERROR =
+  'Campaign tracking could not be attached. Please try again before checkout.';
 
 interface CartItem {
-  id: string; // Line item ID
+  id: string;
   variantId: string;
-  title: string; // Product title
-  variantTitle?: string; // Variant title (e.g., "6 mL Cairo")
+  title: string;
+  variantTitle?: string;
   handle: string;
   quantity: number;
   price: string;
@@ -30,10 +47,7 @@ interface ShopifyCartLineNode {
   merchandise: {
     id: string;
     title?: string;
-    price?: {
-      amount: string;
-      currencyCode: string;
-    };
+    price?: { amount: string; currencyCode: string };
     image?: {
       url: string;
       altText?: string;
@@ -57,16 +71,10 @@ interface ShopifyCart {
   id: string;
   checkoutUrl: string;
   totalQuantity: number;
-  lines: {
-    edges: Array<{
-      node: ShopifyCartLineNode;
-    }>;
-  };
+  attributes?: ShopifyCartAttribute[];
+  lines: { edges: Array<{ node: ShopifyCartLineNode }> };
   cost: {
-    totalAmount: {
-      amount: string;
-      currencyCode: string;
-    };
+    totalAmount: { amount: string; currencyCode: string };
   };
 }
 
@@ -83,137 +91,176 @@ interface ShopifyCartContextType {
   clearCart: () => Promise<void>;
 }
 
-const ShopifyCartContext = createContext<ShopifyCartContextType | undefined>(undefined);
+const ShopifyCartContext = createContext<ShopifyCartContextType | undefined>(
+  undefined,
+);
+
+function mutationPayload<T>(response: unknown, operationName: string): T {
+  const record = response as {
+    data?: Record<string, T | undefined>;
+    errors?: Array<{ message?: string }>;
+  };
+  const payload = record.data?.[operationName];
+  if (payload) return payload;
+
+  const message = record.errors?.[0]?.message;
+  throw new Error(message || 'Shopify returned an invalid cart response.');
+}
 
 export function ShopifyCartProvider({ children }: { children: React.ReactNode }) {
+  const { cartAttributes, ready: attributionReady } = useAttribution();
   const [cart, setCart] = useState<ShopifyCart | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const initializationStartedRef = useRef(false);
+  const syncAttemptRef = useRef<string | null>(null);
 
-  // Initialize cart from localStorage or URL parameters (for abandoned cart recovery)
+  const createNewCart = useCallback(
+    async (attributes: ShopifyCartAttribute[]): Promise<ShopifyCart> => {
+      const response = await shopifyFetch({
+        query: CREATE_CART_MUTATION,
+        variables: { input: { attributes } },
+      });
+      const payload = mutationPayload<{
+        cart?: ShopifyCart | null;
+        userErrors?: Array<{ message: string }>;
+        warnings?: Array<{ code: string; message: string; target: string }>;
+      }>(response, 'cartCreate');
+
+      assertCartMutationSuccess(payload, 'create the cart');
+      if (!payload.cart) throw new Error('Shopify did not return a cart.');
+
+      setCart(payload.cart);
+      localStorage.setItem('shopify_cart_id', payload.cart.id);
+      return payload.cart;
+    },
+    [],
+  );
+
   useEffect(() => {
+    if (!attributionReady || initializationStartedRef.current) return;
+    initializationStartedRef.current = true;
+
     const initCart = async () => {
       setIsLoading(true);
       try {
-        // Check for cart ID in URL parameters first (for abandoned cart emails)
         const urlParams = new URLSearchParams(window.location.search);
         const urlCartId = urlParams.get('cart_id') || urlParams.get('cart');
-        
-        // Also check for checkout URL - if provided, log it (cart restoration happens via cart_id)
-        const checkoutUrl = urlParams.get('checkout_url');
-        if (checkoutUrl) {
-          console.log('Checkout URL detected in params:', checkoutUrl);
-          // Note: For direct checkout, the cart page will handle redirect
-        }
-
-        // Priority: URL param > localStorage
-        const cartId = urlCartId || localStorage.getItem('shopify_cart_id');
+        const storedCartId = localStorage.getItem('shopify_cart_id');
+        const cartId = urlCartId || storedCartId;
 
         if (cartId) {
           const response = await shopifyFetch({
             query: GET_CART_QUERY,
-            variables: { cartId }
+            variables: { cartId },
           });
 
           if (response.data?.cart) {
             setCart(response.data.cart);
-            // Save to localStorage for future use
             localStorage.setItem('shopify_cart_id', cartId);
-            console.log('✅ Cart restored from:', urlCartId ? 'URL parameter' : 'localStorage');
-          } else {
-            // Cart might be expired, clear it
-            if (urlCartId) {
-              // If from URL, don't clear localStorage (might have a different valid cart)
-              console.warn('Cart ID from URL is expired or invalid');
-            } else {
-              localStorage.removeItem('shopify_cart_id');
-            }
-            await createNewCart();
+            return;
           }
-        } else {
-          await createNewCart();
+
+          if (!urlCartId) localStorage.removeItem('shopify_cart_id');
         }
-      } catch (err) {
-        setError('Failed to initialize cart');
-        console.error(err);
+
+        await createNewCart(cartAttributes);
+      } catch {
+        setError('Failed to initialize cart. Please refresh and try again.');
       } finally {
         setIsLoading(false);
       }
     };
 
-    initCart();
-  }, []);
+    void initCart();
+  }, [attributionReady, cartAttributes, createNewCart]);
 
-  const createNewCart = async () => {
-    try {
-      const response = await shopifyFetch({
-        query: CREATE_CART_MUTATION,
-        variables: { input: {} }
-      });
+  useEffect(() => {
+    if (!attributionReady || !cart) return;
 
-      const newCart = response.data?.cartCreate?.cart;
-      if (newCart) {
-        setCart(newCart);
-        localStorage.setItem('shopify_cart_id', newCart.id);
-        return newCart;
-      }
-    } catch (err) {
-      console.error('Error creating cart:', err);
+    const currentAttributes = cart.attributes ?? [];
+    const patch = buildAttributionAttributePatch(
+      currentAttributes,
+      cartAttributes,
+    );
+
+    if (patch.length === 0) {
+      syncAttemptRef.current = null;
+      setError((current) =>
+        current === TRACKING_SYNC_ERROR ? null : current,
+      );
+      return;
     }
-    return null;
-  };
+
+    const attemptFingerprint = [
+      cart.id,
+      getAttributionAttributeFingerprint(currentAttributes),
+      getAttributionAttributeFingerprint(cartAttributes),
+    ].join('|');
+    if (syncAttemptRef.current === attemptFingerprint) return;
+    syncAttemptRef.current = attemptFingerprint;
+
+    let cancelled = false;
+    const syncAttributes = async () => {
+      try {
+        const response = await shopifyFetch({
+          query: CART_ATTRIBUTES_UPDATE_MUTATION,
+          variables: { cartId: cart.id, attributes: patch },
+        });
+        const payload = mutationPayload<{
+          cart?: ShopifyCart | null;
+          userErrors?: Array<{ message: string }>;
+          warnings?: Array<{ code: string; message: string; target: string }>;
+        }>(response, 'cartAttributesUpdate');
+
+        assertCartMutationSuccess(payload, 'attach campaign tracking');
+        if (!payload.cart) {
+          throw new Error('Shopify did not return the updated cart.');
+        }
+
+        if (!cancelled) setCart(payload.cart);
+      } catch {
+        if (!cancelled) setError(TRACKING_SYNC_ERROR);
+      }
+    };
+
+    void syncAttributes();
+    return () => {
+      cancelled = true;
+    };
+  }, [attributionReady, cart, cartAttributes]);
 
   const addItem = async (variantId: string, quantity: number) => {
     setIsLoading(true);
     setError(null);
 
-    let currentCart = cart;
-    if (!currentCart) {
-      console.log('No cart available. Creating new cart...');
-      // Await the creation and use the RETURNED value, not the state
-      currentCart = await createNewCart();
-
-      if (!currentCart) {
-        const errorMsg = 'Failed to create cart. Please check your Shopify configuration.';
-        setError(errorMsg);
-        setIsLoading(false);
-        throw new Error(errorMsg);
-      }
-    }
-
     try {
-      const formattedVariantId = formatVariantId(variantId);
-      console.log('Adding item to cart:', { variantId, formattedVariantId, quantity, cartId: currentCart.id });
-
+      const currentCart = cart ?? (await createNewCart(cartAttributes));
       const response = await shopifyFetch({
         query: ADD_LINES_MUTATION,
         variables: {
           cartId: currentCart.id,
-          lines: [{
-            merchandiseId: formattedVariantId,
-            quantity
-          }]
-        }
+          lines: [
+            { merchandiseId: formatVariantId(variantId), quantity },
+          ],
+        },
       });
+      const payload = mutationPayload<{
+        cart?: ShopifyCart | null;
+        userErrors?: Array<{ message: string }>;
+        warnings?: Array<{ code: string; message: string; target: string }>;
+      }>(response, 'cartLinesAdd');
 
-      console.log('Shopify response:', response);
-
-      if (response.errors) {
-        console.error('Shopify GraphQL errors:', response.errors);
-        throw new Error(response.errors[0]?.message || 'Failed to add item to cart');
-      }
-
-      if (response.data?.cartLinesAdd?.cart) {
-        setCart(response.data.cartLinesAdd.cart);
-        console.log('Successfully added item to cart');
-      } else {
-        throw new Error('Invalid response from Shopify');
-      }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to add item to cart';
-      console.error('Error adding item to cart:', err);
-      setError(errorMessage);
-      throw err; // Re-throw so the component can handle it
+      assertCartMutationSuccess(payload, 'add the item to the cart');
+      if (!payload.cart) throw new Error('Shopify did not return the cart.');
+      setCart(payload.cart);
+    } catch (caughtError) {
+      const message =
+        caughtError instanceof Error
+          ? caughtError.message
+          : 'Failed to add item to cart.';
+      setError(message);
+      throw caughtError;
     } finally {
       setIsLoading(false);
     }
@@ -226,25 +273,35 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
     }
 
     if (!cart) {
-      setError('No cart available');
+      setError('No cart available.');
       return;
     }
 
     setIsLoading(true);
+    setError(null);
     try {
       const response = await shopifyFetch({
         query: UPDATE_LINES_MUTATION,
         variables: {
           cartId: cart.id,
-          lines: [{ id: lineId, quantity }]
-        }
+          lines: [{ id: lineId, quantity }],
+        },
       });
+      const payload = mutationPayload<{
+        cart?: ShopifyCart | null;
+        userErrors?: Array<{ message: string }>;
+        warnings?: Array<{ code: string; message: string; target: string }>;
+      }>(response, 'cartLinesUpdate');
 
-      if (response.data?.cartLinesUpdate?.cart) {
-        setCart(response.data.cartLinesUpdate.cart);
-      }
-    } catch {
-      setError('Failed to update quantity');
+      assertCartMutationSuccess(payload, 'update the item quantity');
+      if (!payload.cart) throw new Error('Shopify did not return the cart.');
+      setCart(payload.cart);
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : 'Failed to update quantity.',
+      );
     } finally {
       setIsLoading(false);
     }
@@ -252,25 +309,32 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
   const removeItem = async (lineId: string) => {
     if (!cart) {
-      setError('No cart available');
+      setError('No cart available.');
       return;
     }
 
     setIsLoading(true);
+    setError(null);
     try {
       const response = await shopifyFetch({
         query: REMOVE_LINES_MUTATION,
-        variables: {
-          cartId: cart.id,
-          lineIds: [lineId]
-        }
+        variables: { cartId: cart.id, lineIds: [lineId] },
       });
+      const payload = mutationPayload<{
+        cart?: ShopifyCart | null;
+        userErrors?: Array<{ message: string }>;
+        warnings?: Array<{ code: string; message: string; target: string }>;
+      }>(response, 'cartLinesRemove');
 
-      if (response.data?.cartLinesRemove?.cart) {
-        setCart(response.data.cartLinesRemove.cart);
-      }
-    } catch {
-      setError('Failed to remove item');
+      assertCartMutationSuccess(payload, 'remove the item from the cart');
+      if (!payload.cart) throw new Error('Shopify did not return the cart.');
+      setCart(payload.cart);
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : 'Failed to remove item.',
+      );
     } finally {
       setIsLoading(false);
     }
@@ -278,71 +342,35 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
   const clearCart = async () => {
     setIsLoading(true);
+    setError(null);
     try {
       localStorage.removeItem('shopify_cart_id');
-      await createNewCart();
+      await createNewCart(cartAttributes);
+    } catch {
+      setError('Failed to clear the cart. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const items: CartItem[] = cart?.lines?.edges?.map(({ node }: { node: ShopifyCartLineNode }) => {
-    // Debug log for each item being mapped
-    console.log('Cart Item Node:', {
-      title: node.merchandise.product.title,
-      variantImage: node.merchandise.image,
-      productImage: node.merchandise.product.featuredImage
-    });
-
-    return {
+  const items: CartItem[] =
+    cart?.lines?.edges?.map(({ node }: { node: ShopifyCartLineNode }) => ({
       id: node.id,
       variantId: node.merchandise.id,
       title: node.merchandise.product.title,
-      variantTitle: node.merchandise.title, // Variant title (e.g., "6 mL Cairo")
+      variantTitle: node.merchandise.title,
       handle: node.merchandise.product.handle,
       quantity: node.quantity,
       price: String(node.merchandise.price?.amount || '0.00'),
       currencyCode: node.merchandise.price?.currencyCode || 'USD',
-      image: node.merchandise.image?.url || node.merchandise.product.featuredImage?.url
-    };
-  }) || [];
+      image:
+        node.merchandise.image?.url ||
+        node.merchandise.product.featuredImage?.url,
+    })) || [];
 
   const itemCount = cart?.totalQuantity || 0;
   const cartTotal = String(cart?.cost?.totalAmount?.amount || '0.00');
-
-  // Transform checkout URL to use Shopify domain if it's pointing to custom domain
-  const rawCheckoutUrl = cart?.checkoutUrl || '';
-
-  let checkoutUrl = rawCheckoutUrl;
-
-  if (rawCheckoutUrl && SHOPIFY_STORE_DOMAIN) {
-    try {
-      // If checkout URL is pointing to tarifeattar.com, replace with Shopify domain
-      const customDomainPattern = /https?:\/\/(www\.)?tarifeattar\.com/i;
-      if (customDomainPattern.test(rawCheckoutUrl)) {
-        // Extract the path and query from the checkout URL
-        const url = new URL(rawCheckoutUrl);
-        const pathAndQuery = url.pathname + url.search;
-        // Replace with Shopify store domain
-        checkoutUrl = `https://${SHOPIFY_STORE_DOMAIN}${pathAndQuery}`;
-        console.log('✅ Transformed checkout URL:', {
-          from: rawCheckoutUrl,
-          to: checkoutUrl,
-          shopifyDomain: SHOPIFY_STORE_DOMAIN
-        });
-      } else {
-        console.log('✓ Checkout URL already uses correct domain:', rawCheckoutUrl);
-      }
-    } catch (error) {
-      console.error('❌ Error transforming checkout URL:', error);
-      // Fall back to original URL if transformation fails
-      checkoutUrl = rawCheckoutUrl;
-    }
-  } else {
-    if (rawCheckoutUrl && !SHOPIFY_STORE_DOMAIN) {
-      console.warn('⚠️ Shopify domain not configured. Checkout URL:', rawCheckoutUrl);
-    }
-  }
+  const checkoutUrl = cart?.checkoutUrl || '';
 
   return (
     <ShopifyCartContext.Provider
@@ -356,7 +384,7 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
         addItem,
         updateItemQuantity,
         removeItem,
-        clearCart
+        clearCart,
       }}
     >
       {children}
