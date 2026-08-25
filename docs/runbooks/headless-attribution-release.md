@@ -2,7 +2,7 @@
 
 ## Release gate
 
-Revenue Bridge email remains blocked until every owned-channel check in this runbook passes against the same deployed build. Paid Meta remains blocked and is not part of this release.
+Revenue Bridge email remains blocked until every owned-channel check in this runbook passes against the same deployed build. The Meta storefront adapter may ship in the same build, but paid Meta remains blocked until the separate Meta Test Events and reconciliation gate passes.
 
 Use a dedicated test contact and an explicitly approved low-value purchase. Keep customer email, shipping details, cart secrets, checkout URLs, tokens, and full attribution values out of screenshots, terminal output, and ClickUp.
 
@@ -85,6 +85,23 @@ https://www.tarifeattar.com/product/granada?utm_source=omnisend&utm_medium=email
 
 Do not add customer identifiers, email addresses, cart IDs, or checkout URLs to campaign parameters.
 
+## 5A. Meta paid-channel gate
+
+The headless storefront uses `NEXT_PUBLIC_META_PIXEL_ID` only after Shopify reports marketing processing is allowed. `NEXT_PUBLIC_META_CATALOG_COUNTRY` must match the country prefix used by the Shopify-synced Meta catalog (for example, `US`). Shopify's Facebook & Instagram channel remains the only owner of checkout completion and server-side conversion delivery; the headless storefront must not emit a completed-order event.
+
+1. Confirm the connected Facebook & Instagram channel is using **Enhanced** data sharing: Meta Pixel, advanced matching, and Conversions API.
+2. Confirm the Vercel Meta Pixel ID is the same dataset shown by that Shopify channel.
+3. Confirm browser events appear in Meta Test Events only after marketing consent:
+   - `ViewContent`
+   - `AddToCart`
+   - `InitiateCheckout`
+4. Inspect `content_ids` and confirm they match actual Shopify-synced catalog item IDs in the form `shopify_{COUNTRY}_{PRODUCT_ID}_{VARIANT_ID}`.
+5. Complete the separately approved test order and confirm Shopify produces one browser/server-deduplicated completed-order conversion through the connected channel.
+6. Confirm the Shopify order value, currency, and item identifiers match the Meta conversion.
+7. In a clean reject-consent profile, confirm no request is sent to `connect.facebook.net` or `facebook.com` and no Meta event appears.
+
+Pass condition: Meta Test Events shows the complete pre-checkout funnel, one correctly deduplicated completed-order conversion from Shopify, catalog identifiers match, and the reject path emits nothing. Do not release paid budget on a partial pass.
+
 ## 6. Consent accept test
 
 Run this path only after production deployment and the low-value purchase have separate approval.
@@ -123,7 +140,7 @@ Run this test first in production so a failure cannot be hidden by an earlier gr
 2. Open the campaign test URL and reject analytics and marketing processing.
 3. Confirm browser storage does not contain `ta_attribution_v1`.
 4. Add an in-stock variant and inspect the Storefront cart. Confirm there are no `ta_` cart attributes. Any retained or blank `ta_` key is a failure until Shopify removal behavior is understood and corrected.
-5. Confirm no requests are sent to `googletagmanager.com` or `google-analytics.com`, and no GA4 storefront or checkout events appear.
+5. Confirm no requests are sent to `googletagmanager.com`, `google-analytics.com`, `connect.facebook.net`, or `facebook.com`, and no GA4 or Meta storefront events appear.
 6. Open the cart and checkout. Confirm essential cart, quantity, removal, and checkout behavior still works.
 7. Do not complete a second purchase unless it was separately approved and is necessary to validate the reject path.
 
@@ -140,6 +157,7 @@ Record sanitized evidence on ClickUp task `86bbkqy4u`:
 - Consent-accept pass/fail by criterion
 - Consent-reject pass/fail by criterion
 - Shopify-versus-GA4 revenue reconciliation
+- Shopify-versus-Meta conversion reconciliation and deduplication result
 - Screenshots with all customer PII, cart secrets, checkout URLs, and tokens redacted
 - Test operator
 - Final release decision and approver
@@ -152,8 +170,9 @@ If any criterion fails:
 
 1. Keep Revenue Bridge email blocked and do not release paid media.
 2. Clear `NEXT_PUBLIC_GA4_MEASUREMENT_ID` in the production environment and redeploy if storefront GA4 behavior is unsafe or inaccurate.
-3. Disable the Shopify checkout Google integration/Web Pixel if it duplicates purchases, bypasses consent, exposes prohibited data, or reports incorrect revenue.
-4. Revert the checkout domain to the last verified Shopify host if DNS, TLS, or redirect behavior is broken.
-5. Preserve the Shopify-native order attribution ledger only if its consent and order-value behavior is correct; otherwise roll back the affected deployment.
-6. Record the failed criterion and sanitized evidence on ClickUp without customer PII.
-7. Repeat both clean-profile consent paths after the correction. Do not release on a partial pass.
+3. Clear `NEXT_PUBLIC_META_PIXEL_ID` and redeploy if Meta consent, catalog identifiers, or event delivery is unsafe or inaccurate.
+4. Disable the Shopify checkout Google integration/Web Pixel if it duplicates purchases, bypasses consent, exposes prohibited data, or reports incorrect revenue.
+5. Revert the checkout domain to the last verified Shopify host if DNS, TLS, or redirect behavior is broken.
+6. Preserve the Shopify-native order attribution ledger only if its consent and order-value behavior is correct; otherwise roll back the affected deployment.
+7. Record the failed criterion and sanitized evidence on ClickUp without customer PII.
+8. Repeat both clean-profile consent paths after the correction. Do not release on a partial pass.

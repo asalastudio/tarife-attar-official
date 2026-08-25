@@ -13,8 +13,9 @@ import {
 import {
   DENIED_PERMISSIONS,
   MeasurementPermissions,
+  SETTLED_DENIED_PERMISSIONS,
   ShopifyCustomerPrivacyApi,
-  normalizePermissions,
+  settlePermissions,
 } from '@/lib/privacy/permissions';
 
 interface PrivacyBannerConfig {
@@ -44,6 +45,7 @@ declare global {
 }
 
 interface PrivacyContextValue extends MeasurementPermissions {
+  controlsAvailable: boolean;
   showPreferences: () => Promise<void>;
 }
 
@@ -88,11 +90,12 @@ export function PrivacyProvider({ children }: { children: React.ReactNode }) {
   const [permissions, setPermissions] = useState<MeasurementPermissions>(
     DENIED_PERMISSIONS,
   );
+  const [controlsAvailable, setControlsAvailable] = useState(false);
   const bootstrapPromiseRef = useRef<Promise<void> | null>(null);
   const warnedRef = useRef(false);
 
   const refreshPermissions = useCallback(() => {
-    setPermissions(normalizePermissions(window.Shopify?.customerPrivacy));
+    setPermissions(settlePermissions(window.Shopify?.customerPrivacy));
   }, []);
 
   const bootstrapPrivacy = useCallback(async () => {
@@ -105,16 +108,18 @@ export function PrivacyProvider({ children }: { children: React.ReactNode }) {
           console.warn('Shopify privacy configuration is incomplete.');
           warnedRef.current = true;
         }
-        setPermissions(DENIED_PERMISSIONS);
+        setPermissions(SETTLED_DENIED_PERMISSIONS);
         return;
       }
 
       try {
         await window.privacyBanner.loadBanner(config);
         await loadConsentTrackingFeature();
+        setControlsAvailable(true);
         refreshPermissions();
       } catch {
-        setPermissions(DENIED_PERMISSIONS);
+        setControlsAvailable(false);
+        setPermissions(SETTLED_DENIED_PERMISSIONS);
         console.warn('Shopify privacy controls could not be initialized.');
       }
     })();
@@ -139,8 +144,8 @@ export function PrivacyProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo<PrivacyContextValue>(
-    () => ({ ...permissions, showPreferences }),
-    [permissions, showPreferences],
+    () => ({ ...permissions, controlsAvailable, showPreferences }),
+    [controlsAvailable, permissions, showPreferences],
   );
 
   return (

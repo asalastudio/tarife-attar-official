@@ -23,6 +23,21 @@ function normalizedAttributionAttributes(
     .map(([key, value]) => ({ key, value }));
 }
 
+function preservedNonAttributionAttributes(
+  attributes: ShopifyCartAttribute[],
+): ShopifyCartAttribute[] {
+  const valuesByKey = new Map<string, string>();
+
+  for (const attribute of attributes) {
+    if (!attribute.key || attribute.key.startsWith(ATTRIBUTION_PREFIX)) continue;
+    valuesByKey.set(attribute.key, attribute.value);
+  }
+
+  return Array.from(valuesByKey.entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([key, value]) => ({ key, value }));
+}
+
 export function getAttributionAttributeFingerprint(
   attributes: ShopifyCartAttribute[],
 ): string {
@@ -45,13 +60,16 @@ export function buildAttributionAttributePatch(
     return [];
   }
 
-  const desiredAttributes = normalizedAttributionAttributes(desired);
-  const desiredKeys = new Set(desiredAttributes.map(({ key }) => key));
-  const staleAttributes = normalizedAttributionAttributes(current)
-    .filter(({ key }) => !desiredKeys.has(key))
-    .map(({ key }) => ({ key, value: '' }));
+  const desiredAttributes = normalizedAttributionAttributes(desired).slice(
+    0,
+    MAX_CART_ATTRIBUTES,
+  );
+  const preservedAttributes = preservedNonAttributionAttributes(current).slice(
+    0,
+    MAX_CART_ATTRIBUTES - desiredAttributes.length,
+  );
 
-  return [...desiredAttributes, ...staleAttributes]
-    .sort(({ key: left }, { key: right }) => left.localeCompare(right))
-    .slice(0, MAX_CART_ATTRIBUTES);
+  return [...preservedAttributes, ...desiredAttributes].sort(
+    ({ key: left }, { key: right }) => left.localeCompare(right),
+  );
 }

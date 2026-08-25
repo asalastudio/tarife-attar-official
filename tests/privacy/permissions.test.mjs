@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizePermissions } from '../../src/lib/privacy/permissions.ts';
+import {
+  SETTLED_DENIED_PERMISSIONS,
+  normalizePermissions,
+  settlePermissions,
+} from '../../src/lib/privacy/permissions.ts';
 
 const denied = {
   ready: false,
@@ -43,5 +47,29 @@ test('fails closed when a Shopify permission method throws', () => {
       saleOfDataAllowed: () => true,
     }),
     denied,
+  );
+});
+
+test('settles unavailable privacy controls without granting measurement permission', () => {
+  assert.deepEqual(SETTLED_DENIED_PERMISSIONS, {
+    ready: true,
+    analyticsAllowed: false,
+    marketingAllowed: false,
+    preferencesAllowed: false,
+    saleOfDataAllowed: false,
+  });
+});
+
+test('settles a broken Shopify permission API without deadlocking commerce', () => {
+  assert.deepEqual(
+    settlePermissions({
+      analyticsProcessingAllowed: () => {
+        throw new Error('privacy unavailable');
+      },
+      marketingAllowed: () => true,
+      preferencesProcessingAllowed: () => true,
+      saleOfDataAllowed: () => true,
+    }),
+    SETTLED_DENIED_PERMISSIONS,
   );
 });

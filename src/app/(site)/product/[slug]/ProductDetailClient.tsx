@@ -29,6 +29,7 @@ const WaypointMiniMap = dynamic(
 );
 import { triggerEssenceDrop } from "@/components/cart/Satchel";
 import { CompactAudioButton } from "@/components/ui/CompactAudioButton";
+import { buildShopifyCatalogContentId } from "@/lib/analytics/meta";
 
 // Portable Text type
 type PortableTextBlock = unknown;
@@ -676,6 +677,16 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     const item = {
       item_id: selectedShopifyVariantId,
       item_name: product.title,
+      ...(product.shopifyProductId
+        ? {
+            meta_content_id:
+              buildShopifyCatalogContentId(
+                product.shopifyProductId,
+                selectedShopifyVariantId,
+                process.env.NEXT_PUBLIC_META_CATALOG_COUNTRY || 'US',
+              ) || undefined,
+          }
+        : {}),
       ...(selectedVariantLabel
         ? { item_variant: selectedVariantLabel }
         : {}),
@@ -691,6 +702,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     analyticsReady,
     currentPrice,
     product.title,
+    product.shopifyProductId,
     selectedShopifyVariantId,
     selectedVariantLabel,
     trackViewItem,
