@@ -1,25 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ShoppingBag, Trash, ArrowSquareOut, BookmarkSimple, Check } from "@phosphor-icons/react";
-import { useShopifyCart } from "@/context";
+import { useAnalytics, useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
+import { getSafeCheckoutUrl } from "@/lib/attribution/checkout-url";
+
+const ALLOWED_CHECKOUT_HOSTS = [
+  process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN,
+  process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN,
+].filter((host): host is string => Boolean(host));
+
+const INVALID_CHECKOUT_ERROR =
+  'Secure checkout is unavailable. Please refresh and try again.';
 
 export default function CartPage() {
   const router = useRouter();
+  const {
+    ready: analyticsReady,
+    trackViewCart,
+    trackBeginCheckout,
+  } = useAnalytics();
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [showSaveCart, setShowSaveCart] = useState(false);
   const [saveCartEmail, setSaveCartEmail] = useState('');
   const [saveCartSubmitted, setSaveCartSubmitted] = useState(false);
   const [isSavingCart, setIsSavingCart] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [saveCartError, setSaveCartError] = useState<string | null>(null);
   const {
     items,
     itemCount,
     cartTotal,
     checkoutUrl,
+    isReadyForCheckout,
     isLoading,
     error,
     updateItemQuantity,
@@ -27,18 +44,71 @@ export default function CartPage() {
     clearCart
   } = useShopifyCart();
 
+  const commerceItems = useMemo(
+    () =>
+      items.map((item) => ({
+        item_id: item.variantId,
+        item_name: item.title,
+        ...(item.variantTitle
+          ? { item_variant: item.variantTitle }
+          : {}),
+        price: Number(item.price),
+        quantity: item.quantity,
+      })),
+    [items],
+  );
+  const commerceCurrency = items[0]?.currencyCode || 'USD';
+  const cartFingerprint = useMemo(
+    () =>
+      commerceItems
+        .map(
+          (item) =>
+            `${encodeURIComponent(item.item_id)}:${item.quantity}:${item.price}`,
+        )
+        .sort()
+        .join('|'),
+    [commerceItems],
+  );
+  const safeCheckoutUrl = getSafeCheckoutUrl(
+    checkoutUrl,
+    ALLOWED_CHECKOUT_HOSTS,
+  );
+
   // Handle direct checkout URL from abandoned cart emails
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const directCheckoutUrl = urlParams.get('checkout_url');
-    
-    if (directCheckoutUrl && directCheckoutUrl.startsWith('http')) {
-      // If a checkout URL is provided directly, redirect to checkout immediately
-      console.log('Direct checkout URL detected, redirecting to checkout...');
-      window.location.href = directCheckoutUrl;
+
+    if (!directCheckoutUrl) return;
+    const safeDirectCheckoutUrl = getSafeCheckoutUrl(
+      directCheckoutUrl,
+      ALLOWED_CHECKOUT_HOSTS,
+    );
+    if (!safeDirectCheckoutUrl) {
+      setCheckoutError(INVALID_CHECKOUT_ERROR);
       return;
     }
+
+    window.location.replace(safeDirectCheckoutUrl);
   }, []);
+
+  useEffect(() => {
+    if (!checkoutUrl) return;
+    setCheckoutError(safeCheckoutUrl ? null : INVALID_CHECKOUT_ERROR);
+  }, [checkoutUrl, safeCheckoutUrl]);
+
+  useEffect(() => {
+    if (!analyticsReady || commerceItems.length === 0 || !cartFingerprint) {
+      return;
+    }
+    trackViewCart(commerceItems, commerceCurrency, cartFingerprint);
+  }, [
+    analyticsReady,
+    cartFingerprint,
+    commerceCurrency,
+    commerceItems,
+    trackViewCart,
+  ]);
 
   // Show "Save your satchel" prompt after 15 seconds on cart page with items
   useEffect(() => {
@@ -59,10 +129,10 @@ export default function CartPage() {
     if (!saveCartEmail) return;
 
     setIsSavingCart(true);
+    setSaveCartError(null);
 
     try {
-      // Send to Omnisend via API
-      await fetch('/api/subscribe', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,6 +140,7 @@ export default function CartPage() {
         body: JSON.stringify({
           email: saveCartEmail,
           source: 'satchel',
+          marketingConsent,
           cartItems: items.map(item => ({
             title: item.title,
             price: item.price
@@ -77,89 +148,28 @@ export default function CartPage() {
         }),
       });
 
-      // Also store in localStorage for redundancy
-      const savedCarts = JSON.parse(localStorage.getItem('saved-carts') || '[]');
-      savedCarts.push({
-        email: saveCartEmail,
-        items: items.map(item => ({ title: item.title, price: item.price, quantity: item.quantity })),
-        total: cartTotal,
-        timestamp: new Date().toISOString(),
-      });
-      localStorage.setItem('saved-carts', JSON.stringify(savedCarts));
-      localStorage.setItem('satchel-saved', 'true');
+      if (!response.ok) {
+        throw new Error('The reminder could not be saved.');
+      }
 
+      localStorage.setItem('satchel-saved', 'true');
       setSaveCartSubmitted(true);
-    } catch (error) {
-      console.error('Error saving cart:', error);
-      // Still show success to user
-      setSaveCartSubmitted(true);
+    } catch {
+      setSaveCartError(
+        'We could not save your satchel. Please check your connection and try again.',
+      );
     } finally {
       setIsSavingCart(false);
     }
   };
 
-  // Log checkout URL for debugging
-  useEffect(() => {
-    if (checkoutUrl) {
-      console.log('Checkout URL available:', checkoutUrl);
-      setCheckoutError(null); // Clear error when URL becomes available
-    } else {
-      console.warn('Checkout URL is missing. Cart state:', { items, itemCount, cartTotal });
-    }
-  }, [checkoutUrl, items, itemCount, cartTotal]);
-
-  const handleCheckout = () => {
-    setCheckoutError(null); // Clear previous errors
-
-    if (items.length === 0) {
-      setCheckoutError('Your cart is empty. Please add items before checking out.');
-      return;
-    }
-
-    if (!checkoutUrl) {
-      setCheckoutError('Checkout URL not available. Please try refreshing the page or adding items again.');
-      console.error('Checkout URL is missing:', { checkoutUrl, items, itemCount });
-      return;
-    }
-
-    // Validate checkout URL format
-    if (!checkoutUrl.startsWith('http://') && !checkoutUrl.startsWith('https://')) {
-      setCheckoutError('Invalid checkout URL. Please refresh the page and try again.');
-      console.error('Invalid checkout URL format:', checkoutUrl);
-      return;
-    }
-
-    // Final check: ensure checkout URL uses Shopify domain, not custom domain
-    const shopifyDomain = 'vasana-perfumes.myshopify.com';
-    let finalCheckoutUrl = checkoutUrl;
-
-    if (checkoutUrl.includes('tarifeattar.com')) {
-      console.warn('⚠️ Checkout URL still contains tarifeattar.com, transforming...');
-      try {
-        const url = new URL(checkoutUrl);
-        const pathAndQuery = url.pathname + url.search;
-        finalCheckoutUrl = `https://${shopifyDomain}${pathAndQuery}`;
-        console.log('🔄 Transforming checkout URL:', { from: checkoutUrl, to: finalCheckoutUrl });
-      } catch (error) {
-        console.error('Error transforming checkout URL:', error);
-      }
-    }
-
-    // Add return URL parameter to checkout URL so Shopify knows where to redirect back
-    // This helps with post-checkout and error redirects
-    try {
-      const url = new URL(finalCheckoutUrl);
-      // Add return URL parameter - Shopify may use this for redirects
-      url.searchParams.set('return_to', 'https://www.tarifeattar.com/cart');
-      url.searchParams.set('redirect', 'https://www.tarifeattar.com');
-      finalCheckoutUrl = url.toString();
-      console.log('✅ Added return URL parameters to checkout:', finalCheckoutUrl);
-    } catch (error) {
-      console.warn('Could not add return URL parameters:', error);
-    }
-
-    console.log('✅ Redirecting to checkout:', finalCheckoutUrl);
-    window.location.href = finalCheckoutUrl;
+  const handleBeginCheckout = () => {
+    if (!analyticsReady || !cartFingerprint) return;
+    trackBeginCheckout(
+      commerceItems,
+      commerceCurrency,
+      cartFingerprint,
+    );
   };
 
   return (
@@ -331,19 +341,39 @@ export default function CartPage() {
                           <span className="font-mono text-[9px] uppercase opacity-40 tracking-widest">USD</span>
                         </div>
                       </div>
-                      <button
-                        onClick={handleCheckout}
-                        disabled={isLoading || !checkoutUrl || items.length === 0}
-                        className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-theme-obsidian transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
-                        title={!checkoutUrl ? 'Checkout URL not available. Please refresh the page.' : items.length === 0 ? 'Your cart is empty' : 'Proceed to secure checkout'}
-                      >
-                        {isLoading ? "Syncing..." : !checkoutUrl ? "Preparing Checkout..." : (
+                      {isReadyForCheckout &&
+                      safeCheckoutUrl &&
+                      items.length > 0 ? (
+                        <a
+                          href={safeCheckoutUrl}
+                          onClick={handleBeginCheckout}
+                          className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-theme-obsidian transition-all flex items-center justify-center gap-3 group"
+                        >
                           <>
                             Secure Checkout
                             <ArrowSquareOut weight="thin" className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />
                           </>
-                        )}
-                      </button>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled
+                          className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.4em] transition-all flex items-center justify-center gap-3 opacity-50 cursor-not-allowed"
+                          title={
+                            items.length === 0
+                              ? 'Your cart is empty'
+                              : 'Checkout is being prepared securely.'
+                          }
+                        >
+                          {isLoading
+                            ? 'Syncing...'
+                            : !checkoutUrl
+                              ? 'Preparing Checkout...'
+                              : !safeCheckoutUrl
+                                ? 'Checkout Unavailable'
+                                : 'Attaching Campaign...'}
+                        </button>
+                      )}
 
                       <div className="mt-6 flex flex-wrap justify-center gap-4 opacity-30 grayscale contrast-200">
                         {/* Simple placeholder icons for payment methods */}
@@ -372,16 +402,32 @@ export default function CartPage() {
                             Not ready? Save your satchel and we'll remind you.
                           </p>
                           <form onSubmit={handleSaveCart} className="space-y-3">
-                            <input
+                                <input
                               type="email"
                               value={saveCartEmail}
                               onChange={(e) => setSaveCartEmail(e.target.value)}
                               placeholder="your@email.com"
                               required
                               className="w-full px-4 py-3 rounded-lg border border-theme-charcoal/10 bg-white/80 font-serif text-sm focus:outline-none focus:border-theme-gold/50"
-                              style={{ fontSize: '16px' }}
-                            />
-                            <button
+                                  style={{ fontSize: '16px' }}
+                                />
+                                <label className="flex items-start gap-2 font-serif text-xs leading-relaxed text-theme-charcoal/60">
+                                  <input
+                                    type="checkbox"
+                                    checked={marketingConsent}
+                                    onChange={(event) => setMarketingConsent(event.target.checked)}
+                                    className="mt-0.5 h-4 w-4 accent-theme-gold"
+                                  />
+                                  <span>
+                                    Also send me new releases, scent stories, and occasional offers.
+                                  </span>
+                                </label>
+                                {saveCartError && (
+                                  <p role="alert" className="text-xs leading-relaxed text-red-700">
+                                    {saveCartError}
+                                  </p>
+                                )}
+                                <button
                               type="submit"
                               disabled={isSavingCart}
                               className="w-full py-3 bg-theme-gold/90 text-white font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-theme-gold transition-colors rounded-lg disabled:opacity-50"

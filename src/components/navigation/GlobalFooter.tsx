@@ -13,12 +13,14 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriptionError, setSubscriptionError] = useState<string | null>(null);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     
     setIsSubmitting(true);
+    setSubscriptionError(null);
     
     try {
       // Send to Omnisend via API
@@ -30,19 +32,19 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
         body: JSON.stringify({
           email,
           source: 'newsletter',
+          marketingConsent: true,
         }),
       });
 
-      if (response.ok) {
-        setIsSubscribed(true);
-      } else {
-        // Still show success - don't block UX
-        setIsSubscribed(true);
+      if (!response.ok) {
+        throw new Error('Newsletter signup failed.');
       }
-    } catch (error) {
-      console.error('Newsletter subscription error:', error);
-      // Still show success
+
       setIsSubscribed(true);
+    } catch {
+      setSubscriptionError(
+        'We could not add you right now. Please check your connection and try again.',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -200,6 +202,11 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                     required
                     className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-mono text-[11px] uppercase tracking-widest outline-none transition-colors placeholder:opacity-30 placeholder:normal-case placeholder:tracking-normal`}
                   />
+                  {subscriptionError && (
+                    <p role="alert" className="font-serif text-sm text-red-400">
+                      {subscriptionError}
+                    </p>
+                  )}
                   <button 
                     type="submit"
                     disabled={isSubmitting}
