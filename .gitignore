@@ -40,6 +40,9 @@ next-env.d.ts
 *.swp
 *.swo
 
+# Local Git worktrees
+/.worktrees/
+
 # Sanity
 /sanity/dist
 /.sanity/
