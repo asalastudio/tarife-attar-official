@@ -49,6 +49,17 @@ export interface ShopifyAttributeInput {
   value: string;
 }
 
+export interface ResolveAttributionForConsentInput {
+  marketingAllowed: boolean;
+  stored: AttributionLedger | null;
+  inbound: InboundTouch | null;
+}
+
+export interface ResolvedAttributionState {
+  ledger: AttributionLedger | null;
+  storageAction: 'clear' | 'write' | 'none';
+}
+
 const TOUCH_FIELDS = [
   'utm_source',
   'utm_medium',
@@ -190,6 +201,22 @@ export function mergeAttribution(
   return {
     ...existing,
     latest: inbound.touch,
+  };
+}
+
+export function resolveAttributionForConsent({
+  marketingAllowed,
+  stored,
+  inbound,
+}: ResolveAttributionForConsentInput): ResolvedAttributionState {
+  if (!marketingAllowed) {
+    return { ledger: null, storageAction: 'clear' };
+  }
+
+  const ledger = mergeAttribution(stored, inbound);
+  return {
+    ledger,
+    storageAction: ledger ? 'write' : 'none',
   };
 }
 

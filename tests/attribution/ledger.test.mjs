@@ -4,6 +4,7 @@ import {
   mergeAttribution,
   parseInboundTouch,
   parseStoredLedger,
+  resolveAttributionForConsent,
   serializeCartAttributes,
 } from '../../src/lib/attribution/ledger.ts';
 
@@ -93,4 +94,36 @@ test('emits deterministic namespaced Shopify attributes', () => {
       ({ key, value }) => key.startsWith('ta_') && !/[\u0000-\u001F]/.test(value),
     ),
   );
+});
+
+test('clears attribution when marketing processing is denied', () => {
+  const stored = mergeAttribution(null, first);
+
+  assert.deepEqual(
+    resolveAttributionForConsent({
+      marketingAllowed: false,
+      stored,
+      inbound: first,
+    }),
+    { ledger: null, storageAction: 'clear' },
+  );
+});
+
+test('merges pending inbound attribution after marketing consent', () => {
+  const stored = mergeAttribution(null, first);
+  const second = parseInboundTouch({
+    url: 'https://www.tarifeattar.com/atlas?utm_source=google&utm_medium=organic&utm_campaign=attar_guide',
+    referrer: 'https://www.google.com/search?q=attar',
+    ownHosts,
+    capturedAt: '2026-08-26T16:00:00.000Z',
+  });
+  const result = resolveAttributionForConsent({
+    marketingAllowed: true,
+    stored,
+    inbound: second,
+  });
+
+  assert.equal(result.ledger?.first.utm_source, 'omnisend');
+  assert.equal(result.ledger?.latest.utm_source, 'google');
+  assert.equal(result.storageAction, 'write');
 });
