@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "@phosphor-icons/react";
 import { GlobalFooter } from "@/components/navigation";
+import { PrivacyPreferencesButton } from "@/components/privacy/PrivacyPreferencesButton";
 
 export default function PrivacyPage() {
   const router = useRouter();
@@ -46,28 +47,40 @@ export default function PrivacyPage() {
               <section className="mb-12">
                 <h2 className="text-2xl font-serif italic mb-4">Data Collection</h2>
                 <p className="opacity-70 leading-relaxed">
-                  Tarife Attär collects minimal personal information necessary to fulfill orders 
-                  and provide archival consultation services. This includes contact information, 
-                  shipping addresses, and preference data voluntarily submitted through our 
-                  Sensory Curator questionnaire.
+                  Tarife Attär collects information needed to fulfill orders and provide requested
+                  services. This can include contact and shipping information, cart contents,
+                  territory preferences you submit, and campaign attribution when you permit
+                  marketing measurement.
                 </p>
               </section>
 
               <section className="mb-12">
                 <h2 className="text-2xl font-serif italic mb-4">Use of Information</h2>
                 <p className="opacity-70 leading-relaxed">
-                  Your information is used solely to process orders, communicate about products, 
-                  and improve your experience with our archive. We do not sell, trade, or 
-                  transfer your personal information to outside parties.
+                  We use this information to process orders, deliver requested guides or reminders,
+                  communicate with people who opt into marketing, understand site performance, and
+                  operate the archive. Service providers such as Shopify, Omnisend, and analytics
+                  platforms process limited information for those purposes under their respective
+                  terms and controls.
                 </p>
               </section>
 
               <section className="mb-12">
                 <h2 className="text-2xl font-serif italic mb-4">Cookies</h2>
                 <p className="opacity-70 leading-relaxed">
-                  We use cookies to enhance site functionality and analyze traffic patterns. 
-                  You may disable cookies in your browser settings, though some features 
-                  may be limited.
+                  Essential browser storage supports cart and checkout functionality. Non-essential
+                  analytics and marketing storage is controlled through our privacy preference
+                  center and is used only when the corresponding permission is available.
+                </p>
+                <PrivacyPreferencesButton />
+              </section>
+
+              <section className="mb-12">
+                <h2 className="text-2xl font-serif italic mb-4">Your Choices</h2>
+                <p className="opacity-70 leading-relaxed">
+                  You can review or change non-essential analytics and marketing preferences at any
+                  time. Declining those categories does not disable the satchel, cart, or checkout,
+                  although campaign measurement and personalized marketing will not run.
                 </p>
               </section>
 

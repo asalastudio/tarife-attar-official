@@ -65,11 +65,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.shopify.com https://js.sentry.io",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.shopify.com https://www.googletagmanager.com https://js.sentry.io",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://api.sentry.io",
+              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://checkout.tarifeattar.com https://www.google-analytics.com https://*.google-analytics.com https://api.sentry.io",
               "frame-src 'self' https://*.myshopify.com",
               "object-src 'none'",
               "base-uri 'self'",
