@@ -145,6 +145,8 @@ export function TerritoryQuizClient() {
   const [email, setEmail] = useState('');
   const [emailSubmitted, setEmailSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [showIntro, setShowIntro] = useState(true);
   const [showNameCapture, setShowNameCapture] = useState(false);
 
@@ -192,6 +194,7 @@ export function TerritoryQuizClient() {
     if (!email || !resultTerritory) return;
 
     setIsSubmitting(true);
+    setEmailError(null);
 
     try {
       // Send to Omnisend via API
@@ -205,29 +208,19 @@ export function TerritoryQuizClient() {
           firstName: firstName.trim() || undefined,
           source: 'quiz',
           territory: resultTerritory.id.toLowerCase(),
+          marketingConsent,
         }),
       });
 
-      if (response.ok) {
-        // Also store locally for redundancy
-        const profiles = JSON.parse(localStorage.getItem('territory-profiles') || '[]');
-        profiles.push({
-          email,
-          territory: resultTerritory.id,
-          timestamp: new Date().toISOString(),
-        });
-        localStorage.setItem('territory-profiles', JSON.stringify(profiles));
-        
-        setEmailSubmitted(true);
-      } else {
-        console.error('Subscription failed');
-        // Still show success to user - email captured server-side
-        setEmailSubmitted(true);
+      if (!response.ok) {
+        throw new Error('Territory guide delivery failed.');
       }
-    } catch (error) {
-      console.error('Error saving profile:', error);
-      // Still show success - don't block UX
+
       setEmailSubmitted(true);
+    } catch {
+      setEmailError(
+        'We could not save your profile. Please check your connection and try again.',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -563,6 +556,24 @@ export function TerritoryQuizClient() {
                             />
                           </div>
 
+                          <label className="flex items-start gap-3 font-serif text-sm leading-relaxed text-theme-charcoal/60">
+                            <input
+                              type="checkbox"
+                              checked={marketingConsent}
+                              onChange={(event) => setMarketingConsent(event.target.checked)}
+                              className="mt-0.5 h-4 w-4 accent-theme-gold"
+                            />
+                            <span>
+                              After my territory guide, send me scent stories, new releases, and occasional offers.
+                            </span>
+                          </label>
+
+                          {emailError && (
+                            <p role="alert" className="text-sm leading-relaxed text-red-700">
+                              {emailError}
+                            </p>
+                          )}
+
                           <button
                             type="submit"
                             disabled={isSubmitting}
@@ -573,7 +584,7 @@ export function TerritoryQuizClient() {
                         </form>
 
                         <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-theme-charcoal/30 text-center mt-4">
-                          No spam. Unsubscribe anytime.
+                          The guide is yours. Ongoing marketing is optional.
                         </p>
                       </>
                     ) : (
@@ -619,6 +630,8 @@ export function TerritoryQuizClient() {
                         setEmailSubmitted(false);
                         setEmail('');
                         setFirstName('');
+                        setMarketingConsent(false);
+                        setEmailError(null);
                       }}
                       className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-mono text-sm uppercase tracking-[0.15em] text-theme-charcoal/60 hover:text-theme-charcoal transition-colors"
                     >
