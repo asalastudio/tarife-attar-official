@@ -8,11 +8,12 @@ const csp = entries[0].headers.find(
   ({ key }) => key === 'Content-Security-Policy',
 ).value;
 
-test('CSP permits Shopify consent and GA4 but not Meta before the paid gate', () => {
+test('CSP permits Shopify consent, GA4, and the consent-gated Meta Pixel', () => {
   assert.match(csp, /https:\/\/www\.googletagmanager\.com/);
   assert.match(csp, /https:\/\/\*\.google-analytics\.com/);
   assert.match(csp, /https:\/\/checkout\.tarifeattar\.com/);
-  assert.doesNotMatch(csp, /connect\.facebook\.net|facebook\.com\/tr/);
+  assert.match(csp, /https:\/\/connect\.facebook\.net/);
+  assert.match(csp, /https:\/\/www\.facebook\.com/);
 });
 
 test('CSP retains strict object, base, and framing directives', () => {
@@ -41,7 +42,7 @@ test('privacy page exposes consent preferences without disabling cart or checkou
   const page = await readFile('src/app/(site)/privacy/page.tsx', 'utf8');
 
   assert.match(button, /showPreferences/);
-  assert.match(button, /disabled=\{!ready\}/);
+  assert.match(button, /disabled=\{!ready \|\| !controlsAvailable\}/);
   assert.match(page, /PrivacyPreferencesButton/);
   assert.match(page, /declining[\s\S]*cart[\s\S]*checkout/i);
 });

@@ -26,6 +26,7 @@ import {
   ShopifyCartAttribute,
 } from '@/lib/shopify/cart-attributes';
 import { assertCartMutationSuccess } from '@/lib/shopify/cart-errors';
+import { buildShopifyCatalogContentId } from '@/lib/analytics/meta';
 
 const TRACKING_SYNC_ERROR =
   'Campaign tracking could not be attached. Please try again before checkout.';
@@ -33,6 +34,7 @@ const TRACKING_SYNC_ERROR =
 interface CartItem {
   id: string;
   variantId: string;
+  productId: string;
   title: string;
   variantTitle?: string;
   handle: string;
@@ -56,6 +58,7 @@ interface ShopifyCartLineNode {
       height?: number;
     };
     product: {
+      id: string;
       title: string;
       handle: string;
       featuredImage?: {
@@ -264,10 +267,16 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       )?.node;
       const addedPrice = Number(addedLine?.merchandise.price?.amount);
       if (addedLine && Number.isFinite(addedPrice) && addedPrice >= 0) {
+        const metaContentId = buildShopifyCatalogContentId(
+          addedLine.merchandise.product.id,
+          addedLine.merchandise.id,
+          process.env.NEXT_PUBLIC_META_CATALOG_COUNTRY || 'US',
+        );
         trackAddToCart(
           {
             item_id: addedLine.merchandise.id,
             item_name: addedLine.merchandise.product.title,
+            ...(metaContentId ? { meta_content_id: metaContentId } : {}),
             ...(addedLine.merchandise.title
               ? { item_variant: addedLine.merchandise.title }
               : {}),
@@ -380,6 +389,7 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
     cart?.lines?.edges?.map(({ node }: { node: ShopifyCartLineNode }) => ({
       id: node.id,
       variantId: node.merchandise.id,
+      productId: node.merchandise.product.id,
       title: node.merchandise.product.title,
       variantTitle: node.merchandise.title,
       handle: node.merchandise.product.handle,

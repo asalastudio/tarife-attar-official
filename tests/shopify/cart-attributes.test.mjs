@@ -28,9 +28,10 @@ test('returns no patch when current attribution already matches desired values',
   assert.deepEqual(buildAttributionAttributePatch(current, desired), []);
 });
 
-test('blanks stale attribution keys while applying new desired values', () => {
+test('replaces stale attribution keys while preserving unrelated cart attributes', () => {
   const patch = buildAttributionAttributePatch(
     [
+      { key: 'note', value: 'gift' },
       { key: 'ta_first_utm_source', value: 'omnisend' },
       { key: 'ta_latest_fbclid', value: 'old-click' },
     ],
@@ -41,13 +42,13 @@ test('blanks stale attribution keys while applying new desired values', () => {
   );
 
   assert.deepEqual(patch, [
+    { key: 'note', value: 'gift' },
     { key: 'ta_first_utm_source', value: 'omnisend' },
-    { key: 'ta_latest_fbclid', value: '' },
     { key: 'ta_latest_utm_source', value: 'google' },
   ]);
 });
 
-test('consent rejection blanks every existing attribution value', () => {
+test('consent rejection removes every attribution key and preserves other attributes', () => {
   assert.deepEqual(
     buildAttributionAttributePatch(
       [
@@ -57,9 +58,6 @@ test('consent rejection blanks every existing attribution value', () => {
       ],
       [],
     ),
-    [
-      { key: 'ta_first_utm_source', value: '' },
-      { key: 'ta_latest_utm_source', value: '' },
-    ],
+    [{ key: 'note', value: 'gift' }],
   );
 });

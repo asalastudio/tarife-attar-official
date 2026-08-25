@@ -77,6 +77,7 @@ const CART_FIELDS = `
                 height
               }
               product {
+                id
                 title
                 handle
                 featuredImage {

@@ -21,6 +21,13 @@ export const DENIED_PERMISSIONS: MeasurementPermissions = {
   saleOfDataAllowed: false,
 };
 
+// A terminal fail-closed state. Measurement stays disabled, but essential
+// commerce no longer waits forever when Shopify's privacy runtime is missing.
+export const SETTLED_DENIED_PERMISSIONS: MeasurementPermissions = {
+  ...DENIED_PERMISSIONS,
+  ready: true,
+};
+
 export function normalizePermissions(
   api: ShopifyCustomerPrivacyApi | null | undefined,
 ): MeasurementPermissions {
@@ -37,4 +44,11 @@ export function normalizePermissions(
   } catch {
     return DENIED_PERMISSIONS;
   }
+}
+
+export function settlePermissions(
+  api: ShopifyCustomerPrivacyApi | null | undefined,
+): MeasurementPermissions {
+  const permissions = normalizePermissions(api);
+  return permissions.ready ? permissions : SETTLED_DENIED_PERMISSIONS;
 }
