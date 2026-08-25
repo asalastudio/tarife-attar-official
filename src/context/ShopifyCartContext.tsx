@@ -19,6 +19,7 @@ import {
   shopifyFetch,
 } from '@/lib/shopify';
 import { useAttribution } from '@/context/AttributionContext';
+import { useAnalytics } from '@/context/AnalyticsContext';
 import {
   buildAttributionAttributePatch,
   getAttributionAttributeFingerprint,
@@ -83,6 +84,7 @@ interface ShopifyCartContextType {
   itemCount: number;
   cartTotal: string;
   checkoutUrl: string;
+  isReadyForCheckout: boolean;
   isLoading: boolean;
   error: string | null;
   addItem: (variantId: string, quantity: number) => Promise<void>;
@@ -109,6 +111,7 @@ function mutationPayload<T>(response: unknown, operationName: string): T {
 
 export function ShopifyCartProvider({ children }: { children: React.ReactNode }) {
   const { cartAttributes, ready: attributionReady } = useAttribution();
+  const { trackAddToCart } = useAnalytics();
   const [cart, setCart] = useState<ShopifyCart | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -236,12 +239,13 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
     try {
       const currentCart = cart ?? (await createNewCart(cartAttributes));
+      const formattedVariantId = formatVariantId(variantId);
       const response = await shopifyFetch({
         query: ADD_LINES_MUTATION,
         variables: {
           cartId: currentCart.id,
           lines: [
-            { merchandiseId: formatVariantId(variantId), quantity },
+            { merchandiseId: formattedVariantId, quantity },
           ],
         },
       });
@@ -254,6 +258,25 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       assertCartMutationSuccess(payload, 'add the item to the cart');
       if (!payload.cart) throw new Error('Shopify did not return the cart.');
       setCart(payload.cart);
+
+      const addedLine = payload.cart.lines.edges.find(
+        ({ node }) => node.merchandise.id === formattedVariantId,
+      )?.node;
+      const addedPrice = Number(addedLine?.merchandise.price?.amount);
+      if (addedLine && Number.isFinite(addedPrice) && addedPrice >= 0) {
+        trackAddToCart(
+          {
+            item_id: addedLine.merchandise.id,
+            item_name: addedLine.merchandise.product.title,
+            ...(addedLine.merchandise.title
+              ? { item_variant: addedLine.merchandise.title }
+              : {}),
+            price: addedPrice,
+            quantity,
+          },
+          addedLine.merchandise.price?.currencyCode || 'USD',
+        );
+      }
     } catch (caughtError) {
       const message =
         caughtError instanceof Error
@@ -371,6 +394,15 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
   const itemCount = cart?.totalQuantity || 0;
   const cartTotal = String(cart?.cost?.totalAmount?.amount || '0.00');
   const checkoutUrl = cart?.checkoutUrl || '';
+  const isAttributionSynchronized = Boolean(
+    attributionReady &&
+      cart &&
+      buildAttributionAttributePatch(
+        cart.attributes ?? [],
+        cartAttributes,
+      ).length === 0,
+  );
+  const isReadyForCheckout = isAttributionSynchronized && !isLoading;
 
   return (
     <ShopifyCartContext.Provider
@@ -379,6 +411,7 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
         itemCount,
         cartTotal,
         checkoutUrl,
+        isReadyForCheckout,
         isLoading,
         error,
         addItem,
