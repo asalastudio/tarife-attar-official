@@ -15,6 +15,8 @@ export default function CartPage() {
   const [saveCartEmail, setSaveCartEmail] = useState('');
   const [saveCartSubmitted, setSaveCartSubmitted] = useState(false);
   const [isSavingCart, setIsSavingCart] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
+  const [saveCartError, setSaveCartError] = useState<string | null>(null);
   const {
     items,
     itemCount,
@@ -59,10 +61,10 @@ export default function CartPage() {
     if (!saveCartEmail) return;
 
     setIsSavingCart(true);
+    setSaveCartError(null);
 
     try {
-      // Send to Omnisend via API
-      await fetch('/api/subscribe', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,6 +72,7 @@ export default function CartPage() {
         body: JSON.stringify({
           email: saveCartEmail,
           source: 'satchel',
+          marketingConsent,
           cartItems: items.map(item => ({
             title: item.title,
             price: item.price
@@ -77,22 +80,16 @@ export default function CartPage() {
         }),
       });
 
-      // Also store in localStorage for redundancy
-      const savedCarts = JSON.parse(localStorage.getItem('saved-carts') || '[]');
-      savedCarts.push({
-        email: saveCartEmail,
-        items: items.map(item => ({ title: item.title, price: item.price, quantity: item.quantity })),
-        total: cartTotal,
-        timestamp: new Date().toISOString(),
-      });
-      localStorage.setItem('saved-carts', JSON.stringify(savedCarts));
-      localStorage.setItem('satchel-saved', 'true');
+      if (!response.ok) {
+        throw new Error('The reminder could not be saved.');
+      }
 
+      localStorage.setItem('satchel-saved', 'true');
       setSaveCartSubmitted(true);
-    } catch (error) {
-      console.error('Error saving cart:', error);
-      // Still show success to user
-      setSaveCartSubmitted(true);
+    } catch {
+      setSaveCartError(
+        'We could not save your satchel. Please check your connection and try again.',
+      );
     } finally {
       setIsSavingCart(false);
     }
@@ -372,16 +369,32 @@ export default function CartPage() {
                             Not ready? Save your satchel and we'll remind you.
                           </p>
                           <form onSubmit={handleSaveCart} className="space-y-3">
-                            <input
+                                <input
                               type="email"
                               value={saveCartEmail}
                               onChange={(e) => setSaveCartEmail(e.target.value)}
                               placeholder="your@email.com"
                               required
                               className="w-full px-4 py-3 rounded-lg border border-theme-charcoal/10 bg-white/80 font-serif text-sm focus:outline-none focus:border-theme-gold/50"
-                              style={{ fontSize: '16px' }}
-                            />
-                            <button
+                                  style={{ fontSize: '16px' }}
+                                />
+                                <label className="flex items-start gap-2 font-serif text-xs leading-relaxed text-theme-charcoal/60">
+                                  <input
+                                    type="checkbox"
+                                    checked={marketingConsent}
+                                    onChange={(event) => setMarketingConsent(event.target.checked)}
+                                    className="mt-0.5 h-4 w-4 accent-theme-gold"
+                                  />
+                                  <span>
+                                    Also send me new releases, scent stories, and occasional offers.
+                                  </span>
+                                </label>
+                                {saveCartError && (
+                                  <p role="alert" className="text-xs leading-relaxed text-red-700">
+                                    {saveCartError}
+                                  </p>
+                                )}
+                                <button
                               type="submit"
                               disabled={isSavingCart}
                               className="w-full py-3 bg-theme-gold/90 text-white font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-theme-gold transition-colors rounded-lg disabled:opacity-50"
