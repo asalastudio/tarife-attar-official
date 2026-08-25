@@ -7,7 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Drop, Check, WarningCircle, MapTrifold as MapIcon, Flame, Flower, Waves, TreeEvergreen, SpeakerHigh, Play, Pause, Compass } from "@phosphor-icons/react";
 import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
-import { useShopifyCart } from "@/context";
+import { useAnalytics, useShopifyCart } from "@/context";
 import { checkVariantAvailability } from "@/lib/shopify/client";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { GlobalFooter } from "@/components/navigation";
@@ -588,6 +588,7 @@ const TrustBadges = ({ collectionType, product }: { collectionType: Product['col
 
 export function ProductDetailClient({ product, placeholderImages }: Props) {
   const { addItem } = useShopifyCart();
+  const { ready: analyticsReady, trackViewItem } = useAnalytics();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
@@ -654,6 +655,46 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const isAtlas = product.collectionType === "atlas";
   const isRelic = product.collectionType === "relic";
   const isGift = product.collectionType === "gift";
+  const selectedShopifyVariantId =
+    selectedVariant === '12ml' && product.shopifyVariant12mlId
+      ? product.shopifyVariant12mlId
+      : product.shopifyVariant6mlId || product.shopifyVariantId;
+  const selectedVariantLabel = isAtlas
+    ? selectedVariant
+    : product.volume || undefined;
+
+  useEffect(() => {
+    if (
+      !analyticsReady ||
+      !selectedShopifyVariantId ||
+      typeof currentPrice !== 'number' ||
+      currentPrice < 0
+    ) {
+      return;
+    }
+
+    const item = {
+      item_id: selectedShopifyVariantId,
+      item_name: product.title,
+      ...(selectedVariantLabel
+        ? { item_variant: selectedVariantLabel }
+        : {}),
+      price: currentPrice,
+      quantity: 1,
+    };
+    trackViewItem(
+      item,
+      'USD',
+      `${item.item_id}:${item.item_variant ?? 'default'}`,
+    );
+  }, [
+    analyticsReady,
+    currentPrice,
+    product.title,
+    selectedShopifyVariantId,
+    selectedVariantLabel,
+    trackViewItem,
+  ]);
 
   // Theme colors - Relic always dark, Atlas light
   const theme = {
