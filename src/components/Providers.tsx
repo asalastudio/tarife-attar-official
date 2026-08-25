@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import {
+  AnalyticsProvider,
   AttributionProvider,
   PrivacyProvider,
   ShopifyCartProvider,
@@ -23,18 +24,20 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <PrivacyProvider>
       <AttributionProvider>
-        <ConvexProvider client={convex}>
-          <ChatProvider>
-            <ShopifyCartProvider>
-              <WishlistProvider>
-                <CompassProvider>
-                  {children}
-                  <ElevenLabsVoiceWidget />
-                </CompassProvider>
-              </WishlistProvider>
-            </ShopifyCartProvider>
-          </ChatProvider>
-        </ConvexProvider>
+        <AnalyticsProvider>
+          <ConvexProvider client={convex}>
+            <ChatProvider>
+              <ShopifyCartProvider>
+                <WishlistProvider>
+                  <CompassProvider>
+                    {children}
+                    <ElevenLabsVoiceWidget />
+                  </CompassProvider>
+                </WishlistProvider>
+              </ShopifyCartProvider>
+            </ChatProvider>
+          </ConvexProvider>
+        </AnalyticsProvider>
       </AttributionProvider>
     </PrivacyProvider>
   );
