@@ -2,6 +2,7 @@ export interface CommerceItem {
   item_id: string;
   item_name: string;
   item_variant?: string;
+  meta_content_id?: string;
   price: number;
   quantity: number;
 }

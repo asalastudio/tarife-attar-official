@@ -8,6 +8,7 @@ import { ArrowLeft, ShoppingBag, Trash, ArrowSquareOut, BookmarkSimple, Check } 
 import { useAnalytics, useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
 import { getSafeCheckoutUrl } from "@/lib/attribution/checkout-url";
+import { buildShopifyCatalogContentId } from "@/lib/analytics/meta";
 
 const ALLOWED_CHECKOUT_HOSTS = [
   process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN,
@@ -46,15 +47,23 @@ export default function CartPage() {
 
   const commerceItems = useMemo(
     () =>
-      items.map((item) => ({
-        item_id: item.variantId,
-        item_name: item.title,
-        ...(item.variantTitle
-          ? { item_variant: item.variantTitle }
-          : {}),
-        price: Number(item.price),
-        quantity: item.quantity,
-      })),
+      items.map((item) => {
+        const metaContentId = buildShopifyCatalogContentId(
+          item.productId,
+          item.variantId,
+          process.env.NEXT_PUBLIC_META_CATALOG_COUNTRY || 'US',
+        );
+        return {
+          item_id: item.variantId,
+          item_name: item.title,
+          ...(metaContentId ? { meta_content_id: metaContentId } : {}),
+          ...(item.variantTitle
+            ? { item_variant: item.variantTitle }
+            : {}),
+          price: Number(item.price),
+          quantity: item.quantity,
+        };
+      }),
     [items],
   );
   const commerceCurrency = items[0]?.currencyCode || 'USD';
