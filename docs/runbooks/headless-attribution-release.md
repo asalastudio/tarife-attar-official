@@ -10,16 +10,16 @@ Record the deployed commit and production configuration state before testing. Do
 
 ## 1. DNS and Shopify domain
 
-1. Create the `checkout.tarifeattar.com` DNS record using the target Shopify provides during domain connection. Do not guess the CNAME or A record.
-2. In Shopify Admin, open **Settings → Domains**, connect `checkout.tarifeattar.com`, and assign it to the Online Store/checkout surface offered by Shopify.
+1. Keep `vasana-perfumes.myshopify.com` as the active checkout domain until Shopify and DNS both verify a first-party checkout hostname.
+2. If migrating later, create the `checkout.tarifeattar.com` DNS record using the exact target Shopify provides, connect it under **Settings → Domains**, and verify it before changing application configuration.
 3. Wait until Shopify reports the domain connected and its TLS/SSL certificate active.
 4. Set the production public environment variable:
 
    ```text
-   NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN=checkout.tarifeattar.com
+   NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN=vasana-perfumes.myshopify.com
    ```
 
-5. Redeploy, create a disposable cart, and confirm Shopify returns an HTTPS checkout URL whose hostname is exactly `checkout.tarifeattar.com`. During migration only, `vasana-perfumes.myshopify.com` is also allowlisted by the application.
+5. Redeploy, create a disposable cart, and confirm Shopify returns an HTTPS checkout URL whose hostname is exactly `vasana-perfumes.myshopify.com`.
 
 Pass condition: the customer can move from `www.tarifeattar.com` to a valid Shopify checkout over HTTPS without a host rewrite, open redirect, certificate warning, or redirect loop.
 
@@ -29,7 +29,7 @@ Pass condition: the customer can move from `www.tarifeattar.com` to a valid Shop
 2. Configure the consent banner for every region where Shopify or counsel requires it. Enable distinct analytics and marketing choices where the Shopify interface permits them.
 3. Load `www.tarifeattar.com` in a clean browser profile and verify the Shopify privacy banner renders on the headless storefront.
 4. Open the Privacy page, select **Review Privacy Preferences**, and confirm the Shopify preference center reopens.
-5. Verify consent can be accepted, rejected, and revised on both `www.tarifeattar.com` and `checkout.tarifeattar.com`.
+5. Verify consent can be accepted, rejected, and revised on both `www.tarifeattar.com` and the active Shopify checkout.
 6. Confirm the cart and checkout remain functional when non-essential categories are rejected.
 
 Pass condition: Shopify reports a ready privacy state, accept/reject choices persist as Shopify intends, and GA4/marketing behavior follows the effective permission rather than the presence of the banner alone.
@@ -41,7 +41,7 @@ Pass condition: Shopify reports a ready privacy state, accept/reject choices per
 3. In GA4, open **Admin → Data streams → Web → Configure tag settings → Configure your domains**.
 4. Add exact-match conditions for:
    - `www.tarifeattar.com`
-   - `checkout.tarifeattar.com`
+   - `vasana-perfumes.myshopify.com`
 5. Treat `vasana-perfumes.myshopify.com` as migration-only. Include it only while live checkout traffic still uses that host, then remove it after the custom checkout domain is proven.
 6. Confirm the same GA4 property/stream is used on the headless storefront and Shopify checkout.
 7. With analytics consent accepted, follow the checkout anchor and confirm the `_gl` linker parameter is carried to the checkout host without breaking the destination URL.
@@ -118,7 +118,7 @@ Run this path only after production deployment and the low-value purchase have s
    - `ta_latest_utm_source`
    - `ta_latest_landing_page`
 7. Open the cart and confirm `view_item → add_to_cart → view_cart` in DebugView with the correct product, quantity, value, and currency.
-8. Confirm the checkout link hostname is exactly `checkout.tarifeattar.com` (or the documented migration host during the temporary migration window).
+8. Confirm the checkout link hostname is exactly `vasana-perfumes.myshopify.com`.
 9. Select **Secure Checkout** and confirm one `begin_checkout` event before the handoff.
 10. Complete the approved test order and confirm `add_shipping_info → add_payment_info → purchase`.
 11. Confirm purchase value/currency/items match Shopify and `transaction_id` equals the Shopify order ID.

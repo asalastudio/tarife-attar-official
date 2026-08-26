@@ -26,7 +26,7 @@ test('environment example documents public measurement settings and server-only 
   const environment = await readFile('.env.example', 'utf8');
   assert.match(
     environment,
-    /^NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN=checkout\.tarifeattar\.com$/m,
+    /^NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN=vasana-perfumes\.myshopify\.com$/m,
   );
   assert.match(environment, /^NEXT_PUBLIC_GA4_MEASUREMENT_ID=$/m);
   assert.match(environment, /^OMNISEND_API_KEY=$/m);
