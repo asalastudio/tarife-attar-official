@@ -48,262 +48,127 @@ async function shopifyFetch({
  * Cart Queries & Mutations
  */
 
-export const CREATE_CART_MUTATION = `
-  mutation cartCreate($input: CartInput) {
-    cartCreate(input: $input) {
-      cart {
-        id
-        checkoutUrl
-        totalQuantity
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  image {
-                    url
-                    altText
-                    width
-                    height
-                  }
-                  product {
-                    title
-                    handle
-                    featuredImage {
-                      url
-                      altText
-                      width
-                      height
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-      }
+const CART_FIELDS = `
+  fragment CartFields on Cart {
+    id
+    checkoutUrl
+    totalQuantity
+    attributes {
+      key
+      value
     }
-  }
-`;
-
-export const GET_CART_QUERY = `
-  query getCart($cartId: ID!) {
-    cart(id: $cartId) {
-      id
-      checkoutUrl
-      totalQuantity
-      lines(first: 100) {
-        edges {
-          node {
-            id
-            quantity
-            merchandise {
-              ... on ProductVariant {
+    lines(first: 100) {
+      edges {
+        node {
+          id
+          quantity
+          merchandise {
+            ... on ProductVariant {
+              id
+              title
+              price {
+                amount
+                currencyCode
+              }
+              image {
+                url
+                altText
+                width
+                height
+              }
+              product {
                 id
                 title
-                price {
-                  amount
-                  currencyCode
-                }
-                image {
+                handle
+                featuredImage {
                   url
                   altText
                   width
                   height
                 }
-                product {
-                  title
-                  handle
-                  featuredImage {
-                    url
-                    altText
-                    width
-                    height
-                  }
-                }
               }
             }
           }
         }
       }
-      cost {
-        totalAmount {
-          amount
-          currencyCode
-        }
+    }
+    cost {
+      totalAmount {
+        amount
+        currencyCode
       }
     }
   }
+`;
+
+const CART_MUTATION_FEEDBACK = `
+  userErrors {
+    field
+    message
+    code
+  }
+  warnings {
+    code
+    message
+    target
+  }
+`;
+
+export const CREATE_CART_MUTATION = `
+  mutation cartCreate($input: CartInput) {
+    cartCreate(input: $input) {
+      cart { ...CartFields }
+      ${CART_MUTATION_FEEDBACK}
+    }
+  }
+  ${CART_FIELDS}
+`;
+
+export const GET_CART_QUERY = `
+  query getCart($cartId: ID!) {
+    cart(id: $cartId) { ...CartFields }
+  }
+  ${CART_FIELDS}
 `;
 
 export const ADD_LINES_MUTATION = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     cartLinesAdd(cartId: $cartId, lines: $lines) {
-      cart {
-        id
-        checkoutUrl
-        totalQuantity
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  image {
-                    url
-                    altText
-                    width
-                    height
-                  }
-                  product {
-                    title
-                    handle
-                    featuredImage {
-                      url
-                      altText
-                      width
-                      height
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-      }
+      cart { ...CartFields }
+      ${CART_MUTATION_FEEDBACK}
     }
   }
+  ${CART_FIELDS}
 `;
 
 export const UPDATE_LINES_MUTATION = `
   mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
     cartLinesUpdate(cartId: $cartId, lines: $lines) {
-      cart {
-        id
-        checkoutUrl
-        totalQuantity
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  image {
-                    url
-                    altText
-                    width
-                    height
-                  }
-                  product {
-                    title
-                    handle
-                    featuredImage {
-                      url
-                      altText
-                      width
-                      height
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-      }
+      cart { ...CartFields }
+      ${CART_MUTATION_FEEDBACK}
     }
   }
+  ${CART_FIELDS}
 `;
 
 export const REMOVE_LINES_MUTATION = `
   mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
-      cart {
-        id
-        checkoutUrl
-        totalQuantity
-        lines(first: 100) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  image {
-                    url
-                    altText
-                    width
-                    height
-                  }
-                  product {
-                    title
-                    handle
-                    featuredImage {
-                      url
-                      altText
-                      width
-                      height
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-        }
-      }
+      cart { ...CartFields }
+      ${CART_MUTATION_FEEDBACK}
     }
   }
+  ${CART_FIELDS}
+`;
+
+export const CART_ATTRIBUTES_UPDATE_MUTATION = `
+  mutation cartAttributesUpdate($cartId: ID!, $attributes: [AttributeInput!]!) {
+    cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+      cart { ...CartFields }
+      ${CART_MUTATION_FEEDBACK}
+    }
+  }
+  ${CART_FIELDS}
 `;
 
 /**

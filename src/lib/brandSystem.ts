@@ -6,7 +6,7 @@
  * - Relic (The Vault): Subtractive/Found — "Artifact" metaphors
  */
 
-export type CollectionType = 'atlas' | 'relic';
+export type CollectionType = 'atlas' | 'relic' | 'gift';
 
 // ============================================================================
 // COLLECTION-LEVEL LABELS
@@ -38,6 +38,17 @@ export const COLLECTION_LABELS = {
     heritageClassLabel: 'Heritage Distillation',
     heritageCoordinateLabel: 'Distillery (The Kiln)',
     heritageCoordinateDescription: 'The location where the artifact was born.',
+  },
+  gift: {
+    name: 'The Gift',
+    concept: 'Curated Sets',
+    philosophy: 'Bundled/Curated',
+    context: 'A collection shared.',
+    itemSingular: 'Set',
+    itemPlural: 'Sets',
+    classLabel: 'Curated Set',
+    coordinateLabel: 'Contents',
+    coordinateDescription: "What's included in this set.",
   },
 } as const;
 

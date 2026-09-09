@@ -62,6 +62,21 @@ export const structure = (S: StructureBuilder, _context: StructureResolverContex
             .defaultOrdering([{ field: 'title', direction: 'asc' }])
         ),
 
+      // Group 3.5: The Gift (Sets & Bundles)
+      S.listItem()
+        .title('The Gift (Sets)')
+        .id('gift')
+        .icon(() => {
+          // Gift icon
+          return null;
+        })
+        .child(
+          S.documentList()
+            .title('The Gift')
+            .filter('_type == "product" && collectionType == "gift"')
+            .defaultOrdering([{ field: 'title', direction: 'asc' }])
+        ),
+
       // Divider
       S.divider(),
 

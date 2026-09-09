@@ -1,8 +1,21 @@
 import { sanityFetch } from "@/sanity/lib/client";
-import { featuredProductsQuery, heroBackgroundsQuery, HeroBackgroundsQueryResult, placeholderImagesQuery, PlaceholderImagesQueryResult, portsOfCallQuery, PortOfCall } from "@/sanity/lib/queries";
+import { featuredProductsQuery, heroBackgroundsQuery, HeroBackgroundsQueryResult, placeholderImagesQuery, PlaceholderImagesQueryResult, portsOfCallQuery, PortOfCall, giftProductsQuery } from "@/sanity/lib/queries";
 import { Product } from "@/types";
 import { HomeClient } from "./HomeClient";
 import type { Metadata } from "next";
+
+interface GiftProduct {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  price?: number;
+  compareAtPrice?: number;
+  mainImage?: unknown;
+  shopifyPreviewImageUrl?: string;
+  shopifyImage?: string;
+  setSize?: number;
+  inStock?: boolean;
+}
 
 export const metadata: Metadata = {
   title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
@@ -18,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [featuredProducts, heroBackgrounds, placeholderImages, portsOfCall] = await Promise.all([
+  const [featuredProducts, heroBackgrounds, placeholderImages, portsOfCall, giftProducts] = await Promise.all([
     sanityFetch<Product[]>({
       query: featuredProductsQuery,
       tags: ['featured-products'],
@@ -39,6 +52,11 @@ export default async function Home() {
       tags: ['ports-of-call'],
       revalidate: 0,
     }),
+    sanityFetch<GiftProduct[]>({
+      query: giftProductsQuery,
+      tags: ['gift-products'],
+      revalidate: 0,
+    }),
   ]);
 
   // Debug logging in development
@@ -46,5 +64,5 @@ export default async function Home() {
     console.log('[Home Page] Hero Backgrounds fetched:', heroBackgrounds);
   }
 
-  return <HomeClient featuredProducts={featuredProducts} heroBackgrounds={heroBackgrounds} placeholderImages={placeholderImages} portsOfCall={portsOfCall || []} />;
+  return <HomeClient featuredProducts={featuredProducts} heroBackgrounds={heroBackgrounds} placeholderImages={placeholderImages} portsOfCall={portsOfCall || []} giftProducts={giftProducts || []} />;
 }

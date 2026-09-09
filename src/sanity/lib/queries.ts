@@ -164,6 +164,38 @@ export const relicProductsByCategoryQuery = groq`
   }
 `;
 
+// ===== GIFT QUERIES (Curated Sets & Bundles) =====
+
+/**
+ * Get all Gift products
+ * Note: Only returns PUBLISHED products (not drafts)
+ * Make sure to click "Publish" in Sanity Studio!
+ */
+export const giftProductsQuery = groq`
+  *[_type == "product" && collectionType == "gift" && !(_id in path("drafts.**"))] | order(title asc) {
+    _id,
+    "title": coalesce(title, store.title),
+    "slug": coalesce(slug, store.slug),
+    legacyName,
+    showLegacyName,
+    internalName,
+    "price": coalesce(price, store.priceRange.minVariantPrice),
+    compareAtPrice,
+    volume,
+    mainImage,
+    shopifyPreviewImageUrl,
+    "shopifyImage": store.previewImageUrl,
+    inStock,
+    "setSize": giftData.setSize,
+    "pieceFormat": giftData.pieceFormat,
+    "includedItems": giftData.includedItems,
+    "giftNote": giftData.giftNote,
+    notes,
+    perfumer,
+    year
+  }
+`;
+
 // ===== PRODUCT DETAIL QUERIES =====
 
 /**
@@ -182,6 +214,7 @@ export const productBySlugQuery = groq`
     internalName,
     collectionType,
     "price": coalesce(price, store.priceRange.minVariantPrice),
+    compareAtPrice,
     volume,
     productFormat,
     mainImage,
@@ -258,6 +291,14 @@ export const productBySlugQuery = groq`
           specimenData
         }
       }
+    },
+    // Gift-specific fields
+    giftData {
+      setSize,
+      pieceFormat,
+      includedItems,
+      giftNote,
+      badges
     }
   }
 `;

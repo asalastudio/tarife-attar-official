@@ -7,7 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { ArrowLeft, Plus, Minus, Gift, MapPin, Calendar, Drop, Check, WarningCircle, MapTrifold as MapIcon, Flame, Flower, Waves, TreeEvergreen, SpeakerHigh, Play, Pause, Compass } from "@phosphor-icons/react";
 import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
-import { useShopifyCart } from "@/context";
+import { useAnalytics, useShopifyCart } from "@/context";
 import { checkVariantAvailability } from "@/lib/shopify/client";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { GlobalFooter } from "@/components/navigation";
@@ -29,6 +29,7 @@ const WaypointMiniMap = dynamic(
 );
 import { triggerEssenceDrop } from "@/components/cart/Satchel";
 import { CompactAudioButton } from "@/components/ui/CompactAudioButton";
+import { buildShopifyCatalogContentId } from "@/lib/analytics/meta";
 
 // Portable Text type
 type PortableTextBlock = unknown;
@@ -41,8 +42,9 @@ interface Product {
   showLegacyName?: boolean;
   scentProfile?: string;
   inspiredBy?: string;
-  collectionType: "atlas" | "relic";
+  collectionType: "atlas" | "relic" | "gift";
   price?: number;
+  compareAtPrice?: number;
   volume?: string;
   productFormat?: string;
   mainImage?: unknown;
@@ -120,6 +122,13 @@ interface Product {
     };
     isHeritageDistillation?: boolean;
     heritageType?: string;
+  };
+  giftData?: {
+    setSize?: number;
+    pieceFormat?: string;
+    includedItems?: string[];
+    giftNote?: PortableTextBlock[];
+    badges?: string[];
   };
 }
 
@@ -538,22 +547,31 @@ const ScentPyramid = ({ notes }: { notes: Product["notes"] }) => {
 };
 
 // Trust Badges Component - Conditionally rendered based on collection type
-const TrustBadges = ({ isAtlas, product }: { isAtlas: boolean; product: Product }) => {
+const TrustBadges = ({ collectionType, product }: { collectionType: Product['collectionType']; product: Product }) => {
   // Use custom badges from Sanity if available, otherwise fall back to defaults
-  const customBadges = isAtlas ? product.atlasData?.badges : product.relicData?.badges;
+  const customBadges = collectionType === 'atlas'
+    ? product.atlasData?.badges
+    : collectionType === 'relic'
+      ? product.relicData?.badges
+      : product.giftData?.badges;
 
   const badges = customBadges && customBadges.length > 0
     ? customBadges.map(label => ({ label, icon: Check }))
-    : isAtlas
+    : collectionType === 'atlas'
       ? [
         { label: "Skin Safe", icon: Check },
         { label: "Clean", icon: Check },
         { label: "Cruelty-Free", icon: Check },
       ]
-      : [
-        { label: "Pure Origin", icon: Check },
-        { label: "Wild Harvested", icon: Check },
-      ];
+      : collectionType === 'relic'
+        ? [
+          { label: "Pure Origin", icon: Check },
+          { label: "Wild Harvested", icon: Check },
+        ]
+        : [
+          { label: "Gift-Ready", icon: Check },
+          { label: "Cruelty-Free", icon: Check },
+        ];
 
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-6 border-t border-theme-charcoal/5">
@@ -571,6 +589,7 @@ const TrustBadges = ({ isAtlas, product }: { isAtlas: boolean; product: Product 
 
 export function ProductDetailClient({ product, placeholderImages }: Props) {
   const { addItem } = useShopifyCart();
+  const { ready: analyticsReady, trackViewItem } = useAnalytics();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
@@ -636,6 +655,58 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     : null;
   const isAtlas = product.collectionType === "atlas";
   const isRelic = product.collectionType === "relic";
+  const isGift = product.collectionType === "gift";
+  const selectedShopifyVariantId =
+    selectedVariant === '12ml' && product.shopifyVariant12mlId
+      ? product.shopifyVariant12mlId
+      : product.shopifyVariant6mlId || product.shopifyVariantId;
+  const selectedVariantLabel = isAtlas
+    ? selectedVariant
+    : product.volume || undefined;
+
+  useEffect(() => {
+    if (
+      !analyticsReady ||
+      !selectedShopifyVariantId ||
+      typeof currentPrice !== 'number' ||
+      currentPrice < 0
+    ) {
+      return;
+    }
+
+    const item = {
+      item_id: selectedShopifyVariantId,
+      item_name: product.title,
+      ...(product.shopifyProductId
+        ? {
+            meta_content_id:
+              buildShopifyCatalogContentId(
+                product.shopifyProductId,
+                selectedShopifyVariantId,
+                process.env.NEXT_PUBLIC_META_CATALOG_COUNTRY || 'US',
+              ) || undefined,
+          }
+        : {}),
+      ...(selectedVariantLabel
+        ? { item_variant: selectedVariantLabel }
+        : {}),
+      price: currentPrice,
+      quantity: 1,
+    };
+    trackViewItem(
+      item,
+      'USD',
+      `${item.item_id}:${item.item_variant ?? 'default'}`,
+    );
+  }, [
+    analyticsReady,
+    currentPrice,
+    product.title,
+    product.shopifyProductId,
+    selectedShopifyVariantId,
+    selectedVariantLabel,
+    trackViewItem,
+  ]);
 
   // Theme colors - Relic always dark, Atlas light
   const theme = {
@@ -754,14 +825,14 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       <header className={`fixed top-0 left-0 right-0 z-50 ${theme.bgTransparent} backdrop-blur-md border-b ${theme.borderSubtle}`}>
         <div className="max-w-[1800px] mx-auto px-6 md:px-24 py-6 flex items-center justify-between">
           <Link
-            href={isAtlas ? "/atlas" : "/relic"}
+            href={isAtlas ? "/atlas" : isGift ? "/gift" : "/relic"}
             className="flex items-center gap-3 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
-            Return to {isAtlas ? "Atlas" : "Relic"}
+            Return to {isAtlas ? "Atlas" : isGift ? "Gift" : "Relic"}
           </Link>
           <span className="font-mono text-xs md:text-sm uppercase tracking-[0.6em] text-theme-gold">
-            {isAtlas ? "The Atlas" : "The Relic"}
+            {isAtlas ? "The Atlas" : isGift ? "The Gift" : "The Relic"}
           </span>
         </div>
       </header>
@@ -1018,10 +1089,22 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </div>
             ) : (
               <>
-                {/* Fallback: Single Price (Relic or no territory) */}
+                {/* Fallback: Single Price (Relic, Gift, or no territory) */}
                 {currentPrice && (
-                  <div className="text-4xl md:text-5xl font-serif tracking-tighter">
-                    ${currentPrice}
+                  <div className="flex items-baseline gap-3">
+                    <div className="text-4xl md:text-5xl font-serif tracking-tighter">
+                      ${currentPrice}
+                    </div>
+                    {product.compareAtPrice && product.compareAtPrice > currentPrice && (
+                      <>
+                        <span className="text-xl md:text-2xl font-serif tracking-tighter opacity-40 line-through">
+                          ${product.compareAtPrice}
+                        </span>
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-theme-gold">
+                          {Math.round((1 - currentPrice / product.compareAtPrice) * 100)}% Off
+                        </span>
+                      </>
+                    )}
                   </div>
                 )}
 
@@ -1174,7 +1257,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             )}
 
             {/* Trust Badges - Above CTA for conversion */}
-            <TrustBadges isAtlas={isAtlas} product={product} />
+            <TrustBadges collectionType={product.collectionType} product={product} />
 
             {/* Quantity Selector */}
             <div className="flex items-center gap-4">
@@ -1341,10 +1424,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </CollapsibleSection>
             )}
 
-            {/* The Journey / Travel Log - Collapsible, collapsed by default */}
-            {(isAtlas && product.atlasData?.travelLog) || (isRelic && product.relicData?.museumDescription) ? (
+            {/* The Journey / Travel Log / Gift Note - Collapsible, collapsed by default */}
+            {(isAtlas && product.atlasData?.travelLog) || (isRelic && product.relicData?.museumDescription) || (isGift && product.giftData?.giftNote) ? (
               <CollapsibleSection
-                title={isAtlas ? "The Journey" : "Curator's Notes"}
+                title={isAtlas ? "The Journey" : isGift ? "What's Inside" : "Curator's Notes"}
                 isOpen={expandedSections.journey}
                 onToggle={() => toggleSection("journey")}
               >
@@ -1353,10 +1436,22 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     <PortableText value={product.atlasData.travelLog as any} />
                   ) : isRelic && product.relicData?.museumDescription ? (
                     <PortableText value={product.relicData.museumDescription as any} />
+                  ) : isGift && product.giftData?.giftNote ? (
+                    <PortableText value={product.giftData.giftNote as any} />
                   ) : null}
                 </div>
               </CollapsibleSection>
             ) : null}
+            {isGift && product.giftData?.includedItems && product.giftData.includedItems.length > 0 && (
+              <div className="pt-2 pb-4 space-y-2">
+                <span className="font-mono text-xs uppercase tracking-widest opacity-60">Included</span>
+                <ul className="font-serif text-base opacity-90 space-y-1">
+                  {product.giftData.includedItems.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Collapsible Sections */}
             <div className="space-y-2 pt-8 border-t border-theme-charcoal/10">
