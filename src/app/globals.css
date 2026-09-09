@@ -77,3 +77,141 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
+/* ------------------------------------------------------------------------
+   Shopify cookie banner — slim, brand-matched restyle
+   Shopify injects #shopify-pc__banner as plain DOM on our domain (no shadow
+   root), so these rules only change presentation. Consent behavior, copy,
+   regions, and the preferences modal stay managed in Shopify Admin →
+   Settings → Customer privacy → Cookie banner. Preview locally with
+   ?preview_privacy_banner=1 on any page.
+   ------------------------------------------------------------------------ */
+#shopify-pc__banner.shopify-pc__banner__dialog {
+  padding: 10px 24px !important;
+  background: rgba(242, 240, 233, 0.96) !important; /* theme.alabaster */
+  color: #1a1a1a !important;                          /* theme.charcoal  */
+  box-shadow: none !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(26, 26, 26, 0.12) !important;
+  border-radius: 0 !important;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  max-height: none !important;
+  font-family: var(--font-eb-garamond), Georgia, serif;
+}
+
+#shopify-pc__banner .shopify-pc__banner__wrapper {
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 24px;
+}
+
+#shopify-pc__banner .shopify-pc__banner__body {
+  margin: 0 !important;
+  flex: 1 1 auto;
+}
+
+/* The heading is redundant on a one-line bar; the message and policy link
+   carry the notice. */
+#shopify-pc__banner__body-title {
+  display: none !important;
+}
+
+#shopify-pc__banner p {
+  margin: 0 !important;
+  font-family: var(--font-eb-garamond), Georgia, serif !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: #1a1a1a !important;
+}
+
+#shopify-pc__banner a {
+  color: #c5a66a !important; /* theme.gold */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#shopify-pc__banner .shopify-pc__banner__btns {
+  min-width: 0 !important;
+  width: auto !important;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+}
+
+#shopify-pc__banner button {
+  margin: 0 !important;
+  padding: 7px 16px !important;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4 !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+}
+
+/* Accept and Decline share size and prominence; only fill differs. */
+#shopify-pc__banner__btn-accept {
+  background: #1a1a1a !important;
+  color: #f2f0e9 !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+#shopify-pc__banner__btn-decline {
+  background: transparent !important;
+  color: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+#shopify-pc__banner__btn-manage-prefs {
+  background: transparent !important;
+  border: 0 !important;
+  color: #6b6b6b !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 7px 4px !important;
+}
+
+#shopify-pc__banner button:focus-visible {
+  outline: 2px solid #c5a66a;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  #shopify-pc__banner.shopify-pc__banner__dialog {
+    padding: 12px 16px !important;
+  }
+  #shopify-pc__banner .shopify-pc__banner__wrapper {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px;
+  }
+  #shopify-pc__banner p {
+    font-size: 12px !important;
+  }
+  /* Shopify stacks the buttons in a column under 480px and reorders them.
+     Keep a single row so the bar stays short on phones. */
+  #shopify-pc__banner .shopify-pc__banner__btns,
+  #shopify-pc__banner .shopify-pc__banner__btns-granular {
+    width: 100% !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  #shopify-pc__banner .shopify-pc__banner__btns-granular > :nth-child(1),
+  #shopify-pc__banner .shopify-pc__banner__btns-granular > :nth-child(2),
+  #shopify-pc__banner .shopify-pc__banner__btns-granular > :nth-child(3) {
+    order: 0 !important;
+  }
+  #shopify-pc__banner__btn-manage-prefs {
+    margin-right: auto !important;
+    padding-left: 0 !important;
+  }
+  #shopify-pc__banner button {
+    padding: 8px 12px !important;
+    letter-spacing: 0.08em;
+  }
+}
