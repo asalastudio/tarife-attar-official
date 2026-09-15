@@ -1,4 +1,5 @@
 import { google } from '@ai-sdk/google';
+import { openai, createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { ConvexHttpClient } from 'convex/browser';
 
@@ -68,7 +69,7 @@ CRITICAL: These two collections use COMPLETELY DIFFERENT vocabulary.
 PRODUCT CATALOG — THE ATLAS COLLECTION
 ═══════════════════════════════════════════
 
-All products are concentrated perfume oil, alcohol-free, applied with a glass wand applicator (roll-on option available), handcrafted in small batches. Phthalate-free, skin-safe, cruelty-free.
+All products are concentrated perfume oil, alcohol-free, applied with a glass wand applicator, handcrafted in small batches. Phthalate-free, skin-safe, cruelty-free.
 
 ── EMBER TERRITORY ──
 "The Intimacy of Ancient Routes" | Spice, warmth, incense, amber, resin
@@ -198,10 +199,9 @@ Pricing: 6ml $33 / 12ml $55
     Top: Bergamot, Pink Pepper, Davana | Heart: Oud, White Amber, Rosemary | Base: Leather, Musk, Vetiver
     Sillage: Warm, embracing | Longevity: 8+ hours | Season: Cool evenings
 
-── ARCHIVE (discontinued, limited remaining stock) ──
-- CAIRO (formerly Superior Egyptian Musk) — Archived
-- KALAHARI (formerly Black Ambergris) — Archived
-- ETHIOPIA (formerly Frankincense & Myrrh) — Archived, replaced by BEIRUT
+── DISCONTINUED (no longer available) ──
+- CAIRO (formerly Superior Egyptian Musk), KALAHARI (formerly Black Ambergris), ETHIOPIA (formerly Frankincense & Myrrh, succeeded by BEIRUT).
+If asked, say these are no longer part of the Atlas and suggest the closest current waypoint by notes.
 
 ═══════════════════════════════════════════
 LEGACY NAME LOOKUP TABLE
@@ -226,7 +226,8 @@ POLICIES (answer accurately)
 SHIPPING: Orders ship within 1-2 business days via USPS. Free shipping on orders over $35. First Class $4.50-$5.80 (2-5 days), Priority $9-$14 (2 days), Express $27.95-$29.95 (next day). Express cutoff: 1 PM Pacific.
 RETURNS: 30-day returns on unopened products with original seals. Non-returnable: custom blends, sample sets, items over 15% off. Refunds processed in 3-5 business days.
 APPLICATION: Apply to pulse points (wrists, neck, behind ears). Let it bloom 15-30 minutes. Don't rub — dab gently. Oils layer beautifully across territories.
-FORMAT: All Atlas waypoints are concentrated perfume oil, alcohol-free, glass wand applicator. Available in 6ml and 12ml.`;
+FORMAT: All Atlas waypoints are concentrated perfume oil, alcohol-free, glass wand applicator. Available in 6ml and 12ml. Six waypoints also come in a 3ml travel size: BIG SUR, TOBAGO, SICILY, SAMARKAND, HUDSON and MARRAKESH.
+STOCK: You cannot see live inventory. If asked whether something is in stock, direct the customer to the product page, which shows availability per size.`;
 
 async function fetchKnowledgeContext(): Promise<string> {
   try {
@@ -270,15 +271,48 @@ async function fetchKnowledgeContext(): Promise<string> {
   }
 }
 
+/**
+ * Provider selection. Set CONCIERGE_PROVIDER to "openai", "nvidia" or "google"
+ * to force one; otherwise the first provider with a key wins, in that order.
+ * CONCIERGE_MODEL overrides the default model for whichever provider is used.
+ *
+ * NVIDIA NIM (build.nvidia.com) speaks the OpenAI chat-completions protocol at
+ * https://integrate.api.nvidia.com/v1, so it rides the OpenAI SDK with a base URL.
+ */
+function pickModel() {
+  const forced = process.env.CONCIERGE_PROVIDER;
+  const override = process.env.CONCIERGE_MODEL;
+  const candidates: Array<[string, () => ReturnType<typeof openai> | null]> = [
+    ['openai', () => process.env.OPENAI_API_KEY
+      ? openai(override || 'gpt-4.1-mini')
+      : null],
+    ['nvidia', () => process.env.NVIDIA_API_KEY
+      ? createOpenAI({
+          baseURL: 'https://integrate.api.nvidia.com/v1',
+          apiKey: process.env.NVIDIA_API_KEY,
+        }).chat(override || 'meta/llama-3.3-70b-instruct')
+      : null],
+    ['google', () => process.env.GOOGLE_GENERATIVE_AI_API_KEY
+      ? google(override || 'gemini-2.5-flash')
+      : null],
+  ];
+  for (const [name, make] of candidates) {
+    if (forced && forced !== name) continue;
+    const m = make();
+    if (m) return m;
+  }
+  return null;
+}
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+    const model = pickModel();
+    if (!model) {
+      console.error('Concierge: set one of OPENAI_API_KEY, NVIDIA_API_KEY or GOOGLE_GENERATIVE_AI_API_KEY');
       return new Response(
-        JSON.stringify({ 
-          error: 'Google API key not configured.' 
-        }),
+        JSON.stringify({ error: 'The concierge is not configured.' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
@@ -286,14 +320,37 @@ export async function POST(req: Request) {
     const knowledgeContext = await fetchKnowledgeContext();
     const fullPrompt = SYSTEM_PROMPT + knowledgeContext;
 
+    // Fail loudly. streamText does not throw on upstream errors; without this
+    // an invalid key or retired model returns HTTP 200 with an empty body and
+    // the visitor sees a blank bubble.
+    let upstreamError: unknown = null;
     const result = streamText({
-      model: google('gemini-2.5-flash'),
+      model,
       system: fullPrompt,
       messages,
       temperature: 0.3,
+      onError: ({ error }) => {
+        upstreamError = error;
+        console.error('Concierge model error:', error);
+      },
     });
 
-    return result.toTextStreamResponse();
+    // Consume the first chunk before answering so an immediate upstream
+    // failure becomes a real 502 instead of an empty 200.
+    const [probe, body] = result.textStream.tee();
+    const reader = probe.getReader();
+    const first = await reader.read();
+    reader.releaseLock();
+    if (first.done && upstreamError) {
+      return new Response(
+        JSON.stringify({ error: 'The concierge is momentarily unavailable.' }),
+        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    return new Response(body.pipeThrough(new TextEncoderStream()), {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    });
   } catch (error) {
     console.error('Chat API Error:', error);
     

@@ -113,12 +113,20 @@ export function ChatPanel() {
         scrollToBottom();
       }
 
+      if (!assistantMessage.trim()) {
+        throw new Error('Empty response from concierge');
+      }
+
     } catch (e) {
       console.error("Chat error:", e);
-      setLocalMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "I'm momentarily unavailable. Please try again in a moment." }
-      ]);
+      const fallback = "I'm momentarily unavailable. Please try again in a moment, or reach us at support@tarifeattar.com.";
+      setLocalMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last?.role === "assistant" && !last.content.trim()) {
+          return [...prev.slice(0, -1), { role: "assistant", content: fallback }];
+        }
+        return [...prev, { role: "assistant", content: fallback }];
+      });
     } finally {
       setIsSending(false);
       scrollToBottom();
