@@ -612,6 +612,33 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   // Falls back to the 6ml/default variant when the selected size has no ID.
   const selectedShopifyVariantId =
     variantIdForSize(selectedVariant) ?? variantIdForSize('6ml');
+
+  // If the default 6ml is sold out, land on the first size that is in stock
+  // (3ml first, then 12ml) instead of greeting the visitor with Out of Stock.
+  // Runs once per product; a later manual size choice is never overridden.
+  const [defaultSizeResolved, setDefaultSizeResolved] = useState(false);
+  const id3ml = product.shopifyVariant3mlId;
+  const id6ml = product.shopifyVariant6mlId || product.shopifyVariantId;
+  const id12ml = product.shopifyVariant12mlId;
+  useEffect(() => {
+    if (defaultSizeResolved || product.collectionType !== 'atlas' || !id6ml) return;
+    let cancelled = false;
+    (async () => {
+      const sixAvailable = await checkVariantAvailability(id6ml);
+      if (cancelled) return;
+      if (!sixAvailable) {
+        for (const [size, id] of [['3ml', id3ml], ['12ml', id12ml]] as const) {
+          if (!id) continue;
+          if (await checkVariantAvailability(id)) {
+            if (!cancelled) setSelectedVariant(size);
+            break;
+          }
+        }
+      }
+      if (!cancelled) setDefaultSizeResolved(true);
+    })();
+    return () => { cancelled = true; };
+  }, [defaultSizeResolved, product.collectionType, id3ml, id6ml, id12ml]);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     description: false,
     notes: false,
