@@ -69,7 +69,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://checkout.tarifeattar.com https://www.google-analytics.com https://*.google-analytics.com https://www.facebook.com https://connect.facebook.net https://api.sentry.io https://*.elevenlabs.io wss://*.elevenlabs.io",
+              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://monorail-edge.shopifysvc.com https://checkout.tarifeattar.com https://www.google-analytics.com https://*.google-analytics.com https://www.facebook.com https://connect.facebook.net https://api.sentry.io https://*.elevenlabs.io wss://*.elevenlabs.io",
               "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io",
               "object-src 'none'",
               "base-uri 'self'",
