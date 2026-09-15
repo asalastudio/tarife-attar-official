@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "@/context/ChatContext";
-import { Sparkle, X, ChatCircle, ArrowRight, CircleNotch, Compass, Drop, Palette, Package, ArrowsClockwise } from "@phosphor-icons/react";
+import { Sparkle, X, ArrowRight, CircleNotch, Compass, Drop, Palette, Package, ArrowsClockwise, EnvelopeSimple } from "@phosphor-icons/react";
 
 const QUICK_CHIPS = [
   {
@@ -51,6 +51,66 @@ export function ChatPanel() {
 
   const [isSending, setIsSending] = useState(false);
   const [chipsUsed, setChipsUsed] = useState(false);
+
+  // Handoff to a person: files a support ticket with the transcript attached.
+  const [handoffOpen, setHandoffOpen] = useState(false);
+  const [handoff, setHandoff] = useState({ name: "", email: "", orderNumber: "", message: "" });
+  const [handoffState, setHandoffState] = useState<"idle" | "sending" | "error">("idle");
+
+  const openHandoff = () => {
+    const lastUser = [...localMessages].reverse().find((m) => m.role === "user")?.content || "";
+    setHandoff((prev) => ({ ...prev, message: prev.message || lastUser }));
+    setHandoffState("idle");
+    setHandoffOpen(true);
+    scrollToBottom();
+  };
+
+  const submitHandoff = async () => {
+    if (!handoff.name.trim() || !handoff.email.trim() || !handoff.message.trim()) {
+      setHandoffState("error");
+      return;
+    }
+    setHandoffState("sending");
+    try {
+      const res = await fetch("/api/support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: handoff.name.trim(),
+          email: handoff.email.trim(),
+          orderNumber: handoff.orderNumber.trim() || undefined,
+          message: handoff.message.trim(),
+          inquiryType: handoff.orderNumber.trim() ? "Order Status" : "Other",
+          platform: "Website",
+          channel: "concierge",
+          sourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
+          transcript: localMessages
+            .slice(1)
+            .filter((m) => m.content && m.content.trim())
+            .map((m) => ({ role: m.role, content: m.content })),
+        }),
+      });
+      if (!res.ok) throw new Error("Support request failed");
+      const data = await res.json().catch(() => ({}));
+      const ref = typeof data?.ticketNumber === "string" ? data.ticketNumber : null;
+      setLocalMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: ref
+            ? `Your message is with the team. Reference ${ref}. A person will reply to ${handoff.email.trim()}.`
+            : `Your message is with the team. A person will reply to ${handoff.email.trim()}.`,
+        },
+      ]);
+      setHandoffOpen(false);
+      setHandoff({ name: "", email: "", orderNumber: "", message: "" });
+      setHandoffState("idle");
+      scrollToBottom();
+    } catch (e) {
+      console.error("Handoff error:", e);
+      setHandoffState("error");
+    }
+  };
 
   const showChips = !chipsUsed && localMessages.length === 1;
 
@@ -119,7 +179,8 @@ export function ChatPanel() {
 
     } catch (e) {
       console.error("Chat error:", e);
-      const fallback = "I'm momentarily unavailable. Please try again in a moment, or reach us at support@tarifeattar.com.";
+      const fallback = "I'm momentarily unavailable. You can leave a message for the team below and a person will reply by email.";
+      setHandoffOpen(true);
       setLocalMessages((prev) => {
         const last = prev[prev.length - 1];
         if (last?.role === "assistant" && !last.content.trim()) {
@@ -249,6 +310,88 @@ export function ChatPanel() {
           )}
         </AnimatePresence>
 
+        {/* ─── Handoff to a person ─── */}
+        <AnimatePresence>
+          {handoffOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white border border-theme-charcoal/10 rounded-2xl p-4 shadow-sm"
+            >
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-theme-gold">Leave a message for the team</p>
+                  <p className="font-serif text-[12px] text-theme-charcoal/60 mt-1">A person replies by email, usually within one business day. Your conversation here is attached.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setHandoffOpen(false)}
+                  className="shrink-0 p-1 text-theme-charcoal/40 hover:text-theme-charcoal"
+                  aria-label="Close message form"
+                >
+                  <X weight="thin" className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  id="handoff-name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Your name"
+                  value={handoff.name}
+                  onChange={(e) => setHandoff({ ...handoff, name: e.target.value })}
+                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                />
+                <input
+                  id="handoff-email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Email"
+                  value={handoff.email}
+                  onChange={(e) => setHandoff({ ...handoff, email: e.target.value })}
+                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                />
+                <input
+                  id="handoff-order"
+                  type="text"
+                  placeholder="Order number, if you have one"
+                  value={handoff.orderNumber}
+                  onChange={(e) => setHandoff({ ...handoff, orderNumber: e.target.value })}
+                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                />
+                <textarea
+                  id="handoff-message"
+                  rows={3}
+                  placeholder="What can the team help with?"
+                  value={handoff.message}
+                  onChange={(e) => setHandoff({ ...handoff, message: e.target.value })}
+                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg resize-none"
+                />
+              </div>
+              {handoffState === "error" && (
+                <p className="mt-2 font-serif text-[12px] text-red-800/80">
+                  Name, email and a message are needed. If it keeps failing, write to support@tarifeattar.com.
+                </p>
+              )}
+              <button
+                type="button"
+                onClick={submitHandoff}
+                disabled={handoffState === "sending"}
+                className="mt-3 w-full flex items-center justify-center gap-2 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.25em] py-3 rounded-full hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50"
+              >
+                {handoffState === "sending" ? (
+                  <CircleNotch weight="thin" className="w-4 h-4 animate-spin" />
+                ) : (
+                  <EnvelopeSimple weight="thin" className="w-4 h-4" />
+                )}
+                Send to the team
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Typing indicator when waiting for first chunk */}
         {isSending && localMessages[localMessages.length - 1]?.role === "user" && (
           <motion.div
@@ -299,10 +442,14 @@ export function ChatPanel() {
             )}
           </button>
         </div>
-        <div className="mt-3 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/40">
-          <ChatCircle weight="thin" className="w-3 h-3" />
-          Powered by Eleanor
-        </div>
+        <button
+          type="button"
+          onClick={openHandoff}
+          className="mt-3 w-full flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/40 hover:text-theme-gold transition-colors"
+        >
+          <EnvelopeSimple weight="thin" className="w-3 h-3" />
+          Leave a message for the team
+        </button>
       </div>
     </motion.div>
   );

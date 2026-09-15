@@ -1,0 +1,165 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - banner [ref=e5]:
+          - link "Six waypoints of the Atlas, now in 3 ml." [ref=e7] [cursor=pointer]:
+            - /url: /atlas
+          - generic [ref=e9]:
+            - generic [ref=e10]:
+              - link "Find Your Waypoint" [ref=e12] [cursor=pointer]:
+                - /url: /quiz
+              - link "Tarifé Attär, home" [ref=e13] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e14]: TARIFÉ ATTÄR
+                - generic [ref=e15]: Modern Apothecary
+              - generic [ref=e16]:
+                - button "Open the concierge" [ref=e17] [cursor=pointer]: Concierge
+                - link "Satchel, 0 items" [ref=e20] [cursor=pointer]:
+                  - /url: /cart
+            - navigation "Sections" [ref=e23]:
+              - link "The Atlas" [ref=e25] [cursor=pointer]:
+                - /url: /atlas
+              - link "The Relic" [ref=e26] [cursor=pointer]:
+                - /url: /relic
+              - link "Gift Sets" [ref=e27] [cursor=pointer]:
+                - /url: /gift
+              - link "Journal" [ref=e28] [cursor=pointer]:
+                - /url: /journal
+              - link "Stockists" [ref=e29] [cursor=pointer]:
+                - /url: /stockists
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - img "TOBAGO" [ref=e36]
+            - generic [ref=e37]:
+              - generic [ref=e39]:
+                - generic [ref=e40]: Composition
+                - generic [ref=e41]: Petal
+              - heading "TOBAGO" [level=1] [ref=e43]
+              - generic "Previously named Arabian Jasmine" [ref=e44]: Arabian Jasmine
+              - generic [ref=e45]:
+                - generic [ref=e46]: Petal
+                - paragraph [ref=e49]: Bloom. Herb. The exhale of living gardens.
+              - generic [ref=e50]:
+                - text: Select Size
+                - generic [ref=e51]:
+                  - button "3ml $23" [ref=e52] [cursor=pointer]:
+                    - generic [ref=e53]:
+                      - generic [ref=e54]: 3ml
+                      - generic [ref=e55]: $23
+                  - button "6ml $30" [ref=e56] [cursor=pointer]:
+                    - generic [ref=e57]:
+                      - generic [ref=e58]: 6ml
+                      - generic [ref=e59]: $30
+                  - button "12ml $50" [ref=e60] [cursor=pointer]:
+                    - generic [ref=e61]:
+                      - generic [ref=e62]: 12ml
+                      - generic [ref=e63]: $50
+              - button "Inspiration Point 11.1889° N, 60.6317° W" [ref=e66] [cursor=pointer]:
+                - generic [ref=e70]:
+                  - generic [ref=e71]: Inspiration Point
+                  - text: 11.1889° N, 60.6317° W
+              - generic [ref=e74]:
+                - generic [ref=e75]: Skin Safe
+                - generic [ref=e79]: Clean
+                - generic [ref=e83]: Cruelty-Free
+              - generic [ref=e87]:
+                - generic [ref=e88]: Quantity
+                - generic [ref=e89]:
+                  - button [disabled] [ref=e90]
+                  - generic [ref=e93]: "1"
+                  - button [ref=e94] [cursor=pointer]
+              - button "Add to Satchel" [ref=e97] [cursor=pointer]
+              - button "Make it a gift" [ref=e99] [cursor=pointer]
+              - generic [ref=e102]:
+                - button "Evocation" [ref=e103] [cursor=pointer]
+                - generic [ref=e109]:
+                  - paragraph [ref=e110]: Tobago's rainforest is the oldest protected forest in the Western Hemisphere, a canopy so dense that jasmine vines climb toward any crack of sunlight, releasing their perfume in waves that intensify as the tropical dusk settles.
+                  - paragraph [ref=e111]: "The jasmine here is different from its Mediterranean cousin: wilder, headier, sweetened by humidity and the salt carried inland on trade winds. Night-blooming and narcotic, it fills the air with something confessional, beauty that has nothing to hide."
+                  - paragraph [ref=e112]: "TOBAGO captures jasmine at full power: intoxicating, slightly dangerous, impossible to ignore. Not the pressed-flower delicacy of a perfumer's lab, but the living vine climbing a rain-forest wall."
+              - generic [ref=e113]:
+                - button "On Skin" [ref=e114] [cursor=pointer]
+                - generic [ref=e120]:
+                  - paragraph [ref=e121]: A very beautiful blend of jasmine and sambac opens with bright, fresh intensity, capturing the flower at its most intoxicating. Classic jasmine accords weave through, honeyed and narcotic.
+                  - paragraph [ref=e122]: Intoxicating without apology. The kind of fragrance that changes the energy of a room without anyone knowing why.
+              - button "Scent Architecture" [ref=e124] [cursor=pointer]
+          - contentinfo [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - generic [ref=e131]:
+                  - generic [ref=e132]:
+                    - heading "TARIFÉ ATTÄR" [level=2] [ref=e133]
+                    - generic [ref=e134]: Modern Apothecary
+                  - paragraph [ref=e135]: Clean, skin-safe perfume oils for those who travel by scent.
+                  - link "Not sure where to start? Take the Quiz →" [ref=e137] [cursor=pointer]:
+                    - /url: /quiz
+                    - generic [ref=e138]: Not sure where to start?
+                    - generic [ref=e139]: Take the Quiz →
+                  - generic [ref=e140]:
+                    - link "Journal" [ref=e141] [cursor=pointer]:
+                      - /url: /journal
+                    - link "Archive" [ref=e142] [cursor=pointer]:
+                      - /url: /archive
+                    - link "Stockists" [ref=e143] [cursor=pointer]:
+                      - /url: /stockists
+                    - link "Privacy" [ref=e144] [cursor=pointer]:
+                      - /url: /privacy
+                - generic [ref=e145]:
+                  - heading "Navigation" [level=3] [ref=e146]
+                  - list [ref=e147]:
+                    - listitem [ref=e148]:
+                      - link "Threshold" [ref=e149] [cursor=pointer]:
+                        - /url: /
+                    - listitem [ref=e150]:
+                      - link "Atlas Collection" [ref=e151] [cursor=pointer]:
+                        - /url: /atlas
+                    - listitem [ref=e152]:
+                      - link "Relic Vault" [ref=e153] [cursor=pointer]:
+                        - /url: /relic
+                    - listitem [ref=e154]:
+                      - link "Gift Sets" [ref=e155] [cursor=pointer]:
+                        - /url: /gift
+                    - listitem [ref=e156]:
+                      - link "Territory Quiz" [ref=e157] [cursor=pointer]:
+                        - /url: /quiz
+                - generic [ref=e158]:
+                  - heading "Stay Connected" [level=3] [ref=e159]
+                  - generic [ref=e160]:
+                    - paragraph [ref=e161]: New territories, limited releases, and scent journeys — delivered to your inbox.
+                    - generic [ref=e162]:
+                      - textbox "Your email address" [ref=e163]
+                      - button "Join the Journey" [ref=e164] [cursor=pointer]
+              - generic [ref=e165]:
+                - generic [ref=e166]:
+                  - generic [ref=e167]: "Lat: 31.7917° N"
+                  - generic [ref=e168]: "Lon: 7.0926° W"
+                  - generic [ref=e169]: "Batch: ARCH_04_2025"
+                  - generic [ref=e170]: "Status: Verified"
+                - generic [ref=e172]: © 2026 Tarife Attär — All Specimens Verified Archival Grade
+      - generic [ref=e176]:
+        - button "Concierge" [ref=e177] [cursor=pointer]
+        - generic [ref=e179]:
+          - generic [ref=e180]:
+            - heading "The Guide" [level=2] [ref=e181]
+            - paragraph [ref=e184]: Tarife Attar Concierge
+          - button [ref=e185] [cursor=pointer]
+        - generic [ref=e188]:
+          - generic [ref=e189]: Welcome. I am your guide through the Tarife Attar archive — a living collection of rare and artisan perfume oils organized by territory and memory.I can help you discover a fragrance, navigate the new Atlas names, answer questions about your order, or explain how our oils are crafted.Where shall we begin?
+          - generic [ref=e194]:
+            - paragraph [ref=e195]: Common starting points
+            - button "Help me find a scent" [ref=e196] [cursor=pointer]
+            - button "What are the territories?" [ref=e201] [cursor=pointer]
+            - button "How do I apply perfume oil?" [ref=e206] [cursor=pointer]
+            - button "Shipping & returns" [ref=e211] [cursor=pointer]
+            - button "Names changed — find mine" [ref=e216] [cursor=pointer]
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - textbox "Ask about scents, orders, or anything..." [ref=e223]
+            - button [disabled] [ref=e224]
+          - generic [ref=e227]: Powered by Eleanor
+    - button "Shopping satchel with 0 items" [ref=e232] [cursor=pointer]
+    - button [ref=e237] [cursor=pointer]:
+      - generic [ref=e238]:
+        - img "Navigation Compass" [ref=e239]
+        - img "Compass Needle" [ref=e241]
+  - alert [ref=e242]

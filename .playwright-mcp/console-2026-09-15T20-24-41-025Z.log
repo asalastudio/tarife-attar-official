@@ -1,0 +1,21 @@
+[     679ms] [LOG] [Satchel] Setting up essence drop event listener @ https://www.tarifeattar.com/_next/static/chunks/7235-de54a3e80d57525c.js?dpl=dpl_EC6Lh7uapXjhrZhkPTtkgJpeyCHg:0
+[     759ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.tarifeattar.com/favicon.ico:0
+[    1433ms] [ERROR] Sending form data to 'https://www.facebook.com/tr/' violates the following Content Security Policy directive: "form-action 'self'". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[    1433ms] [ERROR] Framing 'https://www.facebook.com/' violates the following Content Security Policy directive: "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[    1457ms] [ERROR] Sending form data to 'https://www.facebook.com/tr/' violates the following Content Security Policy directive: "form-action 'self'". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[    1457ms] [ERROR] Framing 'https://www.facebook.com/' violates the following Content Security Policy directive: "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[   12148ms] [ERROR] Sending form data to 'https://www.facebook.com/tr/' violates the following Content Security Policy directive: "form-action 'self'". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[   12148ms] [ERROR] Framing 'https://www.facebook.com/' violates the following Content Security Policy directive: "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[   16234ms] [ERROR] Sending form data to 'https://www.facebook.com/tr/' violates the following Content Security Policy directive: "form-action 'self'". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[   16234ms] [ERROR] Framing 'https://www.facebook.com/' violates the following Content Security Policy directive: "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io". The request has been blocked.
+ @ https://www.googletagmanager.com/:0
+[   17048ms] [ERROR] Failed to load resource: the server responded with a status of 502 () @ https://www.tarifeattar.com/api/chat:0
+[   17048ms] [ERROR] Chat error: Error: Failed to fetch response
+    at C (https://www.tarifeattar.com/_next/static/chunks/app/(site)/layout-df2e7ad80964d679.js?dpl=dpl_EC6Lh7uapXjhrZhkPTtkgJpeyCHg:1:3357) @ https://www.tarifeattar.com/_next/static/chunks/2117-c09c9e068c03a619.js?dpl=dpl_EC6Lh7uapXjhrZhkPTtkgJpeyCHg:0
