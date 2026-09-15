@@ -78,7 +78,7 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
 
           {/* Always visible description */}
           <motion.p className="max-w-[200px] sm:max-w-[240px] md:max-w-sm mx-auto text-sm sm:text-base md:text-lg opacity-80 leading-relaxed font-serif italic mb-6 md:mb-8">
-            Clean perfume oils organized across four sensory territories. Twenty-six destinations for the modern explorer.
+            Clean perfume oils organized across four sensory territories. Twenty-eight destinations for the modern explorer.
           </motion.p>
 
           {/* Territory preview */}
