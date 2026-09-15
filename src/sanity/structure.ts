@@ -11,9 +11,43 @@
 import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 
 export const structure = (S: StructureBuilder, _context: StructureResolverContext) => {
+  const tickets = (title: string, id: string, filter: string) =>
+    S.listItem()
+      .title(title)
+      .id(id)
+      .child(
+        S.documentList()
+          .title(title)
+          .filter(filter)
+          .defaultOrdering([{ field: 'createdAt', direction: 'desc' }])
+      );
+
   return S.list()
     .title('Content')
     .items([
+      // ═══════════════════════════════════════════
+      // CUSTOMER SERVICE (support tickets)
+      // ═══════════════════════════════════════════
+      S.listItem()
+        .title('✉️ Customer Service')
+        .id('customer-service')
+        .child(
+          S.list()
+            .title('Customer Service')
+            .items([
+              tickets('● Open', 'tickets-open', '_type == "supportTicket" && status == "open"'),
+              tickets('◐ Waiting on customer', 'tickets-waiting', '_type == "supportTicket" && status == "waiting"'),
+              tickets('○ Resolved', 'tickets-resolved', '_type == "supportTicket" && status == "resolved"'),
+              S.divider(),
+              tickets('From the concierge', 'tickets-concierge', '_type == "supportTicket" && channel == "concierge"'),
+              tickets('High priority', 'tickets-high', '_type == "supportTicket" && priority == "high" && status != "resolved"'),
+              S.divider(),
+              tickets('All tickets', 'tickets-all', '_type == "supportTicket"'),
+            ])
+        ),
+
+      S.divider(),
+
       // Group 1: The Inbox (Critical for Madison Studio)
       S.listItem()
         .title('The Inbox')

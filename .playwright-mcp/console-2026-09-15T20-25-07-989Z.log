@@ -1,0 +1,4 @@
+[     220ms] [LOG] [Satchel] Setting up essence drop event listener @ https://www.tarifeattar.com/_next/static/chunks/7235-de54a3e80d57525c.js?dpl=dpl_EC6Lh7uapXjhrZhkPTtkgJpeyCHg:0
+[    2139ms] [WARNING] Blocked aria-hidden on an element because its descendant retained focus. The focus must not be hidden from assistive technology users. Avoid using aria-hidden on a focused element or its ancestor. Consider using the inert attribute instead, which will also prevent focus. For more details, see the aria-hidden section of the WAI-ARIA specification at https://w3c.github.io/aria/#aria-hidden.
+Element with focus: <a.flex flex-col items-center justify-center group px-4>
+Ancestor with aria-hidden: <header.sticky top-0 z-40 w-full transition-opacity duration-700 ease-out opacity-0 pointer-events-none> @ https://www.tarifeattar.com/:0

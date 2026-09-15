@@ -53,6 +53,7 @@ export default function SupportPage() {
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [ticketNumber, setTicketNumber] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const validate = (): boolean => {
@@ -92,13 +93,15 @@ export default function SupportPage() {
 
       if (!response.ok) throw new Error("Submission failed");
 
+      const result = await response.json().catch(() => ({}));
+      setTicketNumber(typeof result?.ticketNumber === "string" ? result.ticketNumber : null);
       setIsSubmitted(true);
       setFormData(INITIAL_FORM);
     } catch {
-      // If the API route doesn't exist yet, still show success for demo
-      // This will be wired to Eleanor/Convex later
-      setIsSubmitted(true);
-      setFormData(INITIAL_FORM);
+      setErrors((prev) => ({
+        ...prev,
+        message: "We could not send that just now. Please try again, or write to support@tarifeattar.com.",
+      }));
     } finally {
       setIsSubmitting(false);
     }
@@ -198,6 +201,11 @@ export default function SupportPage() {
                 <h2 className="text-3xl md:text-4xl font-serif italic tracking-tight mb-4">
                   Message Received
                 </h2>
+                {ticketNumber && (
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold mb-6">
+                    Reference {ticketNumber}
+                  </p>
+                )}
                 <p className="text-xl font-serif opacity-80 italic mb-2">
                   We typically respond within 24 hours.
                 </p>
