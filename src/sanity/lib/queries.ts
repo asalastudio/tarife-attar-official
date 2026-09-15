@@ -224,6 +224,7 @@ export const productBySlugQuery = groq`
     inStock,
     "shopifyHandle": store.slug.current,
     "shopifyVariantId": coalesce(shopifyVariantId, store.variants[0].store.gid),
+    shopifyVariant3mlId,
     shopifyVariant6mlId,
     shopifyVariant12mlId,
     "shopifyProductId": coalesce(shopifyProductId, store.id),
