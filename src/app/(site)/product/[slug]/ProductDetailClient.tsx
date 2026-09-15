@@ -854,23 +854,9 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   return (
     <div className={`min-h-screen ${theme.bg} ${theme.text}`}>
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 ${theme.bgTransparent} backdrop-blur-md border-b ${theme.borderSubtle}`}>
-        <div className="max-w-[1800px] mx-auto px-6 md:px-24 py-6 flex items-center justify-between">
-          <Link
-            href={isAtlas ? "/atlas" : isGift ? "/gift" : "/relic"}
-            className="flex items-center gap-3 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity"
-          >
-            <ArrowLeft weight="thin" className="w-4 h-4" />
-            Return to {isAtlas ? "Atlas" : isGift ? "Gift" : "Relic"}
-          </Link>
-          <span className="font-mono text-xs md:text-sm uppercase tracking-[0.6em] text-theme-gold">
-            {isAtlas ? "The Atlas" : isGift ? "The Gift" : "The Relic"}
-          </span>
-        </div>
-      </header>
 
       {/* Main Content - Split Layout - Extra bottom padding on mobile for sticky button */}
-      <div className="pt-24 pb-32 md:pb-20">
+      <div className="pt-6 md:pt-10 pb-32 md:pb-20">
         <div className="max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-24">
           {/* Left: Product Images */}
           <div className="space-y-4">
