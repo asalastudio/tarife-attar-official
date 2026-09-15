@@ -430,7 +430,7 @@ const TERRITORY_PRICING: Record<string, Record<VariantSize, number>> = {
   ember: { '3ml': 23, '6ml': 28, '12ml': 48 },
   petal: { '3ml': 23, '6ml': 30, '12ml': 50 },
   tidal: { '3ml': 23, '6ml': 30, '12ml': 50 },
-  terra: { '3ml': 25, '6ml': 33, '12ml': 55 },
+  terra: { '3ml': 23, '6ml': 33, '12ml': 55 },
 };
 
 const TERRITORY_TAGLINES: Record<string, string> = {

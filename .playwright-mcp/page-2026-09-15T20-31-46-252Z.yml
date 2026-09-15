@@ -1,0 +1,552 @@
+- generic [active] [ref=f6e1]:
+  - generic [ref=f6e2]:
+    - generic [ref=f6e3]:
+      - generic [ref=f6e4]:
+        - banner [ref=f6e5]:
+          - link "Six waypoints of the Atlas, now in 3 ml." [ref=f6e7] [cursor=pointer]:
+            - /url: /atlas
+          - generic [ref=f6e9]:
+            - generic [ref=f6e10]:
+              - link "Find Your Waypoint" [ref=f6e12] [cursor=pointer]:
+                - /url: /quiz
+              - link "Tarifé Attär, home" [ref=f6e13] [cursor=pointer]:
+                - /url: /
+                - generic [ref=f6e14]: TARIFÉ ATTÄR
+                - generic [ref=f6e15]: Modern Apothecary
+              - generic [ref=f6e16]:
+                - button "Open the concierge" [ref=f6e17] [cursor=pointer]: Concierge
+                - link "Satchel, 0 items" [ref=f6e20] [cursor=pointer]:
+                  - /url: /cart
+            - navigation "Sections" [ref=f6e23]:
+              - link "The Atlas" [ref=f6e25] [cursor=pointer]:
+                - /url: /atlas
+              - link "The Relic" [ref=f6e26] [cursor=pointer]:
+                - /url: /relic
+              - link "Gift Sets" [ref=f6e27] [cursor=pointer]:
+                - /url: /gift
+              - link "Journal" [ref=f6e28] [cursor=pointer]:
+                - /url: /journal
+              - link "Stockists" [ref=f6e29] [cursor=pointer]:
+                - /url: /stockists
+        - generic [ref=f6e30]:
+          - generic [ref=f6e34]:
+            - generic [ref=f6e35]:
+              - generic [ref=f6e36]: 28 Waypoints · 4 Territories
+              - heading "The Atlas" [level=1] [ref=f6e37]
+            - generic [ref=f6e38]:
+              - paragraph [ref=f6e39]: Clean, skin-safe perfume oils for those who travel by scent.
+              - link "Not sure? Take the Quiz →" [ref=f6e40] [cursor=pointer]:
+                - /url: /quiz
+                - generic [ref=f6e41]: Not sure?
+                - generic [ref=f6e42]: Take the Quiz →
+          - generic [ref=f6e45]:
+            - button "All Territories" [ref=f6e46] [cursor=pointer]
+            - button "Ember" [ref=f6e47] [cursor=pointer]
+            - button "Tidal" [ref=f6e48] [cursor=pointer]
+            - button "Petal" [ref=f6e49] [cursor=pointer]
+            - button "Terra" [ref=f6e50] [cursor=pointer]
+          - generic [ref=f6e52]:
+            - generic [ref=f6e53]:
+              - generic [ref=f6e54]:
+                - generic [ref=f6e55]:
+                  - heading "Ember" [level=2] [ref=f6e56]
+                  - paragraph [ref=f6e57]: Spice. Warmth. The intimacy of ancient routes.
+                - generic [ref=f6e58]:
+                  - paragraph [ref=f6e59]: 7 Waypoints
+                  - paragraph [ref=f6e60]: $28 – $48
+              - generic [ref=f6e61]:
+                - link [ref=f6e62] [cursor=pointer]:
+                  - /url: /product/aden
+                  - img "ADEN" [ref=f6e64]
+                  - generic [ref=f6e65]:
+                    - heading "ADEN" [level=3] [ref=f6e66]
+                    - paragraph [ref=f6e67]: $28
+                - link [ref=f6e68] [cursor=pointer]:
+                  - /url: /product/beirut
+                  - img "BEIRUT" [ref=f6e70]
+                  - generic [ref=f6e71]:
+                    - heading "BEIRUT" [level=3] [ref=f6e72]
+                    - paragraph [ref=f6e73]: $28
+                - link [ref=f6e74] [cursor=pointer]:
+                  - /url: /product/granada
+                  - img "GRANADA" [ref=f6e76]
+                  - generic [ref=f6e77]:
+                    - heading "GRANADA" [level=3] [ref=f6e78]
+                    - paragraph [ref=f6e79]: $28
+                - link [ref=f6e80] [cursor=pointer]:
+                  - /url: /product/malabar
+                  - img "MALABAR" [ref=f6e82]
+                  - generic [ref=f6e83]:
+                    - heading "MALABAR" [level=3] [ref=f6e84]
+                    - paragraph [ref=f6e85]: $28
+                - link [ref=f6e86] [cursor=pointer]:
+                  - /url: /product/saana
+                  - img "SAANA" [ref=f6e88]
+                  - generic [ref=f6e89]:
+                    - heading "SAANA" [level=3] [ref=f6e90]
+                    - paragraph [ref=f6e91]: $28
+                - link [ref=f6e92] [cursor=pointer]:
+                  - /url: /product/serengeti
+                  - img "SERENGETI" [ref=f6e94]
+                  - generic [ref=f6e95]:
+                    - heading "SERENGETI" [level=3] [ref=f6e96]
+                    - paragraph [ref=f6e97]: $28
+                - link [ref=f6e98] [cursor=pointer]:
+                  - /url: /product/tarifa
+                  - img "TARIFA" [ref=f6e100]
+                  - generic [ref=f6e101]:
+                    - heading "TARIFA" [level=3] [ref=f6e102]
+                    - paragraph [ref=f6e103]: $28
+                - link [ref=f6e104] [cursor=pointer]:
+                  - /url: /quiz
+                  - paragraph [ref=f6e109]: Not sure whereto begin?
+                  - generic [ref=f6e110]:
+                    - heading "Take the Quiz" [level=3] [ref=f6e111]
+                    - paragraph [ref=f6e112]: Find your waypoint
+            - generic [ref=f6e113]:
+              - generic [ref=f6e114]:
+                - generic [ref=f6e115]:
+                  - heading "Tidal" [level=2] [ref=f6e116]
+                  - paragraph [ref=f6e117]: Salt. Mist. The pull of open water.
+                - generic [ref=f6e118]:
+                  - paragraph [ref=f6e119]: 7 Waypoints
+                  - paragraph [ref=f6e120]: $30 – $50
+              - generic [ref=f6e121]:
+                - link [ref=f6e122] [cursor=pointer]:
+                  - /url: /product/bahia
+                  - img "BAHIA" [ref=f6e124]
+                  - generic [ref=f6e125]:
+                    - heading "BAHIA" [level=3] [ref=f6e126]
+                    - paragraph [ref=f6e127]: $30
+                - link [ref=f6e128] [cursor=pointer]:
+                  - /url: /product/bahrain
+                  - img "BAHRAIN" [ref=f6e130]
+                  - generic [ref=f6e131]:
+                    - heading "BAHRAIN" [level=3] [ref=f6e132]
+                    - paragraph [ref=f6e133]: $30
+                - link [ref=f6e134] [cursor=pointer]:
+                  - /url: /product/big-sur
+                  - img "BIG SUR" [ref=f6e136]
+                  - generic [ref=f6e137]:
+                    - heading "BIG SUR" [level=3] [ref=f6e138]
+                    - paragraph [ref=f6e139]: $30
+                - link [ref=f6e140] [cursor=pointer]:
+                  - /url: /product/meishan
+                  - img "MEISHAN" [ref=f6e142]
+                  - generic [ref=f6e143]:
+                    - heading "MEISHAN" [level=3] [ref=f6e144]
+                    - paragraph [ref=f6e145]: $30
+                - link [ref=f6e146] [cursor=pointer]:
+                  - /url: /product/monaco
+                  - img "MONACO" [ref=f6e148]
+                  - generic [ref=f6e149]:
+                    - heading "MONACO" [level=3] [ref=f6e150]
+                    - paragraph [ref=f6e151]: $30
+                - link [ref=f6e152] [cursor=pointer]:
+                  - /url: /product/tangiers
+                  - img "TANGIERS" [ref=f6e154]
+                  - generic [ref=f6e155]:
+                    - heading "TANGIERS" [level=3] [ref=f6e156]
+                    - paragraph [ref=f6e157]: $30
+                - link [ref=f6e158] [cursor=pointer]:
+                  - /url: /product/tigris
+                  - img "TIGRIS" [ref=f6e160]
+                  - generic [ref=f6e161]:
+                    - heading "TIGRIS" [level=3] [ref=f6e162]
+                    - paragraph [ref=f6e163]: $30
+                - link [ref=f6e164] [cursor=pointer]:
+                  - /url: /quiz
+                  - paragraph [ref=f6e169]: Not sure whereto begin?
+                  - generic [ref=f6e170]:
+                    - heading "Take the Quiz" [level=3] [ref=f6e171]
+                    - paragraph [ref=f6e172]: Find your waypoint
+            - generic [ref=f6e173]:
+              - generic [ref=f6e174]:
+                - generic [ref=f6e175]:
+                  - heading "Petal" [level=2] [ref=f6e176]
+                  - paragraph [ref=f6e177]: Bloom. Herb. The exhale of living gardens.
+                - generic [ref=f6e178]:
+                  - paragraph [ref=f6e179]: 7 Waypoints
+                  - paragraph [ref=f6e180]: $30 – $50
+              - generic [ref=f6e181]:
+                - link [ref=f6e182] [cursor=pointer]:
+                  - /url: /product/carmel
+                  - img "CARMEL" [ref=f6e184]
+                  - generic [ref=f6e185]:
+                    - heading "CARMEL" [level=3] [ref=f6e186]
+                    - paragraph [ref=f6e187]: $30
+                - link [ref=f6e188] [cursor=pointer]:
+                  - /url: /product/damascus
+                  - img "DAMASCUS" [ref=f6e190]
+                  - generic [ref=f6e191]:
+                    - heading "DAMASCUS" [level=3] [ref=f6e192]
+                    - paragraph [ref=f6e193]: $30
+                - link [ref=f6e194] [cursor=pointer]:
+                  - /url: /product/kandy
+                  - img "KANDY" [ref=f6e196]
+                  - generic [ref=f6e197]:
+                    - heading "KANDY" [level=3] [ref=f6e198]
+                    - paragraph [ref=f6e199]: $30
+                - link [ref=f6e200] [cursor=pointer]:
+                  - /url: /product/manali
+                  - img "MANALI" [ref=f6e202]
+                  - generic [ref=f6e203]:
+                    - heading "MANALI" [level=3] [ref=f6e204]
+                    - paragraph [ref=f6e205]: $30
+                - link [ref=f6e206] [cursor=pointer]:
+                  - /url: /product/medina
+                  - img "MEDINA" [ref=f6e208]
+                  - generic [ref=f6e209]:
+                    - heading "MEDINA" [level=3] [ref=f6e210]
+                    - paragraph [ref=f6e211]: $30
+                - link [ref=f6e212] [cursor=pointer]:
+                  - /url: /product/siwa
+                  - img "SIWA" [ref=f6e214]
+                  - generic [ref=f6e215]:
+                    - heading "SIWA" [level=3] [ref=f6e216]
+                    - paragraph [ref=f6e217]: $30
+                - link [ref=f6e218] [cursor=pointer]:
+                  - /url: /product/tobago
+                  - img "TOBAGO" [ref=f6e220]
+                  - generic [ref=f6e221]:
+                    - heading "TOBAGO" [level=3] [ref=f6e222]
+                    - paragraph [ref=f6e223]: $30
+                - link [ref=f6e224] [cursor=pointer]:
+                  - /url: /quiz
+                  - paragraph [ref=f6e229]: Not sure whereto begin?
+                  - generic [ref=f6e230]:
+                    - heading "Take the Quiz" [level=3] [ref=f6e231]
+                    - paragraph [ref=f6e232]: Find your waypoint
+            - generic [ref=f6e233]:
+              - generic [ref=f6e234]:
+                - generic [ref=f6e235]:
+                  - heading "Terra" [level=2] [ref=f6e236]
+                  - paragraph [ref=f6e237]: Wood. Oud. The gravity of deep forests.
+                - generic [ref=f6e238]:
+                  - paragraph [ref=f6e239]: 7 Waypoints
+                  - paragraph [ref=f6e240]: $33 – $55
+              - generic [ref=f6e241]:
+                - link [ref=f6e242] [cursor=pointer]:
+                  - /url: /product/astoria
+                  - img "ASTORIA" [ref=f6e244]
+                  - generic [ref=f6e245]:
+                    - heading "ASTORIA" [level=3] [ref=f6e246]
+                    - paragraph [ref=f6e247]: $33
+                - link [ref=f6e248] [cursor=pointer]:
+                  - /url: /product/havana
+                  - img "HAVANA" [ref=f6e250]
+                  - generic [ref=f6e251]:
+                    - heading "HAVANA" [level=3] [ref=f6e252]
+                    - paragraph [ref=f6e253]: $33
+                - link [ref=f6e254] [cursor=pointer]:
+                  - /url: /product/hudson
+                  - img "HUDSON" [ref=f6e256]
+                  - generic [ref=f6e257]:
+                    - heading "HUDSON" [level=3] [ref=f6e258]
+                    - paragraph [ref=f6e259]: $33
+                - link [ref=f6e260] [cursor=pointer]:
+                  - /url: /product/marrakesh
+                  - img "MARRAKESH" [ref=f6e262]
+                  - generic [ref=f6e263]:
+                    - heading "MARRAKESH" [level=3] [ref=f6e264]
+                    - paragraph [ref=f6e265]: $33
+                - link [ref=f6e266] [cursor=pointer]:
+                  - /url: /product/riyadh
+                  - img "RIYADH" [ref=f6e268]
+                  - generic [ref=f6e269]:
+                    - heading "RIYADH" [level=3] [ref=f6e270]
+                    - paragraph [ref=f6e271]: $33
+                - link [ref=f6e272] [cursor=pointer]:
+                  - /url: /product/samarkand
+                  - img "SAMARKAND" [ref=f6e274]
+                  - generic [ref=f6e275]:
+                    - heading "SAMARKAND" [level=3] [ref=f6e276]
+                    - paragraph [ref=f6e277]: $33
+                - link [ref=f6e278] [cursor=pointer]:
+                  - /url: /product/sicily
+                  - img "SICILY" [ref=f6e280]
+                  - generic [ref=f6e281]:
+                    - heading "SICILY" [level=3] [ref=f6e282]
+                    - paragraph [ref=f6e283]: $33
+                - link [ref=f6e284] [cursor=pointer]:
+                  - /url: /quiz
+                  - paragraph [ref=f6e289]: Not sure whereto begin?
+                  - generic [ref=f6e290]:
+                    - heading "Take the Quiz" [level=3] [ref=f6e291]
+                    - paragraph [ref=f6e292]: Find your waypoint
+          - generic [ref=f6e294]:
+            - generic [ref=f6e295]:
+              - generic [ref=f6e296]: Four Territories · 28 Waypoints · One Atlas
+              - heading "Explore the Map" [level=2] [ref=f6e297]
+            - generic [ref=f6e416]:
+              - generic [ref=f6e417]:
+                - button "ALL" [ref=f6e418] [cursor=pointer]
+                - button "EMBER" [ref=f6e419] [cursor=pointer]
+                - button "TIDAL" [ref=f6e420] [cursor=pointer]
+                - button "PETAL" [ref=f6e421] [cursor=pointer]
+                - button "TERRA" [ref=f6e422] [cursor=pointer]
+              - generic [ref=f6e423]:
+                - heading "Cartographer's Key" [level=3] [ref=f6e424]
+                - generic [ref=f6e425]:
+                  - generic [ref=f6e426]: Ember Territory
+                  - generic [ref=f6e431]: Tidal Territory
+                  - generic [ref=f6e436]: Petal Territory
+                  - generic [ref=f6e441]: Terra Territory
+              - generic [ref=f6e447]:
+                - generic:
+                  - generic:
+                    - button [ref=f6e448] [cursor=pointer]:
+                      - generic [ref=f6e449]:
+                        - generic:
+                          - generic:
+                            - generic: ADEN
+                            - generic: EMBER
+                    - button [ref=f6e452] [cursor=pointer]:
+                      - generic [ref=f6e453]:
+                        - generic:
+                          - generic:
+                            - generic: SAANA
+                            - generic: EMBER
+                    - button [ref=f6e456] [cursor=pointer]:
+                      - generic [ref=f6e457]:
+                        - generic:
+                          - generic:
+                            - generic: GRANADA
+                            - generic: EMBER
+                    - button [ref=f6e460] [cursor=pointer]:
+                      - generic [ref=f6e461]:
+                        - generic:
+                          - generic:
+                            - generic: MALABAR
+                            - generic: EMBER
+                    - button [ref=f6e464] [cursor=pointer]:
+                      - generic [ref=f6e465]:
+                        - generic:
+                          - generic:
+                            - generic: SERENGETI
+                            - generic: EMBER
+                    - button [ref=f6e468] [cursor=pointer]:
+                      - generic [ref=f6e469]:
+                        - generic:
+                          - generic:
+                            - generic: BEIRUT
+                            - generic: EMBER
+                    - button [ref=f6e472] [cursor=pointer]:
+                      - generic [ref=f6e473]:
+                        - generic:
+                          - generic:
+                            - generic: TARIFA
+                            - generic: EMBER
+                    - button [ref=f6e476] [cursor=pointer]:
+                      - generic [ref=f6e477]:
+                        - generic:
+                          - generic:
+                            - generic: BAHIA
+                            - generic: TIDAL
+                    - button [ref=f6e480] [cursor=pointer]:
+                      - generic [ref=f6e481]:
+                        - generic:
+                          - generic:
+                            - generic: BAHRAIN
+                            - generic: TIDAL
+                    - button [ref=f6e484] [cursor=pointer]:
+                      - generic [ref=f6e485]:
+                        - generic:
+                          - generic:
+                            - generic: BIG SUR
+                            - generic: TIDAL
+                    - button [ref=f6e488] [cursor=pointer]:
+                      - generic [ref=f6e489]:
+                        - generic:
+                          - generic:
+                            - generic: MEISHAN
+                            - generic: TIDAL
+                    - button [ref=f6e492] [cursor=pointer]:
+                      - generic [ref=f6e493]:
+                        - generic:
+                          - generic:
+                            - generic: MONACO
+                            - generic: TIDAL
+                    - button [ref=f6e496] [cursor=pointer]:
+                      - generic [ref=f6e497]:
+                        - generic:
+                          - generic:
+                            - generic: TANGIERS
+                            - generic: TIDAL
+                    - button [ref=f6e500] [cursor=pointer]:
+                      - generic [ref=f6e501]:
+                        - generic:
+                          - generic:
+                            - generic: TIGRIS
+                            - generic: TIDAL
+                    - button [ref=f6e504] [cursor=pointer]:
+                      - generic [ref=f6e505]:
+                        - generic:
+                          - generic:
+                            - generic: CARMEL
+                            - generic: PETAL
+                    - button [ref=f6e508] [cursor=pointer]:
+                      - generic [ref=f6e509]:
+                        - generic:
+                          - generic:
+                            - generic: DAMASCUS
+                            - generic: PETAL
+                    - button [ref=f6e512] [cursor=pointer]:
+                      - generic [ref=f6e513]:
+                        - generic:
+                          - generic:
+                            - generic: TOBAGO
+                            - generic: PETAL
+                    - button [ref=f6e516] [cursor=pointer]:
+                      - generic [ref=f6e517]:
+                        - generic:
+                          - generic:
+                            - generic: KANDY
+                            - generic: PETAL
+                    - button [ref=f6e520] [cursor=pointer]:
+                      - generic [ref=f6e521]:
+                        - generic:
+                          - generic:
+                            - generic: MANALI
+                            - generic: PETAL
+                    - button [ref=f6e524] [cursor=pointer]:
+                      - generic [ref=f6e525]:
+                        - generic:
+                          - generic:
+                            - generic: MEDINA
+                            - generic: PETAL
+                    - button [ref=f6e528] [cursor=pointer]:
+                      - generic [ref=f6e529]:
+                        - generic:
+                          - generic:
+                            - generic: SIWA
+                            - generic: PETAL
+                    - button [ref=f6e532] [cursor=pointer]:
+                      - generic [ref=f6e533]:
+                        - generic:
+                          - generic:
+                            - generic: ASTORIA
+                            - generic: TERRA
+                    - button [ref=f6e536] [cursor=pointer]:
+                      - generic [ref=f6e537]:
+                        - generic:
+                          - generic:
+                            - generic: HAVANA
+                            - generic: TERRA
+                    - button [ref=f6e540] [cursor=pointer]:
+                      - generic [ref=f6e541]:
+                        - generic:
+                          - generic:
+                            - generic: HUDSON
+                            - generic: TERRA
+                    - button [ref=f6e544] [cursor=pointer]:
+                      - generic [ref=f6e545]:
+                        - generic:
+                          - generic:
+                            - generic: MARRAKESH
+                            - generic: TERRA
+                    - button [ref=f6e548] [cursor=pointer]:
+                      - generic [ref=f6e549]:
+                        - generic:
+                          - generic:
+                            - generic: RIYADH
+                            - generic: TERRA
+                    - button [ref=f6e552] [cursor=pointer]:
+                      - generic [ref=f6e553]:
+                        - generic:
+                          - generic:
+                            - generic: SAMARKAND
+                            - generic: TERRA
+                    - button [ref=f6e556] [cursor=pointer]:
+                      - generic [ref=f6e557]:
+                        - generic:
+                          - generic:
+                            - generic: SICILY
+                            - generic: TERRA
+                - generic [ref=f6e560]:
+                  - link "Leaflet" [ref=f6e561] [cursor=pointer]:
+                    - /url: https://leafletjs.com
+                  - text: "| Tiles © Esri"
+                - generic [ref=f6e566]:
+                  - button "Zoom in" [ref=f6e567] [cursor=pointer]
+                  - button "Zoom out" [ref=f6e571] [cursor=pointer]
+          - contentinfo [ref=f6e301]:
+            - generic [ref=f6e302]:
+              - generic [ref=f6e303]:
+                - generic [ref=f6e304]:
+                  - generic [ref=f6e305]:
+                    - heading "TARIFÉ ATTÄR" [level=2] [ref=f6e306]
+                    - generic [ref=f6e307]: Modern Apothecary
+                  - paragraph [ref=f6e308]: Clean, skin-safe perfume oils for those who travel by scent.
+                  - link "Not sure where to start? Take the Quiz →" [ref=f6e310] [cursor=pointer]:
+                    - /url: /quiz
+                    - generic [ref=f6e311]: Not sure where to start?
+                    - generic [ref=f6e312]: Take the Quiz →
+                  - generic [ref=f6e313]:
+                    - link "Journal" [ref=f6e314] [cursor=pointer]:
+                      - /url: /journal
+                    - link "Archive" [ref=f6e315] [cursor=pointer]:
+                      - /url: /archive
+                    - link "Stockists" [ref=f6e316] [cursor=pointer]:
+                      - /url: /stockists
+                    - link "Privacy" [ref=f6e317] [cursor=pointer]:
+                      - /url: /privacy
+                - generic [ref=f6e318]:
+                  - heading "Navigation" [level=3] [ref=f6e319]
+                  - list [ref=f6e320]:
+                    - listitem [ref=f6e321]:
+                      - link "Threshold" [ref=f6e322] [cursor=pointer]:
+                        - /url: /
+                    - listitem [ref=f6e323]:
+                      - link "Atlas Collection" [ref=f6e324] [cursor=pointer]:
+                        - /url: /atlas
+                    - listitem [ref=f6e325]:
+                      - link "Relic Vault" [ref=f6e326] [cursor=pointer]:
+                        - /url: /relic
+                    - listitem [ref=f6e327]:
+                      - link "Gift Sets" [ref=f6e328] [cursor=pointer]:
+                        - /url: /gift
+                    - listitem [ref=f6e329]:
+                      - link "Territory Quiz" [ref=f6e330] [cursor=pointer]:
+                        - /url: /quiz
+                - generic [ref=f6e331]:
+                  - heading "Stay Connected" [level=3] [ref=f6e332]
+                  - generic [ref=f6e333]:
+                    - paragraph [ref=f6e334]: New territories, limited releases, and scent journeys — delivered to your inbox.
+                    - generic [ref=f6e335]:
+                      - textbox "Your email address" [ref=f6e336]
+                      - button "Join the Journey" [ref=f6e337] [cursor=pointer]
+              - generic [ref=f6e338]:
+                - generic [ref=f6e339]:
+                  - generic [ref=f6e340]: "Lat: 31.7917° N"
+                  - generic [ref=f6e341]: "Lon: 7.0926° W"
+                  - generic [ref=f6e342]: "Batch: ARCH_04_2025"
+                  - generic [ref=f6e343]: "Status: Verified"
+                - generic [ref=f6e345]: © 2026 Tarife Attär — All Specimens Verified Archival Grade
+      - generic [ref=f6e349]:
+        - button "Concierge" [ref=f6e350] [cursor=pointer]
+        - generic [ref=f6e352]:
+          - generic [ref=f6e353]:
+            - heading "The Guide" [level=2] [ref=f6e354]
+            - paragraph [ref=f6e357]: Tarife Attar Concierge
+          - button [ref=f6e358] [cursor=pointer]
+        - generic [ref=f6e361]:
+          - generic [ref=f6e362]: Welcome. I am your guide through the Tarife Attar archive — a living collection of rare and artisan perfume oils organized by territory and memory.I can help you discover a fragrance, navigate the new Atlas names, answer questions about your order, or explain how our oils are crafted.Where shall we begin?
+          - generic [ref=f6e367]:
+            - paragraph [ref=f6e368]: Common starting points
+            - button "Help me find a scent" [ref=f6e369] [cursor=pointer]
+            - button "What are the territories?" [ref=f6e374] [cursor=pointer]
+            - button "How do I apply perfume oil?" [ref=f6e379] [cursor=pointer]
+            - button "Shipping & returns" [ref=f6e384] [cursor=pointer]
+            - button "Names changed — find mine" [ref=f6e389] [cursor=pointer]
+        - generic [ref=f6e394]:
+          - generic [ref=f6e395]:
+            - textbox "Ask about scents, orders, or anything..." [ref=f6e396]
+            - button [disabled] [ref=f6e397]
+          - generic [ref=f6e400]: Powered by Eleanor
+    - button "Shopping satchel with 0 items" [ref=f6e405] [cursor=pointer]
+    - button [ref=f6e410] [cursor=pointer]:
+      - generic [ref=f6e411]:
+        - img "Navigation Compass" [ref=f6e412]
+        - img "Compass Needle" [ref=f6e414]
+  - alert [ref=f6e415]
