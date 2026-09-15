@@ -71,7 +71,7 @@ export function WaypointMiniMap({ lat, lng, territory, coordinates }: WaypointMi
         style={{ background: '#2a2520' }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
           maxZoom={10}
           minZoom={2}
         />

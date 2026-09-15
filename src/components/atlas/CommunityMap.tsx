@@ -28,7 +28,7 @@ export function CommunityMap({ ports }: CommunityMapProps) {
         style={{ background: '#0c1929' }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
           maxZoom={10}
           minZoom={2}
         />
