@@ -272,14 +272,14 @@ export function SiteHeader() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setDrawerOpen(false)}
-              className="fixed inset-0 z-40 bg-theme-charcoal/40 md:hidden"
+              className="fixed inset-0 z-[3000] bg-theme-charcoal/40 md:hidden"
             />
             <motion.aside
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-0 left-0 bottom-0 z-50 w-[84vw] max-w-sm bg-theme-alabaster text-theme-charcoal flex flex-col md:hidden"
+              className="fixed top-0 left-0 bottom-0 z-[3001] w-[84vw] max-w-sm bg-theme-alabaster text-theme-charcoal flex flex-col md:hidden"
               aria-label="Menu"
             >
               <div className="flex items-center justify-between h-16 px-5 border-b border-theme-charcoal/10">
