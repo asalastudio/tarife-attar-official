@@ -80,6 +80,56 @@ const nextConfig = {
           }
         ],
       },
+      // The embedded Studio may be opened inside the Sanity dashboard, which
+      // frames it from sanity.io. Only this route allows that; the storefront
+      // keeps frame-ancestors 'self'. Browsers honour frame-ancestors over
+      // X-Frame-Options when both are present.
+      {
+        source: '/studio/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: https: blob:",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.api.sanity.io wss://*.api.sanity.io",
+              "frame-src 'self' https://*.sanity.io",
+              "worker-src 'self' blob:",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self' https://api.sanity.io",
+              "frame-ancestors 'self' https://www.sanity.io https://*.sanity.io",
+              "upgrade-insecure-requests"
+            ].join('; ')
+          }
+        ],
+      },
+      {
+        source: '/studio',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: https: blob:",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              "connect-src 'self' https://*.sanity.io wss://*.sanity.io https://*.api.sanity.io wss://*.api.sanity.io",
+              "frame-src 'self' https://*.sanity.io",
+              "worker-src 'self' blob:",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self' https://api.sanity.io",
+              "frame-ancestors 'self' https://www.sanity.io https://*.sanity.io",
+              "upgrade-insecure-requests"
+            ].join('; ')
+          }
+        ],
+      },
     ];
   },
   

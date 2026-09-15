@@ -294,7 +294,7 @@ function pickModel() {
         }).chat(override || 'meta/llama-3.3-70b-instruct')
       : null],
     ['google', () => process.env.GOOGLE_GENERATIVE_AI_API_KEY
-      ? google(override || 'gemini-2.5-flash')
+      ? google(override || 'gemini-3.6-flash')
       : null],
   ];
   for (const [name, make] of candidates) {
