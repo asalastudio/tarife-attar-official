@@ -1,0 +1,31 @@
+- generic [active]:
+  - generic [ref=f7e1]:
+    - generic [ref=f7e12]:
+      - generic [ref=f7e14]:
+        - generic [ref=f7e17]:
+          - img [ref=f7e19]:
+            - generic [ref=f7e21]: TA
+          - generic [ref=f7e22]: Tarife Attär Studio
+        - generic [ref=f7e29]:
+          - generic [ref=f7e30]: Choose login provider
+          - generic [ref=f7e32]:
+            - link "Google" [ref=f7e33]:
+              - /url: https://api.sanity.io/v1/auth/login/google?origin=https%3A%2F%2Fwww.tarifeattar.com%2Fstudio&projectId=8h5l91ut&type=dual
+            - link "GitHub" [ref=f7e47]:
+              - /url: https://api.sanity.io/v1/auth/login/github?origin=https%3A%2F%2Fwww.tarifeattar.com%2Fstudio&projectId=8h5l91ut&type=dual
+            - link "E-mail / password" [ref=f7e58]:
+              - /url: https://api.sanity.io/v1/auth/login/sanity?origin=https%3A%2F%2Fwww.tarifeattar.com%2Fstudio&projectId=8h5l91ut&type=dual
+      - generic [ref=f7e75]:
+        - link "Community" [ref=f7e78]:
+          - /url: https://snty.link/community
+        - generic [ref=f7e79]: •
+        - link "Docs" [ref=f7e83]:
+          - /url: https://www.sanity.io/docs
+        - generic [ref=f7e84]: •
+        - link "Privacy" [ref=f7e88]:
+          - /url: https://www.sanity.io/legal/privacy
+        - generic [ref=f7e89]: •
+        - link "sanity.io" [ref=f7e93]:
+          - /url: https://www.sanity.io
+    - list
+  - alert [ref=f7e7]

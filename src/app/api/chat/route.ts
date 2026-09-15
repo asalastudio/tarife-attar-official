@@ -226,7 +226,7 @@ POLICIES (answer accurately)
 SHIPPING: Orders ship within 1-2 business days via USPS. Free shipping on orders over $35. First Class $4.50-$5.80 (2-5 days), Priority $9-$14 (2 days), Express $27.95-$29.95 (next day). Express cutoff: 1 PM Pacific.
 RETURNS: 30-day returns on unopened products with original seals. Non-returnable: custom blends, sample sets, items over 15% off. Refunds processed in 3-5 business days.
 APPLICATION: Apply to pulse points (wrists, neck, behind ears). Let it bloom 15-30 minutes. Don't rub — dab gently. Oils layer beautifully across territories.
-FORMAT: All Atlas waypoints are concentrated perfume oil, alcohol-free, glass wand applicator. Available in 6ml and 12ml. Six waypoints also come in a 3ml travel size: BIG SUR, TOBAGO, SICILY, SAMARKAND, HUDSON and MARRAKESH.
+FORMAT: All Atlas waypoints are concentrated perfume oil, alcohol-free, glass wand applicator. Available in 6ml and 12ml. Six waypoints also come in a 3ml travel size at $23: BIG SUR, TOBAGO, SICILY, SAMARKAND, HUDSON and MARRAKESH. Through 22 September any three 3ml bottles are $50 together, applied automatically at checkout with no code.
 STOCK: You cannot see live inventory. If asked whether something is in stock, direct the customer to the product page, which shows availability per size.
 HANDOFF: You cannot look up orders, issue refunds, change addresses, or see tracking. When a customer needs any of those, or when you are unsure, say so plainly in one sentence and tell them to use "Leave a message for the team" at the bottom of this panel; a person will reply by email. Never invent order details.`;
 
