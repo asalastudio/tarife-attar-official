@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Handbag, List, X, ChatCircle } from "@phosphor-icons/react";
 import { useShopifyCart } from "@/context";
 import { useChat } from "@/context/ChatContext";
+import { useIntro } from "@/context/IntroContext";
 
 /**
  * SiteHeader
@@ -53,6 +54,8 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { itemCount } = useShopifyCart();
   const { openChat } = useChat();
+  const { introActive } = useIntro();
+  const headerRef = useRef<HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [atlasOpen, setAtlasOpen] = useState(false);
 
@@ -61,6 +64,21 @@ export function SiteHeader() {
     setDrawerOpen(false);
     setAtlasOpen(false);
   }, [pathname]);
+
+  // Publish the header's height so full-height sections can sit exactly beneath it.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const publish = () =>
+      document.documentElement.style.setProperty("--site-header-h", `${el.offsetHeight}px`);
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      document.documentElement.style.removeProperty("--site-header-h");
+    };
+  }, []);
 
   useEffect(() => {
     if (!drawerOpen) return;
@@ -82,7 +100,13 @@ export function SiteHeader() {
     }`;
 
   return (
-    <header className="sticky top-0 z-40 w-full">
+    <header
+      ref={headerRef}
+      className={`sticky top-0 z-40 w-full transition-opacity duration-700 ease-out ${
+        introActive ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+      aria-hidden={introActive}
+    >
       {/* 1. Announcement bar */}
       <div className="bg-theme-charcoal text-theme-alabaster">
         <Link

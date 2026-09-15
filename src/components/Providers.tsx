@@ -10,6 +10,7 @@ import {
 } from "@/context";
 import { CompassProvider } from "@/components/navigation/CompassProvider";
 import { ChatProvider } from "@/context/ChatContext";
+import { IntroProvider } from "@/context/IntroContext";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { ElevenLabsVoiceWidget } from "@/components/voice/ElevenLabsVoiceWidget";
 
@@ -27,6 +28,7 @@ export function Providers({ children }: ProvidersProps) {
         <AnalyticsProvider>
           <ConvexProvider client={convex}>
             <ChatProvider>
+              <IntroProvider>
               <ShopifyCartProvider>
                 <WishlistProvider>
                   <CompassProvider>
@@ -35,6 +37,7 @@ export function Providers({ children }: ProvidersProps) {
                   </CompassProvider>
                 </WishlistProvider>
               </ShopifyCartProvider>
+              </IntroProvider>
             </ChatProvider>
           </ConvexProvider>
         </AnalyticsProvider>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useIntro, hasSeenIntro, markIntroSeen } from "@/context/IntroContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -55,6 +56,17 @@ interface HomeClientProps {
 export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImages, portsOfCall = [], giftProducts = [] }: HomeClientProps) {
     const router = useRouter();
     const [showLoader, setShowLoader] = useState(true); // Enable intro loader with animations
+    const { setIntroActive } = useIntro();
+
+    // Play the intro once per session. The header waits while it runs.
+    useEffect(() => {
+        if (hasSeenIntro()) {
+            setShowLoader(false);
+            setIntroActive(false);
+        } else {
+            setIntroActive(true);
+        }
+    }, [setIntroActive]);
     
 
     const handleNavigate = (path: string) => {
@@ -77,7 +89,9 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
 
     const handleLoaderComplete = useCallback(() => {
         setShowLoader(false);
-    }, []);
+        setIntroActive(false);
+        markIntroSeen();
+    }, [setIntroActive]);
 
     const handleProductClick = (product: Product) => {
         if (product.slug?.current) {
@@ -100,7 +114,7 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                     }`}
             >
                 {/* Hero Entry Section */}
-                <div className="h-screen w-full relative">
+                <div className="w-full relative h-[calc(100svh-var(--site-header-h,0px))] min-h-[560px]">
                     <SplitEntry onNavigate={handleNavigate} heroBackgrounds={heroBackgrounds} />
                 </div>
 

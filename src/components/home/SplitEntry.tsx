@@ -28,7 +28,7 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
   };
 
   return (
-    <div className="relative w-full h-screen flex flex-col md:flex-row overflow-hidden">
+    <div className="relative w-full h-full flex flex-col md:flex-row overflow-hidden">
       {/* Atlas Side (Left/West) - Fixed 50% */}
       <HeroPanel
         variant="atlas"
