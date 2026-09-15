@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { useIntro, hasSeenIntro, markIntroSeen } from "@/context/IntroContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -55,25 +56,18 @@ interface HomeClientProps {
 export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImages, portsOfCall = [], giftProducts = [] }: HomeClientProps) {
     const router = useRouter();
     const [showLoader, setShowLoader] = useState(true); // Enable intro loader with animations
-    
-    // #region agent log
+    const { setIntroActive } = useIntro();
+
+    // Play the intro once per session. The header waits while it runs.
     useEffect(() => {
-        // Log render entry for debug session (H1: verify HomeClient runs without unused vars)
-        fetch('http://127.0.0.1:7243/ingest/6c3a1000-6649-4e7a-a50a-9f4301ecbd6a', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                sessionId: 'debug-session',
-                runId: 'lint-verify',
-                hypothesisId: 'H1',
-                location: 'HomeClient.tsx:log-render',
-                message: 'HomeClient rendered',
-                data: { featuredCount: featuredProducts?.length ?? 0 },
-                timestamp: Date.now()
-            })
-        }).catch(() => { });
-    }, [featuredProducts]);
-    // #endregion
+        if (hasSeenIntro()) {
+            setShowLoader(false);
+            setIntroActive(false);
+        } else {
+            setIntroActive(true);
+        }
+    }, [setIntroActive]);
+    
 
     const handleNavigate = (path: string) => {
         if (path === 'home') {
@@ -95,7 +89,9 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
 
     const handleLoaderComplete = useCallback(() => {
         setShowLoader(false);
-    }, []);
+        setIntroActive(false);
+        markIntroSeen();
+    }, [setIntroActive]);
 
     const handleProductClick = (product: Product) => {
         if (product.slug?.current) {
@@ -118,7 +114,7 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                     }`}
             >
                 {/* Hero Entry Section */}
-                <div className="h-screen w-full relative">
+                <div className="w-full relative h-[calc(100svh-var(--site-header-h,0px))] min-h-[560px]">
                     <SplitEntry onNavigate={handleNavigate} heroBackgrounds={heroBackgrounds} />
                 </div>
 

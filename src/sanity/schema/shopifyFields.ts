@@ -25,6 +25,13 @@ export const shopifyFields = [
     group: 'commerce',
   },
   {
+    name: 'shopifyVariant3mlId',
+    title: 'Shopify Variant ID (3ml)',
+    type: 'string',
+    description: 'The GID for the 3ml variant. Only six Atlas waypoints carry one; leave empty otherwise and the size will not be offered.',
+    group: 'commerce',
+  },
+  {
     name: 'shopifyVariant6mlId',
     title: 'Shopify Variant ID (6ml)',
     type: 'string',

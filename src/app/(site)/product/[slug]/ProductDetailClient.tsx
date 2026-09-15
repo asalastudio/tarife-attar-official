@@ -54,6 +54,7 @@ interface Product {
   inStock?: boolean;
   shopifyHandle?: string;
   shopifyVariantId?: string;
+  shopifyVariant3mlId?: string;
   shopifyVariant6mlId?: string;
   shopifyVariant12mlId?: string;
   shopifyProductId?: string;
@@ -424,11 +425,12 @@ const TERRITORY_NAMES: Record<string, string> = {
 };
 
 // Territory-based pricing for Atlas Collection
-const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
-  ember: { '6ml': 28, '12ml': 48 },
-  petal: { '6ml': 30, '12ml': 50 },
-  tidal: { '6ml': 30, '12ml': 50 },
-  terra: { '6ml': 33, '12ml': 55 },
+// 3ml is only offered when a product carries a 3ml variant ID in Sanity.
+const TERRITORY_PRICING: Record<string, Record<VariantSize, number>> = {
+  ember: { '3ml': 23, '6ml': 28, '12ml': 48 },
+  petal: { '3ml': 23, '6ml': 30, '12ml': 50 },
+  tidal: { '3ml': 23, '6ml': 30, '12ml': 50 },
+  terra: { '3ml': 25, '6ml': 33, '12ml': 55 },
 };
 
 const TERRITORY_TAGLINES: Record<string, string> = {
@@ -438,7 +440,8 @@ const TERRITORY_TAGLINES: Record<string, string> = {
   terra: "Wood. Oud. The gravity of deep forests.",
 };
 
-type VariantSize = '6ml' | '12ml';
+type VariantSize = '3ml' | '6ml' | '12ml';
+const ALL_SIZES: VariantSize[] = ['3ml', '6ml', '12ml'];
 
 // Territory Badge Component with elegant icons
 const TerritoryBadge = ({ territory }: { territory: string }) => {
@@ -595,6 +598,47 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const [isAdding, setIsAdding] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<VariantSize>('6ml');
+
+  // Which sizes this product can actually sell. 6ml and 12ml are always offered
+  // for Atlas products; 3ml appears only when Sanity holds a 3ml variant ID.
+  const sizeOptions: VariantSize[] = ALL_SIZES.filter(
+    (size) => size !== '3ml' || Boolean(product.shopifyVariant3mlId),
+  );
+  const variantIdForSize = (size: VariantSize): string | undefined => {
+    if (size === '3ml') return product.shopifyVariant3mlId || undefined;
+    if (size === '12ml') return product.shopifyVariant12mlId || undefined;
+    return product.shopifyVariant6mlId || product.shopifyVariantId || undefined;
+  };
+  // Falls back to the 6ml/default variant when the selected size has no ID.
+  const selectedShopifyVariantId =
+    variantIdForSize(selectedVariant) ?? variantIdForSize('6ml');
+
+  // If the default 6ml is sold out, land on the first size that is in stock
+  // (3ml first, then 12ml) instead of greeting the visitor with Out of Stock.
+  // Runs once per product; a later manual size choice is never overridden.
+  const [defaultSizeResolved, setDefaultSizeResolved] = useState(false);
+  const id3ml = product.shopifyVariant3mlId;
+  const id6ml = product.shopifyVariant6mlId || product.shopifyVariantId;
+  const id12ml = product.shopifyVariant12mlId;
+  useEffect(() => {
+    if (defaultSizeResolved || product.collectionType !== 'atlas' || !id6ml) return;
+    let cancelled = false;
+    (async () => {
+      const sixAvailable = await checkVariantAvailability(id6ml);
+      if (cancelled) return;
+      if (!sixAvailable) {
+        for (const [size, id] of [['3ml', id3ml], ['12ml', id12ml]] as const) {
+          if (!id) continue;
+          if (await checkVariantAvailability(id)) {
+            if (!cancelled) setSelectedVariant(size);
+            break;
+          }
+        }
+      }
+      if (!cancelled) setDefaultSizeResolved(true);
+    })();
+    return () => { cancelled = true; };
+  }, [defaultSizeResolved, product.collectionType, id3ml, id6ml, id12ml]);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     description: false,
     notes: false,
@@ -609,16 +653,12 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
   useEffect(() => {
     // Check real-time availability for whichever variant is selected
-    const variantId = selectedVariant === '12ml' && product.shopifyVariant12mlId
-      ? product.shopifyVariant12mlId
-      : product.shopifyVariant6mlId || product.shopifyVariantId;
+    if (!selectedShopifyVariantId) return;
 
-    if (!variantId) return;
-
-    checkVariantAvailability(variantId).then(available => {
+    checkVariantAvailability(selectedShopifyVariantId).then(available => {
       setLiveInStock(available);
     });
-  }, [selectedVariant, product.shopifyVariantId, product.shopifyVariant6mlId, product.shopifyVariant12mlId]);
+  }, [selectedShopifyVariantId]);
 
   // Set responsive defaults after mount (collapse on mobile)
   useEffect(() => {
@@ -656,10 +696,6 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const isAtlas = product.collectionType === "atlas";
   const isRelic = product.collectionType === "relic";
   const isGift = product.collectionType === "gift";
-  const selectedShopifyVariantId =
-    selectedVariant === '12ml' && product.shopifyVariant12mlId
-      ? product.shopifyVariant12mlId
-      : product.shopifyVariant6mlId || product.shopifyVariantId;
   const selectedVariantLabel = isAtlas
     ? selectedVariant
     : product.volume || undefined;
@@ -747,11 +783,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     let variantIdToAdd = product.shopifyVariantId;
 
     if (isAtlas && selectedVariant) {
-      if (selectedVariant === '6ml' && product.shopifyVariant6mlId) {
-        variantIdToAdd = product.shopifyVariant6mlId;
-      } else if (selectedVariant === '12ml' && product.shopifyVariant12mlId) {
-        variantIdToAdd = product.shopifyVariant12mlId;
-      }
+      variantIdToAdd = variantIdForSize(selectedVariant) || variantIdToAdd;
     }
 
     if (!variantIdToAdd) {
@@ -822,23 +854,9 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   return (
     <div className={`min-h-screen ${theme.bg} ${theme.text}`}>
       {/* Header */}
-      <header className={`fixed top-0 left-0 right-0 z-50 ${theme.bgTransparent} backdrop-blur-md border-b ${theme.borderSubtle}`}>
-        <div className="max-w-[1800px] mx-auto px-6 md:px-24 py-6 flex items-center justify-between">
-          <Link
-            href={isAtlas ? "/atlas" : isGift ? "/gift" : "/relic"}
-            className="flex items-center gap-3 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity"
-          >
-            <ArrowLeft weight="thin" className="w-4 h-4" />
-            Return to {isAtlas ? "Atlas" : isGift ? "Gift" : "Relic"}
-          </Link>
-          <span className="font-mono text-xs md:text-sm uppercase tracking-[0.6em] text-theme-gold">
-            {isAtlas ? "The Atlas" : isGift ? "The Gift" : "The Relic"}
-          </span>
-        </div>
-      </header>
 
       {/* Main Content - Split Layout - Extra bottom padding on mobile for sticky button */}
-      <div className="pt-24 pb-32 md:pb-20">
+      <div className="pt-6 md:pt-10 pb-32 md:pb-20">
         <div className="max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-24">
           {/* Left: Product Images */}
           <div className="space-y-4">
@@ -1058,7 +1076,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   Select Size
                 </span>
                 <div className="flex gap-3">
-                  {(['6ml', '12ml'] as VariantSize[]).map((size) => (
+                  {sizeOptions.map((size) => (
                     <motion.button
                       key={size}
                       onClick={() => setSelectedVariant(size)}
@@ -1606,7 +1624,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </div>
               {isAtlas && territoryPricing ? (
                 <div className="flex gap-1 mt-0.5">
-                  {(['6ml', '12ml'] as VariantSize[]).map((size) => (
+                  {sizeOptions.map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedVariant(size)}

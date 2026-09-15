@@ -85,8 +85,11 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               transition={{ duration: 0.6 }}
               className="flex flex-col"
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] md:tracking-[0.4em] uppercase font-semibold leading-none mb-2">
-                TARIFE ATTÄR
+              <h2
+                className="text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] md:tracking-[0.4em] uppercase font-semibold leading-none mb-2"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+              >
+                TARIFÉ ATTÄR
               </h2>
               <span className="text-[9px] md:text-[10px] font-mono tracking-[0.6em] uppercase opacity-40">
                 Modern Apothecary

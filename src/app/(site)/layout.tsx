@@ -1,6 +1,7 @@
 import { EB_Garamond, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { ChatLayoutWrapper } from "@/components/chat/ChatLayoutWrapper";
+import { SiteHeader } from "@/components/navigation/SiteHeader";
 import "../globals.css";
 
 // Primary serif font - elegant, editorial
@@ -30,6 +31,7 @@ export default function SiteLayout({
     <div className={`${ebGaramond.variable} ${jetbrainsMono.variable} min-h-screen bg-theme-alabaster text-theme-charcoal antialiased font-serif overflow-x-hidden cursor-none`}>
       <Providers>
         <ChatLayoutWrapper>
+          <SiteHeader />
           {children}
         </ChatLayoutWrapper>
       </Providers>
