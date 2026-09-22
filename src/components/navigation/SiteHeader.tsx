@@ -22,7 +22,7 @@ import { useIntro } from "@/context/IntroContext";
  */
 
 const ANNOUNCEMENT = {
-  text: "Six waypoints in 3 ml. Any three for $50, through 22 September.",
+  text: "Six waypoints in 3 ml. Any three for $50, through 28 September.",
   href: "/atlas",
 };
 
