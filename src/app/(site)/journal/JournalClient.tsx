@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar } from "@phosphor-icons/react";
@@ -44,6 +44,12 @@ const TERRITORY_COLORS: Record<string, string> = {
 export function JournalClient({ entries }: Props) {
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('all');
+
+  // The header menu links to /journal?category=..., so open on that category.
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get('category');
+    if (requested && CATEGORIES.some((c) => c.id === requested)) setActiveCategory(requested);
+  }, []);
 
   const filteredEntries = activeCategory === 'all'
     ? entries
