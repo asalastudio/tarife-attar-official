@@ -22,7 +22,7 @@ import { useIntro } from "@/context/IntroContext";
  */
 
 const ANNOUNCEMENT = {
-  text: "Six waypoints in 3 ml. Any three for $50, through 28 September.",
+  text: "Every waypoint now in 3 ml. Any three for $50, through 28 September.",
   href: "/atlas",
 };
 
@@ -72,12 +72,12 @@ const MENUS: Record<
       label: t.name,
       href: `/atlas?territory=${t.id}`,
       note: t.tagline,
-      meta: `6 ml \u00b7 12 ml \u2014 ${t.price}`,
+      meta: `3 ml $23 \u00b7 6 ml / 12 ml ${t.price}`,
     })),
     feature: {
       eyebrow: "Through 28 September",
       title: "Any three 3 ml for $50",
-      body: "Big Sur, Hudson, Marrakesh, Samarkand, Sicily and Tobago in the travel size. Applied at checkout, no code.",
+      body: "Every waypoint now comes in the 3 ml travel size. Mix any three in stock; the price applies at checkout, no code.",
       cta: "Choose your three",
       href: "/atlas",
     },
