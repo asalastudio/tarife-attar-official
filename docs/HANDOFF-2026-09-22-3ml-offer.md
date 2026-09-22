@@ -27,14 +27,13 @@ another session can pick up where this one stopped.
   Marrakesh 22). The other 22 Atlas products have only 6ml and 12ml.
 - **Discount:** automatic discount "Any three 3 ml, $50"
   (`gid://shopify/DiscountAutomaticNode/1572002300186`): $19 off once per order,
-  minimum quantity 3, limited to the six 3 ml variant IDs above. It ends
-  `2026-09-23T06:59:00Z` (22 Sep, 11:59 PM Pacific).
+  minimum quantity 3, limited to the six 3 ml variant IDs above. Extended on
+  22 Sep to end `2026-09-29T06:59:00Z` (28 Sep, 11:59 PM Pacific).
 
 ## Decisions from Jordan (22 Sep), not yet carried out
 
-1. **Extend the deal through Sunday 28 September, 11:59 PM Pacific**
-   (`endsAt: 2026-09-29T06:59:00Z`). This is urgent: the discount stops working
-   at midnight Pacific on 22 September unless it's extended.
+1. **Done:** deal extended through Sunday 28 September, 11:59 PM Pacific, in
+   Shopify, the site banner and the concierge prompt.
 2. **Every product gets a 3 ml option; stock alone decides availability.** Add a
    `3ml` value to the `Size` option of the 22 Atlas products that lack one, at
    $23, inventory tracked, policy DENY, starting at 0 stock. Follow the existing
@@ -46,7 +45,8 @@ another session can pick up where this one stopped.
      `8h5l91ut`, dataset `production`);
    - update the concierge prompt in `src/app/api/chat/route.ts`, which still
      says only six waypoints come in 3 ml;
-   - update the banner end date in `src/components/navigation/SiteHeader.tsx`;
+   - update the banner in `src/components/navigation/SiteHeader.tsx`, which
+     says "Six waypoints in 3 ml";
    - consider pointing the banner at a view that shows which 3 ml sizes are in
      stock, since customers currently can't tell.
 3. **New email:** HTML email for the deal featuring only the 3 ml waypoints in
