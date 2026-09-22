@@ -30,25 +30,20 @@ another session can pick up where this one stopped.
   minimum quantity 3, limited to the six 3 ml variant IDs above. Extended on
   22 Sep to end `2026-09-29T06:59:00Z` (28 Sep, 11:59 PM Pacific).
 
-## Decisions from Jordan (22 Sep), not yet carried out
+## Decisions from Jordan (22 Sep)
 
 1. **Done:** deal extended through Sunday 28 September, 11:59 PM Pacific, in
    Shopify, the site banner and the concierge prompt.
-2. **Every product gets a 3 ml option; stock alone decides availability.** Add a
-   `3ml` value to the `Size` option of the 22 Atlas products that lack one, at
-   $23, inventory tracked, policy DENY, starting at 0 stock. Follow the existing
-   SKU pattern (`<TERRITORY>-<HANDLE>-3ML`, e.g. `TIDAL-BIG-SUR-3ML`, territory
-   taken from the product's 6ml SKU) and weight 0.6 oz.
-   Then:
-   - add each new variant ID to the discount's eligible variants;
-   - write each ID to `shopifyVariant3mlId` on the Sanity product (project
-     `8h5l91ut`, dataset `production`);
-   - update the concierge prompt in `src/app/api/chat/route.ts`, which still
-     says only six waypoints come in 3 ml;
-   - update the banner in `src/components/navigation/SiteHeader.tsx`, which
-     says "Six waypoints in 3 ml";
-   - consider pointing the banner at a view that shows which 3 ml sizes are in
-     stock, since customers currently can't tell.
+2. **Done, except Aden in Sanity:** every Atlas product has a `3ml` variant in
+   Shopify at $23 (the 22 new ones start at 0 stock, policy DENY, SKU
+   `<TERRITORY>-<HANDLE>-3ML`, 0.6 oz), all 28 are in the discount, and 21 of the
+   22 Sanity products now have `shopifyVariant3mlId` set and published. The
+   banner, Atlas menu and concierge now say every waypoint comes in 3 ml.
+   **Aden is open:** `drafts.product-aden` is a stale March draft (no `price`
+   or `priceMax`, plus an unpublished `voiceoverJourney` file), so publishing
+   it would drop the prices. Set `shopifyVariant3mlId` on Aden to
+   `gid://shopify/ProductVariant/52932616421658` once someone decides what to do
+   with that draft (discard it, or fold its voiceover into the published doc).
 3. **New email:** HTML email for the deal featuring only the 3 ml waypoints in
    stock at send time, with the 28 September end date, sent to **Tier 1**
    after the consent check (`presend-consent-check`, then
