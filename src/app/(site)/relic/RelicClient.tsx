@@ -87,10 +87,11 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
           {categories.map((category, index) => (
             <motion.div
               key={category.id}
+              id={category.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="space-y-3 md:space-y-6"
+              className="space-y-3 md:space-y-6 scroll-mt-[calc(var(--site-header-h,0px)+24px)]"
             >
               {/* Category Header - Compact inline layout */}
               <div className="flex flex-row items-baseline justify-between gap-4 border-b border-white/10 pb-2 md:pb-4 min-w-0">

@@ -35,13 +35,109 @@ const TERRITORIES: Array<{ id: string; name: string; tagline: string; price: str
   { id: "terra", name: "Terra", tagline: "Wood. Oud. The gravity of deep forests.", price: "$33 / $55" },
 ];
 
-const SECTIONS: Array<{ label: string; href: string }> = [
-  { label: "The Atlas", href: "/atlas" },
-  { label: "The Relic", href: "/relic" },
-  { label: "Gift Sets", href: "/gift" },
-  { label: "Journal", href: "/journal" },
+type MenuKey = "atlas" | "relic" | "gift" | "journal";
+
+const SECTIONS: Array<{ label: string; href: string; menu?: MenuKey }> = [
+  { label: "The Atlas", href: "/atlas", menu: "atlas" },
+  { label: "The Relic", href: "/relic", menu: "relic" },
+  { label: "Gift Sets", href: "/gift", menu: "gift" },
+  { label: "Journal", href: "/journal", menu: "journal" },
   { label: "Stockists", href: "/stockists" },
 ];
+
+type MenuLink = { label: string; href: string; note: string; meta?: string };
+
+/**
+ * Every panel shares one anatomy so the menu reads the same wherever the
+ * cursor lands: an introduction on the left, the section's doors in the
+ * middle, and one featured card on the right.
+ */
+const MENUS: Record<
+  MenuKey,
+  {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    all: { label: string; href: string };
+    links: MenuLink[];
+    feature: { eyebrow: string; title: string; body: string; cta: string; href: string };
+  }
+> = {
+  atlas: {
+    eyebrow: "Four territories \u00b7 Twenty-eight waypoints",
+    title: "The Atlas",
+    intro: "Clean, alcohol-free perfume oils, each one a place. Choose a territory by the feeling you want to carry.",
+    all: { label: "View the full Atlas", href: "/atlas" },
+    links: TERRITORIES.map((t) => ({
+      label: t.name,
+      href: `/atlas?territory=${t.id}`,
+      note: t.tagline,
+      meta: `6 ml \u00b7 12 ml \u2014 ${t.price}`,
+    })),
+    feature: {
+      eyebrow: "Through 28 September",
+      title: "Any three 3 ml for $50",
+      body: "Big Sur, Hudson, Marrakesh, Samarkand, Sicily and Tobago in the travel size. Applied at checkout, no code.",
+      cta: "Choose your three",
+      href: "/atlas",
+    },
+  },
+  relic: {
+    eyebrow: "Rare materials \u00b7 Small lots",
+    title: "The Relic",
+    intro: "Pure oud oils, aged resins and vintage attars, kept as specimens rather than blends.",
+    all: { label: "View the Relic", href: "/relic" },
+    links: [
+      { label: "Pure Oud", href: "/relic#pure-oud", note: "Single-origin agarwood oils. Aged. Verified. Uncut." },
+      { label: "Aged Resins", href: "/relic#aged-resins", note: "Fossilized amber, vintage frankincense and temple-grade myrrh." },
+      { label: "Rare Attars", href: "/relic#rare-attars", note: "Traditional hydro-distillations from master perfumers." },
+    ],
+    feature: {
+      eyebrow: "Collector's note",
+      title: "Quantities are finite",
+      body: "When a lot is gone it is gone. The Relic is restocked only when the material is right.",
+      cta: "See what remains",
+      href: "/relic",
+    },
+  },
+  gift: {
+    eyebrow: "For someone who travels by scent",
+    title: "Gift Sets",
+    intro: "Curated sets and small formats for giving, when you know the person better than their perfume.",
+    all: { label: "View all gifts", href: "/gift" },
+    links: [
+      { label: "The Traveler Set", href: "/gift", note: "A curated set of Atlas waypoints, ready to give." },
+      { label: "Three in 3 ml", href: "/atlas", note: "Build your own trio of travel sizes, any three for $50." },
+      { label: "From the Relic", href: "/relic", note: "A rare oil or resin for the collector who has everything." },
+    ],
+    feature: {
+      eyebrow: "Not sure what they wear?",
+      title: "Find their waypoint",
+      body: "A few questions about how they live point to the territory that suits them.",
+      cta: "Start the quiz",
+      href: "/quiz",
+    },
+  },
+  journal: {
+    eyebrow: "Field notes from the archive",
+    title: "Journal",
+    intro: "Stories behind the blends, the places that inspired them, and notes for collectors.",
+    all: { label: "Read the Journal", href: "/journal" },
+    links: [
+      { label: "Field Notes", href: "/journal?category=field-notes", note: "Dispatches from the road and the studio." },
+      { label: "Behind the Blend", href: "/journal?category=behind-the-blend", note: "How a waypoint is composed, note by note." },
+      { label: "Territory Spotlight", href: "/journal?category=territory-spotlight", note: "One territory, read closely." },
+      { label: "Collector Archives", href: "/journal?category=collector-archives", note: "Rare materials and the stories they carry." },
+    ],
+    feature: {
+      eyebrow: "The Field Journal",
+      title: "Log your waypoints",
+      body: "Keep a record of what you wore, where, and how it wore on skin.",
+      cta: "Open the Field Journal",
+      href: "/field-journal",
+    },
+  },
+};
 
 const DRAWER_EXTRAS: Array<{ label: string; href: string }> = [
   { label: "Find Your Waypoint", href: "/quiz" },
@@ -57,13 +153,39 @@ export function SiteHeader() {
   const { introActive } = useIntro();
   const headerRef = useRef<HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [atlasOpen, setAtlasOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<MenuKey | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Close the drawer on navigation and lock body scroll while it is open.
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+  };
+  const showMenu = (key: MenuKey | null) => {
+    cancelClose();
+    setOpenMenu(key);
+  };
+  // A short grace period lets the cursor cross the gap between link and panel.
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 140);
+  };
+
+  // Close the drawer and any panel on navigation.
   useEffect(() => {
     setDrawerOpen(false);
-    setAtlasOpen(false);
+    setOpenMenu(null);
   }, [pathname]);
+
+  useEffect(() => () => cancelClose(), []);
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenMenu(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openMenu]);
 
   // Publish the header's height so full-height sections can sit exactly beneath it.
   useEffect(() => {
@@ -117,8 +239,12 @@ export function SiteHeader() {
         </Link>
       </div>
 
-      {/* 2. Masthead */}
-      <div className="bg-theme-alabaster/95 backdrop-blur-sm border-b border-theme-charcoal/10">
+      {/* 2. Masthead. The panel anchors to this full-width box, not to the nav
+          row, so it always spans the viewport edge to edge. */}
+      <div
+        className="relative bg-theme-alabaster/95 backdrop-blur-sm border-b border-theme-charcoal/10"
+        onMouseLeave={scheduleClose}
+      >
         <div className="max-w-[1800px] mx-auto px-4 md:px-8">
           <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16 md:h-20">
             {/* Left: quiz on desktop, menu on mobile */}
@@ -182,83 +308,82 @@ export function SiteHeader() {
           {/* 3. Section links, desktop */}
           <nav
             aria-label="Sections"
-            className="relative hidden md:flex items-center justify-center gap-10 border-t border-theme-charcoal/5"
-            onMouseLeave={() => setAtlasOpen(false)}
+            className="hidden md:flex items-center justify-center gap-10 border-t border-theme-charcoal/5"
           >
-            {SECTIONS.map((s) =>
-              s.href === "/atlas" ? (
-                <div
+            {SECTIONS.map((s) => {
+              const menu = s.menu;
+              const open = menu !== undefined && openMenu === menu;
+              return (
+                <Link
                   key={s.href}
-                  onMouseEnter={() => setAtlasOpen(true)}
-                  onFocus={() => setAtlasOpen(true)}
+                  href={s.href}
+                  onMouseEnter={() => showMenu(menu ?? null)}
+                  onFocus={() => showMenu(menu ?? null)}
+                  aria-haspopup={menu ? "true" : undefined}
+                  aria-expanded={menu ? open : undefined}
+                  aria-controls={menu ? "site-mega-menu" : undefined}
+                  className={`relative ${linkClass(s.href)} ${open ? "!text-theme-charcoal" : ""}`}
                 >
-                  <Link
-                    href={s.href}
-                    className={linkClass(s.href)}
-                    aria-haspopup="true"
-                    aria-expanded={atlasOpen}
-                  >
-                    {s.label}
-                  </Link>
-                </div>
-              ) : (
-                <Link key={s.href} href={s.href} className={linkClass(s.href)}>
                   {s.label}
+                  <span
+                    aria-hidden
+                    className={`absolute left-0 right-0 -bottom-px h-px bg-theme-gold origin-center transition-transform duration-300 ${
+                      open ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
                 </Link>
-              ),
-            )}
-
-            {/* Territories panel */}
-            <AnimatePresence>
-              {atlasOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute left-1/2 top-full -translate-x-1/2 w-[min(920px,94vw)] bg-theme-alabaster border border-theme-charcoal/10 shadow-[0_24px_60px_-30px_rgba(26,26,26,0.35)] z-50"
-                  onMouseEnter={() => setAtlasOpen(true)}
-                  onBlur={(e) => {
-                    if (!e.currentTarget.contains(e.relatedTarget as Node)) setAtlasOpen(false);
-                  }}
-                >
-                  <div className="px-8 pt-6 pb-2 flex items-baseline justify-between border-b border-theme-charcoal/5">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-charcoal/45">
-                      Four territories &middot; Twenty-eight waypoints
-                    </span>
-                    <Link
-                      href="/atlas"
-                      className="font-mono text-[9px] uppercase tracking-[0.22em] text-theme-gold hover:text-theme-charcoal transition-colors"
-                    >
-                      View the full Atlas &rarr;
-                    </Link>
-                  </div>
-                  <ul className="grid grid-cols-4 divide-x divide-theme-charcoal/5">
-                    {TERRITORIES.map((t) => (
-                      <li key={t.id}>
-                        <Link
-                          href={`/atlas?territory=${t.id}`}
-                          className="group/t block px-8 py-7 hover:bg-theme-charcoal/[0.03] transition-colors duration-300"
-                        >
-                          <span className="block font-serif italic text-[26px] leading-none text-theme-charcoal mb-3 group-hover/t:text-theme-gold transition-colors duration-300">
-                            {t.name}
-                          </span>
-                          <span className="block font-serif text-[13px] leading-snug text-theme-charcoal/60 mb-4 min-h-[2.6em]">
-                            {t.tagline}
-                          </span>
-                          <span className="block font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal/45">
-                            Seven waypoints &middot; {t.price}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
-            </AnimatePresence>
+              );
+            })}
           </nav>
         </div>
+
+        {/* Mega menu: one full-width panel whose contents change with the section */}
+        <AnimatePresence>
+          {openMenu && (
+            <motion.div
+              id="site-mega-menu"
+              key="mega"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="hidden md:block absolute inset-x-0 top-full z-50 bg-theme-alabaster border-b border-theme-charcoal/10 shadow-[0_30px_60px_-40px_rgba(26,26,26,0.45)]"
+              onMouseEnter={cancelClose}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node)) scheduleClose();
+              }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={openMenu}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.16 }}
+                >
+                  <MegaPanel menu={MENUS[openMenu]} />
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Veil over the page while a panel is open; moving onto it closes the panel */}
+      <AnimatePresence>
+        {openMenu && (
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="hidden md:block fixed inset-0 -z-10 bg-theme-charcoal/20"
+            onMouseEnter={scheduleClose}
+            onClick={() => setOpenMenu(null)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Mobile drawer */}
       <AnimatePresence>
@@ -356,6 +481,71 @@ export function SiteHeader() {
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+function MegaPanel({ menu }: { menu: (typeof MENUS)[MenuKey] }) {
+  return (
+    <div className="max-w-[1800px] mx-auto px-8 lg:px-12 py-10 min-h-[360px] grid grid-cols-12 gap-8 lg:gap-12">
+      {/* Introduction */}
+      <div className="col-span-3 flex flex-col">
+        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-charcoal/45">
+          {menu.eyebrow}
+        </span>
+        <span className="mt-4 font-serif italic text-[34px] leading-none text-theme-charcoal">{menu.title}</span>
+        <p className="mt-4 font-serif text-[14px] leading-relaxed text-theme-charcoal/60 max-w-[30ch]">{menu.intro}</p>
+        <Link
+          href={menu.all.href}
+          className="mt-auto pt-6 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal hover:text-theme-gold transition-colors duration-300"
+        >
+          {menu.all.label} <span aria-hidden>&rarr;</span>
+        </Link>
+      </div>
+
+      {/* Doors into the section */}
+      <ul
+        className={`col-span-6 grid gap-x-8 content-start border-l border-theme-charcoal/10 pl-8 lg:pl-12 ${
+          menu.links.length > 3 ? "grid-cols-2 [&>li:nth-last-child(2)]:border-b-0" : "grid-cols-1"
+        }`}
+      >
+        {menu.links.map((l) => (
+          <li key={l.label} className="border-b border-theme-charcoal/10 last:border-b-0">
+            <Link href={l.href} className="group/l flex items-start justify-between gap-6 py-5">
+              <span className="min-w-0">
+                <span className="block font-serif italic text-[22px] leading-tight text-theme-charcoal group-hover/l:text-theme-gold transition-colors duration-300">
+                  {l.label}
+                </span>
+                <span className="mt-1.5 block font-serif text-[13px] leading-snug text-theme-charcoal/55">{l.note}</span>
+                {l.meta && (
+                  <span className="mt-2.5 block font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal/40">
+                    {l.meta}
+                  </span>
+                )}
+              </span>
+              <span
+                aria-hidden
+                className="mt-1.5 font-mono text-[11px] text-theme-charcoal/25 -translate-x-1 group-hover/l:translate-x-0 group-hover/l:text-theme-gold transition-all duration-300"
+              >
+                &rarr;
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      {/* Featured card */}
+      <Link
+        href={menu.feature.href}
+        className="col-span-3 group/f flex flex-col bg-theme-charcoal text-theme-alabaster p-7 min-h-[220px]"
+      >
+        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-gold">{menu.feature.eyebrow}</span>
+        <span className="mt-4 font-serif italic text-[26px] leading-[1.1]">{menu.feature.title}</span>
+        <span className="mt-3 font-serif text-[13px] leading-relaxed text-theme-alabaster/65">{menu.feature.body}</span>
+        <span className="mt-auto pt-6 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-alabaster group-hover/f:text-theme-gold transition-colors duration-300">
+          {menu.feature.cta} &rarr;
+        </span>
+      </Link>
+    </div>
   );
 }
 
