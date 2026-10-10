@@ -22,7 +22,7 @@ import { useIntro } from "@/context/IntroContext";
  */
 
 const ANNOUNCEMENT = {
-  text: "Every waypoint now in 3 ml. Any three for $50, through 28 September.",
+  text: "Any three 3 ml oils for $50. Mix any in stock, no code needed.",
   href: "/atlas",
 };
 
@@ -75,9 +75,9 @@ const MENUS: Record<
       meta: `3 ml $23 \u00b7 6 ml / 12 ml ${t.price}`,
     })),
     feature: {
-      eyebrow: "Through 28 September",
+      eyebrow: "The 3 ml trio",
       title: "Any three 3 ml for $50",
-      body: "Every waypoint now comes in the 3 ml travel size. Mix any three in stock; the price applies at checkout, no code.",
+      body: "Mix any three 3 ml oils that are in stock. The price applies at checkout, no code.",
       cta: "Choose your three",
       href: "/atlas",
     },
