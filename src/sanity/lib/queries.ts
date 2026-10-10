@@ -307,12 +307,16 @@ export const productBySlugQuery = groq`
 // ===== HOMEPAGE QUERIES =====
 
 /**
- * Get featured products for homepage
- * Note: Only returns PUBLISHED Atlas products with images
+ * Homepage feature candidates.
+ * Published Atlas products with an image. The three homepage slots are chosen
+ * in selectFeaturedProducts: BIG SUR, TOBAGO and SERENGETI first, then the
+ * newest oils that Shopify still has in some size. `inStock` is returned only
+ * as a fallback — it stays true on waypoints that are sold out in every size.
  */
 export const featuredProductsQuery = groq`
-  *[_type == "product" && collectionType == "atlas" && inStock == true && !(_id in path("drafts.**")) && (defined(mainImage) || defined(shopifyPreviewImageUrl) || defined(store.previewImageUrl))] | order(_createdAt desc) [0...3] {
+  *[_type == "product" && collectionType == "atlas" && !(_id in path("drafts.**")) && (defined(mainImage) || defined(shopifyPreviewImageUrl) || defined(store.previewImageUrl))] | order(_createdAt desc) {
     _id,
+    _createdAt,
     title,
     slug,
     legacyName,
@@ -322,6 +326,11 @@ export const featuredProductsQuery = groq`
     volume,
     productFormat,
     mainImage,
+    inStock,
+    shopifyVariantId,
+    shopifyVariant3mlId,
+    shopifyVariant6mlId,
+    shopifyVariant12mlId,
     shopifyPreviewImageUrl,
     "shopifyImage": store.previewImageUrl,
     "atmosphere": atlasData.atmosphere,

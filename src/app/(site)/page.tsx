@@ -2,7 +2,20 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { featuredProductsQuery, heroBackgroundsQuery, HeroBackgroundsQueryResult, placeholderImagesQuery, PlaceholderImagesQueryResult, portsOfCallQuery, PortOfCall, giftProductsQuery } from "@/sanity/lib/queries";
 import { Product } from "@/types";
 import { HomeClient } from "./HomeClient";
+import {
+  selectFeaturedProducts,
+  variantGidsForFeatured,
+  type FeaturedCandidate,
+} from "@/lib/featured/selectFeaturedProducts";
+import { checkVariantsAvailability } from "@/lib/shopify/client";
 import type { Metadata } from "next";
+
+type HomepageFeature = Product &
+  FeaturedCandidate & {
+    atlasImage?: unknown;
+    shopifyPreviewImageUrl?: string;
+    shopifyImage?: string;
+  };
 
 interface GiftProduct {
   _id: string;
@@ -31,8 +44,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [featuredProducts, heroBackgrounds, placeholderImages, portsOfCall, giftProducts] = await Promise.all([
-    sanityFetch<Product[]>({
+  const [featureCandidates, heroBackgrounds, placeholderImages, portsOfCall, giftProducts] = await Promise.all([
+    sanityFetch<HomepageFeature[]>({
       query: featuredProductsQuery,
       tags: ['featured-products'],
       revalidate: 0, // Always fetch fresh, rely on webhook for revalidation
@@ -59,9 +72,18 @@ export default async function Home() {
     }),
   ]);
 
+  const availability = await checkVariantsAvailability(
+    variantGidsForFeatured(featureCandidates || []),
+  );
+  const featuredProducts = selectFeaturedProducts(featureCandidates || [], availability);
+
   // Debug logging in development
   if (process.env.NODE_ENV === 'development') {
     console.log('[Home Page] Hero Backgrounds fetched:', heroBackgrounds);
+    console.log(
+      '[Home Page] Featured:',
+      featuredProducts.map((product) => product.slug?.current),
+    );
   }
 
   return <HomeClient featuredProducts={featuredProducts} heroBackgrounds={heroBackgrounds} placeholderImages={placeholderImages} portsOfCall={portsOfCall || []} giftProducts={giftProducts || []} />;

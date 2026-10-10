@@ -200,4 +200,61 @@ export async function checkVariantAvailability(variantGid: string): Promise<bool
   }
 }
 
+const CHECK_VARIANTS_AVAILABILITY_QUERY = `
+  query getVariantsAvailability($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on ProductVariant {
+        id
+        availableForSale
+      }
+    }
+  }
+`;
+
+const VARIANT_AVAILABILITY_BATCH = 100;
+
+/**
+ * Live availability for many variants in one Storefront request.
+ * Returns null when Shopify cannot be asked, so callers can fall back
+ * to the Sanity flag instead of hiding the whole homepage.
+ */
+export async function checkVariantsAvailability(
+  variantGids: readonly string[],
+): Promise<Map<string, boolean> | null> {
+  const ids = Array.from(
+    new Set(
+      variantGids.filter(
+        (id): id is string =>
+          typeof id === "string" && id.startsWith("gid://shopify/ProductVariant/"),
+      ),
+    ),
+  );
+  if (!domain || !accessToken || ids.length === 0) return null;
+
+  const available = new Map<string, boolean>();
+  try {
+    for (let i = 0; i < ids.length; i += VARIANT_AVAILABILITY_BATCH) {
+      const batch = ids.slice(i, i + VARIANT_AVAILABILITY_BATCH);
+      const json = await shopifyFetch({
+        query: CHECK_VARIANTS_AVAILABILITY_QUERY,
+        variables: { ids: batch },
+      });
+      const nodes = json?.data?.nodes;
+      if (!Array.isArray(nodes) || json?.errors) return null;
+
+      let sawVariant = false;
+      for (const node of nodes) {
+        if (node && typeof node.id === "string") {
+          sawVariant = true;
+          available.set(node.id, node.availableForSale === true);
+        }
+      }
+      if (!sawVariant) return null;
+    }
+    return available;
+  } catch {
+    return null;
+  }
+}
+
 export { shopifyFetch };
