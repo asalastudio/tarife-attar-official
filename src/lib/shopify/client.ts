@@ -17,9 +17,11 @@ interface ShopifyFetchVariables {
 async function shopifyFetch({
   query,
   variables = {},
+  cache,
 }: {
   query: string;
   variables?: ShopifyFetchVariables;
+  cache?: RequestCache;
 }) {
   if (!domain || !accessToken) {
     throw new Error('Shopify configuration missing. Please set NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN');
@@ -30,6 +32,7 @@ async function shopifyFetch({
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
+      ...(cache ? { cache } : {}),
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': accessToken!,
@@ -201,3 +204,18 @@ export async function checkVariantAvailability(variantGid: string): Promise<bool
 }
 
 export { shopifyFetch };
+
+/** Fetch current product availability in one request; never rely on CMS stock flags. */
+export async function getFeaturedAvailability(handles: string[]) {
+  const fields = handles.map((handle, i) =>
+    `p${i}: product(handle: ${JSON.stringify(handle)}) { handle availableForSale variants(first: 100) { nodes { availableForSale price { amount } } } }`
+  ).join('\n');
+  const { data, errors } = await shopifyFetch({ query: `query FeaturedAvailability { ${fields} }`, cache: 'no-store' });
+  if (errors?.length || !data) throw new Error('Featured availability unavailable');
+  return Object.values(data).flatMap((value) => {
+    const product = value as { handle: string; availableForSale: boolean; variants: { nodes: Array<{ availableForSale: boolean; price: { amount: string } }> } } | null;
+    if (!product) return [];
+    const prices = product.variants.nodes.filter(v => v.availableForSale).map(v => Number(v.price.amount));
+    return [{ handle: product.handle, availableForSale: product.availableForSale, price: Math.min(...prices) }];
+  });
+}

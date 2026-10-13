@@ -1,5 +1,7 @@
 "use client";
 
+import Link from 'next/link';
+
 import { useState, useCallback, useEffect } from "react";
 import { useIntro, hasSeenIntro, markIntroSeen } from "@/context/IntroContext";
 import { useRouter } from "next/navigation";
@@ -203,7 +205,7 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                                                 </h3>
                                                 {product.price && (
                                                     <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest opacity-40 tabular-nums">
-                                                        ${product.price}
+                                                        From ${product.price}
                                                     </p>
                                                 )}
                                             </div>
@@ -221,7 +223,7 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                             ))
                         ) : (
                             <div className="col-span-full py-20 text-center opacity-40 font-mono text-sm">
-                                Loading notable formulations...
+                                <Link href="/atlas" className="underline underline-offset-4">Explore the Atlas for current availability.</Link>
                             </div>
                         )}
                     </div>

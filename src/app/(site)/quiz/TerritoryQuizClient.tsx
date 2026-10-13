@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { scoreTerritory } from '@/lib/quiz/scoring';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Compass, MapPin, Sparkle } from "@phosphor-icons/react";
@@ -150,30 +151,9 @@ export function TerritoryQuizClient() {
   const [showIntro, setShowIntro] = useState(true);
   const [showNameCapture, setShowNameCapture] = useState(false);
 
-  // Calculate result when quiz is complete
-  const calculateResult = () => {
-    const scores: Record<string, number> = {
-      EMBER: 0,
-      PETAL: 0,
-      TIDAL: 0,
-      TERRA: 0,
-    };
-
-    Object.values(answers).forEach((territories) => {
-      territories.forEach((territory) => {
-        scores[territory]++;
-      });
-    });
-
-    const winningTerritory = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0] as 'EMBER' | 'PETAL' | 'TIDAL' | 'TERRA';
-    return TERRITORIES.find((t) => t.id === winningTerritory)!;
-  };
-
   const handleAnswer = (territories: ('EMBER' | 'PETAL' | 'TIDAL' | 'TERRA')[]) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [currentQuestion]: territories,
-    }));
+    const completedAnswers = { ...answers, [currentQuestion]: territories };
+    setAnswers(completedAnswers);
 
     if (currentQuestion < QUESTIONS.length - 1) {
       setTimeout(() => {
@@ -182,7 +162,7 @@ export function TerritoryQuizClient() {
     } else {
       // Quiz complete
       setTimeout(() => {
-        const result = calculateResult();
+        const result = TERRITORIES.find(t => t.id === scoreTerritory(completedAnswers))!;
         setResultTerritory(result);
         setShowResult(true);
       }, 500);
@@ -494,7 +474,7 @@ export function TerritoryQuizClient() {
                     transition={{ delay: 0.5 }}
                     className="text-5xl md:text-7xl font-serif tracking-tighter mb-4"
                   >
-                    {firstName ? `An ${resultTerritory.name} Soul` : resultTerritory.name}
+                    {firstName ? `${resultTerritory.id === 'EMBER' ? 'An' : 'A'} ${resultTerritory.name} Soul` : resultTerritory.name}
                   </motion.h1>
 
                   <motion.p

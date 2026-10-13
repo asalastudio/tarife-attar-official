@@ -311,7 +311,7 @@ export const productBySlugQuery = groq`
  * Note: Only returns PUBLISHED Atlas products with images
  */
 export const featuredProductsQuery = groq`
-  *[_type == "product" && collectionType == "atlas" && inStock == true && !(_id in path("drafts.**")) && (defined(mainImage) || defined(shopifyPreviewImageUrl) || defined(store.previewImageUrl))] | order(_createdAt desc) [0...3] {
+  *[_type == "product" && collectionType == "atlas" && inStock == true && !(_id in path("drafts.**")) && (defined(mainImage) || defined(shopifyPreviewImageUrl) || defined(store.previewImageUrl))] | order(_createdAt desc) [0...28] {
     _id,
     title,
     slug,
