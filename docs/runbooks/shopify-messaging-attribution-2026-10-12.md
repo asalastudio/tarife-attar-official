@@ -36,7 +36,7 @@ A received October 8 campaign used Shopify's `/_t/c/v` tracked links. Its recipi
 - Campaign present in ledger, cart, checkout link and the actual Shopify checkout page. Email field visible; no contact/payment data entered and no order placed.
 - Real Shopify preferences UI: Decline all changed effective permissions, cleared the ledger and every `ta_*` cart key, and removed campaign parameters from the still-usable checkout link. Accept all allowed the tagged checkout test again.
 - Recovered-checkout initialization tested with an intercepted synthetic destination; campaign and capability preserved.
-- Evidence: `docs/evidence/shopify-messaging-2026-10-12/`. Development HMR WebSocket failure under the production-origin test proxy is a harness limitation, not an application checkout failure.
+- Evidence: `docs/evidence/shopify-messaging-2026-10-12/`. Development HMR WebSocket failure under the production-origin test proxy is a harness limitation. Checkout also logged optional-resource HTTP 401/403 responses; the form loaded and no payment was attempted. These checks do not establish payment completion.
 
 ## Remaining acceptance gates
 
