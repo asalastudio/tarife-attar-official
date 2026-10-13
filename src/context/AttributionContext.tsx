@@ -48,6 +48,7 @@ export function AttributionProvider({
   const { ready: privacyReady, marketingAllowed } = usePrivacy();
   const pendingInboundRef = useRef<InboundTouch | null>(null);
   const [captureReady, setCaptureReady] = useState(false);
+  const [resolvedConsent, setResolvedConsent] = useState<boolean | null>(null);
   const [ledger, setLedger] = useState<AttributionLedger | null>(null);
 
   useEffect(() => {
@@ -70,6 +71,7 @@ export function AttributionProvider({
         console.warn('Stored attribution could not be cleared.');
       }
       setLedger(null);
+      setResolvedConsent(false);
       return;
     }
 
@@ -87,6 +89,7 @@ export function AttributionProvider({
     });
 
     setLedger(resolved.ledger);
+    setResolvedConsent(true);
 
     if (resolved.storageAction === 'write' && resolved.ledger) {
       try {
@@ -103,10 +106,10 @@ export function AttributionProvider({
   const value = useMemo<AttributionContextValue>(
     () => ({
       ledger,
-      cartAttributes: serializeCartAttributes(ledger),
-      ready: privacyReady && captureReady,
+      cartAttributes: marketingAllowed ? serializeCartAttributes(ledger) : [],
+      ready: privacyReady && captureReady && resolvedConsent === marketingAllowed,
     }),
-    [captureReady, ledger, privacyReady],
+    [captureReady, ledger, marketingAllowed, privacyReady, resolvedConsent],
   );
 
   return (

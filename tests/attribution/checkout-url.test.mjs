@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { getSafeCheckoutUrl } from '../../src/lib/attribution/checkout-url.ts';
+import { getSafeCheckoutUrl, getAttributedCheckoutUrl } from '../../src/lib/attribution/checkout-url.ts';
 
 const hosts = [
   'checkout.tarifeattar.com',
@@ -70,4 +70,25 @@ test('removes fragments without changing the checkout query', () => {
     ),
     'https://checkout.tarifeattar.com/checkouts/cn/abc?key=secret',
   );
+});
+
+const campaign = {utm_source:'shopify_email', utm_medium:'email', utm_campaign:'Marrakesh + activity-123'};
+test('email campaign survives checkout while capability and discount remain intact', () => {
+  const url = new URL(getAttributedCheckoutUrl('https://vasana-perfumes.myshopify.com/checkouts/cn/test?key=secret&discount=WELCOME10', hosts, campaign, true));
+  for (const [key,value] of Object.entries(campaign)) assert.equal(url.searchParams.get(key),value);
+  assert.equal(url.searchParams.get('key'),'secret');
+  assert.equal(url.searchParams.get('discount'),'WELCOME10');
+  assert.equal(url.hostname,'vasana-perfumes.myshopify.com');
+});
+test('rejected marketing never decorates checkout with persisted campaign data', () => {
+  const url = new URL(getAttributedCheckoutUrl('https://vasana-perfumes.myshopify.com/checkouts/cn/test?key=secret&utm_source=old', hosts, campaign, false));
+  assert.deepEqual([...url.searchParams.keys()], ['key']);
+});
+test('latest campaign replaces stale values without retaining old content fields', () => {
+  const url = new URL(getAttributedCheckoutUrl('https://vasana-perfumes.myshopify.com/checkouts/cn/test?utm_content=old', hosts, campaign, true));
+  assert.equal(url.searchParams.has('utm_content'),false);
+  assert.equal(url.searchParams.get('utm_campaign'),campaign.utm_campaign);
+});
+test('unsafe checkout URL stays blocked even with a valid campaign', () => {
+  assert.equal(getAttributedCheckoutUrl('https://evil.example', hosts, campaign, true), null);
 });

@@ -20,7 +20,7 @@ test('cart page has no arbitrary redirect or hardcoded checkout rewrite', () => 
     cartPage,
     /const shopifyDomain\s*=\s*['"]vasana-perfumes/,
   );
-  assert.match(cartPage, /getSafeCheckoutUrl/);
+  assert.match(cartPage, /getAttributedCheckoutUrl/);
   assert.match(cartPage, /<a[\s\S]*href=\{safeCheckoutUrl\}/);
 });
 

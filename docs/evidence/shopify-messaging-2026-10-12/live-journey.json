@@ -1,0 +1,94 @@
+{
+  "shopifyEvents": [
+    {
+      "schema": "customer_privacy_api_events/2.0"
+    },
+    {
+      "schema": "customer_privacy_api_events/2.0"
+    },
+    {
+      "schema": "customer_privacy_api_events/2.0"
+    },
+    {
+      "schema": "customer_privacy_api_events/2.0"
+    },
+    {
+      "schema": "customer_privacy_api_events/2.0"
+    }
+  ],
+  "gaRequests": 0,
+  "failed": [
+    {
+      "host": "www.tarifeattar.com",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "monorail-edge.shopifysvc.com",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "monorail-edge.shopifysvc.com",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "monorail-edge.shopifysvc.com",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "monorail-edge.shopifysvc.com",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "www.tarifeattar.com",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "monorail-edge.shopifysvc.com",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "cartAttributeKeys": [
+    "ta_attribution_version",
+    "ta_first_captured_at",
+    "ta_first_landing_page",
+    "ta_first_utm_campaign",
+    "ta_first_utm_medium",
+    "ta_first_utm_source",
+    "ta_latest_captured_at",
+    "ta_latest_landing_page",
+    "ta_latest_utm_campaign",
+    "ta_latest_utm_medium",
+    "ta_latest_utm_source"
+  ],
+  "tokens": {
+    "unique": true,
+    "visit": true,
+    "gaCookie": false
+  },
+  "checkout": {
+    "host": "vasana-perfumes.myshopify.com",
+    "queryKeys": [
+      "key"
+    ]
+  },
+  "ledgerCampaign": true,
+  "afterRevoke": {
+    "ledgerCleared": false,
+    "marketing": true,
+    "checkoutEnabled": 1,
+    "cartAttributeKeys": [
+      "ta_attribution_version",
+      "ta_first_captured_at",
+      "ta_first_landing_page",
+      "ta_first_utm_campaign",
+      "ta_first_utm_medium",
+      "ta_first_utm_source",
+      "ta_latest_captured_at",
+      "ta_latest_landing_page",
+      "ta_latest_utm_campaign",
+      "ta_latest_utm_medium",
+      "ta_latest_utm_source"
+    ]
+  },
+  "consentProbeLimitation": "Direct setTrackingConsent call did not change effective permission; this is not evidence of successful rejection. Patched test uses the real Decline all UI."
+}

@@ -28,3 +28,27 @@ export function getSafeCheckoutUrl(
   checkoutUrl.hash = '';
   return checkoutUrl.toString();
 }
+
+const CAMPAIGN_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const;
+
+export function getAttributedCheckoutUrl(
+  rawUrl: string,
+  allowedHosts: string[],
+  campaign: Partial<Record<(typeof CAMPAIGN_KEYS)[number], string>> | null,
+  marketingAllowed: boolean,
+): string | null {
+  const safe = getSafeCheckoutUrl(rawUrl, allowedHosts);
+  if (!safe) return null;
+  const url = new URL(safe);
+  // Retain Shopify's capability and discount parameters; never forward arbitrary landing query data.
+  if (!marketingAllowed) {
+    for (const key of CAMPAIGN_KEYS) url.searchParams.delete(key);
+  } else if (campaign && campaign.utm_source !== '(direct)') {
+    for (const key of CAMPAIGN_KEYS) {
+      url.searchParams.delete(key);
+      const value = campaign[key]?.replace(/[\u0000-\u001F\u007F]/g, '').trim().slice(0, 255);
+      if (value) url.searchParams.set(key, value);
+    }
+  }
+  return url.toString();
+}

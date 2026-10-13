@@ -25,6 +25,7 @@ import {
   getAttributionAttributeFingerprint,
   ShopifyCartAttribute,
 } from '@/lib/shopify/cart-attributes';
+import { trackShopifyEvent } from '@/lib/analytics/shopify-events';
 import { assertCartMutationSuccess } from '@/lib/shopify/cart-errors';
 import { buildShopifyCatalogContentId } from '@/lib/analytics/meta';
 
@@ -190,7 +191,7 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       cartAttributes,
     );
 
-    if (patch.length === 0) {
+    if (patch === null) {
       syncAttemptRef.current = null;
       setError((current) =>
         current === TRACKING_SYNC_ERROR ? null : current,
@@ -267,6 +268,11 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       )?.node;
       const addedPrice = Number(addedLine?.merchandise.price?.amount);
       if (addedLine && Number.isFinite(addedPrice) && addedPrice >= 0) {
+        void trackShopifyEvent({cartId: payload.cart.id, product: {
+          productGid: addedLine.merchandise.product.id, variantGid: addedLine.merchandise.id,
+          name: addedLine.merchandise.product.title, variantName: addedLine.merchandise.title,
+          brand: 'Tarifé Attär', price: String(addedPrice), quantity,
+        }});
         const metaContentId = buildShopifyCatalogContentId(
           addedLine.merchandise.product.id,
           addedLine.merchandise.id,
@@ -410,7 +416,7 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       buildAttributionAttributePatch(
         cart.attributes ?? [],
         cartAttributes,
-      ).length === 0,
+      ) === null,
   );
   const isReadyForCheckout = isAttributionSynchronized && !isLoading;
 

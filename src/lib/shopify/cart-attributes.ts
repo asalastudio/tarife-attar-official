@@ -52,12 +52,12 @@ export function getAttributionAttributeFingerprint(
 export function buildAttributionAttributePatch(
   current: ShopifyCartAttribute[],
   desired: ShopifyCartAttribute[],
-): ShopifyCartAttribute[] {
+): ShopifyCartAttribute[] | null {
   if (
     getAttributionAttributeFingerprint(current) ===
     getAttributionAttributeFingerprint(desired)
   ) {
-    return [];
+    return null;
   }
 
   const desiredAttributes = normalizedAttributionAttributes(desired).slice(

@@ -5,9 +5,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ShoppingBag, Trash, ArrowSquareOut, BookmarkSimple, Check } from "@phosphor-icons/react";
-import { useAnalytics, useShopifyCart } from "@/context";
+import { useAnalytics, useAttribution, usePrivacy, useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
-import { getSafeCheckoutUrl } from "@/lib/attribution/checkout-url";
+import { getAttributedCheckoutUrl } from "@/lib/attribution/checkout-url";
 import { buildShopifyCatalogContentId } from "@/lib/analytics/meta";
 
 const ALLOWED_CHECKOUT_HOSTS = [
@@ -20,6 +20,8 @@ const INVALID_CHECKOUT_ERROR =
 
 export default function CartPage() {
   const router = useRouter();
+  const { ledger, ready: attributionReady } = useAttribution();
+  const { marketingAllowed } = usePrivacy();
   const {
     ready: analyticsReady,
     trackViewCart,
@@ -78,20 +80,25 @@ export default function CartPage() {
         .join('|'),
     [commerceItems],
   );
-  const safeCheckoutUrl = getSafeCheckoutUrl(
+  const safeCheckoutUrl = getAttributedCheckoutUrl(
     checkoutUrl,
     ALLOWED_CHECKOUT_HOSTS,
+    ledger?.latest ?? null,
+    marketingAllowed,
   );
 
   // Handle direct checkout URL from abandoned cart emails
   useEffect(() => {
+    if (!attributionReady) return;
     const urlParams = new URLSearchParams(window.location.search);
     const directCheckoutUrl = urlParams.get('checkout_url');
 
     if (!directCheckoutUrl) return;
-    const safeDirectCheckoutUrl = getSafeCheckoutUrl(
+    const safeDirectCheckoutUrl = getAttributedCheckoutUrl(
       directCheckoutUrl,
       ALLOWED_CHECKOUT_HOSTS,
+      ledger?.latest ?? null,
+      marketingAllowed,
     );
     if (!safeDirectCheckoutUrl) {
       setCheckoutError(INVALID_CHECKOUT_ERROR);
@@ -99,7 +106,7 @@ export default function CartPage() {
     }
 
     window.location.replace(safeDirectCheckoutUrl);
-  }, []);
+  }, [attributionReady, ledger, marketingAllowed]);
 
   useEffect(() => {
     if (!checkoutUrl) return;
