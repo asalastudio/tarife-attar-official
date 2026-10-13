@@ -22,8 +22,8 @@ import { useIntro } from "@/context/IntroContext";
  */
 
 const ANNOUNCEMENT = {
-  text: "Every waypoint now in 3 ml. Any three for $50, through 28 September.",
-  href: "/atlas",
+  text: "Find your territory in five questions.",
+  href: "/quiz",
 };
 
 // The four territories of the Atlas. The Atlas page reads ?territory= and
@@ -75,11 +75,11 @@ const MENUS: Record<
       meta: `3 ml $23 \u00b7 6 ml / 12 ml ${t.price}`,
     })),
     feature: {
-      eyebrow: "Through 28 September",
-      title: "Any three 3 ml for $50",
-      body: "Every waypoint now comes in the 3 ml travel size. Mix any three in stock; the price applies at checkout, no code.",
-      cta: "Choose your three",
-      href: "/atlas",
+      eyebrow: "Find your territory",
+      title: "Five questions. A place to begin.",
+      body: "Explore the Atlas by the notes and places you are drawn to. Product pages show current sizes and availability.",
+      cta: "Take the quiz",
+      href: "/quiz",
     },
   },
   relic: {
@@ -107,7 +107,7 @@ const MENUS: Record<
     all: { label: "View all gifts", href: "/gift" },
     links: [
       { label: "The Traveler Set", href: "/gift", note: "A curated set of Atlas waypoints, ready to give." },
-      { label: "Three in 3 ml", href: "/atlas", note: "Build your own trio of travel sizes, any three for $50." },
+      { label: "Three in 3 ml", href: "/atlas", note: "Explore travel sizes and check current availability." },
       { label: "From the Relic", href: "/relic", note: "A rare oil or resin for the collector who has everything." },
     ],
     feature: {

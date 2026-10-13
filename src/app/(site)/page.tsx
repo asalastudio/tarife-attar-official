@@ -1,6 +1,8 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { featuredProductsQuery, heroBackgroundsQuery, HeroBackgroundsQueryResult, placeholderImagesQuery, PlaceholderImagesQueryResult, portsOfCallQuery, PortOfCall, giftProductsQuery } from "@/sanity/lib/queries";
 import { Product } from "@/types";
+import { availableFeaturedProducts } from "@/lib/shopify/featured-products";
+import { getFeaturedAvailability } from "@/lib/shopify/client";
 import { HomeClient } from "./HomeClient";
 import type { Metadata } from "next";
 
@@ -64,5 +66,7 @@ export default async function Home() {
     console.log('[Home Page] Hero Backgrounds fetched:', heroBackgrounds);
   }
 
-  return <HomeClient featuredProducts={featuredProducts} heroBackgrounds={heroBackgrounds} placeholderImages={placeholderImages} portsOfCall={portsOfCall || []} giftProducts={giftProducts || []} />;
+  const availableProducts = await availableFeaturedProducts(featuredProducts || [], getFeaturedAvailability);
+
+  return <HomeClient featuredProducts={availableProducts} heroBackgrounds={heroBackgrounds} placeholderImages={placeholderImages} portsOfCall={portsOfCall || []} giftProducts={giftProducts || []} />;
 }
