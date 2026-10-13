@@ -9,6 +9,8 @@ import {
   useRef,
   useState,
 } from 'react';
+import { usePathname } from 'next/navigation';
+import { trackShopifyEvent } from '@/lib/analytics/shopify-events';
 import { usePrivacy } from '@/context/PrivacyContext';
 import {
   buildAddToCart,
@@ -113,6 +115,15 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     analyticsAllowed,
     marketingAllowed,
   } = usePrivacy();
+  const pathname = usePathname();
+  const lastShopifyPageRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!privacyReady || !analyticsAllowed) { lastShopifyPageRef.current = null; return; }
+    const page = window.location.href;
+    if (lastShopifyPageRef.current === page) return;
+    lastShopifyPageRef.current = page;
+    void trackShopifyEvent();
+  }, [analyticsAllowed, pathname, privacyReady]);
   const measurementId = configuredMeasurementId();
   const pixelId = configuredPixelId();
   const gaInitializedRef = useRef(false);

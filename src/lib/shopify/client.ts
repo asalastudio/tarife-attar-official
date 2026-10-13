@@ -1,3 +1,5 @@
+import { shopifyTrackingHeaders } from '../analytics/shopify-browser.ts';
+
 /**
  * Shopify Storefront API Client
  */
@@ -36,6 +38,7 @@ async function shopifyFetch({
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': accessToken!,
+        ...shopifyTrackingHeaders(),
       },
       body: JSON.stringify({ query, variables }),
     });

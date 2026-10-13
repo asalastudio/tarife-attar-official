@@ -25,7 +25,7 @@ test('returns no patch when current attribution already matches desired values',
   ];
   const desired = [{ key: 'ta_first_utm_source', value: 'omnisend' }];
 
-  assert.deepEqual(buildAttributionAttributePatch(current, desired), []);
+  assert.deepEqual(buildAttributionAttributePatch(current, desired), null);
 });
 
 test('replaces stale attribution keys while preserving unrelated cart attributes', () => {
@@ -60,4 +60,11 @@ test('consent rejection removes every attribution key and preserves other attrib
     ),
     [{ key: 'note', value: 'gift' }],
   );
+});
+
+ test('consent removal with only attribution is an empty replacement, not a no-op', () => {
+  const replacement = buildAttributionAttributePatch([{key: 'ta_latest_utm_source', value: 'shopify_email'}], []);
+  assert.deepEqual(replacement, []);
+  assert.notEqual(replacement, null);
+  assert.equal(buildAttributionAttributePatch([], []), null);
 });

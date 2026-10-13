@@ -1,0 +1,177 @@
+{
+  "events": [
+    {
+      "schema": "trekkie_storefront_page_view/1.4",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": true,
+      "hasCartSecret": false
+    },
+    {
+      "schema": "custom_storefront_customer_tracking/1.2",
+      "event": "page_rendered",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": true,
+      "hasCartSecret": false
+    },
+    {
+      "schema": "custom_storefront_customer_tracking/1.2",
+      "event": "product_added_to_cart",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": true,
+      "hasCartSecret": false
+    },
+    {
+      "schema": "trekkie_storefront_page_view/1.4",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": false,
+      "hasCartSecret": false
+    },
+    {
+      "schema": "custom_storefront_customer_tracking/1.2",
+      "event": "page_rendered",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": false,
+      "hasCartSecret": false
+    },
+    {
+      "schema": "trekkie_storefront_page_view/1.4",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": false,
+      "hasCartSecret": false
+    },
+    {
+      "schema": "custom_storefront_customer_tracking/1.2",
+      "event": "page_rendered",
+      "hasUnique": true,
+      "hasVisit": true,
+      "hasCampaign": false,
+      "hasCartSecret": false
+    }
+  ],
+  "monorailResults": [
+    {
+      "http": 200
+    },
+    {
+      "http": 200
+    },
+    {
+      "http": 200
+    }
+  ],
+  "cartRequests": [
+    {
+      "operation": "getProductAvailability",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "getProductAvailability",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "getProductAvailability",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "getProductAvailability",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "AttributionShop",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "cartCreate",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "cartLinesAdd",
+      "hasUnique": true,
+      "hasVisit": true
+    },
+    {
+      "operation": "cartAttributesUpdate",
+      "hasUnique": false,
+      "hasVisit": false
+    },
+    {
+      "operation": "cartAttributesUpdate",
+      "hasUnique": true,
+      "hasVisit": true
+    }
+  ],
+  "errors": [
+    "WebSocket connection to 'wss://www.tarifeattar.com/_next/webpack-hmr' failed: Error during WebSocket handshake: Unexpected response code: 404",
+    "Failed to load resource: the server responded with a status of 401 ()",
+    "Failed to load resource: the server responded with a status of 403 ()"
+  ],
+  "checkout": {
+    "host": "vasana-perfumes.myshopify.com",
+    "queryKeys": [
+      "key",
+      "utm_source",
+      "utm_medium",
+      "utm_campaign"
+    ],
+    "campaignPreserved": true
+  },
+  "cartCampaign": true,
+  "privacy": {
+    "marketing": true,
+    "analytics": true
+  },
+  "afterDecline": {
+    "marketing": false,
+    "analytics": false,
+    "ledgerCleared": true,
+    "cartAttributionKeys": [],
+    "checkoutCampaignAbsent": true
+  },
+  "checkoutPage": {
+    "host": "vasana-perfumes.myshopify.com",
+    "campaignPreserved": true,
+    "emailFieldVisible": true,
+    "noContactSubmitted": true,
+    "noOrderPlaced": true
+  },
+  "passed": true,
+  "additionalCheckoutSchemas": {
+    "web_pixels_manager_load/3.3": 1,
+    "web_pixels_manager_init/3.2": 1,
+    "web_pixels_manager_event_publish/1.7": 2,
+    "web_pixels_public_event_payload_transform/1.0": 9,
+    "trekkie_metrics/2.0": 1,
+    "web_pixels_manager_pixel_register/3.8": 7,
+    "trekkie_asset_context/1.3": 1,
+    "storefront_customer_tracking/4.30": 2,
+    "storefront_customer_tracking_validation/1.0": 1,
+    "storefront_customer_tracking/5.9": 2,
+    "shopify_pay_login_with_shop_sdk_feature_initialize/1.1": 1,
+    "web_pixels_manager_subscriber_event_emit/4.1": 16,
+    "checkout_next_performance_metrics/1.3": 51,
+    "checkout_track/3.8": 1,
+    "checkout_payment_method_rendered/1.1": 6,
+    "checkout_lifecycle_events/7.7": 1,
+    "checkout_c1_interaction_and_impression_events/2.25": 8,
+    "checkout_c1_interaction_errors/3.2": 4,
+    "privacy_banner_initialized/1.1": 2,
+    "shopify_pay_user_optin_ui_impression/1.0": 8,
+    "shopify_pay_user_optin_ui_interaction/3.2": 1,
+    "shopify_wallet_checkout_track/6.3": 3
+  },
+  "monorailHttpStatusCounts": {
+    "200": 19
+  }
+}
