@@ -212,7 +212,7 @@ const FAQ_SECTIONS: FAQSection[] = [
     content: (
       <div className="space-y-4">
         <p className="text-lg opacity-90 leading-relaxed">
-          Same oils, same formulations — we renamed each fragrance for the real
+          Same oils, same formulations. We renamed each fragrance for the real
           place that inspired it. Every scent you know and love is still here,
           just with a name that tells the story of where it belongs on the
           map.
@@ -235,7 +235,7 @@ const FAQ_SECTIONS: FAQSection[] = [
         <ul className="space-y-3 text-lg opacity-90">
           <li className="flex gap-3">
             <span className="text-theme-gold mt-1 shrink-0">·</span>
-            Apply to pulse points — wrists, neck, behind ears, inner elbows
+            Apply to pulse points: wrists, neck, behind ears, inner elbows
           </li>
           <li className="flex gap-3">
             <span className="text-theme-gold mt-1 shrink-0">·</span>
@@ -243,7 +243,7 @@ const FAQ_SECTIONS: FAQSection[] = [
           </li>
           <li className="flex gap-3">
             <span className="text-theme-gold mt-1 shrink-0">·</span>
-            Don&apos;t rub — dab or roll gently
+            Don&apos;t rub. Dab or roll gently
           </li>
           <li className="flex gap-3">
             <span className="text-theme-gold mt-1 shrink-0">·</span>

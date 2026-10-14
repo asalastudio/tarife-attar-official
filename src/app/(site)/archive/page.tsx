@@ -45,7 +45,7 @@ export default function ArchivePage() {
           </p>
 
           <div className="inline-block px-12 py-5 bg-theme-charcoal/5 border border-theme-charcoal/10 font-mono text-[10px] uppercase tracking-[0.4em]">
-            Archive Access — Coming Soon
+            Archive Access: Coming Soon
           </div>
         </motion.div>
       </main>

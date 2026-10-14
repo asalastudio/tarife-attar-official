@@ -4,10 +4,10 @@ import { GiftClient } from "./GiftClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'The Gift — Curated Sets & Travel Collections',
+  title: 'The Gift: Curated Sets & Travel Collections',
   description: 'Curated gift sets and travel collections. Assorted perfume oils, bundled and ready to give.',
   openGraph: {
-    title: 'The Gift — Curated Sets & Travel Collections | Tarife Attar',
+    title: 'The Gift: Curated Sets & Travel Collections | Tarife Attar',
     description: 'Curated gift sets and travel collections. Assorted perfume oils, bundled and ready to give.',
     url: 'https://tarifeattar.com/gift',
   },

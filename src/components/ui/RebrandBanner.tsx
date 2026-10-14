@@ -13,7 +13,7 @@ interface RebrandBannerProps {
 }
 
 const DEFAULT_MESSAGES = {
-    global: 'Navigating the Atlas: Familiar fragrances have found their territorial coordinates. Your favorites remain unchanged—only the map has evolved.',
+    global: 'Navigating the Atlas: Familiar fragrances have found their territorial coordinates. Your favorites remain unchanged. Only the map has evolved.',
     product: 'This fragrance has found its coordinates in the Atlas. Same formulation, new destination.',
 };
 

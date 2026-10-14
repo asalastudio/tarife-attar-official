@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     : description.slice(0, 155);
 
   const title = product.legacyName
-    ? `${product.title} — ${product.legacyName} Perfume Oil`
+    ? `${product.title}: ${product.legacyName} Perfume Oil`
     : `${product.title} Perfume Oil`;
 
   return {

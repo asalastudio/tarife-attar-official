@@ -144,12 +144,12 @@ export async function POST(req: Request) {
       summary: result.summary,
       start_iso: result.startIso,
       end_iso: result.endIso,
-      confirmation_message: `Booked — ${displayWhen}. Invite sent to ${payload.caller_email}.`,
+      confirmation_message: `Booked: ${displayWhen}. Invite sent to ${payload.caller_email}.`,
     };
 
     await Promise.allSettled([
       postSlackMessage('sales', {
-        text: `New showroom consultation booked: ${payload.caller_name} — ${displayWhen}`,
+        text: `New showroom consultation booked: ${payload.caller_name}: ${displayWhen}`,
         blocks: [
           section(`*New showroom consultation booked*\n*When:* ${displayWhen}\n*Customer:* ${payload.caller_name}\n*Email:* ${payload.caller_email}`),
           section(

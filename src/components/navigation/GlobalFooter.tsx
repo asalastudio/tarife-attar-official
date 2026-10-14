@@ -185,7 +185,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
             </h3>
             <div className="space-y-6">
               <p className="font-serif text-sm sm:text-base opacity-40">
-                New territories, limited releases, and scent journeys — delivered to your inbox.
+                New territories, limited releases, and scent journeys, delivered to your inbox.
               </p>
               
               {isSubscribed ? (
@@ -194,7 +194,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                   animate={{ opacity: 1, y: 0 }}
                   className="py-4 font-mono text-[10px] uppercase tracking-widest text-theme-gold"
                 >
-                  ✓ Welcome to the Atlas — Check your inbox
+                  ✓ Welcome to the Atlas. Check your inbox
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubscribe} className="w-full space-y-4">
@@ -245,7 +245,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
           
           {/* Copyright */}
           <div className="font-mono text-[8px] uppercase tracking-[0.3em] opacity-10 text-center">
-            © {new Date().getFullYear()} Tarife Attär — All Specimens Verified Archival Grade
+            © {new Date().getFullYear()} Tarife Attär: All Specimens Verified Archival Grade
           </div>
         </motion.div>
 

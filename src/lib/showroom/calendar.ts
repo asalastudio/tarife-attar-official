@@ -98,7 +98,7 @@ export async function bookShowroomEvent(
 ): Promise<BookEventResult> {
   const cal = getCalendarClient();
 
-  const summary = `Private Showroom Consultation — ${input.callerName}`;
+  const summary = `Private Showroom Consultation: ${input.callerName}`;
   const descriptionLines = [
     `Caller: ${input.callerName}`,
     `Email: ${input.callerEmail}`,

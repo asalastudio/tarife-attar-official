@@ -27,13 +27,13 @@ const QUICK_CHIPS = [
     icon: Package,
   },
   {
-    label: "Names changed — find mine",
+    label: "Find my fragrance’s new name",
     message: "I used to buy from you but the names have changed. Can you help me find my old favorite fragrance under its new name?",
     icon: ArrowsClockwise,
   },
 ];
 
-const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive — a living collection of rare and artisan perfume oils organized by territory and memory.
+const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive, a living collection of rare and artisan perfume oils organized by territory and memory.
 
 I can help you discover a fragrance, navigate the new Atlas names, answer questions about your order, or explain how our oils are crafted.
 
