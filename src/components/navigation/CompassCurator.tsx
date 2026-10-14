@@ -144,7 +144,7 @@ export const CompassCurator: React.FC<CompassCuratorProps> = ({
       setMessages([{
         id: 'welcome',
         role: 'assistant',
-        parts: [{ type: 'text', text: 'Welcome, traveler. I am your Atlas — a guide through the territories of scent. Describe the atmosphere you seek, and I shall chart your course.' }],
+        parts: [{ type: 'text', text: 'Welcome, traveler. I am your Atlas, a guide through the territories of scent. Describe the atmosphere you seek, and I shall chart your course.' }],
       }]);
     }
   }, [messages.length, setMessages]);

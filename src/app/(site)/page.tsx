@@ -20,10 +20,10 @@ interface GiftProduct {
 }
 
 export const metadata: Metadata = {
-  title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
-  description: 'Navigate by instinct, not itinerary. 28 artisanal perfume oils across four olfactory territories — Ember, Tidal, Petal, Terra. Concentrated, alcohol-free, skin-safe glass wand applicator fragrances.',
+  title: 'Tarife Attar: Artisanal Perfume Oils & Rare Attars',
+  description: 'Navigate by instinct, not itinerary. 28 artisanal perfume oils across four olfactory territories: Ember, Tidal, Petal, Terra. Concentrated, alcohol-free, skin-safe glass wand applicator fragrances.',
   openGraph: {
-    title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
+    title: 'Tarife Attar: Artisanal Perfume Oils & Rare Attars',
     description: 'Navigate by instinct, not itinerary. 28 artisanal perfume oils across four olfactory territories.',
     url: 'https://tarifeattar.com',
   },

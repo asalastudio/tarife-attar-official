@@ -343,7 +343,9 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                             </p>
                           ) : (
                             <p className="text-xs md:text-base tracking-wide">
-                              ${getTerritoryStartingPrice(territory.id) || product.price || '—'}
+                              {(getTerritoryStartingPrice(territory.id) || product.price)
+                                ? `$${getTerritoryStartingPrice(territory.id) || product.price}`
+                                : 'Price unavailable'}
                             </p>
                           )}
                         </div>

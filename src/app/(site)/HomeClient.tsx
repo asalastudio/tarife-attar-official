@@ -291,7 +291,7 @@ export function HomeClient({ featuredProducts, heroBackgrounds, placeholderImage
                                     </h2>
                                     <p className="font-serif text-lg md:text-xl text-theme-charcoal/60 mb-8 max-w-xl mx-auto md:mx-0">
                                         {giftHighlight.setSize
-                                            ? `A ${giftHighlight.setSize}-piece mystery box for the curious wanderer — every territory, one gift.`
+                                            ? `A ${giftHighlight.setSize}-piece mystery box for the curious wanderer. Every territory, one gift.`
                                             : 'Curated sets and travel collections, bundled and ready to give.'}
                                     </p>
                                     <button

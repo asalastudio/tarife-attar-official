@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
     metadataBase: new URL('https://tarifeattar.com'),
     title: {
-        default: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
+        default: 'Tarife Attar: Artisanal Perfume Oils & Rare Attars',
         template: '%s | Tarife Attar',
     },
     description: 'Artisanal perfume oils and rare attars. Alcohol-free, skin-safe, cruelty-free. 28 fragrances across four olfactory territories. Oud, musk, amber, rose, jasmine, and marine compositions in concentrated glass wand applicator oil format.',
@@ -17,12 +17,12 @@ export const metadata: Metadata = {
         locale: 'en_US',
         url: 'https://tarifeattar.com',
         siteName: 'Tarife Attar',
-        title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
+        title: 'Tarife Attar: Artisanal Perfume Oils & Rare Attars',
         description: 'Artisanal perfume oils and rare attars. Alcohol-free, skin-safe, cruelty-free. 28 fragrances across four olfactory territories.',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Tarife Attar — Artisanal Perfume Oils & Rare Attars',
+        title: 'Tarife Attar: Artisanal Perfume Oils & Rare Attars',
         description: 'Artisanal perfume oils and rare attars. Alcohol-free, skin-safe, cruelty-free. 28 fragrances across four olfactory territories.',
     },
     robots: {

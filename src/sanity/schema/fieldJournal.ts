@@ -118,10 +118,10 @@ export const fieldJournalSchema = {
                     type: 'string',
                     options: {
                         list: [
-                            { title: 'Tidal — Salt. Mist. Open Water.', value: 'tidal' },
-                            { title: 'Ember — Spice. Warmth. Ancient Routes.', value: 'ember' },
-                            { title: 'Petal — Bloom. Herb. Living Gardens.', value: 'petal' },
-                            { title: 'Terra — Wood. Oud. Deep Forests.', value: 'terra' },
+                            { title: 'Tidal: Salt. Mist. Open Water.', value: 'tidal' },
+                            { title: 'Ember: Spice. Warmth. Ancient Routes.', value: 'ember' },
+                            { title: 'Petal: Bloom. Herb. Living Gardens.', value: 'petal' },
+                            { title: 'Terra: Wood. Oud. Deep Forests.', value: 'terra' },
                         ],
                     },
                     description: 'Primary territory association',

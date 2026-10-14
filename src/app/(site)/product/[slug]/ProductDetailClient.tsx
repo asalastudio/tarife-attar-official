@@ -1377,7 +1377,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               >
                 <WarningCircle weight="thin" className="w-3 h-3" />
                 <span className="font-mono text-[9px] uppercase tracking-widest">
-                  {product.scarcityNote || "Limited Batch Production — Small Volume Reserve"}
+                  {product.scarcityNote || "Limited Batch Production: Small Volume Reserve"}
                 </span>
               </motion.div>
             )}

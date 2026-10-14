@@ -746,8 +746,8 @@ export const productSchema = {
       title: 'Scarcity Note',
       type: 'string',
       group: 'commerce',
-      description: 'Custom message for limited stock (e.g., "Limited Batch — 2024 Harvest")',
-      placeholder: 'Limited Batch Production — Small Volume Reserve',
+      description: 'Custom message for limited stock (e.g., "Limited Batch: 2024 Harvest")',
+      placeholder: 'Limited Batch Production: Small Volume Reserve',
     },
 
     // Shared: Related Products (Complete the Journey)

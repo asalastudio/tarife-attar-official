@@ -150,7 +150,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
       {/* Map Background */}
       <Image
         src="/images/atlas-map.jpg"
-        alt="Tarife Attar Atlas Map — 28 waypoints across four territories"
+        alt="Tarife Attar Atlas Map: 28 waypoints across four territories"
         fill
         className="object-cover"
         sizes="100vw"
