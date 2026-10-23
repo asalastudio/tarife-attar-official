@@ -155,7 +155,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                 {/* Mobile Quiz CTA */}
                 <Link
                   href="/quiz"
-                  className="md:hidden inline-flex items-center gap-2 mt-3 py-2.5 px-4 border border-theme-charcoal/15 hover:border-theme-charcoal/40 bg-white/50 transition-all duration-300"
+                  className="md:hidden inline-flex items-center gap-2 mt-3 min-h-11 py-2.5 px-4 border border-theme-charcoal/15 hover:border-theme-charcoal/40 bg-white/50 transition-all duration-300"
                 >
                   <span className="font-mono text-[10px] uppercase tracking-[0.1em] opacity-50">
                     Not sure?
@@ -197,7 +197,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
           >
             <button
               onClick={() => handleTerritorySelect(null)}
-              className={`px-3 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === null
+              className={`min-h-11 px-3 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === null
                 ? "bg-theme-charcoal text-theme-alabaster"
                 : "bg-theme-charcoal/5 opacity-80 hover:opacity-100"
                 }`}
@@ -209,7 +209,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
               <button
                 key={territory.id}
                 onClick={() => handleTerritorySelect(territory.id)}
-                className={`px-3 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === territory.id
+                className={`min-h-11 px-3 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === territory.id
                   ? "bg-theme-charcoal text-theme-alabaster"
                   : "bg-theme-charcoal/5 opacity-80 hover:opacity-100"
                   }`}

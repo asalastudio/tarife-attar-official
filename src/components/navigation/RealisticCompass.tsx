@@ -3,7 +3,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
+import { ChatCircle } from '@phosphor-icons/react';
 import { useIdleHeartbeat, useScrollActivity } from '@/Hooks/useIdleHeartbeat';
+import { useChat } from '@/context/ChatContext';
+import { useShopifyCart } from '@/context/ShopifyCartContext';
 
 interface NavItem {
   label: string;
@@ -48,6 +51,10 @@ export const RealisticCompass: React.FC<Props> = ({
   const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
 
   const compassRef = React.useRef<HTMLButtonElement>(null);
+  const { openChat } = useChat();
+  // The Satchel point carries the count: on phones the compass is the only
+  // floating route to the Satchel once the masthead has scrolled away.
+  const { itemCount } = useShopifyCart();
 
   // === ZERO-UI MITIGATIONS ===
 
@@ -212,8 +219,23 @@ export const RealisticCompass: React.FC<Props> = ({
     if (position === 'center') {
       return isMobile ? 'top-1/2 left-1/2' : 'bottom-12 left-1/2';
     }
-    return isMobile ? 'bottom-3 right-3' : 'bottom-6 right-6';
+    // Phones: offset inline (see cornerStyle) to clear the home indicator and
+    // any bottom dock such as the product page's sticky purchase bar.
+    return isMobile ? '' : 'bottom-6 right-6';
   };
+
+  // Pages with a fixed bottom bar publish its height as --mobile-dock-h. The
+  // lift is a `translate` (composes with framer's transform) rather than a
+  // `bottom` offset, so it is not a layout shift when the page streams in after
+  // the compass has rendered.
+  const cornerStyle =
+    position === 'corner' && isMobile && !isOpen
+      ? {
+          bottom: 'calc(env(safe-area-inset-bottom) + 12px)',
+          right: 'calc(env(safe-area-inset-right) + 12px)',
+          translate: '0 calc(-1 * max(0px, var(--mobile-dock-h, 0px) - env(safe-area-inset-bottom)))',
+        }
+      : undefined;
 
   const getTransformStyle = () => {
     // When open, reset all transforms so flexbox centering works
@@ -338,7 +360,7 @@ export const RealisticCompass: React.FC<Props> = ({
                 >
                   <span className={`font-mono ${isMobile ? 'text-[10px] tracking-[0.2em]' : 'text-lg tracking-[0.5em]'} uppercase transition-all duration-300 ${hoveredDirection === 'S' ? 'text-theme-gold scale-110' : 'text-white/60'
                     }`}>
-                    {NAV_ITEMS[2].label}
+                    {NAV_ITEMS[2].label}{itemCount > 0 ? ` (${itemCount})` : ''}
                   </span>
                   {!isMobile && (
                     <span className={`font-serif italic text-sm mt-1 transition-colors ${hoveredDirection === 'S' ? 'text-white/70' : 'text-white/30'
@@ -376,19 +398,37 @@ export const RealisticCompass: React.FC<Props> = ({
                 </motion.button>
               </div>
 
-              {/* Close Hint */}
+              {/* Close Hint. On phones the compass is the only floating control,
+                  so the concierge lives here too. */}
               <div
-                className={`absolute ${isMobile ? 'bottom-6' : 'bottom-10'} left-0 right-0 flex justify-center pointer-events-auto cursor-pointer`}
-                onClick={handleOverlayClick}
+                className={`absolute ${isMobile ? 'bottom-[calc(env(safe-area-inset-bottom)+1.5rem)]' : 'bottom-10'} left-0 right-0 flex flex-col items-center gap-3 pointer-events-none`}
               >
-                <motion.span
+                {isMobile && (
+                  <motion.button
+                    type="button"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    onClick={() => {
+                      handleOverlayClick();
+                      openChat();
+                    }}
+                    className="pointer-events-auto inline-flex items-center gap-2 min-h-11 px-6 rounded-full border border-white/25 font-mono text-xs uppercase tracking-[0.2em] text-white/80 hover:text-theme-gold hover:border-theme-gold/60 transition-colors"
+                  >
+                    <ChatCircle weight="light" className="w-4 h-4" aria-hidden />
+                    Ask the Concierge
+                  </motion.button>
+                )}
+                <motion.button
+                  type="button"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className={`font-mono ${isMobile ? 'text-xs' : 'text-[10px]'} uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/30 md:text-white/20 whitespace-nowrap`}
+                  onClick={handleOverlayClick}
+                  className={`pointer-events-auto min-h-11 px-4 font-mono ${isMobile ? 'text-xs' : 'text-[10px]'} uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/55 md:text-white/40 whitespace-nowrap`}
                 >
                   {isMobile ? 'Tap anywhere to close' : 'Click anywhere to close'}
-                </motion.span>
+                </motion.button>
               </div>
             </motion.div>
           </>
@@ -399,6 +439,7 @@ export const RealisticCompass: React.FC<Props> = ({
       <motion.div
         data-compass-navigation
         className={`${absolutePosition && !isOpen ? 'absolute' : 'fixed'} z-[3000] ${getPositionClasses()} ${isOpen ? 'pointer-events-none' : 'pointer-events-auto'}`}
+        style={cornerStyle}
         initial={getTransformStyle()}
         animate={{
           ...getTransformStyle(),
@@ -485,8 +526,9 @@ export const RealisticCompass: React.FC<Props> = ({
             </div>
           </motion.button>
 
-          {/* Hint Text (Center position only) */}
-          {position === 'center' && showHint && !isOpen && (
+          {/* Hint Text (Center position only). Hidden on phones, where the
+              compass sits on the seam and the hint landed on the Relic panel. */}
+          {position === 'center' && showHint && !isOpen && !isMobile && (
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}

@@ -1,3 +1,26 @@
+/**
+ * First-party checkout hostname. Shopify starts returning it in Cart.checkoutUrl
+ * once it is connected under Settings → Domains and set as the store's primary
+ * domain. Until then Shopify keeps returning the myshopify.com host, which stays
+ * allowed below, so both work during the switch.
+ */
+export const BRAND_CHECKOUT_HOST = 'checkout.tarifeattar.com';
+
+/**
+ * Hosts a shopper may be sent to for checkout. This only guards against
+ * arbitrary redirects; the URL itself is always the one Shopify returns.
+ * NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN accepts a comma-separated list.
+ */
+export function allowedCheckoutHosts(): string[] {
+  return [
+    BRAND_CHECKOUT_HOST,
+    ...(process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN || '').split(','),
+    process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '',
+  ]
+    .map((host) => host.trim())
+    .filter((host) => host.length > 0);
+}
+
 function normalizeAllowedHosts(allowedHosts: string[]): Set<string> {
   return new Set(
     allowedHosts

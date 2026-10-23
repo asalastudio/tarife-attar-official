@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,6 +9,8 @@ import { Handbag, List, X, ChatCircle } from "@phosphor-icons/react";
 import { useShopifyCart } from "@/context";
 import { useChat } from "@/context/ChatContext";
 import { useIntro } from "@/context/IntroContext";
+import { useOverlay } from "@/context/OverlayContext";
+import { useModalFocus } from "@/Hooks/useModalFocus";
 
 /**
  * SiteHeader
@@ -17,8 +20,9 @@ import { useIntro } from "@/context/IntroContext";
  *   2. Masthead (alabaster): quiz link left, wordmark centred, concierge and satchel right.
  *   3. Section links, one row, desktop only. On mobile the same links live in a drawer.
  *
- * The bottom-left satchel and the corner compass are left exactly as they were;
- * this bar is the plain path, the compass remains the discovery path.
+ * This bar is the plain path, the compass remains the discovery path. On phones
+ * the masthead Satchel is the only cart control, and the drawer renders in a
+ * portal above every floating control.
  */
 
 const ANNOUNCEMENT = {
@@ -151,9 +155,15 @@ export function SiteHeader() {
   const { itemCount } = useShopifyCart();
   const { openChat } = useChat();
   const { introActive } = useIntro();
+  const { setMenuOpen } = useOverlay();
   const headerRef = useRef<HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLElement>(null);
   const [openMenu, setOpenMenu] = useState<MenuKey | null>(null);
+  // The drawer portals to <body>; the header's own stacking context (sticky,
+  // z-40) would otherwise let the compass and other floating controls sit on top.
+  const [portalReady, setPortalReady] = useState(false);
+  useEffect(() => setPortalReady(true), []);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const cancelClose = () => {
@@ -203,13 +213,18 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
+    setMenuOpen(drawerOpen);
     if (!drawerOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [drawerOpen]);
+  }, [drawerOpen, setMenuOpen]);
+
+  // The drawer is modal: focus moves in, stays in, Escape closes it, and focus
+  // returns to the menu button.
+  useModalFocus(drawerOpen, drawerRef, () => setDrawerOpen(false));
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -224,16 +239,17 @@ export function SiteHeader() {
   return (
     <header
       ref={headerRef}
+      data-site-header
       className={`sticky top-0 z-40 w-full transition-opacity duration-700 ease-out ${
         introActive ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
       aria-hidden={introActive}
     >
       {/* 1. Announcement bar */}
-      <div className="bg-theme-charcoal text-theme-alabaster">
+      <div className="bg-theme-charcoal text-theme-alabaster pt-[env(safe-area-inset-top)]">
         <Link
           href={ANNOUNCEMENT.href}
-          className="block text-center font-mono text-[10px] uppercase tracking-[0.22em] py-2 px-4 hover:text-theme-gold transition-colors duration-300"
+          className="flex items-center justify-center min-h-11 md:min-h-0 text-center font-mono text-[10px] uppercase tracking-[0.12em] md:tracking-[0.22em] py-2 px-4 hover:text-theme-gold transition-colors duration-300"
         >
           {ANNOUNCEMENT.text}
         </Link>
@@ -252,7 +268,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setDrawerOpen(true)}
-                className="md:hidden -ml-2 p-2 text-theme-charcoal hover:text-theme-gold transition-colors"
+                className="md:hidden -ml-2.5 w-11 h-11 flex items-center justify-center text-theme-charcoal hover:text-theme-gold transition-colors"
                 aria-label="Open menu"
                 aria-expanded={drawerOpen}
               >
@@ -267,7 +283,7 @@ export function SiteHeader() {
             </div>
 
             {/* Centre: wordmark */}
-            <Link href="/" className="flex flex-col items-center justify-center group px-4" aria-label="Tarifé Attär, home">
+            <Link href="/" className="flex flex-col items-center justify-center min-h-11 group px-4" aria-label="Tarifé Attär, home">
               <span
                 className="text-[20px] md:text-[26px] tracking-[0.38em] md:tracking-[0.42em] uppercase font-semibold text-theme-charcoal leading-none whitespace-nowrap"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
@@ -292,12 +308,13 @@ export function SiteHeader() {
               </button>
               <Link
                 href="/cart"
-                className="relative inline-flex items-center text-theme-charcoal hover:text-theme-gold transition-colors duration-300 -mr-1 p-1"
+                data-satchel-target
+                className="relative inline-flex items-center justify-center w-11 h-11 -mr-2.5 text-theme-charcoal hover:text-theme-gold transition-colors duration-300"
                 aria-label={`Satchel, ${itemCount} item${itemCount === 1 ? "" : "s"}`}
               >
                 <Handbag weight="light" className="w-6 h-6 md:w-[22px] md:h-[22px]" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-theme-gold text-theme-charcoal font-mono text-[9px] leading-4 text-center tabular-nums">
+                  <span className="absolute top-0.5 right-0 min-w-[18px] h-[18px] px-1 rounded-full bg-theme-gold text-theme-charcoal font-mono text-[9px] leading-[18px] text-center tabular-nums">
                     {itemCount}
                   </span>
                 )}
@@ -386,6 +403,7 @@ export function SiteHeader() {
       </AnimatePresence>
 
       {/* Mobile drawer */}
+      {portalReady && createPortal(
       <AnimatePresence>
         {drawerOpen && (
           <>
@@ -397,14 +415,17 @@ export function SiteHeader() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setDrawerOpen(false)}
-              className="fixed inset-0 z-[3000] bg-theme-charcoal/40 md:hidden"
+              className="fixed inset-0 z-[3100] bg-theme-charcoal/40 md:hidden"
             />
             <motion.aside
+              ref={drawerRef}
+              role="dialog"
+              aria-modal="true"
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-0 left-0 bottom-0 z-[3001] w-[84vw] max-w-sm bg-theme-alabaster text-theme-charcoal flex flex-col md:hidden"
+              className="fixed top-0 left-0 bottom-0 z-[3101] w-[84vw] max-w-sm bg-theme-alabaster text-theme-charcoal flex flex-col md:hidden pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)]"
               aria-label="Menu"
             >
               <div className="flex items-center justify-between h-16 px-5 border-b border-theme-charcoal/10">
@@ -412,7 +433,7 @@ export function SiteHeader() {
                 <button
                   type="button"
                   onClick={() => setDrawerOpen(false)}
-                  className="-mr-2 p-2 hover:text-theme-gold transition-colors"
+                  className="-mr-2.5 w-11 h-11 flex items-center justify-center hover:text-theme-gold transition-colors"
                   aria-label="Close menu"
                 >
                   <X weight="light" className="w-6 h-6" />
@@ -430,15 +451,15 @@ export function SiteHeader() {
                         {s.label}
                       </Link>
                       {s.href === "/atlas" && (
-                        <ul className="pb-4 -mt-1 grid grid-cols-2 gap-x-6">
+                        <ul className="pb-3 -mt-1 grid grid-cols-2 gap-x-5">
                           {TERRITORIES.map((t) => (
                             <li key={t.id}>
                               <Link
                                 href={`/atlas?territory=${t.id}`}
-                                className="flex items-baseline justify-between py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/60 hover:text-theme-charcoal"
+                                className="flex items-center justify-between gap-2 min-h-11 font-mono text-[10px] uppercase tracking-[0.16em] text-theme-charcoal/75 hover:text-theme-charcoal"
                               >
                                 <span>{t.name}</span>
-                                <span className="text-theme-charcoal/35 normal-case tracking-normal">{t.price}</span>
+                                <span className="text-theme-charcoal/60 normal-case tracking-normal">{t.price}</span>
                               </Link>
                             </li>
                           ))}
@@ -452,7 +473,7 @@ export function SiteHeader() {
                     <li key={s.href}>
                       <Link
                         href={s.href}
-                        className="block py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/60 hover:text-theme-charcoal"
+                        className="flex items-center min-h-11 font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/75 hover:text-theme-charcoal"
                       >
                         {s.label}
                       </Link>
@@ -465,7 +486,7 @@ export function SiteHeader() {
                         setDrawerOpen(false);
                         openChat();
                       }}
-                      className="block py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/60 hover:text-theme-charcoal"
+                      className="flex items-center min-h-11 w-full font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/75 hover:text-theme-charcoal"
                     >
                       Concierge
                     </button>
@@ -473,13 +494,15 @@ export function SiteHeader() {
                 </ul>
               </nav>
 
-              <div className="px-5 py-5 border-t border-theme-charcoal/10 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal/45">
+              <div className="px-5 pt-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] border-t border-theme-charcoal/10 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal/65">
                 Clean, skin-safe perfume oils for those who travel by scent.
               </div>
             </motion.aside>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body,
+      )}
     </header>
   );
 }

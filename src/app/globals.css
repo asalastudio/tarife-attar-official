@@ -40,10 +40,39 @@
 :root {
   --font-eb-garamond: 'EB Garamond', serif;
   --font-jetbrains-mono: 'JetBrains Mono', monospace;
+  /* SiteHeader publishes its measured height after hydration. These defaults
+     match it, so the full-height hero is sized correctly in the first paint
+     instead of shifting once JavaScript runs. */
+  --site-header-h: 109px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --site-header-h: 152px;
+  }
 }
 
 body {
   @apply bg-theme-alabaster text-theme-charcoal antialiased transition-colors duration-500;
+  /* viewport-fit=cover lets fixed controls read the home-indicator inset. Keep
+     page content clear of the notch in landscape, as Safari did before. */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ------------------------------------------------------------------------
+   Mobile legibility floor
+   Mono labels use 7–11px arbitrary sizes throughout. Below 768px nothing
+   renders smaller than 12px. md: sizes still apply from 768px up, so the
+   desktop composition is unchanged. SVG <text> is excluded: its size is in
+   viewBox units and scales with the drawing (the scent pyramid's 8-unit
+   labels already render at 12px on phones).
+   ------------------------------------------------------------------------ */
+@media (max-width: 767px) {
+  :is(.text-\[7px\], .text-\[8px\], .text-\[9px\], .text-\[10px\], .text-\[11px\],
+  .sm\:text-\[8px\], .sm\:text-\[9px\], .sm\:text-\[10px\], .sm\:text-\[11px\]):not(text) {
+    font-size: 12px;
+  }
 }
 
 

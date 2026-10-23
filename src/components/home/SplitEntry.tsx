@@ -77,16 +77,16 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
           </div>
 
           {/* Always visible description */}
-          <motion.p className="max-w-[200px] sm:max-w-[240px] md:max-w-sm mx-auto text-sm sm:text-base md:text-lg opacity-80 leading-relaxed font-serif italic mb-6 md:mb-8">
+          <motion.p className="max-w-[300px] md:max-w-sm mx-auto text-base md:text-lg opacity-80 leading-relaxed font-serif italic mb-4 md:mb-8">
             Clean perfume oils organized across four sensory territories. Twenty-eight destinations for the modern explorer.
           </motion.p>
 
           {/* Territory preview */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] opacity-40 mb-6 md:mb-8">
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all">Tidal</span>
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all delay-75">Ember</span>
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all delay-100">Petal</span>
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all delay-150">Terra</span>
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-theme-charcoal/75 mb-5 md:mb-8">
+            <span className="group-hover:text-theme-gold transition-all">Tidal</span>
+            <span className="group-hover:text-theme-gold transition-all delay-75">Ember</span>
+            <span className="group-hover:text-theme-gold transition-all delay-100">Petal</span>
+            <span className="group-hover:text-theme-gold transition-all delay-150">Terra</span>
           </div>
 
           {/* CTA Button */}
@@ -151,16 +151,17 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
           </div>
 
           {/* Always visible description */}
-          <motion.p className="max-w-[200px] sm:max-w-[240px] md:max-w-sm mx-auto text-sm sm:text-base md:text-lg opacity-90 leading-relaxed font-serif italic mb-6 md:mb-8">
+          <motion.p className="max-w-[300px] md:max-w-sm mx-auto text-base md:text-lg opacity-90 leading-relaxed font-serif italic mb-4 md:mb-8">
             Pure resins, rare ouds, and aged materials for the devoted collector. Each specimen arrives with provenance documentation.
           </motion.p>
 
-          {/* Material preview */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] opacity-30 mb-6 md:mb-8">
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all">Resins</span>
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all delay-75">Ouds</span>
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all delay-100">Ambers</span>
-            <span className="group-hover:text-theme-gold group-hover:opacity-100 transition-all delay-150">Musks</span>
+          {/* Material preview. Sits over the smoke image, so it gets solid
+              colour and a soft shadow rather than low opacity. */}
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-theme-alabaster/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] mb-5 md:mb-8">
+            <span className="group-hover:text-theme-gold transition-all">Resins</span>
+            <span className="group-hover:text-theme-gold transition-all delay-75">Ouds</span>
+            <span className="group-hover:text-theme-gold transition-all delay-100">Ambers</span>
+            <span className="group-hover:text-theme-gold transition-all delay-150">Musks</span>
           </div>
 
           {/* CTA Button */}

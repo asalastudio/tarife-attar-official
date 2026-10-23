@@ -1,5 +1,13 @@
 import "./globals.css";
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+
+// viewport-fit=cover exposes env(safe-area-inset-*) so the sticky purchase bar,
+// compass and toasts can sit above the iPhone home indicator.
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    viewportFit: 'cover',
+};
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://tarifeattar.com'),

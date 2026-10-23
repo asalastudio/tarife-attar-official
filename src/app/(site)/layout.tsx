@@ -12,12 +12,16 @@ const ebGaramond = EB_Garamond({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-// Technical mono font - industrial, precise
+// Technical mono font - industrial, precise. System monospace fallbacks share
+// its 0.6em advance, so labels keep their width (and line breaks) when the web
+// font swaps in; the default metric-adjusted Arial fallback re-wrapped them.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
   weight: ["400", "500", "700"],
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
 });
 
 // Metadata export removed as it's now in the root layout or handled by pages

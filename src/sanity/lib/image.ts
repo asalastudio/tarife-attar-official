@@ -1,4 +1,5 @@
 import createImageUrlBuilder from "@sanity/image-url";
+import type { ImageLoader } from "next/image";
 import { client } from "./client";
 
 // Define a simple type for Sanity image source
@@ -25,6 +26,21 @@ export const urlForImage = (source: SanityImageSource | undefined) => {
     return undefined;
   }
 };
+
+/**
+ * next/image loader for cdn.sanity.io URLs. Sanity resizes and compresses at the
+ * edge (WebP/AVIF via auto=format), so the srcset points straight at the CDN
+ * instead of round-tripping through the Next image optimizer. fit=max never
+ * upscales past the original asset.
+ */
+export const sanityImageLoader: ImageLoader = ({ src, width, quality }) =>
+  imageBuilder
+    .image(src)
+    .width(width)
+    .quality(quality ?? 75)
+    .auto("format")
+    .fit("max")
+    .url();
 
 // Helper to get URL string directly
 export const urlForImageString = (

@@ -69,14 +69,14 @@ export function JournalClient({ entries }: Props) {
   return (
     <div className="min-h-screen bg-theme-alabaster text-theme-charcoal">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-theme-alabaster/80 backdrop-blur-md border-b border-theme-charcoal/5">
+      <header className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] bg-theme-alabaster/80 backdrop-blur-md border-b border-theme-charcoal/5">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
-            <span className="hidden sm:inline">Back to Site</span>
+            <span className="sr-only sm:not-sr-only">Back to Site</span>
           </button>
           <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
             The Journal
@@ -85,7 +85,7 @@ export function JournalClient({ entries }: Props) {
       </header>
 
       {/* Hero */}
-      <section className="pt-24 md:pt-32 pb-12 md:pb-16 px-4 md:px-8">
+      <section className="pt-[calc(6rem+env(safe-area-inset-top))] md:pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pb-16 px-4 md:px-8">
         <div className="max-w-[1400px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -115,7 +115,7 @@ export function JournalClient({ entries }: Props) {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-[0.15em] whitespace-nowrap transition-all ${
+                className={`flex items-center gap-2 min-h-11 px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-[0.15em] whitespace-nowrap transition-all ${
                   activeCategory === cat.id
                     ? 'bg-theme-charcoal text-theme-alabaster'
                     : 'bg-theme-charcoal/5 text-theme-charcoal/60 hover:bg-theme-charcoal/10'
