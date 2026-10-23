@@ -127,3 +127,51 @@ test('merges pending inbound attribution after marketing consent', () => {
   assert.equal(result.ledger?.latest.utm_source, 'google');
   assert.equal(result.storageAction, 'write');
 });
+
+test('labels untagged search engine visits organic and keeps other referrers as referrals', () => {
+  const visit = (referrer) =>
+    parseInboundTouch({
+      url: 'https://www.tarifeattar.com/atlas',
+      referrer,
+      ownHosts,
+      capturedAt: '2026-10-23T16:00:00.000Z',
+    })?.touch;
+
+  for (const [referrer, source] of [
+    ['https://www.google.com/', 'google'],
+    ['https://www.google.co.uk/search?q=attar', 'google'],
+    ['https://www.bing.com/search?q=attar', 'bing'],
+    ['https://duckduckgo.com/', 'duckduckgo'],
+    ['https://www.ecosia.org/search?q=attar', 'ecosia'],
+    ['https://search.yahoo.com/search?p=attar', 'yahoo'],
+    ['https://search.yahoo.co.jp/search?p=attar', 'yahoo'],
+    ['https://yandex.kz/search/?text=attar', 'yandex'],
+  ]) {
+    const touch = visit(referrer);
+    assert.equal(touch?.utm_source, source, referrer);
+    assert.equal(touch?.utm_medium, 'organic', referrer);
+  }
+
+  for (const [referrer, host] of [
+    ['https://mail.google.com/mail/u/0/', 'mail.google.com'],
+    ['https://google.example.com/', 'google.example.com'],
+    ['https://mail.yahoo.co.jp/', 'mail.yahoo.co.jp'],
+    ['https://yandex.example.kz/', 'yandex.example.kz'],
+    ['https://www.promocodes.com/tarife', 'www.promocodes.com'],
+  ]) {
+    const touch = visit(referrer);
+    assert.equal(touch?.utm_source, host, referrer);
+    assert.equal(touch?.utm_medium, 'referral', referrer);
+  }
+});
+
+test('a campaign tag still wins over the search engine referrer', () => {
+  const touch = parseInboundTouch({
+    url: 'https://www.tarifeattar.com/atlas?utm_source=instagram&utm_medium=social',
+    referrer: 'https://www.google.com/',
+    ownHosts,
+    capturedAt: '2026-10-23T16:00:00.000Z',
+  })?.touch;
+  assert.equal(touch?.utm_source, 'instagram');
+  assert.equal(touch?.utm_medium, 'social');
+});

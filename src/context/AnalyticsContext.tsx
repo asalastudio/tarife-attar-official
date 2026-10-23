@@ -149,11 +149,14 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     }
 
     window.dataLayer = window.dataLayer || [];
+    // gtag.js only reads Arguments objects from the dataLayer and silently
+    // skips arrays, so this must push `arguments`, exactly as Google's snippet.
     window.gtag =
       window.gtag ||
-      ((...args: unknown[]) => {
-        window.dataLayer?.push(args);
-      });
+      function gtag() {
+        // eslint-disable-next-line prefer-rest-params
+        window.dataLayer?.push(arguments as unknown as unknown[]);
+      };
 
     window.gtag('consent', 'update', {
       analytics_storage: 'granted',

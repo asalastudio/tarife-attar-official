@@ -628,6 +628,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const id3ml = product.shopifyVariant3mlId;
   const id6ml = product.shopifyVariant6mlId || product.shopifyVariantId;
   const id12ml = product.shopifyVariant12mlId;
+  // Only Atlas products with a 6ml variant pick a starting size; every other
+  // product shows its single size straight away.
+  const startingSizeSettled =
+    defaultSizeResolved || product.collectionType !== 'atlas' || !id6ml;
   useEffect(() => {
     if (defaultSizeResolved || product.collectionType !== 'atlas' || !id6ml) return;
     let cancelled = false;
@@ -725,9 +729,12 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     ? selectedVariant
     : product.volume || undefined;
 
+  // Wait for the starting size: when 6ml is sold out the page switches to 3ml
+  // or 12ml, and firing before that sent one view_item for each size.
   useEffect(() => {
     if (
       !analyticsReady ||
+      !startingSizeSettled ||
       !selectedShopifyVariantId ||
       typeof currentPrice !== 'number' ||
       currentPrice < 0
@@ -761,6 +768,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     );
   }, [
     analyticsReady,
+    startingSizeSettled,
     currentPrice,
     product.title,
     product.shopifyProductId,

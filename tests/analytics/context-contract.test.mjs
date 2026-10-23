@@ -44,3 +44,14 @@ test('places analytics after attribution and before the Shopify cart provider', 
   assert.ok(analyticsIndex > attributionIndex);
   assert.ok(cartIndex > analyticsIndex);
 });
+
+test('gtag pushes the Arguments object that gtag.js reads, never a plain array', () => {
+  // gtag.js silently skips arrays, so a rest-parameter wrapper sends nothing.
+  assert.match(context, /dataLayer\?\.push\(arguments\b/);
+  assert.doesNotMatch(context, /dataLayer\?\.push\(args\)/);
+});
+
+test('product view waits for the starting size so one view sends one view_item', async () => {
+  const product = await readFile('src/app/(site)/product/[slug]/ProductDetailClient.tsx', 'utf8');
+  assert.match(product, /!startingSizeSettled \|\|[\s\S]*trackViewItem\(/);
+});
