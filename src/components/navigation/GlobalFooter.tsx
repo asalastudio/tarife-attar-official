@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { InstagramLogo } from '@phosphor-icons/react';
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/lib/social';
 
 interface Props {
   theme?: 'light' | 'dark';
@@ -220,6 +222,18 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                   </button>
                 </form>
               )}
+
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-[0.2em] opacity-80 ${hoverClass} transition-opacity duration-300`}
+              >
+                <InstagramLogo weight="light" className="w-5 h-5" aria-hidden="true" />
+                <span>
+                  Instagram <span className="normal-case tracking-normal">@{INSTAGRAM_HANDLE}</span>
+                </span>
+              </a>
             </div>
           </motion.div>
         </div>

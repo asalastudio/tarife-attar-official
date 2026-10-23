@@ -1,5 +1,16 @@
+import { cache } from "react";
 import { sanityFetch } from "@/sanity/lib/client";
 import { productBySlugQuery, placeholderImagesQuery, PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
+import { shareImageUrlFor, urlForImage } from "@/sanity/lib/image";
+import { getProductOffers } from "@/lib/shopify/client";
+import {
+  SHARE_IMAGE,
+  SHARE_PAD_COLOR,
+  buildOffers,
+  schemaAvailability,
+  shopifyShareImageUrl,
+  toShopifyProductGid,
+} from "@/lib/product-structured-data";
 import { notFound } from "next/navigation";
 import { ProductDetailClient } from "./ProductDetailClient";
 import type { Metadata } from "next";
@@ -10,13 +21,56 @@ interface ProductPageProps {
   }>;
 }
 
-// Territory pricing for structured data
+// Territory pricing, used for structured data only when Shopify cannot be reached
 const territoryPricing: Record<string, { min: number; max: number }> = {
   ember: { min: 28, max: 48 },
   tidal: { min: 30, max: 50 },
   petal: { min: 30, max: 50 },
   terra: { min: 33, max: 55 },
 };
+
+// The metadata and the page both need the live offers; fetch them once per request.
+const getOffersFor = cache(async (shopifyProductId?: string | number | null) => {
+  const gid = toShopifyProductGid(shopifyProductId);
+  return gid ? getProductOffers(gid) : null;
+});
+
+// Same image the product page shows: the Sanity photo when there is one,
+// otherwise the Shopify photo.
+function productImages(product: any, featuredImageUrl?: string | null) {
+  if (product.mainImage) {
+    const share = shareImageUrlFor(product.mainImage, { ...SHARE_IMAGE, bg: SHARE_PAD_COLOR });
+    const full = urlForImage(product.mainImage)?.width(1600).url();
+    if (share) return { share, full: full ?? share };
+  }
+  const shopifyUrl = product.shopifyPreviewImageUrl || product.shopifyImage || featuredImageUrl;
+  if (!shopifyUrl) return null;
+  try {
+    return { share: shopifyShareImageUrl(shopifyUrl), full: shopifyUrl as string };
+  } catch {
+    return null;
+  }
+}
+
+function fallbackOffers(product: any, productName: string, url: string) {
+  const base = {
+    '@type': 'Offer',
+    priceCurrency: 'USD',
+    availability: schemaAvailability(product.inStock !== false),
+    itemCondition: 'https://schema.org/NewCondition',
+    url,
+    seller: { '@type': 'Organization', name: 'Tarife Attar' },
+  };
+  if (product.collectionType === 'atlas') {
+    const pricing = territoryPricing[product.atlasData?.atmosphere] || territoryPricing.ember;
+    return [
+      { ...base, name: '6ml Glass Wand Applicator', price: pricing.min },
+      { ...base, name: '12ml Glass Wand Applicator', price: pricing.max },
+    ];
+  }
+  const price = Number(product.price);
+  return Number.isFinite(price) && price > 0 ? [{ ...base, name: productName, price }] : [];
+}
 
 function buildScentDescription(product: any): string {
   const parts: string[] = [];
@@ -72,6 +126,12 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     ? `${product.title}: ${product.legacyName} Perfume Oil`
     : `${product.title} Perfume Oil`;
 
+  const offers = await getOffersFor(product.shopifyProductId);
+  const images = productImages(product, offers?.featuredImageUrl);
+  const shareImage = images
+    ? { url: images.share, ...SHARE_IMAGE, alt: `${product.title} perfume oil by Tarife Attar` }
+    : null;
+
   return {
     title,
     description: metaDescription,
@@ -88,17 +148,22 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       ...(product.notes?.heart || []).map((n: string) => n.toLowerCase()),
       ...(product.notes?.base || []).map((n: string) => n.toLowerCase()),
     ].filter(Boolean),
+    // Price, stock and brand live in the Product JSON-LD, not og:type=product
+    // tags: Next 14 rejects that og:type, metadata.other writes `name=` (which
+    // Facebook ignores), and <meta> rendered by the page lands in <body>.
     openGraph: {
       title: `${product.title} Perfume Oil | Tarife Attar`,
       description: metaDescription,
       url: `https://tarifeattar.com/product/${slug}`,
       siteName: 'Tarife Attar',
       type: 'website',
+      ...(shareImage ? { images: [shareImage] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: `${product.title} Perfume Oil | Tarife Attar`,
       description: metaDescription,
+      ...(shareImage ? { images: [shareImage.url] } : {}),
     },
     alternates: {
       canonical: `https://tarifeattar.com/product/${slug}`,
@@ -126,52 +191,29 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  // Build JSON-LD Product structured data
-  const territory = product.atlasData?.atmosphere || 'ember';
-  const pricing = territoryPricing[territory] || { min: 28, max: 48 };
+  // Build JSON-LD Product structured data from the live Shopify sizes and stock
   const notesStr = buildNotesString(product.notes);
+  const productName = `${product.title} Perfume Oil`;
+  const productUrl = `https://tarifeattar.com/product/${slug}`;
+  const offers = await getOffersFor(product.shopifyProductId);
+  const images = productImages(product, offers?.featuredImageUrl);
+  const schemaOffers = offers?.variants.length
+    ? buildOffers(offers.variants, { productName, url: productUrl })
+    : fallbackOffers(product, productName, productUrl);
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: `${product.title} Perfume Oil`,
+    name: productName,
     description: buildScentDescription(product),
     brand: {
       '@type': 'Brand',
       name: 'Tarife Attar',
     },
     category: 'Perfume Oil',
-    url: `https://tarifeattar.com/product/${slug}`,
-    offers: [
-      {
-        '@type': 'Offer',
-        name: '6ml Glass Wand Applicator',
-        price: pricing.min,
-        priceCurrency: 'USD',
-        availability: product.inStock !== false
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: {
-          '@type': 'Organization',
-          name: 'Tarife Attar',
-        },
-      },
-      {
-        '@type': 'Offer',
-        name: '12ml Glass Wand Applicator',
-        price: pricing.max,
-        priceCurrency: 'USD',
-        availability: product.inStock !== false
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: {
-          '@type': 'Organization',
-          name: 'Tarife Attar',
-        },
-      },
-    ],
+    url: productUrl,
+    ...(images ? { image: Array.from(new Set([images.full, images.share])) } : {}),
+    ...(schemaOffers.length ? { offers: schemaOffers } : {}),
     additionalProperty: [
       ...(product.sillage ? [{ '@type': 'PropertyValue', name: 'Sillage', value: product.sillage }] : []),
       ...(product.longevity ? [{ '@type': 'PropertyValue', name: 'Longevity', value: product.longevity }] : []),
