@@ -1,8 +1,7 @@
 /**
  * Product data for search engines and link previews, built from the live
  * Shopify variants rather than CMS flags: one schema.org Offer per size with
- * its real price and stock, and Open Graph product tags for the cheapest size
- * that can be bought.
+ * its real price and stock, and a padded share image.
  */
 
 export interface OfferVariant {
@@ -51,27 +50,6 @@ export function buildOffers(
       url,
       seller: { '@type': 'Organization', name: 'Tarife Attar' },
     }));
-}
-
-/**
- * Open Graph product tags (Facebook, Instagram link stickers, Pinterest). The
- * price is the lowest size in stock, or the lowest overall when all are sold out.
- */
-export function productOpenGraphTags(variants: OfferVariant[]): Record<string, string> {
-  if (variants.length === 0) return { 'og:type': 'product' };
-  const inStock = variants.filter((variant) => variant.availableForSale);
-  const pool = inStock.length > 0 ? inStock : variants;
-  const cheapest = pool.reduce((low, variant) =>
-    Number(variant.price.amount) < Number(low.price.amount) ? variant : low,
-  );
-  return {
-    'og:type': 'product',
-    'product:brand': 'Tarife Attar',
-    'product:condition': 'new',
-    'product:availability': inStock.length > 0 ? 'in stock' : 'out of stock',
-    'product:price:amount': Number(cheapest.price.amount).toFixed(2),
-    'product:price:currency': cheapest.price.currencyCode,
-  };
 }
 
 /**

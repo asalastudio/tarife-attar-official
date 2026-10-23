@@ -7,7 +7,6 @@ import {
   SHARE_IMAGE,
   SHARE_PAD_COLOR,
   buildOffers,
-  productOpenGraphTags,
   schemaAvailability,
   shopifyShareImageUrl,
   toShopifyProductGid,
@@ -149,13 +148,15 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       ...(product.notes?.heart || []).map((n: string) => n.toLowerCase()),
       ...(product.notes?.base || []).map((n: string) => n.toLowerCase()),
     ].filter(Boolean),
-    // No `type` here: Next only accepts its own og:type values, so
-    // og:type=product comes from `other` along with the product price tags.
+    // Price, stock and brand live in the Product JSON-LD, not og:type=product
+    // tags: Next 14 rejects that og:type, metadata.other writes `name=` (which
+    // Facebook ignores), and <meta> rendered by the page lands in <body>.
     openGraph: {
       title: `${product.title} Perfume Oil | Tarife Attar`,
       description: metaDescription,
       url: `https://tarifeattar.com/product/${slug}`,
       siteName: 'Tarife Attar',
+      type: 'website',
       ...(shareImage ? { images: [shareImage] } : {}),
     },
     twitter: {
@@ -167,7 +168,6 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     alternates: {
       canonical: `https://tarifeattar.com/product/${slug}`,
     },
-    other: productOpenGraphTags(offers?.variants ?? []),
   };
 }
 

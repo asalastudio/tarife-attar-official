@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   buildOffers,
-  productOpenGraphTags,
   shopifyShareImageUrl,
   toShopifyProductGid,
 } from '../../src/lib/product-structured-data.ts';
@@ -41,24 +40,6 @@ test('a single-variant product is offered under its own name at its own price', 
   assert.equal(offer.price, 95);
 });
 
-test('product tags quote the cheapest size in stock, or the cheapest when sold out', () => {
-  assert.deepEqual(productOpenGraphTags(carmel), {
-    'og:type': 'product',
-    'product:brand': 'Tarife Attar',
-    'product:condition': 'new',
-    'product:availability': 'in stock',
-    'product:price:amount': '23.00',
-    'product:price:currency': 'USD',
-  });
-
-  const soldOut = carmel.map((v) => ({ ...v, availableForSale: false }));
-  const tags = productOpenGraphTags(soldOut);
-  assert.equal(tags['product:availability'], 'out of stock');
-  assert.equal(tags['product:price:amount'], '23.00');
-
-  assert.deepEqual(productOpenGraphTags([]), { 'og:type': 'product' });
-});
-
 test('Shopify share image is padded to 1200 x 630 and keeps existing parameters', () => {
   const url = new URL(
     shopifyShareImageUrl('https://cdn.shopify.com/s/files/1/1989/5889/files/Rose.jpg?v=1758673105'),
@@ -83,8 +64,11 @@ test('product page builds offers from Shopify and keeps a fallback when it is do
   assert.match(page, /getProductOffers/);
   assert.match(page, /buildOffers\(offers\.variants/);
   assert.match(page, /fallbackOffers\(product/);
-  assert.match(page, /other: productOpenGraphTags/);
-  assert.doesNotMatch(page, /type: 'website'/);
+  // og:type=product cannot be emitted as property= in <head> on Next 14, so the
+  // page uses og:type=website plus a share image, and no name= OG tags.
+  assert.match(page, /type: 'website'/);
+  assert.match(page, /images: \[shareImage\]/);
+  assert.doesNotMatch(page, /other:/);
 });
 
 test('footer and Organization profile link to Instagram, not the old Etsy shop', async () => {

@@ -22,12 +22,15 @@ async function shopifyFetch({
   variables = {},
   cache,
   revalidate,
+  timeoutMs,
 }: {
   query: string;
   variables?: ShopifyFetchVariables;
   cache?: RequestCache;
   /** Seconds to keep a server-side response in Next's data cache. */
   revalidate?: number;
+  /** Abort the request after this many milliseconds. */
+  timeoutMs?: number;
 }) {
   if (!domain || !accessToken) {
     throw new Error('Shopify configuration missing. Please set NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN');
@@ -40,6 +43,7 @@ async function shopifyFetch({
       method: 'POST',
       ...(cache ? { cache } : {}),
       ...(revalidate !== undefined ? { next: { revalidate } } : {}),
+      ...(timeoutMs !== undefined ? { signal: AbortSignal.timeout(timeoutMs) } : {}),
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': accessToken!,
@@ -241,8 +245,8 @@ export const PRODUCT_OFFERS_QUERY = `
 
 /**
  * Live sizes, prices and stock for a product's structured data and share tags.
- * Cached for a minute; returns null when Shopify cannot be reached, so the
- * page still renders.
+ * Cached for a minute; returns null when Shopify fails or takes longer than
+ * 3 seconds, so the page renders with its fallback offers instead of waiting.
  */
 export async function getProductOffers(
   productGid: string,
@@ -252,6 +256,7 @@ export async function getProductOffers(
       query: PRODUCT_OFFERS_QUERY,
       variables: { id: productGid },
       revalidate: 60,
+      timeoutMs: 3000,
     });
     const product = data?.product;
     if (errors?.length || !product) return null;
