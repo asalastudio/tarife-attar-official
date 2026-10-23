@@ -144,6 +144,8 @@ test('labels untagged search engine visits organic and keeps other referrers as 
     ['https://duckduckgo.com/', 'duckduckgo'],
     ['https://www.ecosia.org/search?q=attar', 'ecosia'],
     ['https://search.yahoo.com/search?p=attar', 'yahoo'],
+    ['https://search.yahoo.co.jp/search?p=attar', 'yahoo'],
+    ['https://yandex.kz/search/?text=attar', 'yandex'],
   ]) {
     const touch = visit(referrer);
     assert.equal(touch?.utm_source, source, referrer);
@@ -153,6 +155,8 @@ test('labels untagged search engine visits organic and keeps other referrers as 
   for (const [referrer, host] of [
     ['https://mail.google.com/mail/u/0/', 'mail.google.com'],
     ['https://google.example.com/', 'google.example.com'],
+    ['https://mail.yahoo.co.jp/', 'mail.yahoo.co.jp'],
+    ['https://yandex.example.kz/', 'yandex.example.kz'],
     ['https://www.promocodes.com/tarife', 'www.promocodes.com'],
   ]) {
     const touch = visit(referrer);
