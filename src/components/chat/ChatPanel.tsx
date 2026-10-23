@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "@/context/ChatContext";
+import { useModalFocus } from "@/Hooks/useModalFocus";
 import { Sparkle, X, ArrowRight, CircleNotch, Compass, Drop, Palette, Package, ArrowsClockwise, EnvelopeSimple } from "@phosphor-icons/react";
 
 const QUICK_CHIPS = [
@@ -44,6 +45,19 @@ export function ChatPanel() {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Full screen on phones, so modal there; the 400px desktop sidebar stays
+  // non-modal and leaves the page usable beside it.
+  const [isPhone, setIsPhone] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsPhone(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  useModalFocus(isChatOpen && isPhone, panelRef, closeChat);
 
   const [localMessages, setLocalMessages] = useState<{role: "user" | "assistant", content: string}[]>([
     { role: "assistant", content: WELCOME_MESSAGE }
@@ -196,6 +210,10 @@ export function ChatPanel() {
 
   return (
     <motion.div
+      ref={panelRef}
+      role="dialog"
+      aria-label="Concierge"
+      aria-modal={isPhone && isChatOpen ? true : undefined}
       initial={false}
       animate={{ x: isChatOpen ? 0 : "100%" }}
       transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
@@ -345,7 +363,7 @@ export function ChatPanel() {
                   placeholder="Your name"
                   value={handoff.name}
                   onChange={(e) => setHandoff({ ...handoff, name: e.target.value })}
-                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:[@media(pointer:fine)]:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
                 />
                 <input
                   id="handoff-email"
@@ -354,7 +372,7 @@ export function ChatPanel() {
                   placeholder="Email"
                   value={handoff.email}
                   onChange={(e) => setHandoff({ ...handoff, email: e.target.value })}
-                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:[@media(pointer:fine)]:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
                 />
                 <input
                   id="handoff-order"
@@ -362,7 +380,7 @@ export function ChatPanel() {
                   placeholder="Order number, if you have one"
                   value={handoff.orderNumber}
                   onChange={(e) => setHandoff({ ...handoff, orderNumber: e.target.value })}
-                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:[@media(pointer:fine)]:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
                 />
                 <textarea
                   id="handoff-message"
@@ -370,7 +388,7 @@ export function ChatPanel() {
                   placeholder="What can the team help with?"
                   value={handoff.message}
                   onChange={(e) => setHandoff({ ...handoff, message: e.target.value })}
-                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg resize-none"
+                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:[@media(pointer:fine)]:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg resize-none"
                 />
               </div>
               {handoffState === "error" && (
@@ -425,7 +443,7 @@ export function ChatPanel() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Ask about scents, orders, or anything..."
-            className="w-full bg-white border border-theme-charcoal/20 px-4 py-3.5 pr-14 font-serif text-base md:text-sm placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold focus:ring-1 focus:ring-theme-gold/30 rounded-full shadow-sm"
+            className="w-full bg-white border border-theme-charcoal/20 px-4 py-3.5 pr-14 font-serif text-base md:[@media(pointer:fine)]:text-sm placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold focus:ring-1 focus:ring-theme-gold/30 rounded-full shadow-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter" && message.trim() && !isSending) {
                 e.preventDefault();

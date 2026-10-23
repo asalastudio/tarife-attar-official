@@ -4,11 +4,15 @@ import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 // iOS Safari zooms the page when a focused field's text is under 16px. Every
-// typed control on the storefront must be at least text-base on phones; a
-// smaller size is only allowed behind a breakpoint prefix (md:text-sm).
+// typed control on the storefront must be at least text-base on phones. A
+// width breakpoint alone is not enough for a smaller size: landscape phones are
+// wider than md (768px). Shrink only for mouse users, e.g.
+// md:[@media(pointer:fine)]:text-sm.
 const SKIP = ['src/components/atlas/map-reference', 'src/sanity', 'src/app/studio'];
 const TYPED_INPUT = /type=["'](checkbox|radio|range|file|hidden)["']/;
-const SMALL_BASE_SIZE = /(?:^|[\s"'`])(text-(?:xs|sm)|text-\[(?:[0-9]|1[0-5])(?:\.\d+)?px\])(?=[\s"'`]|$)/;
+const SMALL = String.raw`text-(?:xs|sm)|text-\[(?:[0-9]|1[0-5])(?:\.\d+)?px\]`;
+const SMALL_BASE_SIZE = new RegExp(String.raw`(?:^|[\s"'\x60])(${SMALL})(?=[\s"'\x60]|$)`);
+const SMALL_AT_BREAKPOINT = new RegExp(String.raw`(?:^|[\s"'\x60])((?:(?:sm|md|lg|xl|2xl):)+(?:${SMALL}))(?=[\s"'\x60]|$)`);
 
 async function sourceFiles(dir) {
   const out = [];
@@ -34,7 +38,9 @@ test('form controls are at least 16px on mobile', async () => {
         const shared = source.match(new RegExp(`const ${name}\\s*=\\s*(["'\`])([\\s\\S]*?)\\1`));
         if (shared) classSources.push(shared[2]);
       }
-      const small = classSources.map((s) => s.match(SMALL_BASE_SIZE)).find(Boolean);
+      const small = classSources
+        .map((s) => s.match(SMALL_BASE_SIZE) || s.match(SMALL_AT_BREAKPOINT))
+        .find(Boolean);
       if (small) {
         const line = source.slice(0, match.index).split('\n').length;
         offenders.push(`${file}:${line} uses ${small[1]}`);

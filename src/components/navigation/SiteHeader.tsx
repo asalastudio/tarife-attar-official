@@ -10,6 +10,7 @@ import { useShopifyCart } from "@/context";
 import { useChat } from "@/context/ChatContext";
 import { useIntro } from "@/context/IntroContext";
 import { useOverlay } from "@/context/OverlayContext";
+import { useModalFocus } from "@/Hooks/useModalFocus";
 
 /**
  * SiteHeader
@@ -157,6 +158,7 @@ export function SiteHeader() {
   const { setMenuOpen } = useOverlay();
   const headerRef = useRef<HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLElement>(null);
   const [openMenu, setOpenMenu] = useState<MenuKey | null>(null);
   // The drawer portals to <body>; the header's own stacking context (sticky,
   // z-40) would otherwise let the compass and other floating controls sit on top.
@@ -215,15 +217,14 @@ export function SiteHeader() {
     if (!drawerOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDrawerOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = previous;
-      window.removeEventListener("keydown", onKey);
     };
   }, [drawerOpen, setMenuOpen]);
+
+  // The drawer is modal: focus moves in, stays in, Escape closes it, and focus
+  // returns to the menu button.
+  useModalFocus(drawerOpen, drawerRef, () => setDrawerOpen(false));
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -417,6 +418,9 @@ export function SiteHeader() {
               className="fixed inset-0 z-[3100] bg-theme-charcoal/40 md:hidden"
             />
             <motion.aside
+              ref={drawerRef}
+              role="dialog"
+              aria-modal="true"
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}

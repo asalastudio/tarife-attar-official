@@ -204,7 +204,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     required
-                    className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-mono text-base md:text-[11px] uppercase tracking-[0.08em] md:tracking-widest outline-none transition-colors placeholder:opacity-60 placeholder:normal-case placeholder:tracking-normal`}
+                    className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-mono text-base md:[@media(pointer:fine)]:text-[11px] uppercase tracking-[0.08em] md:tracking-widest outline-none transition-colors placeholder:opacity-60 placeholder:normal-case placeholder:tracking-normal`}
                   />
                   {subscriptionError && (
                     <p role="alert" className="font-serif text-sm text-red-400">

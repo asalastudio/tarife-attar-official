@@ -600,6 +600,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   // carries the confirmation and next steps.
   const [addState, setAddState] = useState<'idle' | 'adding' | 'added' | 'error'>('idle');
   const isAdding = addState === 'adding' || addState === 'added';
+  // One pending reset at a time: a retry must not be cut short by the timer
+  // left over from the previous attempt.
+  const addResetTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(addResetTimer.current), []);
   const [showMap, setShowMap] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<VariantSize>('6ml');
 
@@ -813,6 +817,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       return;
     }
 
+    clearTimeout(addResetTimer.current);
     setAddState('adding');
 
     // Haptic feedback
@@ -849,13 +854,13 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       console.log('Successfully added to cart');
 
       setAddState('added');
-      setTimeout(() => setAddState('idle'), 2000);
+      addResetTimer.current = setTimeout(() => setAddState('idle'), 2000);
     } catch (error) {
       console.error('Error adding to cart:', error);
       // Don't use alert(); it blocks the animation. Show a retry state and
       // announce the failure instead.
       setAddState('error');
-      setTimeout(() => setAddState('idle'), 3000);
+      addResetTimer.current = setTimeout(() => setAddState('idle'), 3000);
     }
   };
 
