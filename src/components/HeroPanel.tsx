@@ -16,6 +16,8 @@
  */
 
 import React from 'react'
+import Image from 'next/image'
+import { sanityImageLoader } from '@/sanity/lib/image'
 
 interface HeroPanelProps {
     variant: 'atlas' | 'relic'
@@ -74,29 +76,26 @@ export function HeroPanel({
             className={`relative overflow-hidden ${className}`}
             style={{ backgroundColor: colors[variant] }}
         >
-            {/* Layer 1: Background Texture */}
+            {/* Layer 1: Background Texture. Above the fold on every device, so it
+                is preloaded at high priority and served resized from the Sanity CDN. */}
             {backgroundUrl ? (
-                <img
+                <Image
+                    loader={sanityImageLoader}
                     src={backgroundUrl}
                     alt=""
                     aria-hidden="true"
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-                    style={{ 
+                    fill
+                    priority
+                    quality={75}
+                    // Stacked full-width halves on mobile, side-by-side halves from md up
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover pointer-events-none select-none"
+                    style={{
                         objectPosition,
                         zIndex: 0,
                     }}
-                    loading="eager"
                     onError={() => {
                         console.error(`[HeroPanel ${variant}] Failed to load image:`, backgroundUrl);
-                    }}
-                    onLoad={(e) => {
-                        if (process.env.NODE_ENV === 'development') {
-                            console.log(`[HeroPanel ${variant}] Image loaded successfully`);
-                            console.log(`[HeroPanel ${variant}] Image dimensions:`, {
-                                naturalWidth: (e.target as HTMLImageElement).naturalWidth,
-                                naturalHeight: (e.target as HTMLImageElement).naturalHeight,
-                            });
-                        }
                     }}
                 />
             ) : process.env.NODE_ENV === 'development' ? (

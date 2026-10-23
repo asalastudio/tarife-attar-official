@@ -156,7 +156,8 @@ const CollapsibleSection = ({
     <div className="pt-8 border-t border-theme-charcoal/10">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between py-2 group"
+        aria-expanded={isOpen}
+        className="w-full flex items-center justify-between min-h-11 py-2 group"
       >
         <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold">
           {title}
@@ -216,7 +217,7 @@ const FieldReportConcept = ({ concept, hotspots }: { concept?: string; hotspots?
               <span className="font-mono text-[10px] uppercase tracking-widest text-theme-gold mt-1">0{i + 1}</span>
               <div>
                 <span className="font-mono text-[10px] uppercase tracking-widest opacity-60 block">{h.item}</span>
-                <span className="font-serif italic text-sm opacity-80">{h.meaning}</span>
+                <span className="font-serif italic text-base md:text-sm opacity-80">{h.meaning}</span>
               </div>
             </div>
           ))}
@@ -595,7 +596,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const { ready: analyticsReady, trackViewItem } = useAnalytics();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isAdding, setIsAdding] = useState(false);
+  // "Added" only shows once Shopify confirms the line; the Satchel toast
+  // carries the confirmation and next steps.
+  const [addState, setAddState] = useState<'idle' | 'adding' | 'added' | 'error'>('idle');
+  const isAdding = addState === 'adding' || addState === 'added';
   const [showMap, setShowMap] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<VariantSize>('6ml');
 
@@ -679,6 +683,23 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
   const addButtonRef = useRef<HTMLButtonElement>(null);
   const mobileAddButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Publish the sticky bar's height so floating controls (compass) clear it.
+  // It is display:none from md up, which publishes 0px.
+  const dockRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = dockRef.current;
+    if (!el) return;
+    const root = document.documentElement;
+    const publish = () => root.style.setProperty('--mobile-dock-h', `${el.offsetHeight}px`);
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      root.style.removeProperty('--mobile-dock-h');
+    };
+  }, []);
   const { scrollY } = useScroll();
   const imageY = useTransform(scrollY, [0, 1000], [0, -100]);
 
@@ -792,7 +813,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       return;
     }
 
-    setIsAdding(true);
+    setAddState('adding');
 
     // Haptic feedback
     if (typeof navigator !== "undefined" && "vibrate" in navigator) {
@@ -827,19 +848,14 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       await addItem(variantIdToAdd, quantity);
       console.log('Successfully added to cart');
 
-      // Success state feedback
-      setTimeout(() => {
-        setIsAdding(false);
-      }, 1200);
+      setAddState('added');
+      setTimeout(() => setAddState('idle'), 2000);
     } catch (error) {
       console.error('Error adding to cart:', error);
-      // Don't use alert() - it's blocking and prevents animation from running
-      // Instead, let the animation complete, then reset state
-      setTimeout(() => {
-        setIsAdding(false);
-        // Only log to console - the animation still provides visual feedback
-        console.warn('Cart operation failed, but animation completed successfully');
-      }, 1500); // Wait for animation to complete
+      // Don't use alert(); it blocks the animation. Show a retry state and
+      // announce the failure instead.
+      setAddState('error');
+      setTimeout(() => setAddState('idle'), 3000);
     }
   };
 
@@ -852,11 +868,11 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
 
   return (
-    <div className={`min-h-screen ${theme.bg} ${theme.text}`}>
+    <div className={`min-h-screen ${theme.bg} ${theme.text} pb-[var(--mobile-dock-h,0px)] md:pb-0`}>
       {/* Header */}
 
       {/* Main Content - Split Layout - Extra bottom padding on mobile for sticky button */}
-      <div className="pt-6 md:pt-10 pb-32 md:pb-20">
+      <div className="pt-6 md:pt-10 pb-16 md:pb-20">
         <div className="max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 md:px-24">
           {/* Left: Product Images */}
           <div className="space-y-4">
@@ -1063,7 +1079,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     {TERRITORY_NAMES[territory] || territory}
                   </span>
                 </div>
-                <p className="font-serif text-sm md:text-base opacity-70">
+                <p className="font-serif text-base opacity-70">
                   {territoryTagline}
                 </p>
               </div>
@@ -1148,10 +1164,11 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 <div className="group flex flex-col gap-3">
                   <button
                     onClick={() => setShowMap(!showMap)}
-                    className="flex items-center gap-4 text-left hover:opacity-80 transition-opacity"
+                    aria-expanded={showMap}
+                    className="w-full min-h-11 flex items-center gap-4 text-left hover:opacity-80 transition-opacity"
                   >
                     {/* Elegant circular indicator */}
-                    <div className={`w-10 h-10 border flex items-center justify-center transition-all ${showMap
+                    <div className={`w-11 h-11 shrink-0 border flex items-center justify-center transition-all ${showMap
                       ? 'border-theme-gold bg-theme-gold/5'
                       : 'border-theme-charcoal/20 bg-theme-charcoal/[0.02]'
                       }`}>
@@ -1214,7 +1231,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   <div className="group flex flex-col gap-3">
                     <button
                       onClick={() => setShowMap(!showMap)}
-                      className="flex flex-col gap-1 items-start font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-theme-gold transition-all"
+                      aria-expanded={showMap}
+                      className="min-h-11 justify-center flex flex-col gap-1 items-start font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-theme-gold transition-all"
                     >
                       <div className="flex items-center gap-2">
                         <MapPin weight="thin" className={`w-4 h-4 transition-transform ${showMap ? 'scale-110 text-theme-gold' : ''}`} />
@@ -1287,8 +1305,9 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   whileHover={{ backgroundColor: isRelic ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-3 transition-colors"
+                  className="w-12 h-12 flex items-center justify-center transition-colors disabled:opacity-40"
                   disabled={quantity <= 1}
+                  aria-label="Decrease quantity"
                 >
                   <Minus weight="thin" className="w-4 h-4" />
                 </motion.button>
@@ -1299,7 +1318,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   whileHover={{ backgroundColor: isRelic ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setQuantity(quantity + 1)}
-                  className="px-4 py-3 transition-colors"
+                  className="w-12 h-12 flex items-center justify-center transition-colors"
+                  aria-label="Increase quantity"
                 >
                   <Plus weight="thin" className="w-4 h-4" />
                 </motion.button>
@@ -1315,7 +1335,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               whileHover={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
               whileTap={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
               className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${!isOutOfStock
-                ? isAdding
+                ? addState === 'added'
                   ? "bg-theme-gold text-theme-obsidian"
                   : product.shopifyVariantId
                     ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90"
@@ -1324,29 +1344,33 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 }`}
             >
               <AnimatePresence mode="wait">
-                {isAdding ? (
+                {addState === 'added' ? (
                   <motion.div
-                    key="adding"
+                    key="added"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -20, opacity: 0 }}
                     className="flex items-center gap-2"
                   >
-                    <Check weight="thin" className="w-5 h-5" />
+                    <Check weight="bold" className="w-5 h-5" />
                     <span>Added</span>
                   </motion.div>
                 ) : (
                   <motion.span
-                    key="add"
+                    key={addState}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {isOutOfStock
-                      ? "Out of Stock"
-                      : !product.shopifyVariantId
-                        ? "Not Connected to Shopify"
-                        : "Add to Satchel"}
+                    {addState === 'adding'
+                      ? "Adding\u2026"
+                      : addState === 'error'
+                        ? "Not added. Try again"
+                        : isOutOfStock
+                          ? "Out of Stock"
+                          : !product.shopifyVariantId
+                            ? "Not Connected to Shopify"
+                            : "Add to Satchel"}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -1385,7 +1409,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             {/* Gift Option */}
             <motion.button
               whileHover={{ x: 5 }}
-              className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-all hover:text-theme-gold"
+              className="flex items-center gap-2 min-h-11 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-all hover:text-theme-gold"
             >
               <Gift weight="thin" className="w-4 h-4" />
               Make it a gift
@@ -1612,106 +1636,127 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
       <GlobalFooter theme={theme.footerTheme} hideQuiz={isRelic} />
 
-      {/* Mobile Sticky Add to Satchel Bar - Full bottom dock with background for compass/satchel */}
-      <div className={`fixed bottom-0 left-0 right-0 z-40 md:hidden ${theme.bg} border-t ${theme.border} ${theme.shadow}`}>
-        {/* Main content area */}
-        <div className="max-w-[1800px] mx-auto px-4 py-3 pb-20">
-          <div className="flex items-center gap-3">
-            {/* Price & Variant Display - More compact */}
-            <div className="flex-shrink-0 min-w-[70px]">
-              <div className="text-xl font-serif tracking-tighter">
+      {/* Mobile Sticky Add to Satchel Bar. Two rows so every control is at
+          least 44px; its height is published as --mobile-dock-h so the corner
+          compass sits above it rather than inside it. */}
+      <div
+        ref={dockRef}
+        className={`fixed bottom-0 left-0 right-0 z-40 md:hidden ${theme.bg} border-t ${theme.border} ${theme.shadow} pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]`}
+      >
+        <div className="px-4 py-3 space-y-2">
+          {/* Price and size */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-baseline gap-2 min-w-0">
+              <span className="text-2xl font-serif tracking-tighter">
                 ${currentPrice || 0}
-              </div>
-              {isAtlas && territoryPricing ? (
-                <div className="flex gap-1 mt-0.5">
-                  {sizeOptions.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => setSelectedVariant(size)}
-                      className={`font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 border transition-all ${selectedVariant === size
-                        ? isRelic ? 'border-theme-alabaster bg-theme-alabaster text-theme-obsidian' : 'border-theme-charcoal bg-theme-charcoal text-theme-alabaster'
-                        : isRelic ? 'border-white/20' : 'border-theme-charcoal/20'
-                        }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              ) : product.volume ? (
-                <div className="font-mono text-[10px] uppercase tracking-widest opacity-80">
+              </span>
+              {!(isAtlas && territoryPricing) && product.volume && (
+                <span className="font-mono text-xs uppercase tracking-widest opacity-80 truncate">
                   {product.volume}
-                </div>
-              ) : null}
-            </div>
-
-            {/* Quantity & Add Button - More compact */}
-            <div className="flex-1 flex items-center gap-2">
-              {/* Quantity Selector - Compact */}
-              <div className={`flex items-center border ${isRelic ? 'border-white/20' : 'border-theme-charcoal/20'}`}>
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className={`px-2 py-1.5 ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors`}
-                  disabled={quantity <= 1}
-                >
-                  <Minus weight="thin" className="w-3 h-3" />
-                </button>
-                <span className="px-2 py-1.5 font-mono text-xs tabular-nums min-w-[1.5rem] text-center">
-                  {quantity}
                 </span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className={`px-2 py-1.5 ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors`}
-                >
-                  <Plus weight="thin" className="w-3 h-3" />
-                </button>
+              )}
+            </div>
+            {isAtlas && territoryPricing && (
+              <div className="flex" role="group" aria-label="Size">
+                {sizeOptions.map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => setSelectedVariant(size)}
+                    aria-pressed={selectedVariant === size}
+                    className={`min-w-[52px] h-11 px-2 -ml-px first:ml-0 font-mono text-xs uppercase tracking-wider border transition-colors ${selectedVariant === size
+                      ? isRelic ? 'relative z-10 border-theme-alabaster bg-theme-alabaster text-theme-obsidian' : 'relative z-10 border-theme-charcoal bg-theme-charcoal text-theme-alabaster'
+                      : isRelic ? 'border-white/30' : 'border-theme-charcoal/30'
+                      }`}
+                  >
+                    {size}
+                  </button>
+                ))}
               </div>
+            )}
+          </div>
 
-              {/* Add to Satchel Button */}
+          {/* Quantity and add */}
+          <div className="flex items-stretch gap-2">
+            <div className={`flex items-center border ${isRelic ? 'border-white/30' : 'border-theme-charcoal/30'}`} role="group" aria-label="Quantity">
               <button
-                ref={mobileAddButtonRef}
-                onClick={() => handleAddToSatchel('mobile')}
-                disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
-                className={`flex-1 py-3 font-mono text-xs uppercase tracking-[0.3em] transition-all relative overflow-hidden ${!isOutOfStock
-                  ? isAdding
-                    ? "bg-theme-gold text-theme-obsidian"
-                    : product.shopifyVariantId
-                      ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90 active:bg-theme-alabaster/80" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90 active:bg-theme-charcoal/80"
-                      : isRelic ? "bg-white/40 text-white/60 cursor-not-allowed" : "bg-theme-charcoal/40 text-theme-alabaster/60 cursor-not-allowed"
-                  : isRelic ? "bg-white/20 text-white/40 cursor-not-allowed" : "bg-theme-charcoal/20 text-theme-charcoal/40 cursor-not-allowed"
-                  }`}
+                type="button"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className={`w-11 h-12 flex items-center justify-center ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors disabled:opacity-40`}
+                disabled={quantity <= 1}
+                aria-label="Decrease quantity"
               >
-                <AnimatePresence mode="wait">
-                  {isAdding ? (
-                    <motion.div
-                      key="adding-mobile"
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -20, opacity: 0 }}
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <Check weight="thin" className="w-4 h-4" />
-                      <span>Added</span>
-                    </motion.div>
-                  ) : (
-                    <motion.span
-                      key="add-mobile"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      {isOutOfStock
-                        ? "Out of Stock"
-                        : !product.shopifyVariantId
-                          ? "Not Connected"
-                          : "Add to Satchel"}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
+                <Minus weight="thin" className="w-4 h-4" />
+              </button>
+              <span className="w-7 font-mono text-sm tabular-nums text-center">
+                {quantity}
+              </span>
+              <button
+                type="button"
+                onClick={() => setQuantity(quantity + 1)}
+                className={`w-11 h-12 flex items-center justify-center ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors`}
+                aria-label="Increase quantity"
+              >
+                <Plus weight="thin" className="w-4 h-4" />
               </button>
             </div>
+
+            <button
+              ref={mobileAddButtonRef}
+              type="button"
+              onClick={() => handleAddToSatchel('mobile')}
+              disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
+              className={`flex-1 h-12 px-2 font-mono text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden ${!isOutOfStock
+                ? addState === 'added'
+                  ? "bg-theme-gold text-theme-obsidian"
+                  : product.shopifyVariantId
+                    ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90 active:bg-theme-alabaster/80" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90 active:bg-theme-charcoal/80"
+                    : isRelic ? "bg-white/40 text-white/60 cursor-not-allowed" : "bg-theme-charcoal/40 text-theme-alabaster/60 cursor-not-allowed"
+                : isRelic ? "bg-white/20 text-white/40 cursor-not-allowed" : "bg-theme-charcoal/20 text-theme-charcoal/40 cursor-not-allowed"
+                }`}
+            >
+              <AnimatePresence mode="wait">
+                {addState === 'added' ? (
+                  <motion.div
+                    key="added-mobile"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -20, opacity: 0 }}
+                    className="flex items-center justify-center gap-2"
+                  >
+                    <Check weight="bold" className="w-4 h-4" />
+                    <span>Added</span>
+                  </motion.div>
+                ) : (
+                  <motion.span
+                    key={`${addState}-mobile`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {addState === 'adding'
+                      ? "Adding\u2026"
+                      : addState === 'error'
+                        ? "Try again"
+                        : isOutOfStock
+                          ? "Out of Stock"
+                          : !product.shopifyVariantId
+                            ? "Not Connected"
+                            : "Add to Satchel"}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Failure is announced; success is announced by the Satchel toast. */}
+      <p role="alert" className="sr-only">
+        {addState === 'error'
+          ? `${product.title} could not be added to your Satchel. Please try again.`
+          : ''}
+      </p>
     </div>
   );
 }

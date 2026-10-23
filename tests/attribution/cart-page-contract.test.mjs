@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 
 const cartPage = await readFile('src/app/(site)/cart/page.tsx', 'utf8');
 const cartContext = await readFile('src/context/ShopifyCartContext.tsx', 'utf8');
+// Shared by the Satchel page and the add-to-satchel confirmation
+const checkoutHandoff = await readFile('src/Hooks/useCheckoutHandoff.ts', 'utf8');
 const productPage = await readFile(
   'src/app/(site)/product/[slug]/ProductDetailClient.tsx',
   'utf8',
@@ -21,6 +23,7 @@ test('cart page has no arbitrary redirect or hardcoded checkout rewrite', () => 
     /const shopifyDomain\s*=\s*['"]vasana-perfumes/,
   );
   assert.match(cartPage, /getAttributedCheckoutUrl/);
+  assert.match(checkoutHandoff, /getAttributedCheckoutUrl/);
   assert.match(cartPage, /<a[\s\S]*href=\{safeCheckoutUrl\}/);
 });
 
@@ -28,7 +31,8 @@ test('the storefront emits all four confirmed GA4 funnel events', () => {
   assert.match(productPage, /trackViewItem/);
   assert.match(cartContext, /trackAddToCart/);
   assert.match(cartPage, /trackViewCart/);
-  assert.match(cartPage, /trackBeginCheckout/);
+  assert.match(checkoutHandoff, /trackBeginCheckout/);
+  assert.match(cartPage, /handleBeginCheckout/);
 });
 
 test('checkout is unavailable until cart attribution synchronization finishes', () => {

@@ -6,9 +6,11 @@ import { CompassCurator } from './CompassCurator';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { GhostLabels } from '@/components/ui/GhostLabels';
 import { Satchel } from '@/components/cart/Satchel';
+import { SatchelToast } from '@/components/cart/SatchelToast';
 import { ReactNode, useEffect, useState, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useChat } from "@/context/ChatContext";
+import { useOverlay } from "@/context/OverlayContext";
 
 interface CompassProviderProps {
   children: ReactNode;
@@ -20,7 +22,8 @@ interface CompassProviderProps {
  * Manages the compass position across pages and integrates:
  * - RealisticCompass (bottom-right navigation)
  * - CompassCurator (AI chat interface)
- * - Satchel (bottom-left cart)
+ * - Satchel (bottom-left cart, desktop; phones use the masthead Satchel)
+ * - SatchelToast ("Added to Satchel" confirmation)
  * - GhostLabels (first-visit hints including "Ask the Curator")
  * - CustomCursor (branded cursor)
  * 
@@ -44,6 +47,7 @@ export function CompassProvider({ children }: CompassProviderProps) {
   const [compassPosition, setCompassPosition] = useState({ x: 0, y: 0 });
   
   const { isChatOpen } = useChat();
+  const { menuOpen } = useOverlay();
 
   // Page detection
   const isSplitEntryPage = pathname === '/';
@@ -171,9 +175,13 @@ export function CompassProvider({ children }: CompassProviderProps) {
         <Satchel theme={currentTheme} />
       )}
 
-      {/* Corner Compass with fade transition */}
+      <SatchelToast />
+
+      {/* Corner Compass with fade transition. Steps aside for the menu drawer;
+          on phones also for the full-screen concierge and on the Satchel page,
+          where it would sit over Secure Checkout. */}
       <AnimatePresence>
-        {showCornerCompass && !curatorOpen && (
+        {showCornerCompass && !curatorOpen && !menuOpen && (
           <motion.div
             initial={{ opacity: 0, x: 0 }}
             animate={{ 
@@ -185,7 +193,7 @@ export function CompassProvider({ children }: CompassProviderProps) {
               duration: 0.5, 
               ease: [0.85, 0, 0.15, 1] // Synced with ChatPanel slide animation
             }}
-            className="fixed z-[2999] pointer-events-none"
+            className={`fixed z-[2999] pointer-events-none ${isChatOpen || isCartPage ? 'max-md:hidden' : ''}`}
           >
             <RealisticCompass
               onNavigate={handleNavigate}

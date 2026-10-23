@@ -27,6 +27,8 @@ interface EssenceDropEventDetail {
  * Satchel - The Gravity Cart Icon
  * 
  * Positioned in the bottom-left corner as a counterweight to the Compass.
+ * Desktop only: on phones the masthead Satchel icon is always in view, and a
+ * second floating bubble covered page and menu content.
  * Items "drop" down into it with physics-based animations.
  * 
  * Features:
@@ -60,11 +62,16 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
 
   // Get satchel position for the essence drop endpoint
   const getSatchelPosition = useCallback(() => {
-    if (!satchelRef.current) {
-      // Default position if ref not available
+    // The bubble is hidden on phones; land the drop on the masthead Satchel instead.
+    const target =
+      satchelRef.current?.offsetParent
+        ? satchelRef.current
+        : document.querySelector<HTMLElement>('[data-satchel-target]');
+    if (!target) {
+      // Default position if neither is available
       return { x: 40, y: window.innerHeight - 40 };
     }
-    const rect = satchelRef.current.getBoundingClientRect();
+    const rect = target.getBoundingClientRect();
     return {
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2,
@@ -155,7 +162,7 @@ export const Satchel: React.FC<SatchelProps> = ({ theme = 'atlas' }) => {
       )}
 
       {/* Satchel Icon */}
-      <div className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-[2999]">
+      <div className="hidden md:block fixed bottom-6 left-6 z-[2999]">
         <SatchelImpact isImpacting={isImpacting}>
           <motion.button
             ref={satchelRef}

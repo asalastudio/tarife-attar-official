@@ -1,19 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ShoppingBag, Trash, ArrowSquareOut, BookmarkSimple, Check } from "@phosphor-icons/react";
 import { useAnalytics, useAttribution, usePrivacy, useShopifyCart } from "@/context";
 import { GlobalFooter } from "@/components/navigation";
-import { getAttributedCheckoutUrl } from "@/lib/attribution/checkout-url";
-import { buildShopifyCatalogContentId } from "@/lib/analytics/meta";
+import { allowedCheckoutHosts, getAttributedCheckoutUrl } from "@/lib/attribution/checkout-url";
+import { useCheckoutHandoff } from "@/Hooks/useCheckoutHandoff";
 
-const ALLOWED_CHECKOUT_HOSTS = [
-  process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN,
-  process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN,
-].filter((host): host is string => Boolean(host));
+const ALLOWED_CHECKOUT_HOSTS = allowedCheckoutHosts();
 
 const INVALID_CHECKOUT_ERROR =
   'Secure checkout is unavailable. Please refresh and try again.';
@@ -25,7 +22,6 @@ export default function CartPage() {
   const {
     ready: analyticsReady,
     trackViewCart,
-    trackBeginCheckout,
   } = useAnalytics();
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [showSaveCart, setShowSaveCart] = useState(false);
@@ -47,45 +43,13 @@ export default function CartPage() {
     clearCart
   } = useShopifyCart();
 
-  const commerceItems = useMemo(
-    () =>
-      items.map((item) => {
-        const metaContentId = buildShopifyCatalogContentId(
-          item.productId,
-          item.variantId,
-          process.env.NEXT_PUBLIC_META_CATALOG_COUNTRY || 'US',
-        );
-        return {
-          item_id: item.variantId,
-          item_name: item.title,
-          ...(metaContentId ? { meta_content_id: metaContentId } : {}),
-          ...(item.variantTitle
-            ? { item_variant: item.variantTitle }
-            : {}),
-          price: Number(item.price),
-          quantity: item.quantity,
-        };
-      }),
-    [items],
-  );
-  const commerceCurrency = items[0]?.currencyCode || 'USD';
-  const cartFingerprint = useMemo(
-    () =>
-      commerceItems
-        .map(
-          (item) =>
-            `${encodeURIComponent(item.item_id)}:${item.quantity}:${item.price}`,
-        )
-        .sort()
-        .join('|'),
-    [commerceItems],
-  );
-  const safeCheckoutUrl = getAttributedCheckoutUrl(
-    checkoutUrl,
-    ALLOWED_CHECKOUT_HOSTS,
-    ledger?.latest ?? null,
-    marketingAllowed,
-  );
+  const {
+    commerceItems,
+    commerceCurrency,
+    cartFingerprint,
+    safeCheckoutUrl,
+    handleBeginCheckout,
+  } = useCheckoutHandoff();
 
   // Handle direct checkout URL from abandoned cart emails
   useEffect(() => {
@@ -180,15 +144,6 @@ export default function CartPage() {
     }
   };
 
-  const handleBeginCheckout = () => {
-    if (!analyticsReady || !cartFingerprint) return;
-    trackBeginCheckout(
-      commerceItems,
-      commerceCurrency,
-      cartFingerprint,
-    );
-  };
-
   return (
     <div className="min-h-screen bg-theme-alabaster text-theme-charcoal flex flex-col">
       {/* Header */}
@@ -196,7 +151,7 @@ export default function CartPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 md:gap-3 font-mono text-[10px] uppercase tracking-[0.3em] md:tracking-widest opacity-40 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 md:gap-3 min-h-11 -ml-1 px-1 font-mono text-[10px] uppercase tracking-[0.3em] md:tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="hidden sm:inline">Return to Gallery</span>
@@ -283,7 +238,7 @@ export default function CartPage() {
                             </p>
                           </div>
                           {item.variantTitle && (
-                            <p className="font-mono text-[10px] uppercase tracking-widest opacity-40 mb-3 md:mb-4">
+                            <p className="font-mono text-[10px] uppercase tracking-widest opacity-60 mb-3 md:mb-4">
                               {item.variantTitle}
                             </p>
                           )}
@@ -291,24 +246,27 @@ export default function CartPage() {
                             <div className="flex items-center border border-theme-charcoal/20">
                               <button
                                 onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
-                                className="px-2 md:px-3 py-1 font-mono text-sm hover:bg-theme-charcoal/5 transition-colors"
+                                className="w-11 h-11 flex items-center justify-center font-mono text-base hover:bg-theme-charcoal/5 transition-colors"
                                 disabled={isLoading}
+                                aria-label={`Decrease quantity of ${item.title}`}
                               >
                                 −
                               </button>
-                              <span className="px-3 md:px-4 py-1 font-mono text-sm min-w-[2.5rem] text-center">{item.quantity}</span>
+                              <span className="px-2 md:px-3 font-mono text-sm min-w-[2.5rem] text-center">{item.quantity}</span>
                               <button
                                 onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
-                                className="px-2 md:px-3 py-1 font-mono text-sm hover:bg-theme-charcoal/5 transition-colors"
+                                className="w-11 h-11 flex items-center justify-center font-mono text-base hover:bg-theme-charcoal/5 transition-colors"
                                 disabled={isLoading}
+                                aria-label={`Increase quantity of ${item.title}`}
                               >
                                 +
                               </button>
                             </div>
                             <button
                               onClick={() => removeItem(item.id)}
-                              className="flex items-center gap-1.5 md:gap-2 font-mono text-[9px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
+                              className="flex items-center gap-1.5 md:gap-2 min-h-11 px-2 -mx-2 font-mono text-[9px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                               disabled={isLoading}
+                              aria-label={`Remove ${item.title}`}
                             >
                               <Trash weight="thin" className="w-3 h-3" />
                               Remove
@@ -322,7 +280,7 @@ export default function CartPage() {
                   <div className="flex justify-between items-center pt-4">
                     <button
                       onClick={clearCart}
-                      className="font-mono text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
+                      className="min-h-11 px-2 -mx-2 font-mono text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                       disabled={isLoading}
                     >
                       Clear Satchel
@@ -415,7 +373,7 @@ export default function CartPage() {
                               Save for Later
                             </span>
                           </div>
-                          <p className="font-serif text-sm text-theme-charcoal/70 mb-4">
+                          <p className="font-serif text-base md:text-sm text-theme-charcoal/70 mb-4">
                             Not ready? Save your satchel and we'll remind you.
                           </p>
                           <form onSubmit={handleSaveCart} className="space-y-3">
@@ -425,10 +383,9 @@ export default function CartPage() {
                               onChange={(e) => setSaveCartEmail(e.target.value)}
                               placeholder="your@email.com"
                               required
-                              className="w-full px-4 py-3 rounded-lg border border-theme-charcoal/10 bg-white/80 font-serif text-sm focus:outline-none focus:border-theme-gold/50"
-                                  style={{ fontSize: '16px' }}
+                              className="w-full px-4 py-3 rounded-lg border border-theme-charcoal/10 bg-white/80 font-serif text-base focus:outline-none focus:border-theme-gold/50"
                                 />
-                                <label className="flex items-start gap-2 font-serif text-xs leading-relaxed text-theme-charcoal/60">
+                                <label className="flex items-start gap-2 font-serif text-base md:text-xs leading-relaxed text-theme-charcoal/70">
                                   <input
                                     type="checkbox"
                                     checked={marketingConsent}
@@ -440,7 +397,7 @@ export default function CartPage() {
                                   </span>
                                 </label>
                                 {saveCartError && (
-                                  <p role="alert" className="text-xs leading-relaxed text-red-700">
+                                  <p role="alert" className="text-sm md:text-xs leading-relaxed text-red-700">
                                     {saveCartError}
                                   </p>
                                 )}
@@ -470,7 +427,7 @@ export default function CartPage() {
                           <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-green-100 flex items-center justify-center">
                             <Check weight="thin" className="w-5 h-5 text-green-600" />
                           </div>
-                          <p className="font-serif text-sm text-green-800">
+                          <p className="font-serif text-base md:text-sm text-green-800">
                             Satchel saved! We'll send you a reminder.
                           </p>
                         </motion.div>

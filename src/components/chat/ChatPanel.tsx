@@ -199,14 +199,16 @@ export function ChatPanel() {
       initial={false}
       animate={{ x: isChatOpen ? 0 : "100%" }}
       transition={{ duration: 0.5, ease: [0.85, 0, 0.15, 1] }}
-      className="fixed top-0 right-0 bottom-0 w-[400px] bg-theme-alabaster border-l border-theme-charcoal/10 shadow-2xl z-50 flex flex-col"
+      className="fixed top-0 right-0 bottom-0 w-full md:w-[400px] bg-theme-alabaster border-l border-theme-charcoal/10 shadow-2xl z-50 flex flex-col pt-[env(safe-area-inset-top)]"
     >
-      {/* ─── Protruding Tab ─── */}
+      {/* ─── Protruding Tab (desktop; phones open the concierge from the menu
+           or the compass, so nothing floats over page content) ─── */}
       <motion.button
         animate={{ opacity: isChatOpen ? 0 : 1, x: isChatOpen ? 20 : 0 }}
         transition={{ duration: 0.3 }}
         onClick={toggleChat}
-        className={`absolute top-1/2 -translate-y-1/2 -left-12 flex flex-col items-center justify-center w-12 py-6 bg-theme-charcoal text-theme-alabaster rounded-l-md hover:w-14 hover:-left-14 transition-all shadow-xl group border border-r-0 border-theme-charcoal/20 ${
+        aria-label="Open the concierge"
+        className={`absolute top-1/2 -translate-y-1/2 -left-12 hidden md:flex flex-col items-center justify-center w-12 py-6 bg-theme-charcoal text-theme-alabaster rounded-l-md hover:w-14 hover:-left-14 transition-all shadow-xl group border border-r-0 border-theme-charcoal/20 ${
           isChatOpen ? "pointer-events-none" : "cursor-pointer"
         }`}
       >
@@ -228,7 +230,8 @@ export function ChatPanel() {
         </div>
         <button
           onClick={closeChat}
-          className="p-2 hover:bg-theme-charcoal/5 rounded-full transition-colors"
+          className="w-11 h-11 -mr-2 flex items-center justify-center hover:bg-theme-charcoal/5 rounded-full transition-colors"
+          aria-label="Close the concierge"
         >
           <X weight="thin" className="w-5 h-5 opacity-60 hover:opacity-100" />
         </button>
@@ -254,7 +257,7 @@ export function ChatPanel() {
               </div>
             )}
             <div
-              className={`text-[13px] font-serif leading-relaxed text-theme-charcoal/90 px-4 py-3 max-w-[85%] ${
+              className={`text-base md:text-[13px] font-serif leading-relaxed text-theme-charcoal/90 px-4 py-3 max-w-[85%] ${
                 msg.role === "assistant"
                   ? "bg-white border border-theme-charcoal/8 rounded-2xl rounded-tl-sm shadow-sm"
                   : "bg-theme-charcoal/[0.04] border border-theme-charcoal/8 rounded-2xl rounded-tr-sm"
@@ -300,7 +303,7 @@ export function ChatPanel() {
                     <span className="w-6 h-6 rounded-full bg-theme-charcoal/[0.04] flex items-center justify-center shrink-0 group-hover:bg-theme-gold/10 transition-colors">
                       <Icon weight="thin" className="w-3.5 h-3.5 text-theme-charcoal/50 group-hover:text-theme-gold transition-colors" />
                     </span>
-                    <span className="font-serif text-[12px] text-theme-charcoal/70 group-hover:text-theme-charcoal transition-colors">
+                    <span className="font-serif text-base md:text-[12px] text-theme-charcoal/70 group-hover:text-theme-charcoal transition-colors">
                       {chip.label}
                     </span>
                   </button>
@@ -323,7 +326,7 @@ export function ChatPanel() {
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div>
                   <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-theme-gold">Leave a message for the team</p>
-                  <p className="font-serif text-[12px] text-theme-charcoal/60 mt-1">A person replies by email, usually within one business day. Your conversation here is attached.</p>
+                  <p className="font-serif text-base md:text-[12px] text-theme-charcoal/70 mt-1">A person replies by email, usually within one business day. Your conversation here is attached.</p>
                 </div>
                 <button
                   type="button"
@@ -342,7 +345,7 @@ export function ChatPanel() {
                   placeholder="Your name"
                   value={handoff.name}
                   onChange={(e) => setHandoff({ ...handoff, name: e.target.value })}
-                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
                 />
                 <input
                   id="handoff-email"
@@ -351,7 +354,7 @@ export function ChatPanel() {
                   placeholder="Email"
                   value={handoff.email}
                   onChange={(e) => setHandoff({ ...handoff, email: e.target.value })}
-                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                  className="w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
                 />
                 <input
                   id="handoff-order"
@@ -359,7 +362,7 @@ export function ChatPanel() {
                   placeholder="Order number, if you have one"
                   value={handoff.orderNumber}
                   onChange={(e) => setHandoff({ ...handoff, orderNumber: e.target.value })}
-                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
+                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg"
                 />
                 <textarea
                   id="handoff-message"
@@ -367,7 +370,7 @@ export function ChatPanel() {
                   placeholder="What can the team help with?"
                   value={handoff.message}
                   onChange={(e) => setHandoff({ ...handoff, message: e.target.value })}
-                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg resize-none"
+                  className="col-span-2 w-full bg-white border border-theme-charcoal/20 px-3 py-2.5 font-serif text-base md:text-[13px] placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold rounded-lg resize-none"
                 />
               </div>
               {handoffState === "error" && (
@@ -414,7 +417,7 @@ export function ChatPanel() {
       </div>
 
       {/* ─── Input Area ─── */}
-      <div className="p-4 border-t border-theme-charcoal/10 bg-white/60 shrink-0">
+      <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-theme-charcoal/10 bg-white/60 shrink-0">
         <div className="relative">
           <input
             ref={inputRef}
@@ -422,7 +425,7 @@ export function ChatPanel() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Ask about scents, orders, or anything..."
-            className="w-full bg-white border border-theme-charcoal/20 px-4 py-3.5 pr-12 font-serif text-sm placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold focus:ring-1 focus:ring-theme-gold/30 rounded-full shadow-sm"
+            className="w-full bg-white border border-theme-charcoal/20 px-4 py-3.5 pr-14 font-serif text-base md:text-sm placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold focus:ring-1 focus:ring-theme-gold/30 rounded-full shadow-sm"
             onKeyDown={(e) => {
               if (e.key === "Enter" && message.trim() && !isSending) {
                 e.preventDefault();
@@ -433,7 +436,8 @@ export function ChatPanel() {
           <button
             onClick={() => handleSend()}
             disabled={isSending || !message.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-theme-charcoal text-theme-gold rounded-full flex items-center justify-center hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Send"
+            className="absolute right-1 top-1/2 -translate-y-1/2 w-11 h-11 bg-theme-charcoal text-theme-gold rounded-full flex items-center justify-center hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSending ? (
               <CircleNotch weight="thin" className="w-4 h-4 animate-spin" />
@@ -445,7 +449,7 @@ export function ChatPanel() {
         <button
           type="button"
           onClick={openHandoff}
-          className="mt-3 w-full flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/40 hover:text-theme-gold transition-colors"
+          className="mt-1 w-full min-h-11 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/60 hover:text-theme-gold transition-colors"
         >
           <EnvelopeSimple weight="thin" className="w-3 h-3" />
           Leave a message for the team

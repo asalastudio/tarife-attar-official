@@ -45,6 +45,16 @@ interface CartItem {
   image?: string;
 }
 
+/** The most recent successful add, for the "Added to Satchel" confirmation. */
+export interface SatchelAddition {
+  /** Increments on every add so repeat adds of the same item re-announce. */
+  id: number;
+  title: string;
+  variantTitle?: string;
+  quantity: number;
+  image?: string;
+}
+
 interface ShopifyCartLineNode {
   id: string;
   quantity: number;
@@ -92,6 +102,8 @@ interface ShopifyCartContextType {
   isLoading: boolean;
   error: string | null;
   addItem: (variantId: string, quantity: number) => Promise<void>;
+  lastAdded: SatchelAddition | null;
+  dismissLastAdded: () => void;
   updateItemQuantity: (lineId: string, quantity: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
   clearCart: () => Promise<void>;
@@ -119,6 +131,8 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
   const [cart, setCart] = useState<ShopifyCart | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastAdded, setLastAdded] = useState<SatchelAddition | null>(null);
+  const dismissLastAdded = useCallback(() => setLastAdded(null), []);
   const initializationStartedRef = useRef(false);
   const syncAttemptRef = useRef<string | null>(null);
 
@@ -266,6 +280,17 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       const addedLine = payload.cart.lines.edges.find(
         ({ node }) => node.merchandise.id === formattedVariantId,
       )?.node;
+      if (addedLine) {
+        setLastAdded((previous) => ({
+          id: (previous?.id ?? 0) + 1,
+          title: addedLine.merchandise.product.title,
+          variantTitle: addedLine.merchandise.title,
+          quantity,
+          image:
+            addedLine.merchandise.image?.url ||
+            addedLine.merchandise.product.featuredImage?.url,
+        }));
+      }
       const addedPrice = Number(addedLine?.merchandise.price?.amount);
       if (addedLine && Number.isFinite(addedPrice) && addedPrice >= 0) {
         void trackShopifyEvent({cartId: payload.cart.id, product: {
@@ -431,6 +456,8 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
         isLoading,
         error,
         addItem,
+        lastAdded,
+        dismissLastAdded,
         updateItemQuantity,
         removeItem,
         clearCart,

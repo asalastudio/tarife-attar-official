@@ -91,7 +91,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               >
                 TARIFÉ ATTÄR
               </h2>
-              <span className="text-[9px] md:text-[10px] font-mono tracking-[0.6em] uppercase opacity-40">
+              <span className="text-[9px] md:text-[10px] font-mono tracking-[0.4em] md:tracking-[0.6em] uppercase opacity-70">
                 Modern Apothecary
               </span>
             </motion.div>
@@ -101,7 +101,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-serif text-base sm:text-lg md:text-xl opacity-40 leading-relaxed max-w-sm"
+              className="font-serif text-base sm:text-lg md:text-xl opacity-70 leading-relaxed max-w-sm"
             >
               Clean, skin-safe perfume oils for those who travel by scent.
             </motion.p>
@@ -116,9 +116,9 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               >
                 <Link 
                   href="/quiz"
-                  className={`group inline-flex items-center gap-3 py-3 px-5 border ${isDark ? 'border-theme-gold/30 hover:border-theme-gold hover:bg-theme-gold/10' : 'border-theme-charcoal/20 hover:border-theme-charcoal hover:bg-theme-charcoal/5'} transition-all duration-300`}
+                  className={`group inline-flex flex-wrap items-center gap-x-3 gap-y-1 min-h-11 py-2.5 px-5 border ${isDark ? 'border-theme-gold/30 hover:border-theme-gold hover:bg-theme-gold/10' : 'border-theme-charcoal/20 hover:border-theme-charcoal hover:bg-theme-charcoal/5'} transition-all duration-300`}
                 >
-                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] opacity-60 group-hover:opacity-100">
+                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] opacity-80 group-hover:opacity-100">
                     Not sure where to start?
                   </span>
                   <span className={`font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] ${isDark ? 'text-theme-gold' : 'text-theme-charcoal'} font-medium`}>
@@ -133,13 +133,13 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-[9px] uppercase tracking-widest opacity-20"
+              className="flex flex-wrap gap-x-6 md:gap-x-8 font-mono text-[9px] uppercase tracking-widest opacity-70"
             >
               {utilityLinks.map((link) => (
                 <Link 
                   key={link.href} 
                   href={link.href} 
-                  className={`${hoverClass} transition-opacity duration-300`}
+                  className={`${hoverClass} inline-flex items-center min-h-11 transition-opacity duration-300`}
                 >
                   {link.label}
                 </Link>
@@ -155,15 +155,15 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-3 space-y-6 md:space-y-8 w-full"
           >
-            <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-20">
+            <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-70">
               Navigation
             </h3>
-            <ul className="space-y-4 font-serif text-base sm:text-lg opacity-60">
+            <ul className="space-y-1 md:space-y-2 font-serif text-base sm:text-lg opacity-80">
               {navigationLinks.map((link) => (
                 <li key={link.href}>
                   <Link 
                     href={link.href} 
-                    className={`${hoverClass} hover:tracking-tighter transition-all duration-300 inline-block`}
+                    className={`${hoverClass} hover:tracking-tighter transition-all duration-300 inline-flex items-center min-h-11`}
                   >
                     {link.label}
                   </Link>
@@ -180,11 +180,11 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-4 space-y-6 md:space-y-8 w-full"
           >
-            <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-20">
+            <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-70">
               Stay Connected
             </h3>
             <div className="space-y-6">
-              <p className="font-serif text-sm sm:text-base opacity-40">
+              <p className="font-serif text-base opacity-70">
                 New territories, limited releases, and scent journeys, delivered to your inbox.
               </p>
               
@@ -204,7 +204,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     required
-                    className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-mono text-[11px] uppercase tracking-widest outline-none transition-colors placeholder:opacity-30 placeholder:normal-case placeholder:tracking-normal`}
+                    className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-mono text-base md:text-[11px] uppercase tracking-[0.08em] md:tracking-widest outline-none transition-colors placeholder:opacity-60 placeholder:normal-case placeholder:tracking-normal`}
                   />
                   {subscriptionError && (
                     <p role="alert" className="font-serif text-sm text-red-400">
@@ -214,7 +214,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-all ${isDark ? 'bg-theme-gold/90 text-theme-obsidian hover:bg-theme-gold' : 'bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90'} disabled:opacity-50`}
+                    className={`w-full min-h-12 py-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-all ${isDark ? 'bg-theme-gold/90 text-theme-obsidian hover:bg-theme-gold' : 'bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90'} disabled:opacity-50`}
                   >
                     {isSubmitting ? 'Joining...' : 'Join the Journey'}
                   </button>
@@ -233,7 +233,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
           className={`mt-16 md:mt-32 pt-12 border-t ${borderClass} flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10`}
         >
           {/* GPS & Technical Data */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-4 font-mono text-[8px] uppercase tracking-[0.3em] opacity-20 text-center">
+          <div className="flex flex-wrap justify-center md:justify-start gap-x-6 md:gap-x-8 gap-y-3 font-mono text-[8px] uppercase tracking-[0.2em] md:tracking-[0.3em] opacity-70 text-center">
             <span>Lat: 31.7917° N</span>
             <span>Lon: 7.0926° W</span>
             <span>Batch: ARCH_04_2025</span>
@@ -244,7 +244,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
           </div>
           
           {/* Copyright */}
-          <div className="font-mono text-[8px] uppercase tracking-[0.3em] opacity-10 text-center">
+          <div className="font-mono text-[8px] uppercase tracking-[0.2em] md:tracking-[0.3em] opacity-70 text-center">
             © {new Date().getFullYear()} Tarife Attär: All Specimens Verified Archival Grade
           </div>
         </motion.div>

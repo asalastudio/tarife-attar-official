@@ -25,9 +25,12 @@ test('storefront commerce payloads use Shopify catalog-compatible identifiers', 
     'utf8',
   );
   const cart = await readFile('src/app/(site)/cart/page.tsx', 'utf8');
+  // The Satchel page and the add-to-satchel confirmation share this hook
+  const checkoutHandoff = await readFile('src/Hooks/useCheckoutHandoff.ts', 'utf8');
   const shopify = await readFile('src/lib/shopify/client.ts', 'utf8');
 
   assert.match(product, /buildShopifyCatalogContentId/);
-  assert.match(cart, /buildShopifyCatalogContentId/);
+  assert.match(cart, /useCheckoutHandoff/);
+  assert.match(checkoutHandoff, /buildShopifyCatalogContentId/);
   assert.match(shopify, /product\s*\{\s*id/);
 });

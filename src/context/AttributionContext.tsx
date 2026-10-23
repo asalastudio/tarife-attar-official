@@ -18,6 +18,7 @@ import {
   resolveAttributionForConsent,
   serializeCartAttributes,
 } from '@/lib/attribution/ledger';
+import { allowedCheckoutHosts } from '@/lib/attribution/checkout-url';
 import { usePrivacy } from '@/context/PrivacyContext';
 
 interface AttributionContextValue {
@@ -35,9 +36,8 @@ function configuredHosts(): string[] {
     window.location.hostname,
     'tarifeattar.com',
     'www.tarifeattar.com',
-    process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN,
-    process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN,
-  ].filter((host): host is string => Boolean(host));
+    ...allowedCheckoutHosts(),
+  ];
 }
 
 export function AttributionProvider({

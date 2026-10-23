@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { getSafeCheckoutUrl, getAttributedCheckoutUrl } from '../../src/lib/attribution/checkout-url.ts';
+import { BRAND_CHECKOUT_HOST, allowedCheckoutHosts, getSafeCheckoutUrl, getAttributedCheckoutUrl } from '../../src/lib/attribution/checkout-url.ts';
 
 const hosts = [
   'checkout.tarifeattar.com',
@@ -91,4 +91,32 @@ test('latest campaign replaces stale values without retaining old content fields
 });
 test('unsafe checkout URL stays blocked even with a valid campaign', () => {
   assert.equal(getAttributedCheckoutUrl('https://evil.example', hosts, campaign, true), null);
+});
+
+test('allowlist accepts the branded checkout host before and after the primary-domain switch', () => {
+  const previous = {
+    checkout: process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN,
+    store: process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN,
+  };
+  process.env.NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN = ' vasana-perfumes.myshopify.com , shop.tarifeattar.com ';
+  process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN = 'vasana-perfumes.myshopify.com';
+  try {
+    const allowed = allowedCheckoutHosts();
+    assert.ok(allowed.includes(BRAND_CHECKOUT_HOST));
+    assert.ok(allowed.includes('shop.tarifeattar.com'));
+    assert.ok(allowed.includes('vasana-perfumes.myshopify.com'));
+    assert.equal(
+      getSafeCheckoutUrl(`https://${BRAND_CHECKOUT_HOST}/cart/c/abc?key=secret`, allowed),
+      `https://${BRAND_CHECKOUT_HOST}/cart/c/abc?key=secret`,
+    );
+    assert.equal(getSafeCheckoutUrl('https://evil.example/cart/c/abc', allowed), null);
+  } finally {
+    for (const [key, value] of [
+      ['NEXT_PUBLIC_SHOPIFY_CHECKOUT_DOMAIN', previous.checkout],
+      ['NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN', previous.store],
+    ]) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
 });
