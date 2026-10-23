@@ -41,7 +41,7 @@ export default function Error({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={reset}
-            className="px-8 py-3 bg-theme-alabaster text-theme-charcoal font-mono text-[11px] uppercase tracking-[0.3em] hover:bg-theme-gold transition-colors"
+            className="min-h-11 px-8 py-3 bg-theme-alabaster text-theme-charcoal font-mono text-[11px] uppercase tracking-[0.3em] hover:bg-theme-gold transition-colors"
           >
             Retry Protocol
           </button>

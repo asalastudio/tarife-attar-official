@@ -14,7 +14,7 @@ export default function ConsultPage() {
       <header className="px-6 md:px-24 py-6">
         <button
           onClick={() => router.push("/")}
-          className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
+          className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
         >
           <ArrowLeft weight="thin" className="w-4 h-4" />
           Return to Threshold

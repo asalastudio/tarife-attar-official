@@ -161,7 +161,7 @@ export default function SupportPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-mono text-xs font-medium uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-5 h-5" />
             Return

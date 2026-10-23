@@ -90,7 +90,7 @@ function CustomZoomControl({ isPanelOpen }: { isPanelOpen: boolean }) {
     >
       <button
         onClick={(e) => { stopPropagation(e); map.zoomIn(); }}
-        className="w-8 h-8 flex items-center justify-center text-[#C4A265] hover:bg-[#C4A265]/10 hover:text-[#d4b57e] rounded transition-colors"
+        className="w-11 h-11 md:w-8 md:h-8 flex items-center justify-center text-[#C4A265] hover:bg-[#C4A265]/10 hover:text-[#d4b57e] rounded transition-colors"
         aria-label="Zoom in"
       >
         <Plus weight="thin" size={18} />
@@ -98,7 +98,7 @@ function CustomZoomControl({ isPanelOpen }: { isPanelOpen: boolean }) {
       <div className="w-5 h-px bg-[#C4A265]/20 mx-auto"></div>
       <button
         onClick={(e) => { stopPropagation(e); map.zoomOut(); }}
-        className="w-8 h-8 flex items-center justify-center text-[#C4A265] hover:bg-[#C4A265]/10 hover:text-[#d4b57e] rounded transition-colors"
+        className="w-11 h-11 md:w-8 md:h-8 flex items-center justify-center text-[#C4A265] hover:bg-[#C4A265]/10 hover:text-[#d4b57e] rounded transition-colors"
         aria-label="Zoom out"
       >
         <Minus weight="thin" size={18} />
@@ -188,13 +188,14 @@ export function AtlasMapLeaflet() {
     <div className="w-full h-full relative font-serif text-[#F5F0EB] overflow-hidden">
       {/* Header removed — parent page provides context */}
 
-      {/* Filter Controls */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] flex flex-wrap justify-center gap-2 md:gap-4 bg-[#2a2520]/80 backdrop-blur-md p-2 md:p-3 rounded-full border border-[#C4A265]/20 shadow-2xl">
+      {/* Filter Controls: a single row across the top on phones (centred, it
+          wrapped into a circle over the map), a centred pill bar from md up */}
+      <div className="absolute top-3 left-3 right-3 md:top-auto md:right-auto md:bottom-8 md:left-1/2 md:-translate-x-1/2 z-[1000] flex flex-nowrap justify-between md:justify-center gap-1 md:gap-4 overflow-x-auto scrollbar-hide bg-[#2a2520]/80 backdrop-blur-md p-1.5 md:p-3 rounded-full border border-[#C4A265]/20 shadow-2xl">
         {territories.map((t) => (
           <button
             key={t}
             onClick={() => setSelectedTerritory(t)}
-            className={`px-4 py-1.5 rounded-full font-mono text-xs tracking-widest uppercase transition-all duration-300 ${
+            className={`min-h-11 min-w-11 md:min-h-0 md:min-w-0 shrink-0 px-2 md:px-4 py-1.5 rounded-full font-mono text-xs tracking-[0.12em] md:tracking-widest uppercase transition-all duration-300 ${
               selectedTerritory === t
                 ? 'bg-[#C4A265] text-[#1a1714] font-bold shadow-[0_0_15px_rgba(196,162,101,0.4)]'
                 : 'text-[#F5F0EB]/70 hover:text-[#C4A265] hover:bg-white/5'

@@ -88,10 +88,10 @@ export function FieldJournalClient({ entries }: Props) {
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
                     <button
                         onClick={() => router.push('/')}
-                        className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+                        className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                     >
                         <ArrowLeft weight="thin" className="w-4 h-4" />
-                        <span className="hidden sm:inline">Back to Site</span>
+                        <span className="sr-only sm:not-sr-only">Back to Site</span>
                     </button>
                     <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
                         Field Journal
@@ -130,7 +130,7 @@ export function FieldJournalClient({ entries }: Props) {
                             <button
                                 key={territory.id}
                                 onClick={() => setActiveTerritory(territory.id)}
-                                className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.15em] whitespace-nowrap transition-all ${activeTerritory === territory.id
+                                className={`flex items-center gap-2 min-h-11 px-4 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.15em] whitespace-nowrap transition-all ${activeTerritory === territory.id
                                         ? 'bg-theme-charcoal text-theme-alabaster'
                                         : 'bg-theme-charcoal/5 text-theme-charcoal/60 hover:bg-theme-charcoal/10'
                                     }`}

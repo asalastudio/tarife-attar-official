@@ -216,10 +216,10 @@ export function TerritoryQuizClient() {
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
-            <span className="hidden sm:inline">Back to Site</span>
+            <span className="sr-only sm:not-sr-only">Back to Site</span>
           </button>
           
           {!showIntro && !showResult && (
