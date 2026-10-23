@@ -69,11 +69,14 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://monorail-edge.shopifysvc.com https://checkout.tarifeattar.com https://www.google-analytics.com https://*.google-analytics.com https://www.facebook.com https://connect.facebook.net https://api.sentry.io https://*.elevenlabs.io wss://*.elevenlabs.io",
-              "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io",
+              // GA4 now collects on analytics.google.com, www.google.com and
+              // stats.g.doubleclick.net as well as *.google-analytics.com.
+              "connect-src 'self' https://*.sanity.io https://*.myshopify.com https://*.shopifycdn.com https://monorail-edge.shopifysvc.com https://checkout.tarifeattar.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://stats.g.doubleclick.net https://www.facebook.com https://connect.facebook.net https://api.sentry.io https://*.elevenlabs.io wss://*.elevenlabs.io",
+              // The Meta Pixel posts larger events through a hidden iframe form.
+              "frame-src 'self' https://*.myshopify.com https://*.elevenlabs.io https://www.facebook.com",
               "object-src 'none'",
               "base-uri 'self'",
-              "form-action 'self'",
+              "form-action 'self' https://www.facebook.com",
               "frame-ancestors 'self'",
               "upgrade-insecure-requests"
             ].join('; ')

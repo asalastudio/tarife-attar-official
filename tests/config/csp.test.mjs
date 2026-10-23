@@ -46,3 +46,19 @@ test('privacy page exposes consent preferences without disabling cart or checkou
   assert.match(page, /PrivacyPreferencesButton/);
   assert.match(page, /declining[\s\S]*cart[\s\S]*checkout/i);
 });
+
+test('CSP lets GA4 reach every collection host and the Meta Pixel post its form', () => {
+  const directive = (name) => csp.split(';').map((part) => part.trim()).find((part) => part.startsWith(`${name} `)) ?? '';
+  const connect = directive('connect-src');
+  for (const host of [
+    'https://*.google-analytics.com',
+    'https://analytics.google.com',
+    'https://*.analytics.google.com',
+    'https://www.google.com',
+    'https://stats.g.doubleclick.net',
+  ]) {
+    assert.ok(connect.split(' ').includes(host), `connect-src is missing ${host}`);
+  }
+  assert.ok(directive('form-action').split(' ').includes('https://www.facebook.com'));
+  assert.ok(directive('frame-src').split(' ').includes('https://www.facebook.com'));
+});

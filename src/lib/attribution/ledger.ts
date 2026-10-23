@@ -90,6 +90,26 @@ function isHttpUrl(url: URL): boolean {
   return url.protocol === 'https:' || url.protocol === 'http:';
 }
 
+// An untagged visit from a search results page is organic search, reported the
+// way GA4 does (source "google", medium "organic"). Other hosts on the same
+// domain, such as mail.google.com, remain referrals.
+const SEARCH_ENGINES: ReadonlyArray<readonly [RegExp, string]> = [
+  [/^(?:www\.)?google\.(?:com|[a-z]{2}|co\.[a-z]{2}|com\.[a-z]{2})$/, 'google'],
+  [/^(?:www\.)?bing\.com$/, 'bing'],
+  [/^(?:www\.|html\.)?duckduckgo\.com$/, 'duckduckgo'],
+  [/^(?:[a-z]{2}\.)?search\.yahoo\.com$/, 'yahoo'],
+  [/^(?:www\.)?ecosia\.org$/, 'ecosia'],
+  [/^(?:www\.)?yandex\.(?:com|ru)$/, 'yandex'],
+  [/^(?:www\.)?baidu\.com$/, 'baidu'],
+  [/^search\.brave\.com$/, 'brave'],
+  [/^(?:www\.)?startpage\.com$/, 'startpage'],
+  [/^(?:www\.)?qwant\.com$/, 'qwant'],
+];
+
+function searchEngineFor(host: string): string | null {
+  return SEARCH_ENGINES.find(([pattern]) => pattern.test(host))?.[1] ?? null;
+}
+
 function parseExternalReferrer(
   rawReferrer: string,
   ownHosts: Set<string>,
@@ -175,8 +195,9 @@ export function parseInboundTouch(
     touch.utm_source = '(direct)';
     touch.utm_medium = '(none)';
   } else if (!hasCampaignIdentifier && referrer.host) {
-    touch.utm_source = sanitizeString(referrer.host, 255);
-    touch.utm_medium = 'referral';
+    const engine = searchEngineFor(referrer.host);
+    touch.utm_source = engine ?? sanitizeString(referrer.host, 255);
+    touch.utm_medium = engine ? 'organic' : 'referral';
   }
 
   return { touch, qualified };
