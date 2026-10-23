@@ -152,6 +152,8 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
     return null;
   }
 
+  // Desktop only (hidden md:block). On phones the Satchel lives in the masthead,
+  // and these fixed hints would sit on top of the product purchase bar.
   return (
     <AnimatePresence>
       {isVisible && (
@@ -162,7 +164,7 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 10 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className={`fixed z-[2997] pointer-events-none ${compassPosition === 'corner'
+            className={`hidden md:block fixed z-[2997] pointer-events-none ${compassPosition === 'corner'
                 ? 'bottom-6 right-24 md:right-28'
                 : 'bottom-20 left-1/2 -translate-x-1/2'
               }`}
@@ -192,7 +194,7 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
-              className="fixed z-[2997] pointer-events-none bottom-6 left-20 md:left-24"
+              className="hidden md:block fixed z-[2997] pointer-events-none bottom-6 left-20 md:left-24"
             >
               <div className="flex items-center gap-2">
                 <motion.div
@@ -222,7 +224,7 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 5 }}
           transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
-          className="fixed z-[2997] pointer-events-none bottom-[120px] right-6 md:bottom-[110px]"
+          className="hidden md:block fixed z-[2997] pointer-events-none bottom-[120px] right-6 md:bottom-[110px]"
         >
           <motion.div
             animate={{
