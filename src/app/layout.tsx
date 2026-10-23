@@ -75,7 +75,7 @@ export default function RootLayout({
                             sameAs: [INSTAGRAM_URL],
                             contactPoint: {
                                 '@type': 'ContactPoint',
-                                email: 'jordan@tarifeattar.com',
+                                email: 'support@tarifeattar.com',
                                 contactType: 'customer service',
                             },
                         }),

@@ -96,4 +96,5 @@ test('footer and Organization profile link to Instagram, not the old Etsy shop',
   assert.match(footer, /rel="noopener noreferrer"/);
   assert.match(layout, /sameAs: \[INSTAGRAM_URL\]/);
   assert.doesNotMatch(layout, /etsy\.com/);
+  assert.match(layout, /email: 'support@tarifeattar\.com'/);
 });
