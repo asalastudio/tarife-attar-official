@@ -1,4 +1,5 @@
 import { shopifyTrackingHeaders } from '../analytics/shopify-browser.ts';
+import type { OfferVariant } from '../product-structured-data.ts';
 
 /**
  * Shopify Storefront API Client
@@ -20,10 +21,13 @@ async function shopifyFetch({
   query,
   variables = {},
   cache,
+  revalidate,
 }: {
   query: string;
   variables?: ShopifyFetchVariables;
   cache?: RequestCache;
+  /** Seconds to keep a server-side response in Next's data cache. */
+  revalidate?: number;
 }) {
   if (!domain || !accessToken) {
     throw new Error('Shopify configuration missing. Please set NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN');
@@ -35,6 +39,7 @@ async function shopifyFetch({
     const response = await fetch(endpoint, {
       method: 'POST',
       ...(cache ? { cache } : {}),
+      ...(revalidate !== undefined ? { next: { revalidate } } : {}),
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': accessToken!,
@@ -221,4 +226,40 @@ export async function getFeaturedAvailability(handles: string[]) {
     const prices = product.variants.nodes.filter(v => v.availableForSale).map(v => Number(v.price.amount));
     return [{ handle: product.handle, availableForSale: product.availableForSale, price: Math.min(...prices) }];
   });
+}
+
+export const PRODUCT_OFFERS_QUERY = `
+  query ProductOffers($id: ID!) {
+    product(id: $id) {
+      featuredImage { url }
+      variants(first: 10) {
+        nodes { title sku availableForSale price { amount currencyCode } }
+      }
+    }
+  }
+`;
+
+/**
+ * Live sizes, prices and stock for a product's structured data and share tags.
+ * Cached for a minute; returns null when Shopify cannot be reached, so the
+ * page still renders.
+ */
+export async function getProductOffers(
+  productGid: string,
+): Promise<{ variants: OfferVariant[]; featuredImageUrl: string | null } | null> {
+  try {
+    const { data, errors } = await shopifyFetch({
+      query: PRODUCT_OFFERS_QUERY,
+      variables: { id: productGid },
+      revalidate: 60,
+    });
+    const product = data?.product;
+    if (errors?.length || !product) return null;
+    return {
+      variants: product.variants?.nodes ?? [],
+      featuredImageUrl: product.featuredImage?.url ?? null,
+    };
+  } catch {
+    return null;
+  }
 }

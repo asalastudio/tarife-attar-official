@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata, Viewport } from 'next';
+import { INSTAGRAM_URL } from '@/lib/social';
 
 // viewport-fit=cover exposes env(safe-area-inset-*) so the sticky purchase bar,
 // compass and toasts can sit above the iPhone home indicator.
@@ -71,9 +72,7 @@ export default function RootLayout({
                                 '@type': 'Brand',
                                 name: 'Tarife Attar',
                             },
-                            sameAs: [
-                                'https://www.etsy.com/shop/TarifeAttar',
-                            ],
+                            sameAs: [INSTAGRAM_URL],
                             contactPoint: {
                                 '@type': 'ContactPoint',
                                 email: 'jordan@tarifeattar.com',
