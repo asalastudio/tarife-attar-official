@@ -186,7 +186,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                         className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                     >
                         <ArrowLeft weight="thin" className="w-4 h-4" />
-                        <span className="sr-only sm:not-sr-only">Back to Journal</span>
+                        <span className="sr-only sm:not-sr-only">Back to Field Journal</span>
                     </button>
                     <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
                         {categoryInfo?.label || 'Field Journal'}
