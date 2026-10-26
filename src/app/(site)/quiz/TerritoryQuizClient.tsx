@@ -211,8 +211,8 @@ export function TerritoryQuizClient() {
 
   return (
     <div className="min-h-screen bg-theme-alabaster">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] bg-theme-alabaster/80 backdrop-blur-md border-b border-theme-charcoal/5">
+      {/* Section bar, in flow under the site header (it was fixed and covered it) */}
+      <div className="border-b border-theme-charcoal/5">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
@@ -238,10 +238,10 @@ export function TerritoryQuizClient() {
             </div>
           )}
         </div>
-      </header>
+      </div>
 
       {/* Content */}
-      <main className="pt-[calc(5rem+env(safe-area-inset-top))] pb-20 min-h-screen flex flex-col">
+      <main className="pt-2 pb-20 min-h-screen flex flex-col">
         <AnimatePresence mode="wait">
           {/* Intro Screen */}
           {showIntro && (

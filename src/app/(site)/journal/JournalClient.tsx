@@ -68,8 +68,8 @@ export function JournalClient({ entries }: Props) {
 
   return (
     <div className="min-h-screen bg-theme-alabaster text-theme-charcoal">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] bg-theme-alabaster/80 backdrop-blur-md border-b border-theme-charcoal/5">
+      {/* Section bar, in flow under the site header (it was fixed and covered it) */}
+      <div className="border-b border-theme-charcoal/5">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
@@ -82,10 +82,10 @@ export function JournalClient({ entries }: Props) {
             The Journal
           </span>
         </div>
-      </header>
+      </div>
 
       {/* Hero */}
-      <section className="pt-[calc(6rem+env(safe-area-inset-top))] md:pt-[calc(8rem+env(safe-area-inset-top))] pb-12 md:pb-16 px-4 md:px-8">
+      <section className="pt-5 md:pt-12 pb-12 md:pb-16 px-4 md:px-8">
         <div className="max-w-[1400px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
