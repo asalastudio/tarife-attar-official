@@ -178,23 +178,23 @@ export function FieldJournalEntryClient({ entry }: Props) {
 
     return (
         <div className="min-h-screen bg-theme-alabaster text-theme-charcoal">
-            {/* Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] bg-theme-alabaster/80 backdrop-blur-md border-b border-theme-charcoal/5">
+            {/* Section bar, in flow under the site header (it was fixed and covered it) */}
+            <div className="border-b border-theme-charcoal/5">
                 <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
                     <button
                         onClick={() => router.push('/field-journal')}
-                        className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+                        className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
                     >
                         <ArrowLeft weight="thin" className="w-4 h-4" />
-                        <span className="hidden sm:inline">Back to Journal</span>
+                        <span className="sr-only sm:not-sr-only">Back to Field Journal</span>
                     </button>
                     <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
                         {categoryInfo?.label || 'Field Journal'}
                     </span>
                 </div>
-            </header>
+            </div>
 
-            <article className="pt-[calc(6rem+env(safe-area-inset-top))] md:pt-[calc(8rem+env(safe-area-inset-top))]">
+            <article className="pt-5 md:pt-12">
                 {/* Cover Image */}
                 {(() => {
                     if (!entry.coverImage) return null;
