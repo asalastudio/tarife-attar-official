@@ -728,6 +728,9 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const selectedVariantLabel = isAtlas
     ? selectedVariant
     : product.volume || undefined;
+  // Shown on the phone purchase button: whole dollars stay whole, cents only when needed.
+  const lineTotal = (currentPrice || 0) * quantity;
+  const lineTotalLabel = `$${Number.isInteger(lineTotal) ? lineTotal : lineTotal.toFixed(2)}`;
 
   // Wait for the starting size: when 6ml is sold out the page switches to 3ml
   // or 12ml, and firing before that sent one view_item for each size.
@@ -1649,118 +1652,67 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
       <GlobalFooter theme={theme.footerTheme} hideQuiz={isRelic} />
 
-      {/* Mobile Sticky Add to Satchel Bar. Two rows so every control is at
-          least 44px; its height is published as --mobile-dock-h so the corner
-          compass sits above it rather than inside it. */}
+      {/* Mobile Sticky Add to Satchel Bar: one full-width button. Size and
+          quantity are chosen in the page above, so the bar does not repeat
+          them as controls; the button names the chosen size and price so
+          nothing is added blind. Its height is published as --mobile-dock-h
+          so the corner compass sits above it rather than inside it. */}
       <div
         ref={dockRef}
         className={`fixed bottom-0 left-0 right-0 z-40 md:hidden ${theme.bg} border-t ${theme.border} ${theme.shadow} pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]`}
       >
-        <div className="px-4 py-3 space-y-2">
-          {/* Price and size */}
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-baseline gap-2 min-w-0">
-              <span className="text-2xl font-serif tracking-tighter">
-                ${currentPrice || 0}
-              </span>
-              {!(isAtlas && territoryPricing) && product.volume && (
-                <span className="font-mono text-xs uppercase tracking-widest opacity-80 truncate">
-                  {product.volume}
-                </span>
+        <div className="px-4 py-3">
+          <button
+            ref={mobileAddButtonRef}
+            type="button"
+            onClick={() => handleAddToSatchel('mobile')}
+            disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
+            className={`w-full h-14 px-5 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden ${!isOutOfStock
+              ? addState === 'added'
+                ? "bg-theme-gold text-theme-obsidian"
+                : product.shopifyVariantId
+                  ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90 active:bg-theme-alabaster/80" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90 active:bg-theme-charcoal/80"
+                  : isRelic ? "bg-white/40 text-white/60 cursor-not-allowed" : "bg-theme-charcoal/40 text-theme-alabaster/60 cursor-not-allowed"
+              : isRelic ? "bg-white/20 text-white/40 cursor-not-allowed" : "bg-theme-charcoal/20 text-theme-charcoal/40 cursor-not-allowed"
+              }`}
+          >
+            <AnimatePresence mode="wait">
+              {addState === 'added' ? (
+                <motion.span
+                  key="added-mobile"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  className="flex items-center gap-2"
+                >
+                  <Check weight="bold" className="w-4 h-4" />
+                  <span>Added</span>
+                </motion.span>
+              ) : (
+                <motion.span
+                  key={`${addState}-mobile`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  {addState === 'adding'
+                    ? "Adding\u2026"
+                    : addState === 'error'
+                      ? "Try again"
+                      : isOutOfStock
+                        ? "Out of Stock"
+                        : !product.shopifyVariantId
+                          ? "Not Connected"
+                          : "Add to Satchel"}
+                </motion.span>
               )}
-            </div>
-            {isAtlas && territoryPricing && (
-              <div className="flex" role="group" aria-label="Size">
-                {sizeOptions.map((size) => (
-                  <button
-                    key={size}
-                    type="button"
-                    onClick={() => setSelectedVariant(size)}
-                    aria-pressed={selectedVariant === size}
-                    className={`min-w-[52px] h-11 px-2 -ml-px first:ml-0 font-mono text-xs uppercase tracking-wider border transition-colors ${selectedVariant === size
-                      ? isRelic ? 'relative z-10 border-theme-alabaster bg-theme-alabaster text-theme-obsidian' : 'relative z-10 border-theme-charcoal bg-theme-charcoal text-theme-alabaster'
-                      : isRelic ? 'border-white/30' : 'border-theme-charcoal/30'
-                      }`}
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Quantity and add */}
-          <div className="flex items-stretch gap-2">
-            <div className={`flex items-center border ${isRelic ? 'border-white/30' : 'border-theme-charcoal/30'}`} role="group" aria-label="Quantity">
-              <button
-                type="button"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className={`w-11 h-12 flex items-center justify-center ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors disabled:opacity-40`}
-                disabled={quantity <= 1}
-                aria-label="Decrease quantity"
-              >
-                <Minus weight="thin" className="w-4 h-4" />
-              </button>
-              <span className="w-7 font-mono text-sm tabular-nums text-center">
-                {quantity}
-              </span>
-              <button
-                type="button"
-                onClick={() => setQuantity(quantity + 1)}
-                className={`w-11 h-12 flex items-center justify-center ${isRelic ? 'hover:bg-white/5' : 'hover:bg-theme-charcoal/5'} transition-colors`}
-                aria-label="Increase quantity"
-              >
-                <Plus weight="thin" className="w-4 h-4" />
-              </button>
-            </div>
-
-            <button
-              ref={mobileAddButtonRef}
-              type="button"
-              onClick={() => handleAddToSatchel('mobile')}
-              disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
-              className={`flex-1 h-12 px-2 font-mono text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden ${!isOutOfStock
-                ? addState === 'added'
-                  ? "bg-theme-gold text-theme-obsidian"
-                  : product.shopifyVariantId
-                    ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90 active:bg-theme-alabaster/80" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90 active:bg-theme-charcoal/80"
-                    : isRelic ? "bg-white/40 text-white/60 cursor-not-allowed" : "bg-theme-charcoal/40 text-theme-alabaster/60 cursor-not-allowed"
-                : isRelic ? "bg-white/20 text-white/40 cursor-not-allowed" : "bg-theme-charcoal/20 text-theme-charcoal/40 cursor-not-allowed"
-                }`}
-            >
-              <AnimatePresence mode="wait">
-                {addState === 'added' ? (
-                  <motion.div
-                    key="added-mobile"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    className="flex items-center justify-center gap-2"
-                  >
-                    <Check weight="bold" className="w-4 h-4" />
-                    <span>Added</span>
-                  </motion.div>
-                ) : (
-                  <motion.span
-                    key={`${addState}-mobile`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    {addState === 'adding'
-                      ? "Adding\u2026"
-                      : addState === 'error'
-                        ? "Try again"
-                        : isOutOfStock
-                          ? "Out of Stock"
-                          : !product.shopifyVariantId
-                            ? "Not Connected"
-                            : "Add to Satchel"}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </button>
-          </div>
+            </AnimatePresence>
+            <span className="shrink-0 tracking-[0.12em] tabular-nums opacity-90">
+              {quantity > 1 ? `${quantity} \u00d7 ` : ''}
+              {selectedVariantLabel ? `${selectedVariantLabel} \u00b7 ` : ''}
+              {lineTotalLabel}
+            </span>
+          </button>
         </div>
       </div>
 
