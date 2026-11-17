@@ -69,7 +69,7 @@ export const EntryLoader: React.FC<Props> = ({ onComplete }) => {
             y: stage >= 1 ? 0 : 10,
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-3xl sm:text-4xl md:text-7xl tracking-[0.15em] font-serif font-light text-theme-charcoal mr-[0.3em]"
+          className="text-3xl sm:text-4xl md:text-7xl font-serif font-light text-theme-charcoal mr-[0.3em]"
         >
           TARIFÉ
         </motion.span>
@@ -89,7 +89,7 @@ export const EntryLoader: React.FC<Props> = ({ onComplete }) => {
             color: { duration: 0.3 },
             scale: { duration: 0.3 }
           }}
-          className="text-3xl sm:text-4xl md:text-7xl tracking-[0.15em] font-serif font-light"
+          className="text-3xl sm:text-4xl md:text-7xl font-serif font-light"
         >
           A
         </motion.span>
@@ -102,7 +102,7 @@ export const EntryLoader: React.FC<Props> = ({ onComplete }) => {
             y: stage >= 1 ? 0 : 10,
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-3xl sm:text-4xl md:text-7xl tracking-[0.15em] font-serif font-light text-theme-charcoal"
+          className="text-3xl sm:text-4xl md:text-7xl font-serif font-light text-theme-charcoal"
         >
           TT
         </motion.span>
@@ -115,7 +115,7 @@ export const EntryLoader: React.FC<Props> = ({ onComplete }) => {
             y: stage >= 1 ? 0 : 10,
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-3xl sm:text-4xl md:text-7xl tracking-[0.15em] font-serif font-light text-theme-charcoal"
+          className="text-3xl sm:text-4xl md:text-7xl font-serif font-light text-theme-charcoal"
         >
           Ä
         </motion.span>
@@ -135,7 +135,7 @@ export const EntryLoader: React.FC<Props> = ({ onComplete }) => {
             color: { duration: 0.3 },
             scale: { duration: 0.3 }
           }}
-          className="text-3xl sm:text-4xl md:text-7xl tracking-[0.15em] font-serif font-light"
+          className="text-3xl sm:text-4xl md:text-7xl font-serif font-light"
         >
           R
         </motion.span>
@@ -194,7 +194,7 @@ export const EntryLoader: React.FC<Props> = ({ onComplete }) => {
           opacity: stage >= 1 && stage < 3 ? 0.4 : 0,
         }}
         transition={{ duration: 0.4, delay: stage === 1 ? 0.3 : 0 }}
-        className="absolute bottom-1/3 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.5em] text-theme-charcoal"
+        className="absolute bottom-1/3 font-serif text-[13px] md:text-[14px] text-theme-charcoal"
       >
         Scent Archive
       </motion.p>

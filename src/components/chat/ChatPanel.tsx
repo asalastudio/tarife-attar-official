@@ -34,7 +34,7 @@ const QUICK_CHIPS = [
   },
 ];
 
-const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive, a living collection of rare and artisan perfume oils organized by territory and memory.
+const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive, concentrated perfume oils organized by territory.
 
 I can help you discover a fragrance, navigate the new Atlas names, answer questions about your order, or explain how our oils are crafted.
 
@@ -230,7 +230,7 @@ export function ChatPanel() {
           isChatOpen ? "pointer-events-none" : "cursor-pointer"
         }`}
       >
-        <span className="[writing-mode:vertical-lr] rotate-180 font-mono text-[10px] uppercase tracking-[0.4em] font-bold group-hover:tracking-[0.6em] transition-all">
+        <span className="[writing-mode:vertical-lr] rotate-180 font-serif text-[13px] font-bold transition-all">
           Concierge
         </span>
       </motion.button>
@@ -238,11 +238,11 @@ export function ChatPanel() {
       {/* ─── Header ─── */}
       <div className="flex items-center justify-between p-6 border-b border-theme-charcoal/5 bg-white/40 backdrop-blur-md shrink-0">
         <div>
-          <h2 className="text-2xl font-serif italic tracking-wide text-theme-charcoal flex items-center gap-2">
+          <h2 className="text-2xl font-serif italic text-theme-charcoal flex items-center gap-2">
             <Sparkle weight="thin" className="w-4 h-4 text-theme-gold" />
             The Guide
           </h2>
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-theme-charcoal/50 mt-1">
+          <p className="font-serif text-[13px] font-semibold text-theme-charcoal/50 mt-1">
             Tarife Attar Concierge
           </p>
         </div>
@@ -306,7 +306,7 @@ export function ChatPanel() {
               transition={{ duration: 0.4, delay: 0.5 }}
               className="mt-2 flex flex-col gap-2"
             >
-              <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-theme-charcoal/35 mb-1">
+              <p className="font-serif text-[13px] text-theme-charcoal/35 mb-1">
                 Common starting points
               </p>
               {QUICK_CHIPS.map((chip) => {
@@ -343,7 +343,7 @@ export function ChatPanel() {
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-theme-gold">Leave a message for the team</p>
+                  <p className="font-serif text-[13px] text-theme-gold">Leave a message for the team</p>
                   <p className="font-serif text-base md:text-[12px] text-theme-charcoal/70 mt-1">A person replies by email, usually within one business day. Your conversation here is attached.</p>
                 </div>
                 <button
@@ -400,7 +400,7 @@ export function ChatPanel() {
                 type="button"
                 onClick={submitHandoff}
                 disabled={handoffState === "sending"}
-                className="mt-3 w-full flex items-center justify-center gap-2 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.25em] py-3 rounded-full hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50"
+                className="mt-3 w-full flex items-center justify-center gap-2 bg-theme-charcoal text-theme-alabaster font-serif text-[13px] py-3 rounded-full hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50"
               >
                 {handoffState === "sending" ? (
                   <CircleNotch weight="thin" className="w-4 h-4 animate-spin" />
@@ -467,7 +467,7 @@ export function ChatPanel() {
         <button
           type="button"
           onClick={openHandoff}
-          className="mt-1 w-full min-h-11 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/60 hover:text-theme-gold transition-colors"
+          className="mt-1 w-full min-h-11 flex items-center justify-center gap-2 font-serif text-[13px] text-theme-charcoal/60 hover:text-theme-gold transition-colors"
         >
           <EnvelopeSimple weight="thin" className="w-3 h-3" />
           Leave a message for the team

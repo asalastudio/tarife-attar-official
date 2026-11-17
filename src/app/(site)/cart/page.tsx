@@ -151,13 +151,13 @@ export default function CartPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 md:gap-3 min-h-11 -ml-1 px-1 font-mono text-[10px] uppercase tracking-[0.3em] md:tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 md:gap-3 min-h-11 -ml-1 px-1 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="hidden sm:inline">Return to Gallery</span>
             <span className="sm:hidden">Back</span>
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] md:tracking-[0.6em] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold">
             Satchel ({itemCount})
           </span>
         </div>
@@ -177,10 +177,10 @@ export default function CartPage() {
 
             {(error || checkoutError) && (
               <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded">
-                <p className="font-mono text-xs uppercase tracking-widest text-red-800">
+                <p className="font-serif text-[13px] text-red-800">
                   Error: {error || checkoutError}
                 </p>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-red-600 mt-2 opacity-80">
+                <p className="font-serif text-[13px] text-red-600 mt-2 opacity-80">
                   {error
                     ? 'Please check your Shopify configuration or try refreshing the page.'
                     : 'Please try refreshing the page or adding items to your cart again.'}
@@ -196,7 +196,7 @@ export default function CartPage() {
                 </p>
                 <button
                   onClick={() => router.push("/atlas")}
-                  className="px-12 py-4 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-theme-obsidian transition-colors"
+                  className="px-12 py-4 bg-theme-charcoal text-theme-alabaster font-serif text-[13px] hover:bg-theme-obsidian transition-colors"
                 >
                   Explore the Atlas
                 </button>
@@ -238,7 +238,7 @@ export default function CartPage() {
                             </p>
                           </div>
                           {item.variantTitle && (
-                            <p className="font-mono text-[10px] uppercase tracking-widest opacity-60 mb-3 md:mb-4">
+                            <p className="font-serif text-[13px] opacity-80 mb-3 md:mb-4">
                               {item.variantTitle}
                             </p>
                           )}
@@ -264,7 +264,7 @@ export default function CartPage() {
                             </div>
                             <button
                               onClick={() => removeItem(item.id)}
-                              className="flex items-center gap-1.5 md:gap-2 min-h-11 px-2 -mx-2 font-mono text-[9px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+                              className="flex items-center gap-1.5 md:gap-2 min-h-11 px-2 -mx-2 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
                               disabled={isLoading}
                               aria-label={`Remove ${item.title}`}
                             >
@@ -280,7 +280,7 @@ export default function CartPage() {
                   <div className="flex justify-between items-center pt-4">
                     <button
                       onClick={clearCart}
-                      className="min-h-11 px-2 -mx-2 font-mono text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+                      className="min-h-11 px-2 -mx-2 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
                       disabled={isLoading}
                     >
                       Clear Satchel
@@ -291,19 +291,19 @@ export default function CartPage() {
                 {/* Summary */}
                 <div className="lg:col-span-1">
                   <div className="p-4 md:p-8 bg-theme-charcoal/[0.02] border border-theme-charcoal/10 sticky top-32">
-                    <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] mb-4 md:mb-8 opacity-40">
+                    <h3 className="font-serif text-[13px] mb-4 md:mb-8 opacity-80">
                       Order Summary
                     </h3>
                     <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                       <div className="flex justify-between">
-                        <span className="opacity-60 font-mono text-xs uppercase">Subtotal</span>
+                        <span className="opacity-60 font-serif text-[13px] ">Subtotal</span>
                         <span className="font-mono">
                           ${parseFloat(cartTotal || '0').toFixed(2)}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="opacity-60 font-mono text-xs uppercase">Shipping</span>
-                        <span className="font-mono text-[10px] uppercase opacity-40">Calculated at checkout</span>
+                        <span className="opacity-80 font-serif text-[13px]">Shipping</span>
+                        <span className="font-serif text-[13px] opacity-80">Calculated at checkout</span>
                       </div>
                     </div>
                     <div className="pt-4 md:pt-6 border-t border-theme-charcoal/10">
@@ -313,7 +313,7 @@ export default function CartPage() {
                           <span className="font-mono text-xl block">
                             ${parseFloat(cartTotal || '0').toFixed(2)}
                           </span>
-                          <span className="font-mono text-[9px] uppercase opacity-40 tracking-widest">USD</span>
+                          <span className="font-serif text-[13px] opacity-80">USD</span>
                         </div>
                       </div>
                       {isReadyForCheckout &&
@@ -322,7 +322,7 @@ export default function CartPage() {
                         <a
                           href={safeCheckoutUrl}
                           onClick={handleBeginCheckout}
-                          className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-theme-obsidian transition-all flex items-center justify-center gap-3 group"
+                          className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-serif text-[13px] hover:bg-theme-obsidian transition-all flex items-center justify-center gap-3 group"
                         >
                           <>
                             Secure Checkout
@@ -333,7 +333,7 @@ export default function CartPage() {
                         <button
                           type="button"
                           disabled
-                          className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-mono text-[10px] uppercase tracking-[0.4em] transition-all flex items-center justify-center gap-3 opacity-50 cursor-not-allowed"
+                          className="w-full py-4 md:py-5 bg-theme-charcoal text-theme-alabaster font-serif text-[13px] transition-all flex items-center justify-center gap-3 opacity-80 cursor-not-allowed"
                           title={
                             items.length === 0
                               ? 'Your cart is empty'
@@ -352,9 +352,9 @@ export default function CartPage() {
 
                       <div className="mt-6 flex flex-wrap justify-center gap-4 opacity-30 grayscale contrast-200">
                         {/* Simple placeholder icons for payment methods */}
-                        <div className="font-mono text-[8px] uppercase border border-theme-charcoal px-2 py-1">Visa</div>
-                        <div className="font-mono text-[8px] uppercase border border-theme-charcoal px-2 py-1">Amex</div>
-                        <div className="font-mono text-[8px] uppercase border border-theme-charcoal px-2 py-1">Apple Pay</div>
+                        <div className="font-serif text-[13px] border border-theme-charcoal px-2 py-1">Visa</div>
+                        <div className="font-serif text-[13px] border border-theme-charcoal px-2 py-1">Amex</div>
+                        <div className="font-serif text-[13px] border border-theme-charcoal px-2 py-1">Apple Pay</div>
                       </div>
                     </div>
 
@@ -369,7 +369,7 @@ export default function CartPage() {
                         >
                           <div className="flex items-center gap-2 mb-3">
                             <BookmarkSimple weight="thin" className="w-4 h-4 text-theme-gold" />
-                            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-gold">
+                            <span className="font-serif text-[13px] text-theme-gold">
                               Save for Later
                             </span>
                           </div>
@@ -404,14 +404,14 @@ export default function CartPage() {
                                 <button
                               type="submit"
                               disabled={isSavingCart}
-                              className="w-full py-3 bg-theme-gold/90 text-white font-mono text-[10px] uppercase tracking-[0.2em] hover:bg-theme-gold transition-colors rounded-lg disabled:opacity-50"
+                              className="w-full py-3 bg-theme-gold/90 text-white font-serif text-[13px] hover:bg-theme-gold transition-colors rounded-lg disabled:opacity-50"
                             >
                               {isSavingCart ? 'Saving...' : 'Save My Satchel'}
                             </button>
                           </form>
                           <button
                             onClick={() => setShowSaveCart(false)}
-                            className="w-full mt-2 py-2 font-mono text-[9px] uppercase tracking-[0.15em] text-theme-charcoal/40 hover:text-theme-charcoal/60 transition-colors"
+                            className="w-full mt-2 py-2 font-serif text-[13px] text-theme-charcoal/40 hover:text-theme-charcoal/60 transition-colors"
                           >
                             No thanks
                           </button>

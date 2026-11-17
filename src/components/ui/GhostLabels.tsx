@@ -170,7 +170,7 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
               }`}
           >
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-theme-charcoal/40 whitespace-nowrap">
+              <span className="font-serif text-[13px] md:text-[14px] text-theme-charcoal/40 whitespace-nowrap">
                 Menu
               </span>
               <motion.div
@@ -208,7 +208,7 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
                 >
                   ←
                 </motion.div>
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-theme-charcoal/40 whitespace-nowrap">
+                <span className="font-serif text-[13px] md:text-[14px] text-theme-charcoal/40 whitespace-nowrap">
                   Satchel
                 </span>
               </div>
@@ -250,7 +250,7 @@ export const GhostLabels: React.FC<GhostLabelsProps> = ({
               }}
               className="w-1.5 h-1.5 rounded-full bg-theme-gold"
             />
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-theme-charcoal/60 whitespace-nowrap">
+            <span className="font-serif text-[13px] text-theme-charcoal/60 whitespace-nowrap">
               Ask Atlas
             </span>
           </motion.div>

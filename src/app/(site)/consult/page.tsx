@@ -14,7 +14,7 @@ export default function ConsultPage() {
       <header className="px-6 md:px-24 py-6">
         <button
           onClick={() => router.push("/")}
-          className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
+          className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-70 hover:opacity-100 transition-opacity"
         >
           <ArrowLeft weight="thin" className="w-4 h-4" />
           Return to Threshold
@@ -37,7 +37,7 @@ export default function ConsultPage() {
             <ChatCircle weight="thin" className="w-16 h-16 text-theme-gold" />
           </motion.div>
           
-          <span className="font-mono text-[10px] uppercase tracking-[0.8em] opacity-40 mb-6 block">
+          <span className="font-serif text-[13px] opacity-80 mb-6 block">
             Protocol_02
           </span>
           <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-8">
@@ -51,11 +51,11 @@ export default function ConsultPage() {
           <div className="space-y-6">
             <a 
               href="mailto:consult@tarifeattar.com"
-              className="inline-block px-12 py-5 border border-white/20 font-mono text-[10px] uppercase tracking-[0.4em] hover:bg-white hover:text-theme-obsidian transition-all"
+              className="inline-block px-12 py-5 border border-white/20 font-serif text-[13px] hover:bg-white hover:text-theme-obsidian transition-all"
             >
               Request Consultation
             </a>
-            <p className="font-mono text-[9px] uppercase tracking-widest opacity-30">
+            <p className="font-serif text-[13px] opacity-80">
               Response within 48 hours
             </p>
           </div>

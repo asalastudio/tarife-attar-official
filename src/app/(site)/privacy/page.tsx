@@ -16,12 +16,12 @@ export default function PrivacyPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-70 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.6em] opacity-40">
+          <span className="font-serif text-[13px] opacity-80">
             Legal
           </span>
         </div>

@@ -27,11 +27,11 @@ interface Props {
 }
 
 const CATEGORIES = [
-  { id: 'all', label: 'All', icon: null },
-  { id: 'field-notes', label: 'Field Notes', icon: '📍' },
-  { id: 'behind-the-blend', label: 'Behind the Blend', icon: '🧪' },
-  { id: 'territory-spotlight', label: 'Territory Spotlight', icon: '🗺️' },
-  { id: 'collector-archives', label: 'Collector Archives', icon: '📦' },
+  { id: 'all', label: 'All', icon: '' },
+  { id: 'field-notes', label: 'Field Notes', icon: '' },
+  { id: 'behind-the-blend', label: 'Behind the Blend', icon: '' },
+  { id: 'territory-spotlight', label: 'Territory Spotlight', icon: '' },
+  { id: 'collector-archives', label: 'Collector Archives', icon: '' },
 ];
 
 const TERRITORY_COLORS: Record<string, string> = {
@@ -73,12 +73,12 @@ export function JournalClient({ entries }: Props) {
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 min-h-11 min-w-11 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="sr-only sm:not-sr-only">Back to Site</span>
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold-ink">
             The Journal
           </span>
         </div>
@@ -93,15 +93,11 @@ export function JournalClient({ entries }: Props) {
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold block mb-4">
-              Field Notes · Stories · Discoveries
-            </span>
             <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-tight mb-6">
               The Journal
             </h1>
             <p className="font-serif text-lg md:text-xl text-theme-charcoal/60 leading-relaxed">
-              Dispatches from the field. Behind-the-blend revelations. 
-              Territory deep dives. Stories from the archive.
+              Notes on the places, materials and blends behind the Atlas and the Relic.
             </p>
           </motion.div>
         </div>
@@ -115,7 +111,7 @@ export function JournalClient({ entries }: Props) {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-2 min-h-11 px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-[0.15em] whitespace-nowrap transition-all ${
+                className={`flex items-center gap-2 min-h-11 px-4 py-2 rounded-full font-serif text-[13px] whitespace-nowrap transition-all ${
                   activeCategory === cat.id
                     ? 'bg-theme-charcoal text-theme-alabaster'
                     : 'bg-theme-charcoal/5 text-theme-charcoal/60 hover:bg-theme-charcoal/10'
@@ -151,7 +147,7 @@ export function JournalClient({ entries }: Props) {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span className="font-mono text-xs uppercase tracking-widest opacity-20">Featured</span>
+                      <span className="font-serif text-[13px] opacity-20">Featured</span>
                     </div>
                   )}
                 </div>
@@ -159,7 +155,7 @@ export function JournalClient({ entries }: Props) {
                 {/* Content */}
                 <div className="flex flex-col justify-center">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-theme-gold px-2 py-1 bg-theme-gold/10 rounded">
+                    <span className="font-serif text-[13px] text-theme-gold px-2 py-1 bg-theme-gold/10 rounded">
                       Featured
                     </span>
                     {featuredEntry.territory && (
@@ -176,7 +172,7 @@ export function JournalClient({ entries }: Props) {
                   )}
                   <div className="flex items-center gap-4 text-theme-charcoal/40">
                     {featuredEntry.publishedAt && (
-                      <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest">
+                      <span className="flex items-center gap-1.5 font-serif text-[13px]">
                         <Calendar weight="thin" className="w-3 h-3" />
                         {formatDate(featuredEntry.publishedAt)}
                       </span>
@@ -197,7 +193,7 @@ export function JournalClient({ entries }: Props) {
               <p className="font-serif italic text-xl text-theme-charcoal/40">
                 No entries in this category yet.
               </p>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/30 mt-4">
+              <p className="font-serif text-[13px] text-theme-charcoal/30 mt-4">
                 New stories coming soon
               </p>
             </div>
@@ -224,7 +220,7 @@ export function JournalClient({ entries }: Props) {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <span className="font-mono text-[9px] uppercase tracking-widest opacity-20">
+                            <span className="font-serif text-[13px] opacity-20">
                               {entry.category?.replace('-', ' ')}
                             </span>
                           </div>
@@ -241,7 +237,7 @@ export function JournalClient({ entries }: Props) {
                       {/* Content */}
                       <div>
                         {entry.category && (
-                          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-theme-charcoal/40 block mb-2">
+                          <span className="font-serif text-[13px] text-theme-charcoal/40 block mb-2">
                             {entry.category.replace('-', ' ')}
                           </span>
                         )}
@@ -254,7 +250,7 @@ export function JournalClient({ entries }: Props) {
                           </p>
                         )}
                         {entry.publishedAt && (
-                          <span className="font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/30">
+                          <span className="font-serif text-[13px] text-theme-charcoal/30">
                             {formatDate(entry.publishedAt)}
                           </span>
                         )}

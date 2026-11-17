@@ -25,18 +25,18 @@ const FAQ_SECTIONS: FAQSection[] = [
         <p className="text-lg opacity-90">Orders ship within 1–2 business days via USPS.</p>
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 py-3 border-b border-theme-charcoal/10">
-            <span className="font-mono text-sm uppercase tracking-wider text-theme-charcoal/90 shrink-0">
+            <span className="font-serif text-sm text-theme-charcoal/90 shrink-0">
               First Class Mail
             </span>
             <span className="text-base opacity-80">
               $4.50–$5.80 · 2–5 business days
             </span>
-            <span className="font-mono text-xs uppercase tracking-wider text-theme-gold font-medium">
+            <span className="font-serif text-[13px] text-theme-gold-ink font-medium">
               Free on orders $35+
             </span>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 py-3 border-b border-theme-charcoal/10">
-            <span className="font-mono text-sm uppercase tracking-wider text-theme-charcoal/90 shrink-0">
+            <span className="font-serif text-sm text-theme-charcoal/90 shrink-0">
               Priority Mail
             </span>
             <span className="text-base opacity-80">
@@ -44,7 +44,7 @@ const FAQ_SECTIONS: FAQSection[] = [
             </span>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 py-3 border-b border-theme-charcoal/10">
-            <span className="font-mono text-sm uppercase tracking-wider text-theme-charcoal/90 shrink-0">
+            <span className="font-serif text-sm text-theme-charcoal/90 shrink-0">
               Priority Express
             </span>
             <span className="text-base opacity-80">
@@ -68,7 +68,7 @@ const FAQ_SECTIONS: FAQSection[] = [
           Tracking information is sent via email once your order ships.
         </p>
         <div className="bg-white/60 border border-theme-charcoal/10 p-5 rounded-sm">
-          <p className="font-mono text-xs font-semibold uppercase tracking-wider opacity-70 mb-3">
+          <p className="font-serif text-[13px] font-semibold opacity-70 mb-3">
             To check on Etsy
           </p>
           <ol className="list-decimal list-inside space-y-2 text-base opacity-90">
@@ -82,7 +82,7 @@ const FAQ_SECTIONS: FAQSection[] = [
             (status) => (
               <span
                 key={status}
-                className="font-mono text-xs uppercase tracking-wider px-3 py-1.5 border border-theme-charcoal/20 opacity-80"
+                className="font-serif text-[13px] px-3 py-1.5 border border-theme-charcoal/20 opacity-80"
               >
                 {status}
               </span>
@@ -188,11 +188,11 @@ const FAQ_SECTIONS: FAQSection[] = [
               >
                 {t.name}
               </h4>
-              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-theme-charcoal/70 mb-2">
+              <p className="font-serif text-[13px] font-semibold text-theme-charcoal/70 mb-2">
                 {t.desc}
               </p>
               <p className="text-base opacity-80 italic mb-3">{t.notes}</p>
-              <p className="font-mono text-xs font-medium uppercase tracking-wider text-theme-charcoal/80">
+              <p className="font-serif text-[13px] font-medium text-theme-charcoal/80">
                 {t.pricing}
               </p>
             </div>
@@ -219,7 +219,7 @@ const FAQ_SECTIONS: FAQSection[] = [
         </p>
         <a
           href="/name-change"
-          className="inline-flex items-center gap-2 font-mono text-sm font-medium uppercase tracking-wider text-theme-gold hover:underline mt-2"
+          className="inline-flex items-center gap-2 font-serif text-sm font-medium text-theme-gold hover:underline mt-2"
         >
           View the complete reference table →
         </a>
@@ -355,12 +355,12 @@ export default function FAQPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-70 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.6em] opacity-40">
+          <span className="font-serif text-[13px] opacity-80">
             Support
           </span>
         </div>
@@ -378,7 +378,7 @@ export default function FAQPage() {
             <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-4">
               Frequently Asked
             </h1>
-            <p className="text-sm font-mono uppercase tracking-[0.3em] opacity-60">
+            <p className="text-sm font-serif opacity-60">
               Everything you need to know
             </p>
           </motion.div>
@@ -408,7 +408,7 @@ export default function FAQPage() {
             </p>
             <button
               onClick={() => router.push("/support")}
-              className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-mono text-xs font-semibold uppercase tracking-[0.3em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
+              className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-serif text-[13px] font-semibold hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
             >
               Contact Support
             </button>

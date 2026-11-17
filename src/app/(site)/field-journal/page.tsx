@@ -5,10 +5,10 @@ import { FieldJournalClient } from './FieldJournalClient';
 
 export const metadata: Metadata = {
     title: 'Field Journal | Tarife Attär',
-    description: 'Field notes, distillation logs, and archival dispatches from laboratory expeditions. Explore rare materials and territory guides from the olfactory world.',
+    description: 'Material studies and territory guides from the Tarifé Attär studio.',
     openGraph: {
         title: 'Field Journal | Tarife Attär',
-        description: 'Field notes, distillation logs, and archival dispatches from laboratory expeditions.',
+        description: 'Material studies and territory guides from the Tarifé Attär studio.',
         type: 'website',
     },
 };

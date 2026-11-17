@@ -51,7 +51,7 @@ export const SmartCompass: React.FC<Props> = ({ view: _view, theme, gpsCoordinat
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] bg-[size:24px_24px] opacity-[0.03]" />
                   <div className="relative z-10 space-y-3 md:space-y-6">
-                    <span className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.6em] text-theme-gold">PROTOCOL_01</span>
+                    <span className="font-serif text-[13px] md:text-[14px] text-theme-gold">PROTOCOL_01</span>
                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif italic leading-none group-hover:tracking-tighter transition-all duration-[1s]">Sensory Curator</h2>
                     <p className="font-serif italic text-xs sm:text-sm md:text-lg opacity-60 max-w-[200px] md:max-w-xs mx-auto">Calibrate for your molecular match.</p>
                   </div>
@@ -62,7 +62,7 @@ export const SmartCompass: React.FC<Props> = ({ view: _view, theme, gpsCoordinat
                   className="relative group overflow-hidden bg-theme-obsidian text-theme-alabaster flex flex-col items-center justify-center p-8 sm:p-12 md:p-20 text-center"
                 >
                   <div className="relative z-10 space-y-3 md:space-y-6">
-                    <span className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.6em] opacity-40">PROTOCOL_02</span>
+                    <span className="font-serif text-[13px] md:text-[14px] opacity-80">PROTOCOL_02</span>
                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif italic leading-none group-hover:tracking-tighter transition-all duration-[1s]">The Alchemist</h2>
                     <p className="font-serif italic text-xs sm:text-sm md:text-lg opacity-60 max-w-[200px] md:max-w-xs mx-auto">Direct archival consultation.</p>
                   </div>
@@ -70,7 +70,7 @@ export const SmartCompass: React.FC<Props> = ({ view: _view, theme, gpsCoordinat
               </div>
               
               <div className="bg-white p-6 sm:p-8 md:p-10 border-t border-theme-charcoal/5 flex flex-col gap-6">
-                 <div className="flex justify-center gap-8 sm:gap-12 md:gap-14 font-mono text-[9px] uppercase tracking-[0.4em]">
+                 <div className="flex justify-center gap-8 sm:gap-12 md:gap-14 font-serif text-[13px]">
                    {['Home', 'Atlas', 'Relic'].map(label => (
                      <button key={label} onClick={() => { onNavigate(label.toLowerCase() === 'home' ? 'home' : label.toLowerCase()); setIsOpen(false); }} className="opacity-40 hover:opacity-100 transition-opacity py-2">
                        {label}
@@ -83,7 +83,7 @@ export const SmartCompass: React.FC<Props> = ({ view: _view, theme, gpsCoordinat
                    </div>
                    <button 
                     onClick={() => setIsOpen(false)}
-                    className="font-mono text-[9px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
+                    className="font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
                    >
                      [ Close Protocol ]
                    </button>

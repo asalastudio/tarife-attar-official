@@ -28,10 +28,10 @@ interface Props {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
-  'field-notes': '📍 Field Notes',
-  'behind-the-blend': '🧪 Behind the Blend',
-  'territory-spotlight': '🗺️ Territory Spotlight',
-  'collector-archives': '📦 Collector Archives',
+  'field-notes': 'Field Notes',
+  'behind-the-blend': 'Behind the Blend',
+  'territory-spotlight': 'Territory Spotlight',
+  'collector-archives': 'Collector Archives',
 };
 
 const TERRITORY_COLORS: Record<string, { bg: string; text: string }> = {
@@ -59,7 +59,7 @@ const portableTextComponents = {
             />
           </div>
           {value.caption && (
-            <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/40 text-center">
+            <figcaption className="mt-3 font-serif text-[13px] text-theme-charcoal/40 text-center">
               {value.caption}
             </figcaption>
           )}
@@ -116,12 +116,12 @@ export function JournalEntryClient({ entry }: Props) {
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/journal')}
-            className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 min-h-11 min-w-11 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="sr-only sm:not-sr-only">Back to Journal</span>
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold-ink">
             {entry.category ? CATEGORY_LABELS[entry.category]?.replace(/^[^\s]+\s/, '') : 'Journal'}
           </span>
         </div>
@@ -158,14 +158,14 @@ export function JournalEntryClient({ entry }: Props) {
             {/* Category & Territory */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
               {entry.category && (
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50">
+                <span className="font-serif text-[13px] text-theme-charcoal/50">
                   {CATEGORY_LABELS[entry.category] || entry.category}
                 </span>
               )}
               {entry.territory && (
                 <span className="flex items-center gap-1.5">
                   <span className={`w-2 h-2 rounded-full ${TERRITORY_COLORS[entry.territory]?.bg || 'bg-theme-charcoal/20'}`} />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50">
+                  <span className="font-serif text-[13px] text-theme-charcoal/50">
                     {TERRITORY_COLORS[entry.territory]?.text || entry.territory}
                   </span>
                 </span>
@@ -180,13 +180,13 @@ export function JournalEntryClient({ entry }: Props) {
             {/* Meta */}
             <div className="flex flex-wrap items-center gap-6 text-theme-charcoal/50 pb-8 border-b border-theme-charcoal/10">
               {entry.author && (
-                <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
+                <span className="flex items-center gap-2 font-serif text-[13px]">
                   <User weight="thin" className="w-3.5 h-3.5" />
                   {entry.author}
                 </span>
               )}
               {entry.publishedAt && (
-                <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
+                <span className="flex items-center gap-2 font-serif text-[13px]">
                   <Calendar weight="thin" className="w-3.5 h-3.5" />
                   {formatDate(entry.publishedAt)}
                 </span>
@@ -218,7 +218,7 @@ export function JournalEntryClient({ entry }: Props) {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="py-12 border-t border-theme-charcoal/10"
             >
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-theme-charcoal/40 mb-8">
+              <h3 className="font-serif text-[13px] text-theme-charcoal/40 mb-8">
                 Featured in This Story
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -238,7 +238,7 @@ export function JournalEntryClient({ entry }: Props) {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <span className="font-mono text-[8px] uppercase tracking-widest opacity-20">
+                          <span className="font-serif text-[13px] opacity-20">
                             {product.collectionType}
                           </span>
                         </div>
@@ -248,7 +248,7 @@ export function JournalEntryClient({ entry }: Props) {
                       {product.title}
                     </h4>
                     {product.price && (
-                      <span className="font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/40">
+                      <span className="font-serif text-[13px] text-theme-charcoal/40">
                         ${product.price}
                       </span>
                     )}
@@ -262,7 +262,7 @@ export function JournalEntryClient({ entry }: Props) {
           <div className="py-12 text-center">
             <Link
               href="/journal"
-              className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50 hover:text-theme-gold transition-colors"
+              className="inline-flex items-center gap-2 font-serif text-[13px] text-theme-charcoal/50 hover:text-theme-gold transition-colors"
             >
               <ArrowLeft weight="thin" className="w-4 h-4" />
               Back to Journal

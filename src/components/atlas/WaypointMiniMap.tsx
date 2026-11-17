@@ -91,7 +91,7 @@ export function WaypointMiniMap({ lat, lng, territory, coordinates }: WaypointMi
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: color, boxShadow: `0 0 6px ${color}` }}
             />
-            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/70">
+            <span className="font-serif text-[13px] text-white/70">
               Origin · {name} Territory
             </span>
           </div>

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 import { groq } from 'next-sanity';
+import { REDIRECTED_PRODUCT_SLUGS } from '@/lib/redirectedProductSlugs';
 
 const sitemapProductsQuery = groq`
   *[_type == "product" && !(_id in path("drafts.**"))] {
@@ -78,7 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const productPages: MetadataRoute.Sitemap = (products || [])
-    .filter((p) => p.slug)
+    .filter((p) => p.slug && !REDIRECTED_PRODUCT_SLUGS.has(p.slug))
     .map((product) => ({
       url: `${baseUrl}/product/${product.slug}`,
       lastModified: new Date(product._updatedAt),

@@ -41,15 +41,15 @@ export const AtmosphereTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
         <div className="z-50">
           <button
             onClick={(e) => { e.stopPropagation(); onBack(); }}
-            className="group flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase mb-4 opacity-60 hover:opacity-100 transition-opacity pointer-events-auto"
+            className="group flex items-center gap-2 font-serif text-[13px] mb-4 opacity-80 hover:opacity-100 transition-opacity pointer-events-auto"
           >
             <span className="text-lg leading-none transform group-hover:-translate-x-1 transition-transform">←</span> Return to Bifurcation
           </button>
           <h3 className="text-4xl font-light italic">Atmosphere Tuner</h3>
-          <p className="text-[10px] font-mono uppercase tracking-widest opacity-30 mt-2">Select a sensory coordinate to enter the archive</p>
+          <p className="text-[13px] font-serif opacity-30 mt-2">Select a sensory coordinate to enter the archive</p>
         </div>
         <div className="text-right hidden md:block">
-          <span className="font-mono text-[10px] text-theme-industrial uppercase">Step 01: Environmental Context</span>
+          <span className="font-serif text-[13px] text-theme-industrial">Step 01: Environmental Context</span>
         </div>
       </header>
 
@@ -80,7 +80,7 @@ export const AtmosphereTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
 
               {/* Hover Portal Indicator */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-theme-alabaster/10 backdrop-blur-[2px]">
-                <div className="px-6 py-3 border border-theme-charcoal bg-theme-alabaster text-theme-charcoal font-mono text-[9px] uppercase tracking-[0.3em]">
+                <div className="px-6 py-3 border border-theme-charcoal bg-theme-alabaster text-theme-charcoal font-serif text-[13px]">
                   Enter Archive
                 </div>
               </div>
@@ -94,7 +94,7 @@ export const AtmosphereTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
             </div>
 
             <div className="mt-6 pt-4 border-t border-theme-charcoal/10 flex justify-between items-center opacity-40 group-hover:opacity-100 transition-opacity">
-              <span className="font-mono text-[9px] uppercase tracking-widest">Protocol: ATLAS_0{idx + 1}</span>
+              <span className="font-serif text-[13px]">Protocol: ATLAS_0{idx + 1}</span>
               <span className="text-xl">→</span>
             </div>
           </motion.div>
@@ -107,7 +107,7 @@ export const AtmosphereTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
             e.stopPropagation();
             onNavigate?.('atlas');
           }}
-          className="font-mono text-[10px] uppercase tracking-[0.8em] hover:opacity-100 transition-opacity pointer-events-auto"
+          className="font-serif text-[13px] hover:opacity-100 transition-opacity pointer-events-auto"
         >
           Skip to Full Index
         </button>

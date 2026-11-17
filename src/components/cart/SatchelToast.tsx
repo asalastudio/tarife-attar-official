@@ -102,12 +102,12 @@ export function SatchelToast() {
                 </div>
               )}
               <div className="flex-1 min-w-0 pt-1">
-                <p className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.2em] text-theme-gold">
+                <p className="flex items-center gap-1.5 font-serif text-[13px] text-theme-gold">
                   <Check weight="bold" className="w-3.5 h-3.5" aria-hidden />
                   Added to Satchel
                 </p>
                 <p className="mt-1 font-serif text-lg leading-tight truncate">{lastAdded.title}</p>
-                <p className="font-mono text-xs uppercase tracking-[0.12em] text-theme-charcoal/70">
+                <p className="font-serif text-[13px] text-theme-charcoal/70">
                   {variant ? `${variant} · ` : ""}Qty {lastAdded.quantity}
                 </p>
               </div>
@@ -124,7 +124,7 @@ export function SatchelToast() {
             <div className="grid grid-cols-2 gap-2 p-3 pt-3">
               <Link
                 href="/cart"
-                className="min-h-11 flex items-center justify-center border border-theme-charcoal font-mono text-xs uppercase tracking-[0.2em] hover:bg-theme-charcoal/5 transition-colors"
+                className="min-h-11 flex items-center justify-center border border-theme-charcoal font-serif text-[13px] hover:bg-theme-charcoal/5 transition-colors"
               >
                 View Satchel
               </Link>
@@ -132,7 +132,7 @@ export function SatchelToast() {
                 <a
                   href={safeCheckoutUrl}
                   onClick={handleBeginCheckout}
-                  className="min-h-11 flex items-center justify-center gap-2 bg-theme-charcoal text-theme-alabaster font-mono text-xs uppercase tracking-[0.2em] hover:bg-theme-obsidian transition-colors"
+                  className="min-h-11 flex items-center justify-center gap-2 bg-theme-charcoal text-theme-alabaster font-serif text-[13px] hover:bg-theme-obsidian transition-colors"
                 >
                   Checkout
                   <ArrowSquareOut weight="thin" className="w-3.5 h-3.5" aria-hidden />
@@ -141,7 +141,7 @@ export function SatchelToast() {
                 <button
                   type="button"
                   disabled
-                  className="min-h-11 flex items-center justify-center bg-theme-charcoal text-theme-alabaster font-mono text-xs uppercase tracking-[0.2em] opacity-50 cursor-not-allowed"
+                  className="min-h-11 flex items-center justify-center bg-theme-charcoal text-theme-alabaster font-serif text-[13px] opacity-80 cursor-not-allowed"
                   title="Checkout is being prepared securely."
                 >
                   Checkout

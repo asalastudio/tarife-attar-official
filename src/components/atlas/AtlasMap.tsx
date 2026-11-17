@@ -237,14 +237,14 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
                   className="absolute left-1/2 -translate-x-1/2 bottom-full mb-3 pointer-events-none"
                 >
                   <div className="bg-theme-charcoal/95 backdrop-blur-sm px-3 py-2 rounded-sm whitespace-nowrap">
-                    <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-alabaster/50 mb-0.5">
+                    <div className="font-serif text-[13px] text-theme-alabaster/50 mb-0.5">
                       {TERRITORY_LABELS[waypoint.territory]}
                     </div>
                     <div className="font-serif text-sm text-theme-alabaster tracking-tight">
                       {waypoint.name}
                     </div>
                     {waypoint.legacyName && (
-                      <div className="font-mono text-[8px] uppercase tracking-widest text-theme-alabaster/40 mt-0.5">
+                      <div className="font-serif text-[13px] text-theme-alabaster/40 mt-0.5">
                         {waypoint.legacyName}
                       </div>
                     )}
@@ -271,7 +271,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: color }}
             />
-            <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/70">
+            <span className="font-serif text-[13px] text-white/70">
               {territory}
             </span>
           </div>
@@ -298,7 +298,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: TERRITORY_COLORS[selectedWaypoint.territory] }}
                 />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
+                <span className="font-serif text-[13px] text-white/50">
                   {TERRITORY_LABELS[selectedWaypoint.territory]} Territory
                 </span>
               </div>
@@ -308,7 +308,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
               </h3>
 
               {selectedWaypoint.legacyName && (
-                <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mb-4">
+                <p className="font-serif text-[13px] text-white/40 mb-4">
                   Formerly known as {selectedWaypoint.legacyName}
                 </p>
               )}
@@ -318,7 +318,7 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
               </p>
 
               <div className="flex items-center gap-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-white/40">
+                <span className="font-serif text-[13px] text-white/40">
                   {TERRITORY_PRICING[selectedWaypoint.territory]}
                 </span>
                 <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">
@@ -333,14 +333,14 @@ export function AtlasMap({ activeTerritory, onWaypointClick }: AtlasMapProps) {
                 href={`/product/${selectedWaypoint.slug}`}
                 className="group flex items-center gap-3 px-6 py-3 border border-[#c9a96e]/40 hover:border-[#c9a96e] hover:bg-[#c9a96e]/10 transition-all"
               >
-                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#c9a96e]">
+                <span className="font-serif text-[13px] text-[#c9a96e]">
                   Explore Waypoint
                 </span>
                 <ArrowRight weight="thin" className="w-4 h-4 text-[#c9a96e] group-hover:translate-x-1 transition-transform" />
               </Link>
               <button
                 onClick={() => setSelectedWaypoint(null)}
-                className="font-mono text-[9px] uppercase tracking-widest text-white/30 hover:text-white/60 transition-colors"
+                className="font-serif text-[13px] text-white/30 hover:text-white/60 transition-colors"
               >
                 Close
               </button>

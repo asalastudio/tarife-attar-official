@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import { atlasCardPriceLabel } from "@/lib/atlasPricing";
 import Image from "next/image";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -39,6 +40,8 @@ export interface GiftProduct {
 
 export interface HomeSectionsProps {
     featuredProducts: (Product & {
+      atmosphere?: string;
+      has3ml?: boolean;
       atlasImage?: unknown;
       relicImage?: unknown;
       shopifyPreviewImageUrl?: string;
@@ -84,9 +87,9 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
                     </h2>
                     <button
                         onClick={() => handleNavigate('atlas')}
-                        className="inline-flex items-center min-h-11 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-70 hover:opacity-100 transition-opacity whitespace-nowrap"
+                        className="inline-flex items-center min-h-11 font-serif text-[13px] md:text-[14px] opacity-70 hover:opacity-100 transition-opacity whitespace-nowrap"
                     >
-                        Explore the Atlas →
+                        Explore the Atlas
                     </button>
                 </header>
 
@@ -146,7 +149,7 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
                                                     target.style.display = 'none';
                                                     const parent = target.parentElement;
                                                     if (parent) {
-                                                        parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-theme-charcoal/5"><span class="font-mono text-xs uppercase tracking-widest opacity-20">Coming Soon</span></div>';
+                                                        parent.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-theme-charcoal/5"><span class="font-serif text-[13px] opacity-20">Coming Soon</span></div>';
                                                     }
                                                 }}
                                             />
@@ -159,20 +162,20 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
                                             <h3 className="text-xl md:text-2xl font-serif italic text-theme-charcoal leading-none group-hover:tracking-tighter transition-all">
                                                 {product.title}
                                             </h3>
-                                            {product.price && (
-                                                <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest opacity-70 tabular-nums">
-                                                    From ${product.price}
+                                            {atlasCardPriceLabel(product.atmosphere, product.has3ml, product.price) && (
+                                                <p className="font-serif text-[13px] md:text-[14px] opacity-80 tabular-nums">
+                                                    {atlasCardPriceLabel(product.atmosphere, product.has3ml, product.price)}
                                                 </p>
                                             )}
                                         </div>
                                         <LegacyName
                                             legacyName={product.legacyName}
                                             showLegacyName={product.showLegacyName}
-                                            className="text-[10px] !text-theme-charcoal/70"
+                                            className="text-[13px] !text-theme-charcoal/75"
                                         />
                                     </div>
-                                    <p className="font-mono text-[8px] uppercase tracking-widest opacity-70">
-                                        {product.collectionType === 'atlas' ? 'ATLAS COLLECTION' : 'RELIC VAULT'}
+                                    <p className="font-serif text-[13px] opacity-70">
+                                        {product.collectionType === 'atlas' ? 'Atlas collection' : 'The Relic'}
                                     </p>
                                 </div>
                             </motion.div>
@@ -188,21 +191,17 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
             {/* Territory Quiz CTA */}
             <section className="py-16 md:py-24 px-4 sm:px-6 md:px-24 bg-theme-charcoal/[0.02]">
                 <div className="max-w-3xl mx-auto text-center">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold block mb-4">
-                        Find Your Signature
-                    </span>
                     <h2 className="text-3xl md:text-5xl font-serif italic tracking-tight text-theme-charcoal leading-tight mb-4">
-                        Discover Your Territory
+                        Find your territory
                     </h2>
                     <p className="font-serif text-lg md:text-xl text-theme-charcoal/70 mb-8 max-w-xl mx-auto">
-                        Four olfactory worlds. Five questions. One path that speaks to your soul.
+                        Five questions, about two minutes. The quiz suggests one of the four territories to start with.
                     </p>
                     <button
                         onClick={() => handleNavigate('quiz')}
-                        className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-xs uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors"
+                        className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-serif text-[13px] hover:bg-theme-charcoal/90 transition-colors"
                     >
-                        Take the Quiz
-                        <span>→</span>
+                        Take the quiz
                     </button>
                 </div>
             </section>
@@ -216,7 +215,7 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
                             <div className="relative w-48 h-48 md:w-64 md:h-64 flex-shrink-0 bg-[#F8F7F2] overflow-hidden border border-theme-charcoal/5 shadow-sm">
                                 {giftHighlight.compareAtPrice && giftHighlight.price && giftHighlight.compareAtPrice > giftHighlight.price && (
                                     <div className="absolute top-2 left-2 z-10 bg-theme-charcoal text-theme-alabaster px-2 py-1">
-                                        <span className="font-mono text-[9px] uppercase tracking-widest">
+                                        <span className="font-serif text-[13px]">
                                             {Math.round((1 - giftHighlight.price / giftHighlight.compareAtPrice) * 100)}% Off
                                         </span>
                                     </div>
@@ -239,23 +238,19 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
 
                             {/* Copy */}
                             <div className="text-center md:text-left flex-1">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold block mb-4">
-                                    A Third Path
-                                </span>
                                 <h2 className="text-3xl md:text-5xl font-serif italic tracking-tight text-theme-charcoal leading-tight mb-4">
-                                    Give the Whole Journey
+                                    Gift sets
                                 </h2>
                                 <p className="font-serif text-lg md:text-xl text-theme-charcoal/70 mb-8 max-w-xl mx-auto md:mx-0">
                                     {giftHighlight.setSize
-                                        ? `A ${giftHighlight.setSize}-piece mystery box for the curious wanderer. Every territory, one gift.`
+                                        ? `A ${giftHighlight.setSize}-piece set of assorted perfume oils.`
                                         : 'Curated sets and travel collections, bundled and ready to give.'}
                                 </p>
                                 <button
                                     onClick={() => handleNavigate('gift')}
-                                    className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-xs uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors"
+                                    className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-serif text-[13px] hover:bg-theme-charcoal/90 transition-colors"
                                 >
-                                    Shop Gift Sets
-                                    <span>→</span>
+                                    Shop gift sets
                                 </button>
                             </div>
                         </div>
@@ -268,14 +263,11 @@ export function HomeSections({ featuredProducts, placeholderImages, portsOfCall 
                 <section className="py-16 md:py-24 px-4 sm:px-6 md:px-24 bg-[#141210]">
                     <div className="max-w-[1800px] mx-auto">
                         <div className="text-center mb-8 md:mb-12">
-                            <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#c9a96e] block mb-3">
-                                Ports of Call
-                            </span>
                             <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
-                                The Tarife Attar Community
+                                Ports of call
                             </h2>
-                            <p className="font-serif text-base text-[#f5f0eb]/75 mt-3 max-w-lg mx-auto">
-                                Every gold dot represents a city where Tarife Attar found a home.
+                            <p className="font-serif text-base text-[#f5f0eb]/80 mt-3 max-w-lg mx-auto">
+                                Each gold dot marks a city where Tarifé Attär customers live.
                             </p>
                         </div>
                         <div ref={mapRef} className="w-full h-[50vh] md:h-[60vh] rounded-lg overflow-hidden border border-[#C4A265]/10">

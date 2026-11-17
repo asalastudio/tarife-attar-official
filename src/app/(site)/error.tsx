@@ -32,7 +32,7 @@ export default function Error({
 
         {/* Technical Details */}
         <div className="bg-theme-charcoal/50 border border-theme-industrial/20 p-4 rounded-sm">
-          <p className="font-mono text-[10px] text-theme-industrial uppercase tracking-wider">
+          <p className="font-serif text-[13px] text-theme-industrial">
             Error Reference: {error.digest || "UNKNOWN"}
           </p>
         </div>
@@ -41,13 +41,13 @@ export default function Error({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={reset}
-            className="min-h-11 px-8 py-3 bg-theme-alabaster text-theme-charcoal font-mono text-[11px] uppercase tracking-[0.3em] hover:bg-theme-gold transition-colors"
+            className="min-h-11 px-8 py-3 bg-theme-alabaster text-theme-charcoal font-serif text-[13px] hover:bg-theme-gold transition-colors"
           >
             Retry Protocol
           </button>
           <a
             href="/"
-            className="px-8 py-3 border border-theme-industrial/30 text-theme-alabaster font-mono text-[11px] uppercase tracking-[0.3em] hover:border-theme-alabaster transition-colors"
+            className="px-8 py-3 border border-theme-industrial/30 text-theme-alabaster font-serif text-[13px] hover:border-theme-alabaster transition-colors"
           >
             Return Home
           </a>

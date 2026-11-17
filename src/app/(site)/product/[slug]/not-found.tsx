@@ -13,7 +13,7 @@ export default function ProductNotFound() {
         </p>
         <Link
           href="/atlas"
-          className="inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+          className="inline-flex items-center gap-3 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
         >
           <ArrowLeft weight="thin" className="w-4 h-4" />
           Return to Collections

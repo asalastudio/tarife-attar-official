@@ -136,12 +136,12 @@ export default function NameChangePage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-5 h-5" />
             Return
           </button>
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.6em] opacity-60">
+          <span className="font-serif text-[13px] font-semibold opacity-80">
             Atlas Reference
           </span>
         </div>
@@ -163,7 +163,7 @@ export default function NameChangePage() {
                 Same oils. Same formulations. New names inspired by the real
                 places that shaped each scent.
               </p>
-              <p className="text-base opacity-70 font-mono uppercase tracking-wider font-medium">
+              <p className="text-base opacity-70 font-serif font-medium">
                 28 fragrances · 4 territories · One atlas
               </p>
             </motion.div>
@@ -191,7 +191,7 @@ export default function NameChangePage() {
                 <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-xs uppercase tracking-wider text-theme-charcoal/80 font-semibold"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 font-serif text-[13px] text-theme-charcoal/80 font-semibold"
                 >
                   {totalResults} {totalResults === 1 ? "result" : "results"}
                 </motion.span>
@@ -217,7 +217,7 @@ export default function NameChangePage() {
                   </p>
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="mt-4 font-mono text-xs font-semibold uppercase tracking-wider text-theme-gold hover:underline"
+                    className="mt-4 font-serif text-[13px] font-semibold text-theme-gold hover:underline"
                   >
                     Clear search
                   </button>
@@ -244,7 +244,7 @@ export default function NameChangePage() {
                         >
                           {territory.name}
                         </h2>
-                        <p className="font-mono text-xs font-semibold uppercase tracking-[0.4em] opacity-80 mt-2">
+                        <p className="font-serif text-[13px] font-semibold opacity-80 mt-2">
                           {territory.descriptor}
                         </p>
                       </div>
@@ -272,11 +272,11 @@ export default function NameChangePage() {
                           {/* Legacy Name */}
                           <div className="mb-3">
                             {fragrance.legacyName ? (
-                              <span className="font-mono text-xs uppercase tracking-wider text-theme-charcoal/70 font-medium leading-tight">
+                              <span className="font-serif text-[13px] text-theme-charcoal/70 font-medium leading-tight">
                                 {fragrance.legacyName}
                               </span>
                             ) : (
-                              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider leading-tight font-semibold"
+                              <span className="inline-flex items-center gap-1.5 font-serif text-[13px] leading-tight font-semibold"
                                 style={{ color: territory.color }}
                               >
                                 <Sparkle weight="thin" className="w-3.5 h-3.5" />
@@ -290,7 +290,7 @@ export default function NameChangePage() {
                             {fragrance.legacyName && (
                               <ArrowRight weight="thin" className="w-4 h-4 text-theme-gold opacity-80" />
                             )}
-                            <h3 className="text-3xl font-serif italic tracking-wide">
+                            <h3 className="text-3xl font-serif italic ">
                               {fragrance.atlasName}
                             </h3>
                           </div>
@@ -301,7 +301,7 @@ export default function NameChangePage() {
                           </p>
 
                           {/* Inspired By */}
-                          <span className="font-mono text-xs font-medium uppercase tracking-[0.3em] opacity-60">
+                          <span className="font-serif text-[13px] font-medium opacity-80">
                             {fragrance.inspiredBy}
                           </span>
                         </motion.div>
@@ -328,7 +328,7 @@ export default function NameChangePage() {
               </p>
               <button
                 onClick={() => router.push("/atlas")}
-                className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-mono text-xs font-semibold uppercase tracking-[0.3em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
+                className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-serif text-[13px] font-semibold hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
               >
                 Browse the Atlas
                 <ArrowRight weight="thin" className="w-5 h-5" />

@@ -71,10 +71,10 @@ interface Props {
 }
 
 const TERRITORY_STYLES: Record<string, { icon: string; label: string; color: string; bg: string }> = {
-    tidal: { icon: '🌊', label: 'Tidal', color: 'text-cyan-700', bg: 'bg-cyan-600/10' },
-    ember: { icon: '🔥', label: 'Ember', color: 'text-amber-700', bg: 'bg-amber-600/10' },
-    petal: { icon: '🌸', label: 'Petal', color: 'text-pink-700', bg: 'bg-pink-600/10' },
-    terra: { icon: '🌲', label: 'Terra', color: 'text-emerald-700', bg: 'bg-emerald-700/10' },
+    tidal: { icon: '', label: 'Tidal', color: 'text-cyan-700', bg: 'bg-cyan-600/10' },
+    ember: { icon: '', label: 'Ember', color: 'text-amber-700', bg: 'bg-amber-600/10' },
+    petal: { icon: '', label: 'Petal', color: 'text-pink-700', bg: 'bg-pink-600/10' },
+    terra: { icon: '', label: 'Terra', color: 'text-emerald-700', bg: 'bg-emerald-700/10' },
 };
 
 const AUTHOR_LABELS: Record<string, string> = {
@@ -85,11 +85,11 @@ const AUTHOR_LABELS: Record<string, string> = {
 };
 
 const CATEGORY_LABELS: Record<string, { icon: string; label: string }> = {
-    dispatch: { icon: '📡', label: 'Field Dispatch' },
-    distillation: { icon: '⚗️', label: 'Distillation Log' },
-    material: { icon: '🔬', label: 'Material Study' },
-    territory: { icon: '🗺️', label: 'Territory Guide' },
-    archive: { icon: '📜', label: 'Archive Note' },
+    dispatch: { icon: '', label: 'Field Dispatch' },
+    distillation: { icon: '', label: 'Distillation Log' },
+    material: { icon: '', label: 'Material Study' },
+    territory: { icon: '', label: 'Territory Guide' },
+    archive: { icon: '', label: 'Archive Note' },
 };
 
 const SEASON_LABELS: Record<string, string> = {
@@ -117,7 +117,7 @@ const portableTextComponents = {
                         />
                     </div>
                     {value.caption && (
-                        <figcaption className="mt-3 font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/40 text-center">
+                        <figcaption className="mt-3 font-serif text-[13px] text-theme-charcoal/40 text-center">
                             {value.caption}
                         </figcaption>
                     )}
@@ -183,12 +183,12 @@ export function FieldJournalEntryClient({ entry }: Props) {
                 <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
                     <button
                         onClick={() => router.push('/field-journal')}
-                        className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+                        className="flex items-center gap-2 min-h-11 min-w-11 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
                     >
                         <ArrowLeft weight="thin" className="w-4 h-4" />
                         <span className="sr-only sm:not-sr-only">Back to Field Journal</span>
                     </button>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold">
+                    <span className="font-serif text-[13px] text-theme-gold-ink">
                         {categoryInfo?.label || 'Field Journal'}
                     </span>
                 </div>
@@ -225,14 +225,14 @@ export function FieldJournalEntryClient({ entry }: Props) {
                         {entry.expeditionData && (
                             <div className={`inline-flex flex-wrap items-center gap-3 px-4 py-3 rounded-xl mb-8 ${territoryStyle?.bg || 'bg-theme-charcoal/5'}`}>
                                 {territoryStyle && (
-                                    <span className={`inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.15em] ${territoryStyle.color}`}>
+                                    <span className={`inline-flex items-center gap-1.5 font-serif text-[13px] ${territoryStyle.color}`}>
                                         {territoryStyle.icon} {territoryStyle.label} Territory
                                     </span>
                                 )}
                                 {entry.expeditionData.locationName && (
                                     <>
                                         <span className="text-theme-charcoal/20">•</span>
-                                        <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/50">
+                                        <span className="flex items-center gap-1.5 font-serif text-[13px] text-theme-charcoal/50">
                                             <MapPin weight="thin" className="w-3 h-3" />
                                             {entry.expeditionData.locationName}
                                         </span>
@@ -253,7 +253,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                         {/* Category Badge */}
                         {categoryInfo && (
                             <div className="flex items-center gap-2 mb-4">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50">
+                                <span className="font-serif text-[13px] text-theme-charcoal/50">
                                     {categoryInfo.icon} {categoryInfo.label}
                                 </span>
                             </div>
@@ -274,19 +274,19 @@ export function FieldJournalEntryClient({ entry }: Props) {
                         {/* Meta */}
                         <div className="flex flex-wrap items-center gap-6 text-theme-charcoal/50 pb-8 border-b border-theme-charcoal/10">
                             {entry.author && (
-                                <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
+                                <span className="flex items-center gap-2 font-serif text-[13px]">
                                     <User weight="thin" className="w-3.5 h-3.5" />
                                     {AUTHOR_LABELS[entry.author] || entry.author}
                                 </span>
                             )}
                             {entry.publishedAt && (
-                                <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
+                                <span className="flex items-center gap-2 font-serif text-[13px]">
                                     <Calendar weight="thin" className="w-3.5 h-3.5" />
                                     {formatDate(entry.publishedAt)}
                                 </span>
                             )}
                             {entry.expeditionData?.season && (
-                                <span className="font-mono text-[10px] uppercase tracking-widest">
+                                <span className="font-serif text-[13px]">
                                     {SEASON_LABELS[entry.expeditionData.season] || entry.expeditionData.season}
                                 </span>
                             )}
@@ -316,7 +316,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                 {entry.seo.keywords.map((keyword, index) => (
                                     <span
                                         key={index}
-                                        className="px-3 py-1.5 rounded-full bg-theme-charcoal/5 font-mono text-[9px] uppercase tracking-widest text-theme-charcoal/50"
+                                        className="px-3 py-1.5 rounded-full bg-theme-charcoal/5 font-serif text-[13px] text-theme-charcoal/50"
                                     >
                                         {keyword}
                                     </span>
@@ -333,7 +333,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                             transition={{ duration: 0.6, delay: 0.3 }}
                             className="py-12 border-t border-theme-charcoal/10"
                         >
-                            <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-theme-charcoal/40 mb-8">
+                            <h3 className="font-serif text-[13px] text-theme-charcoal/40 mb-8">
                                 Featured in This Dispatch
                             </h3>
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -363,7 +363,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                                         target.style.display = 'none';
                                                         const parent = target.parentElement;
                                                         if (parent) {
-                                                            parent.innerHTML = `<div class="w-full h-full flex items-center justify-center"><span class="font-mono text-[8px] uppercase tracking-widest opacity-20">${product.collectionType}</span></div>`;
+                                                            parent.innerHTML = `<div class="w-full h-full flex items-center justify-center"><span class="font-serif text-[13px] opacity-20">${product.collectionType}</span></div>`;
                                                         }
                                                     }}
                                                 />
@@ -373,7 +373,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                             {product.title}
                                         </h4>
                                         {product.price && (
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-theme-charcoal/40">
+                                            <span className="font-serif text-[13px] text-theme-charcoal/40">
                                                 ${product.price}
                                             </span>
                                         )}
@@ -391,7 +391,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                             transition={{ duration: 0.6, delay: 0.4 }}
                             className="py-12 border-t border-theme-charcoal/10"
                         >
-                            <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-theme-charcoal/40 mb-8">
+                            <h3 className="font-serif text-[13px] text-theme-charcoal/40 mb-8">
                                 Related Dispatches
                             </h3>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -420,7 +420,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                                             })()}
                                             <div className="flex-1 min-w-0">
                                                 {relatedTerritoryStyle && (
-                                                    <span className={`inline-flex items-center gap-1 font-mono text-[9px] uppercase tracking-widest mb-2 ${relatedTerritoryStyle.color}`}>
+                                                    <span className={`inline-flex items-center gap-1 font-serif text-[13px] mb-2 ${relatedTerritoryStyle.color}`}>
                                                         {relatedTerritoryStyle.icon} {relatedTerritoryStyle.label}
                                                     </span>
                                                 )}
@@ -439,7 +439,7 @@ export function FieldJournalEntryClient({ entry }: Props) {
                     <div className="py-12 text-center">
                         <Link
                             href="/field-journal"
-                            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50 hover:text-theme-gold transition-colors"
+                            className="inline-flex items-center gap-2 font-serif text-[13px] text-theme-charcoal/50 hover:text-theme-gold transition-colors"
                         >
                             <ArrowLeft weight="thin" className="w-4 h-4" />
                             Back to Field Journal

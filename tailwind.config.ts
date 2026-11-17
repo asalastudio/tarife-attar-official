@@ -16,6 +16,7 @@ export default {
           obsidian: "#121212",     // The Relic dark mode - absolute depth
           industrial: "#B3B3B3",   // Metadata - understated technical
           gold: "#c5a66a",         // Accent gold - protocol markers
+          "gold-ink": "#7d6331",   // Gold for small text on alabaster (4.98:1)
         },
       },
       fontFamily: {

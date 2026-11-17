@@ -17,7 +17,7 @@ export default function Loading() {
                 </div>
 
                 {/* Status text */}
-                <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/40">
+                <p className="font-serif text-[13px] text-white/40">
                     Unlocking Vault...
                 </p>
             </div>

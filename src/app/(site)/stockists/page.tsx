@@ -8,12 +8,6 @@ import { GlobalFooter } from "@/components/navigation";
 export default function StockistsPage() {
   const router = useRouter();
 
-  const stockists = [
-    { name: "Coming Soon", location: "New York, NY", status: "pending" },
-    { name: "Coming Soon", location: "Los Angeles, CA", status: "pending" },
-    { name: "Coming Soon", location: "London, UK", status: "pending" },
-    { name: "Coming Soon", location: "Paris, FR", status: "pending" },
-  ];
 
   return (
     <div className="min-h-screen bg-theme-alabaster text-theme-charcoal flex flex-col">
@@ -22,12 +16,12 @@ export default function StockistsPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-70 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold-ink">
             Stockists
           </span>
         </div>
@@ -47,45 +41,11 @@ export default function StockistsPage() {
               Stockists
             </h1>
             <p className="font-serif text-lg md:text-xl opacity-60 leading-relaxed">
-              Authorized purveyors of Tarife Attär specimens. 
-              Physical locations for in-person consultation and acquisition.
+              Tarifé Attär is sold online for now. For wholesale and stockist enquiries, write to{" "}
+              <a href="mailto:support@tarifeattar.com" className="underline underline-offset-4">support@tarifeattar.com</a>.
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {stockists.map((stockist, i) => (
-              <div
-                key={i}
-                className="p-8 border border-theme-charcoal/10 bg-theme-charcoal/[0.02]"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="font-serif italic text-xl mb-1">{stockist.name}</h3>
-                    <p className="font-mono text-[10px] uppercase tracking-widest opacity-40">
-                      {stockist.location}
-                    </p>
-                  </div>
-                  <span className="font-mono text-[8px] uppercase tracking-widest px-3 py-1 bg-theme-gold/10 text-theme-gold">
-                    {stockist.status}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 font-mono text-[10px] uppercase tracking-widest opacity-30 text-center"
-          >
-            Retail partnerships opening Q2 2025
-          </motion.p>
         </div>
       </main>
 

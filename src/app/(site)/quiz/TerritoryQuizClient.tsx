@@ -216,7 +216,7 @@ export function TerritoryQuizClient() {
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 min-h-11 min-w-11 font-mono text-xs uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-2 min-h-11 min-w-11 font-serif text-[13px] opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="sr-only sm:not-sr-only">Back to Site</span>
@@ -224,7 +224,7 @@ export function TerritoryQuizClient() {
           
           {!showIntro && !showResult && (
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/50">
+              <span className="font-serif text-[13px] text-theme-charcoal/50">
                 {currentQuestion + 1} of {QUESTIONS.length}
               </span>
               <div className="w-20 h-1 bg-theme-charcoal/10 rounded-full overflow-hidden">
@@ -266,7 +266,7 @@ export function TerritoryQuizClient() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold block mb-4"
+                  className="font-serif text-[13px] text-theme-gold block mb-4"
                 >
                   The Territory Quiz
                 </motion.span>
@@ -294,7 +294,7 @@ export function TerritoryQuizClient() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="font-mono text-[11px] uppercase tracking-[0.2em] text-theme-charcoal/50 mb-10"
+                  className="font-serif text-[13px] text-theme-charcoal/50 mb-10"
                 >
                   5 questions · 2 minutes
                 </motion.p>
@@ -309,7 +309,7 @@ export function TerritoryQuizClient() {
                   }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-sm uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors"
+                  className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-serif text-sm hover:bg-theme-charcoal/90 transition-colors"
                 >
                   Begin Your Journey
                   <ArrowRight weight="thin" className="w-4 h-4" />
@@ -332,7 +332,7 @@ export function TerritoryQuizClient() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="font-mono text-[10px] uppercase tracking-[0.4em] text-theme-gold block mb-4"
+                  className="font-serif text-[13px] text-theme-gold block mb-4"
                 >
                   Before We Begin
                 </motion.span>
@@ -380,7 +380,7 @@ export function TerritoryQuizClient() {
                   <button
                     type="submit"
                     disabled={!firstName.trim()}
-                    className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-mono text-sm uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="inline-flex items-center gap-3 bg-theme-charcoal text-theme-alabaster px-8 py-4 rounded-full font-serif text-sm hover:bg-theme-charcoal/90 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     Continue
                     <ArrowRight weight="thin" className="w-4 h-4" />
@@ -402,7 +402,7 @@ export function TerritoryQuizClient() {
             >
               <div className="max-w-2xl w-full">
                 <div className="text-center mb-10 md:mb-14">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-charcoal/40 block mb-4">
+                  <span className="font-serif text-[13px] text-theme-charcoal/40 block mb-4">
                     {currentQ.subtext}
                   </span>
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif tracking-tight leading-tight text-theme-charcoal">
@@ -463,7 +463,7 @@ export function TerritoryQuizClient() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="font-mono text-[11px] uppercase tracking-[0.4em] text-white/70 block mb-3"
+                    className="font-serif text-[13px] text-white/70 block mb-3"
                   >
                     {firstName ? `${firstName}, you're` : 'Your Territory'}
                   </motion.span>
@@ -511,7 +511,7 @@ export function TerritoryQuizClient() {
                       <>
                         <div className="flex items-center justify-center gap-2 mb-4">
                           <Sparkle weight="thin" className="w-5 h-5 text-theme-gold" />
-                          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-theme-gold">
+                          <span className="font-serif text-[13px] text-theme-gold">
                             Save Your Profile
                           </span>
                         </div>
@@ -557,13 +557,13 @@ export function TerritoryQuizClient() {
                           <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full bg-theme-charcoal text-theme-alabaster py-4 rounded-xl font-mono text-sm uppercase tracking-[0.2em] hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50"
+                            className="w-full bg-theme-charcoal text-theme-alabaster py-4 rounded-xl font-serif text-sm hover:bg-theme-charcoal/90 transition-colors disabled:opacity-50"
                           >
                             {isSubmitting ? 'Saving...' : 'Save My Territory'}
                           </button>
                         </form>
 
-                        <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-theme-charcoal/30 text-center mt-4">
+                        <p className="font-serif text-[13px] text-theme-charcoal/30 text-center mt-4">
                           The guide is yours. Ongoing marketing is optional.
                         </p>
                       </>
@@ -595,7 +595,7 @@ export function TerritoryQuizClient() {
                   >
                     <button
                       onClick={() => router.push(`/atlas?territory=${resultTerritory.id.toLowerCase()}`)}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-theme-charcoal/20 font-mono text-sm uppercase tracking-[0.15em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-theme-charcoal/20 font-serif text-sm hover:bg-theme-charcoal hover:text-theme-alabaster transition-colors"
                     >
                       Explore {resultTerritory.name}
                       <ArrowRight weight="thin" className="w-4 h-4" />
@@ -613,7 +613,7 @@ export function TerritoryQuizClient() {
                         setMarketingConsent(false);
                         setEmailError(null);
                       }}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-mono text-sm uppercase tracking-[0.15em] text-theme-charcoal/60 hover:text-theme-charcoal transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-serif text-sm text-theme-charcoal/60 hover:text-theme-charcoal transition-colors"
                     >
                       Retake Quiz
                     </button>

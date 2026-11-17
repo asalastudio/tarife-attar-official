@@ -152,7 +152,7 @@ export default function SupportPage() {
   const inputBase =
     "w-full bg-white/80 border border-theme-charcoal/20 px-4 py-4 font-mono text-base tracking-wide placeholder:text-theme-charcoal/40 focus:outline-none focus:border-theme-gold focus:ring-1 focus:ring-theme-gold/30 transition-all rounded-sm font-medium";
   const labelBase =
-    "block font-mono text-xs font-bold uppercase tracking-wider text-theme-charcoal/80 mb-2";
+    "block font-serif text-[13px] font-bold text-theme-charcoal/80 mb-2";
 
   return (
     <div className="min-h-screen bg-theme-alabaster text-theme-charcoal flex flex-col">
@@ -161,12 +161,12 @@ export default function SupportPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-xs font-medium uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] font-medium opacity-80 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-5 h-5" />
             Return
           </button>
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.6em] opacity-60">
+          <span className="font-serif text-[13px] font-semibold opacity-80">
             Support
           </span>
         </div>
@@ -202,26 +202,26 @@ export default function SupportPage() {
                   Message Received
                 </h2>
                 {ticketNumber && (
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold mb-6">
+                  <p className="font-serif text-[13px] text-theme-gold mb-6">
                     Reference {ticketNumber}
                   </p>
                 )}
                 <p className="text-xl font-serif opacity-80 italic mb-2">
                   We typically respond within 24 hours.
                 </p>
-                <p className="text-sm font-mono opacity-60 font-semibold uppercase tracking-wider mb-8">
+                <p className="text-sm font-serif opacity-60 font-semibold mb-8">
                   Check your email for a confirmation
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="px-8 py-4 border border-theme-charcoal/30 font-mono text-xs font-semibold uppercase tracking-[0.3em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
+                    className="px-8 py-4 border border-theme-charcoal/30 font-serif text-[13px] font-semibold hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
                   >
                     Send Another
                   </button>
                   <button
                     onClick={() => router.push("/")}
-                    className="px-8 py-4 font-mono text-xs font-semibold uppercase tracking-[0.3em] opacity-60 hover:opacity-100 transition-opacity"
+                    className="px-8 py-4 font-serif text-[13px] font-semibold opacity-80 hover:opacity-100 transition-opacity"
                   >
                     Return Home
                   </button>
@@ -240,7 +240,7 @@ export default function SupportPage() {
                   <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-4">
                     Get in Touch
                   </h1>
-                  <p className="text-sm font-mono font-semibold uppercase tracking-[0.3em] opacity-60">
+                  <p className="text-sm font-serif font-semibold opacity-60">
                     We&apos;re here to help
                   </p>
                 </div>
@@ -266,7 +266,7 @@ export default function SupportPage() {
                         <motion.p
                           initial={{ opacity: 0, y: -4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-red-500 font-mono text-xs font-medium uppercase tracking-wider mt-2"
+                          className="text-red-500 font-serif text-[13px] font-medium mt-2"
                         >
                           {errors.name}
                         </motion.p>
@@ -290,7 +290,7 @@ export default function SupportPage() {
                         <motion.p
                           initial={{ opacity: 0, y: -4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-red-500 font-mono text-xs font-medium uppercase tracking-wider mt-2"
+                          className="text-red-500 font-serif text-[13px] font-medium mt-2"
                         >
                           {errors.email}
                         </motion.p>
@@ -379,7 +379,7 @@ export default function SupportPage() {
                         <motion.p
                           initial={{ opacity: 0, y: -4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-red-500 font-mono text-xs font-medium uppercase tracking-wider mt-2"
+                          className="text-red-500 font-serif text-[13px] font-medium mt-2"
                         >
                           {errors.message}
                         </motion.p>
@@ -399,7 +399,7 @@ export default function SupportPage() {
                           />
                           <label
                             htmlFor="support-attachment"
-                            className="inline-flex items-center gap-2 cursor-pointer font-mono text-xs font-semibold uppercase tracking-wider text-theme-industrial hover:text-theme-charcoal transition-colors p-2 -ml-2 rounded-sm"
+                            className="inline-flex items-center gap-2 cursor-pointer font-serif text-[13px] font-semibold text-theme-industrial hover:text-theme-charcoal transition-colors p-2 -ml-2 rounded-sm"
                           >
                             <Paperclip weight="thin" className="w-4 h-4" />
                             Attach an image (Max 3MB)
@@ -426,7 +426,7 @@ export default function SupportPage() {
                         <motion.p
                           initial={{ opacity: 0, y: -4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-red-500 font-mono text-xs font-medium uppercase tracking-wider mt-2"
+                          className="text-red-500 font-serif text-[13px] font-medium mt-2"
                         >
                           {errors.attachment}
                         </motion.p>
@@ -438,7 +438,7 @@ export default function SupportPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-3 py-4 bg-theme-charcoal text-theme-alabaster font-mono text-xs font-bold uppercase tracking-[0.3em] hover:bg-theme-charcoal/90 disabled:opacity-40 transition-all duration-500 rounded-sm"
+                    className="w-full flex items-center justify-center gap-3 py-4 bg-theme-charcoal text-theme-alabaster font-serif text-[13px] font-bold hover:bg-theme-charcoal/90 disabled:opacity-40 transition-all duration-500 rounded-sm"
                   >
                     {isSubmitting ? (
                       <motion.span

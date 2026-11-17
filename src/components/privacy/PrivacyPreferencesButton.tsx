@@ -26,7 +26,7 @@ export function PrivacyPreferencesButton() {
           void handleClick();
         }}
         disabled={!ready || !controlsAvailable}
-        className="border border-theme-charcoal/20 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-colors hover:border-theme-gold hover:text-theme-gold disabled:cursor-not-allowed disabled:opacity-40"
+        className="border border-theme-charcoal/20 px-5 py-3 font-serif text-[13px] transition-colors hover:border-theme-gold hover:text-theme-gold disabled:cursor-not-allowed disabled:opacity-40"
       >
         {!ready
           ? 'Loading Privacy Controls...'

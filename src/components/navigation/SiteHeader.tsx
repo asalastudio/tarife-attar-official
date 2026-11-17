@@ -25,11 +25,6 @@ import { useModalFocus } from "@/Hooks/useModalFocus";
  * portal above every floating control.
  */
 
-const ANNOUNCEMENT = {
-  text: "Find your territory in five questions.",
-  href: "/quiz",
-};
-
 // The four territories of the Atlas. The Atlas page reads ?territory= and
 // opens on that tab, so these are true deep links, not anchors.
 const TERRITORIES: Array<{ id: string; name: string; tagline: string; price: string }> = [
@@ -76,7 +71,7 @@ const MENUS: Record<
       label: t.name,
       href: `/atlas?territory=${t.id}`,
       note: t.tagline,
-      meta: `3 ml $23 \u00b7 6 ml / 12 ml ${t.price}`,
+      meta: `3 ml $23, 6 ml / 12 ml ${t.price}`,
     })),
     feature: {
       eyebrow: "Find your territory",
@@ -87,20 +82,19 @@ const MENUS: Record<
     },
   },
   relic: {
-    eyebrow: "Rare materials \u00b7 Small lots",
+    eyebrow: "",
     title: "The Relic",
-    intro: "Pure oud oils, aged resins and vintage attars, kept as specimens rather than blends.",
+    intro: "Traditional attars and Sacred Hojari oil.",
     all: { label: "View the Relic", href: "/relic" },
     links: [
-      { label: "Pure Oud", href: "/relic#pure-oud", note: "Single-origin agarwood oils. Aged. Verified. Uncut." },
-      { label: "Aged Resins", href: "/relic#aged-resins", note: "Fossilized amber, vintage frankincense and temple-grade myrrh." },
-      { label: "Rare Attars", href: "/relic#rare-attars", note: "Traditional hydro-distillations from master perfumers." },
+      { label: "Aged Resins", href: "/relic#aged-resins", note: "Natural resins." },
+      { label: "Traditional Attars", href: "/relic#rare-attars", note: "Attars from the Relic." },
     ],
     feature: {
       eyebrow: "Collector's note",
-      title: "Quantities are finite",
-      body: "When a lot is gone it is gone. The Relic is restocked only when the material is right.",
-      cta: "See what remains",
+      title: "Sacred Hojari oil",
+      body: "A 10 ml roll-on of Sacred Hojari oil, from Dhofar, Oman.",
+      cta: "View the Relic",
       href: "/relic",
     },
   },
@@ -112,7 +106,7 @@ const MENUS: Record<
     links: [
       { label: "The Traveler Set", href: "/gift", note: "A curated set of Atlas waypoints, ready to give." },
       { label: "Three in 3 ml", href: "/atlas", note: "Explore travel sizes and check current availability." },
-      { label: "From the Relic", href: "/relic", note: "A rare oil or resin for the collector who has everything." },
+      { label: "From the Relic", href: "/relic", note: "A traditional attar or Sacred Hojari oil." },
     ],
     feature: {
       eyebrow: "Not sure what they wear?",
@@ -131,7 +125,7 @@ const MENUS: Record<
       { label: "Field Notes", href: "/journal?category=field-notes", note: "Dispatches from the road and the studio." },
       { label: "Behind the Blend", href: "/journal?category=behind-the-blend", note: "How a waypoint is composed, note by note." },
       { label: "Territory Spotlight", href: "/journal?category=territory-spotlight", note: "One territory, read closely." },
-      { label: "Collector Archives", href: "/journal?category=collector-archives", note: "Rare materials and the stories they carry." },
+      { label: "Collector Archives", href: "/journal?category=collector-archives", note: "Notes on the materials behind the Relic." },
     ],
     feature: {
       eyebrow: "The Field Journal",
@@ -230,10 +224,10 @@ export function SiteHeader() {
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
   const linkClass = (href: string) =>
-    `font-mono text-[10px] uppercase tracking-[0.22em] transition-colors duration-300 py-3 ${
+    `font-serif text-[13px] transition-colors duration-300 py-3 ${
       isActive(href)
         ? "text-theme-charcoal"
-        : "text-theme-charcoal/55 hover:text-theme-charcoal"
+        : "text-theme-charcoal/75 hover:text-theme-charcoal"
     }`;
 
   return (
@@ -245,15 +239,9 @@ export function SiteHeader() {
       }`}
       aria-hidden={introActive}
     >
-      {/* 1. Announcement bar */}
-      <div className="bg-theme-charcoal text-theme-alabaster pt-[env(safe-area-inset-top)]">
-        <Link
-          href={ANNOUNCEMENT.href}
-          className="flex items-center justify-center min-h-11 md:min-h-0 text-center font-mono text-[10px] uppercase tracking-[0.12em] md:tracking-[0.22em] py-2 px-4 hover:text-theme-gold transition-colors duration-300"
-        >
-          {ANNOUNCEMENT.text}
-        </Link>
-      </div>
+      {/* 1. Announcement bar removed (Hallmark 69: the quiz was offered several times per page).
+          The masthead quiz link below is the one quiz entry. Keep the safe-area inset. */}
+      <div className="pt-[env(safe-area-inset-top)] bg-theme-alabaster" />
 
       {/* 2. Masthead. The panel anchors to this full-width box, not to the nav
           row, so it always spans the viewport edge to edge. */}
@@ -276,9 +264,9 @@ export function SiteHeader() {
               </button>
               <Link
                 href="/quiz"
-                className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/55 hover:text-theme-charcoal transition-colors duration-300"
+                className="hidden md:inline font-serif text-[14px] text-theme-charcoal/80 hover:text-theme-charcoal transition-colors duration-300"
               >
-                Find Your Waypoint
+                Find your territory
               </Link>
             </div>
 
@@ -300,7 +288,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={openChat}
-                className="hidden md:inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/55 hover:text-theme-charcoal transition-colors duration-300"
+                className="hidden md:inline-flex items-center gap-2 font-serif text-[13px] text-theme-charcoal/55 hover:text-theme-charcoal transition-colors duration-300"
                 aria-label="Open the concierge"
               >
                 <ChatCircle weight="light" className="w-4 h-4" />
@@ -456,7 +444,7 @@ export function SiteHeader() {
                             <li key={t.id}>
                               <Link
                                 href={`/atlas?territory=${t.id}`}
-                                className="flex items-center justify-between gap-2 min-h-11 font-mono text-[10px] uppercase tracking-[0.16em] text-theme-charcoal/75 hover:text-theme-charcoal"
+                                className="flex items-center justify-between gap-2 min-h-11 font-serif text-[13px] text-theme-charcoal/75 hover:text-theme-charcoal"
                               >
                                 <span>{t.name}</span>
                                 <span className="text-theme-charcoal/60 normal-case tracking-normal">{t.price}</span>
@@ -473,7 +461,7 @@ export function SiteHeader() {
                     <li key={s.href}>
                       <Link
                         href={s.href}
-                        className="flex items-center min-h-11 font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/75 hover:text-theme-charcoal"
+                        className="flex items-center min-h-11 font-serif text-[13px] text-theme-charcoal/75 hover:text-theme-charcoal"
                       >
                         {s.label}
                       </Link>
@@ -486,7 +474,7 @@ export function SiteHeader() {
                         setDrawerOpen(false);
                         openChat();
                       }}
-                      className="flex items-center min-h-11 w-full font-mono text-[10px] uppercase tracking-[0.22em] text-theme-charcoal/75 hover:text-theme-charcoal"
+                      className="flex items-center min-h-11 w-full font-serif text-[13px] text-theme-charcoal/75 hover:text-theme-charcoal"
                     >
                       Concierge
                     </button>
@@ -494,7 +482,7 @@ export function SiteHeader() {
                 </ul>
               </nav>
 
-              <div className="px-5 pt-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] border-t border-theme-charcoal/10 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal/65">
+              <div className="px-5 pt-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] border-t border-theme-charcoal/10 font-serif text-[13px] text-theme-charcoal/65">
                 Clean, skin-safe perfume oils for those who travel by scent.
               </div>
             </motion.aside>
@@ -512,16 +500,13 @@ function MegaPanel({ menu }: { menu: (typeof MENUS)[MenuKey] }) {
     <div className="max-w-[1800px] mx-auto px-8 lg:px-12 py-10 min-h-[360px] grid grid-cols-12 gap-8 lg:gap-12">
       {/* Introduction */}
       <div className="col-span-3 flex flex-col">
-        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-charcoal/45">
-          {menu.eyebrow}
-        </span>
-        <span className="mt-4 font-serif italic text-[34px] leading-none text-theme-charcoal">{menu.title}</span>
-        <p className="mt-4 font-serif text-[14px] leading-relaxed text-theme-charcoal/60 max-w-[30ch]">{menu.intro}</p>
+        <span className="font-serif italic text-[34px] leading-none text-theme-charcoal">{menu.title}</span>
+        <p className="mt-4 font-serif text-[14px] leading-relaxed text-theme-charcoal/75 max-w-[30ch]">{menu.intro}</p>
         <Link
           href={menu.all.href}
-          className="mt-auto pt-6 inline-flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal hover:text-theme-gold transition-colors duration-300"
+          className="mt-auto pt-6 inline-flex items-center gap-2 font-serif text-[13px] text-theme-charcoal hover:text-theme-gold transition-colors duration-300"
         >
-          {menu.all.label} <span aria-hidden>&rarr;</span>
+          {menu.all.label}
         </Link>
       </div>
 
@@ -538,9 +523,9 @@ function MegaPanel({ menu }: { menu: (typeof MENUS)[MenuKey] }) {
                 <span className="block font-serif italic text-[22px] leading-tight text-theme-charcoal group-hover/l:text-theme-gold transition-colors duration-300">
                   {l.label}
                 </span>
-                <span className="mt-1.5 block font-serif text-[13px] leading-snug text-theme-charcoal/55">{l.note}</span>
+                <span className="mt-1.5 block font-serif text-[13px] leading-snug text-theme-charcoal/75">{l.note}</span>
                 {l.meta && (
-                  <span className="mt-2.5 block font-mono text-[9px] uppercase tracking-[0.22em] text-theme-charcoal/40">
+                  <span className="mt-2.5 block font-serif text-[13px] text-theme-charcoal/70">
                     {l.meta}
                   </span>
                 )}
@@ -561,11 +546,10 @@ function MegaPanel({ menu }: { menu: (typeof MENUS)[MenuKey] }) {
         href={menu.feature.href}
         className="col-span-3 group/f flex flex-col bg-theme-charcoal text-theme-alabaster p-7 min-h-[220px]"
       >
-        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-gold">{menu.feature.eyebrow}</span>
-        <span className="mt-4 font-serif italic text-[26px] leading-[1.1]">{menu.feature.title}</span>
+        <span className="font-serif italic text-[26px] leading-[1.1]">{menu.feature.title}</span>
         <span className="mt-3 font-serif text-[13px] leading-relaxed text-theme-alabaster/65">{menu.feature.body}</span>
-        <span className="mt-auto pt-6 font-mono text-[9px] uppercase tracking-[0.22em] text-theme-alabaster group-hover/f:text-theme-gold transition-colors duration-300">
-          {menu.feature.cta} &rarr;
+        <span className="mt-auto pt-6 font-serif text-[13px] text-theme-alabaster group-hover/f:text-theme-gold transition-colors duration-300">
+          {menu.feature.cta}
         </span>
       </Link>
     </div>

@@ -68,7 +68,7 @@ export function InteractiveMap({
       <div className="flex items-center justify-center gap-2 mb-6 flex-wrap">
         <button
           onClick={() => onTerritoryChange?.(null)}
-          className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-[0.15em] transition-all ${
+          className={`px-4 py-1.5 rounded-full text-[13px] font-serif capitalize transition-all ${
             !activeTerritory
               ? "bg-[#c9a96e]/20 text-[#c9a96e] ring-1 ring-[#c9a96e]/40"
               : "text-[#f5f0eb]/50 hover:text-[#f5f0eb]/80"
@@ -83,7 +83,7 @@ export function InteractiveMap({
             <button
               key={t}
               onClick={() => onTerritoryChange?.(activeTerritory === t ? null : t)}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-[0.15em] transition-all ${
+              className={`px-4 py-1.5 rounded-full text-[13px] font-serif capitalize transition-all ${
                 activeTerritory === t
                   ? "ring-1"
                   : "text-[#f5f0eb]/50 hover:text-[#f5f0eb]/80"
@@ -195,12 +195,12 @@ export function InteractiveMap({
             <div className="flex items-start justify-between mb-3">
               <div>
                 <span
-                  className="text-[10px] font-mono uppercase tracking-[0.2em] block mb-1"
+                  className="text-[13px] font-serif block mb-1"
                   style={{ color: TERRITORY_COLORS[selectedPin.territory]?.pin }}
                 >
                   {selectedPin.territory} Territory
                 </span>
-                <h3 className="text-2xl font-serif text-[#f5f0eb] tracking-wide">
+                <h3 className="text-2xl font-serif text-[#f5f0eb] ">
                   {selectedPin.atlasName}
                 </h3>
                 {selectedPin.legacyName && (
@@ -233,7 +233,7 @@ export function InteractiveMap({
               </span>
               <Link
                 href={`/product/${selectedPin.slug}`}
-                className="px-5 py-2 rounded-full text-xs font-mono uppercase tracking-[0.15em] transition-all"
+                className="px-5 py-2 rounded-full text-[13px] font-serif transition-all"
                 style={{
                   backgroundColor: TERRITORY_COLORS[selectedPin.territory]?.pin,
                   color: "#0f0f0f",

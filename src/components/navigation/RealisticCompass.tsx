@@ -18,7 +18,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Threshold', path: 'home', direction: 'N', angle: 0, description: 'Return to origin' },
-  { label: 'The Relic', path: 'relic', direction: 'E', angle: 90, description: 'Pure resins & rare materials' },
+  { label: 'The Relic', path: 'relic', direction: 'E', angle: 90, description: 'Traditional attars and Sacred Hojari oil' },
   { label: 'Satchel', path: 'cart', direction: 'S', angle: 180, description: 'Your collection' },
   { label: 'The Atlas', path: 'atlas', direction: 'W', angle: 270, description: 'Perfume oil territories' },
 ];
@@ -304,7 +304,7 @@ export const RealisticCompass: React.FC<Props> = ({
                   onMouseLeave={() => !isMobile && setHoveredDirection(null)}
                   className="pointer-events-auto flex flex-col items-center group touch-manipulation min-h-[48px] min-w-[80px] md:min-w-[120px] px-4 py-3 active:scale-95 transition-transform"
                 >
-                  <span className={`font-mono ${isMobile ? 'text-[10px] tracking-[0.2em]' : 'text-lg tracking-[0.5em]'} uppercase transition-all duration-300 ${hoveredDirection === 'N' ? 'text-theme-gold scale-110' : 'text-white/60'
+                  <span className={`font-serif ${isMobile ? 'text-[13px] ' : 'text-lg '} transition-all duration-300 ${hoveredDirection === 'N' ? 'text-theme-gold scale-110' : 'text-white/60'
                     }`}>
                     {NAV_ITEMS[0].label}
                   </span>
@@ -331,7 +331,7 @@ export const RealisticCompass: React.FC<Props> = ({
                   onMouseLeave={() => !isMobile && setHoveredDirection(null)}
                   className="pointer-events-auto flex flex-col items-center group touch-manipulation min-h-[48px] min-w-[80px] md:min-w-[120px] px-4 py-3 active:scale-95 transition-transform"
                 >
-                  <span className={`font-mono ${isMobile ? 'text-[10px] tracking-[0.2em]' : 'text-lg tracking-[0.5em]'} uppercase transition-all duration-300 ${hoveredDirection === 'E' ? 'text-theme-gold scale-110' : 'text-white/60'
+                  <span className={`font-serif ${isMobile ? 'text-[13px] ' : 'text-lg '} transition-all duration-300 ${hoveredDirection === 'E' ? 'text-theme-gold scale-110' : 'text-white/60'
                     }`}>
                     {NAV_ITEMS[1].label}
                   </span>
@@ -358,7 +358,7 @@ export const RealisticCompass: React.FC<Props> = ({
                   onMouseLeave={() => !isMobile && setHoveredDirection(null)}
                   className="pointer-events-auto flex flex-col items-center group touch-manipulation min-h-[48px] min-w-[80px] md:min-w-[120px] px-4 py-3 active:scale-95 transition-transform"
                 >
-                  <span className={`font-mono ${isMobile ? 'text-[10px] tracking-[0.2em]' : 'text-lg tracking-[0.5em]'} uppercase transition-all duration-300 ${hoveredDirection === 'S' ? 'text-theme-gold scale-110' : 'text-white/60'
+                  <span className={`font-serif ${isMobile ? 'text-[13px] ' : 'text-lg '} transition-all duration-300 ${hoveredDirection === 'S' ? 'text-theme-gold scale-110' : 'text-white/60'
                     }`}>
                     {NAV_ITEMS[2].label}{itemCount > 0 ? ` (${itemCount})` : ''}
                   </span>
@@ -385,7 +385,7 @@ export const RealisticCompass: React.FC<Props> = ({
                   onMouseLeave={() => !isMobile && setHoveredDirection(null)}
                   className="pointer-events-auto flex flex-col items-center group touch-manipulation min-h-[48px] min-w-[80px] md:min-w-[120px] px-4 py-3 active:scale-95 transition-transform"
                 >
-                  <span className={`font-mono ${isMobile ? 'text-[10px] tracking-[0.2em]' : 'text-lg tracking-[0.5em]'} uppercase transition-all duration-300 ${hoveredDirection === 'W' ? 'text-theme-gold scale-110' : 'text-white/60'
+                  <span className={`font-serif ${isMobile ? 'text-[13px] ' : 'text-lg '} transition-all duration-300 ${hoveredDirection === 'W' ? 'text-theme-gold scale-110' : 'text-white/60'
                     }`}>
                     {NAV_ITEMS[3].label}
                   </span>
@@ -413,7 +413,7 @@ export const RealisticCompass: React.FC<Props> = ({
                       handleOverlayClick();
                       openChat();
                     }}
-                    className="pointer-events-auto inline-flex items-center gap-2 min-h-11 px-6 rounded-full border border-white/25 font-mono text-xs uppercase tracking-[0.2em] text-white/80 hover:text-theme-gold hover:border-theme-gold/60 transition-colors"
+                    className="pointer-events-auto inline-flex items-center gap-2 min-h-11 px-6 rounded-full border border-white/25 font-serif text-[13px] text-white/80 hover:text-theme-gold hover:border-theme-gold/60 transition-colors"
                   >
                     <ChatCircle weight="light" className="w-4 h-4" aria-hidden />
                     Ask the Concierge
@@ -425,7 +425,7 @@ export const RealisticCompass: React.FC<Props> = ({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onClick={handleOverlayClick}
-                  className={`pointer-events-auto min-h-11 px-4 font-mono ${isMobile ? 'text-xs' : 'text-[10px]'} uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/55 md:text-white/40 whitespace-nowrap`}
+                  className={`pointer-events-auto min-h-11 px-4 font-serif ${isMobile ? 'text-[13px]' : 'text-[13px]'} text-white/55 md:text-white/40 whitespace-nowrap`}
                 >
                   {isMobile ? 'Tap anywhere to close' : 'Click anywhere to close'}
                 </motion.button>
@@ -457,7 +457,7 @@ export const RealisticCompass: React.FC<Props> = ({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 5 }}
-                className="absolute -top-8 font-mono text-[10px] uppercase tracking-[0.3em] text-theme-charcoal/60 whitespace-nowrap"
+                className="absolute -top-8 font-serif text-[13px] text-theme-charcoal/60 whitespace-nowrap"
               >
                 Explore
               </motion.span>
@@ -532,7 +532,7 @@ export const RealisticCompass: React.FC<Props> = ({
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
-              className="mt-4 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-theme-charcoal whitespace-nowrap"
+              className="mt-4 font-serif text-[13px] md:text-[14px] text-theme-charcoal whitespace-nowrap"
             >
               Navigate by compass
             </motion.p>
