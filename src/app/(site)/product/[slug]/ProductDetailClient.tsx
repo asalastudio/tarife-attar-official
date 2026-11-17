@@ -144,13 +144,15 @@ const CollapsibleSection = ({
   isOpen,
   onToggle,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  defaultOpenDesktop = false
+  defaultOpenDesktop = false,
+  dark = false
 }: {
   title: string;
   children: React.ReactNode;
   isOpen: boolean;
   onToggle: () => void;
   defaultOpenDesktop?: boolean;
+  dark?: boolean;
 }) => {
   return (
     <div className="pt-8 border-t border-theme-charcoal/10">
@@ -159,7 +161,7 @@ const CollapsibleSection = ({
         aria-expanded={isOpen}
         className="w-full flex items-center justify-between min-h-11 py-2 group"
       >
-        <span className="font-serif text-[13px] text-theme-gold-ink">
+        <span className={`font-serif text-[13px] ${dark ? 'text-theme-gold' : 'text-theme-gold-ink'}`}>
           {title}
         </span>
         <Plus weight="thin"
@@ -1466,6 +1468,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             {(isAtlas && product.atlasData?.travelLog) || (isRelic && product.relicData?.museumDescription) || (isGift && product.giftData?.giftNote) ? (
               <CollapsibleSection
                 title={isAtlas ? "The Journey" : isGift ? "What's Inside" : "Curator's Notes"}
+                dark={isRelic}
                 isOpen={expandedSections.journey}
                 onToggle={() => toggleSection("journey")}
               >
