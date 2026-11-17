@@ -23,6 +23,7 @@ export const atlasProductsByTerritoryQuery = groq`
     shopifyPreviewImageUrl,
     "shopifyImage": store.previewImageUrl,
     inStock,
+    "has3ml": defined(shopifyVariant3mlId),
     "atmosphere": atlasData.atmosphere,
     "gpsCoordinates": atlasData.gpsCoordinates,
     "latitude": atlasData.latitude,
@@ -325,6 +326,7 @@ export const featuredProductsQuery = groq`
     shopifyPreviewImageUrl,
     "shopifyImage": store.previewImageUrl,
     "atmosphere": atlasData.atmosphere,
+    "has3ml": defined(shopifyVariant3mlId),
     "atlasImage": atlasData.fieldReport.image
   }
 `;

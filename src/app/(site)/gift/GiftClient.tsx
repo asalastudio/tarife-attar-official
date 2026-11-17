@@ -7,7 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
-import { getItemLabel } from "@/lib/brandSystem";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 
 interface GiftProduct {
@@ -33,7 +32,7 @@ interface Props {
   placeholderImages?: PlaceholderImagesQueryResult | null;
 }
 
-export function GiftClient({ products, totalCount, placeholderImages }: Props) {
+export function GiftClient({ products, placeholderImages }: Props) {
   const router = useRouter();
 
   return (
@@ -51,9 +50,6 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
           >
             {/* Left - Title */}
             <div className="flex-shrink-0">
-              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.6em] md:tracking-[0.8em] text-theme-gold mb-2 md:mb-3 block leading-tight">
-                {totalCount} {getItemLabel('gift', totalCount)} · Curated
-              </span>
               <h1 className="text-3xl md:text-6xl font-serif tracking-tighter leading-[0.95] md:leading-[0.9]">
                 The Gift
               </h1>
@@ -62,10 +58,7 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
             {/* Right - Description */}
             <div className="hidden md:block max-w-md text-right">
               <p className="font-serif text-lg opacity-80 leading-relaxed mb-2">
-                Curated sets and travel collections. Bundled and ready to give.
-              </p>
-              <p className="font-mono text-[10px] uppercase tracking-widest opacity-60">
-                Assorted selections. Signature gift packaging.
+                Sets of assorted perfume oils, ready to give.
               </p>
             </div>
           </motion.div>
@@ -92,7 +85,7 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
                     <div className="relative aspect-square">
                       {product.compareAtPrice && product.price && product.compareAtPrice > product.price && (
                         <div className="absolute top-2 left-2 z-10 bg-theme-charcoal text-theme-alabaster px-2 py-1">
-                          <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest">
+                          <span className="font-serif text-[13px] md:text-[14px]">
                             {Math.round((1 - product.price / product.compareAtPrice) * 100)}% Off
                           </span>
                         </div>
@@ -153,11 +146,11 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
 
                     {/* Product Info */}
                     <div className="text-center py-4 md:py-8 space-y-1.5 px-2">
-                      <h3 className="font-serif italic text-xs md:text-base tracking-wide break-words line-clamp-2">
+                      <h3 className="font-serif italic text-xs md:text-base break-words line-clamp-2">
                         {product.title}
                       </h3>
                       {product.setSize && (
-                        <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest opacity-50">
+                        <p className="font-serif text-[13px] md:text-[14px] opacity-80">
                           {product.setSize}-Piece Set{product.pieceFormat ? ` · ${product.pieceFormat}` : ''}
                         </p>
                       )}
@@ -180,7 +173,7 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
             </div>
           ) : (
             <div className="py-20 text-center bg-theme-charcoal/[0.03]">
-              <span className="font-mono text-xs uppercase tracking-widest opacity-30">
+              <span className="font-serif text-[13px] opacity-80">
                 No gift sets available yet
               </span>
             </div>

@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { GlobalFooter } from "@/components/navigation";
-import { Compass } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { urlForImage } from "@/sanity/lib/image";
 import { getItemLabel } from "@/lib/brandSystem";
+import { ATLAS_PRICING, atlasCardPriceLabel } from "@/lib/atlasPricing";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import dynamic from "next/dynamic";
@@ -28,24 +28,11 @@ const AtlasMapLeaflet = dynamic(
 
 
 // Territory-based pricing for Atlas Collection (same as ProductDetailClient)
-const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
-  ember: { '6ml': 28, '12ml': 48 },
-  petal: { '6ml': 30, '12ml': 50 },
-  tidal: { '6ml': 30, '12ml': 50 },
-  terra: { '6ml': 33, '12ml': 55 },
-};
-
-// Helper to format price range for display
+// Territory header shows the 6 ml and 12 ml prices in words.
 const getTerritoryPriceRange = (territoryId: string): string => {
-  const pricing = TERRITORY_PRICING[territoryId];
+  const pricing = ATLAS_PRICING[territoryId];
   if (!pricing) return '';
-  return `$${pricing['6ml']} – $${pricing['12ml']}`;
-};
-
-// Helper to get starting price for a territory
-const getTerritoryStartingPrice = (territoryId: string): number | null => {
-  const pricing = TERRITORY_PRICING[territoryId];
-  return pricing ? pricing['6ml'] : null;
+  return `6 ml $${pricing['6ml']} / 12 ml $${pricing['12ml']}`;
 };
 
 interface Territory {
@@ -69,6 +56,7 @@ interface Territory {
       image?: unknown;
     };
     inStock?: boolean;
+    has3ml?: boolean;
     legacyName?: string;
     showLegacyName?: boolean;
     scentProfile?: string;
@@ -146,9 +134,6 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
           >
             <div className="flex flex-col md:flex-row md:items-end md:justify-between md:gap-8">
               <div>
-                <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.6em] md:tracking-[0.4em] text-theme-gold mb-2 md:mb-3 block leading-tight break-words">
-                  {totalCount} {getItemLabel('atlas', totalCount)}{'\u00A0'}·{'\u00A0'}4 Territories
-                </span>
                 <h1 className="text-3xl md:text-6xl font-serif italic tracking-tighter leading-[0.95] md:leading-[0.9] mb-3 md:mb-0">
                   The Atlas
                 </h1>
@@ -157,27 +142,21 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                   href="/quiz"
                   className="md:hidden inline-flex items-center gap-2 mt-3 min-h-11 py-2.5 px-4 border border-theme-charcoal/15 hover:border-theme-charcoal/40 bg-white/50 transition-all duration-300"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.1em] opacity-50">
-                    Not sure?
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-theme-gold font-medium">
-                    Take the Quiz →
+                  <span className="font-serif text-[14px] text-theme-charcoal">
+                    Not sure where to start? Take the quiz
                   </span>
                 </Link>
               </div>
               <div className="hidden md:block max-w-md text-right">
-                <p className="font-serif text-base opacity-60 leading-relaxed mb-3">
-                  Clean, skin-safe perfume oils for those who travel by scent.
+                <p className="font-serif text-base opacity-80 leading-relaxed mb-3">
+                  {totalCount} perfume oils in four territories: Ember, Tidal, Petal and Terra.
                 </p>
                 <Link
                   href="/quiz"
                   className="group inline-flex items-center gap-2 py-2.5 px-4 border border-theme-charcoal/15 hover:border-theme-charcoal/40 hover:bg-theme-charcoal/5 transition-all duration-300"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] opacity-50 group-hover:opacity-80">
-                    Not sure?
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-theme-gold font-medium">
-                    Take the Quiz →
+                  <span className="font-serif text-[14px] text-theme-charcoal">
+                    Not sure where to start? Take the quiz
                   </span>
                 </Link>
               </div>
@@ -197,7 +176,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
           >
             <button
               onClick={() => handleTerritorySelect(null)}
-              className={`min-h-11 px-3 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === null
+              className={`min-h-11 px-3 md:px-6 py-2 md:py-3 font-serif text-[13px] md:text-sm transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === null
                 ? "bg-theme-charcoal text-theme-alabaster"
                 : "bg-theme-charcoal/5 opacity-80 hover:opacity-100"
                 }`}
@@ -209,7 +188,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
               <button
                 key={territory.id}
                 onClick={() => handleTerritorySelect(territory.id)}
-                className={`min-h-11 px-3 md:px-6 py-2 md:py-3 font-mono text-[9px] md:text-sm uppercase tracking-[0.15em] md:tracking-widest transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === territory.id
+                className={`min-h-11 px-3 md:px-6 py-2 md:py-3 font-serif text-[13px] md:text-sm transition-all whitespace-nowrap flex-shrink-0 ${activeTerritory === territory.id
                   ? "bg-theme-charcoal text-theme-alabaster"
                   : "bg-theme-charcoal/5 opacity-80 hover:opacity-100"
                   }`}
@@ -246,11 +225,11 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                     </p>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
-                    <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] opacity-50 whitespace-nowrap">
+                    <p className="font-serif text-[13px] md:text-[14px] opacity-80 whitespace-nowrap">
                       {territory.count} {getItemLabel('atlas', territory.count)}
                     </p>
                     {getTerritoryPriceRange(territory.id) && (
-                      <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider opacity-40 whitespace-nowrap">
+                      <p className="font-serif text-[13px] md:text-[14px] opacity-80 whitespace-nowrap">
                         {getTerritoryPriceRange(territory.id)}
                       </p>
                     )}
@@ -324,7 +303,7 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                                   target.style.display = 'none';
                                   const parent = target.parentElement;
                                   if (parent) {
-                                    parent.innerHTML = '<div class="absolute inset-0 flex items-center justify-center"><span class="font-mono text-[10px] uppercase tracking-widest opacity-20">Coming Soon</span></div>';
+                                    parent.innerHTML = '<div class="absolute inset-0 flex items-center justify-center"><span class="font-serif text-[13px] opacity-20">Coming Soon</span></div>';
                                   }
                                 }}
                               />
@@ -343,41 +322,17 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                             </p>
                           ) : (
                             <p className="text-xs md:text-base tracking-wide">
-                              {(getTerritoryStartingPrice(territory.id) || product.price)
-                                ? `$${getTerritoryStartingPrice(territory.id) || product.price}`
-                                : 'Price unavailable'}
+                              {atlasCardPriceLabel(territory.id, product.has3ml, product.price) ?? 'Price unavailable'}
                             </p>
                           )}
                         </div>
                       </Link>
                     ))}
 
-                    {/* Quiz CTA Card — fills the empty grid slot */}
-                    <Link
-                      href="/quiz"
-                      className="group flex flex-col bg-[#eae6df] hover:bg-[#e2ddd5] transition-colors"
-                    >
-                      <div className="relative aspect-square flex items-center justify-center px-6">
-                        <div className="text-center space-y-4">
-                          <Compass weight="thin" className="w-8 h-8 mx-auto opacity-20 group-hover:opacity-40 transition-opacity" />
-                          <p className="font-serif text-sm md:text-base italic text-theme-charcoal/60 leading-relaxed">
-                            Not sure where<br />to begin?
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-center py-4 md:py-8 space-y-1.5 px-2">
-                        <h3 className="font-sans text-xs md:text-base font-medium tracking-[0.15em] uppercase text-theme-gold group-hover:text-theme-charcoal transition-colors">
-                          Take the Quiz
-                        </h3>
-                        <p className="text-[10px] md:text-sm tracking-wider opacity-40">
-                          Find your waypoint
-                        </p>
-                      </div>
-                    </Link>
                   </div>
                 ) : (
                   <div className="py-20 text-center bg-[#f8f6f3]">
-                    <span className="font-mono text-xs uppercase tracking-widest opacity-30">
+                    <span className="font-serif text-[13px] opacity-80">
                       No products in this territory yet
                     </span>
                   </div>
@@ -391,9 +346,6 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
       <section className="py-16 md:py-24 px-4 md:px-24 bg-[#0f0f0f]">
         <div className="max-w-[1800px] mx-auto">
           <div className="text-center mb-8 md:mb-12">
-            <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] text-[#c9a96e] block mb-3">
-              Four Territories · 28 Waypoints · One Atlas
-            </span>
             <h2 className="text-2xl md:text-4xl font-serif italic text-[#f5f0eb] tracking-tight">
               Explore the Map
             </h2>

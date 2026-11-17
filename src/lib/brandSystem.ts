@@ -32,8 +32,8 @@ export const COLLECTION_LABELS = {
     itemSingular: 'Specimen',
     itemPlural: 'Specimens',
     classLabel: 'Single Origin Specimen',
-    coordinateLabel: 'Provenance',
-    coordinateDescription: 'The exact harvest site of the material.',
+    coordinateLabel: 'Origin',
+    coordinateDescription: 'The region the material comes from.',
     // Heritage Distillation overrides
     heritageClassLabel: 'Heritage Distillation',
     heritageCoordinateLabel: 'Distillery (The Kiln)',
@@ -88,7 +88,7 @@ export function getClassLabel(
 /**
  * Get the semantic label for GPS coordinates.
  * Atlas: "Inspiration Point"
- * Relic (Standard): "Provenance"
+ * Relic (Standard): "Origin"
  * Relic (Heritage): "Distillery (The Kiln)"
  */
 export function getCoordinateLabel(

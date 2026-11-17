@@ -259,7 +259,7 @@ export const EssenceDrop: React.FC<EssenceDropProps> = ({
             }}
           >
             <div className="bg-theme-charcoal/95 backdrop-blur-sm text-theme-alabaster px-4 py-2 rounded-sm shadow-lg">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] whitespace-nowrap">
+              <p className="font-serif text-[13px] whitespace-nowrap">
                 {productName} <span className="text-theme-gold">Added to Satchel</span>
               </p>
             </div>

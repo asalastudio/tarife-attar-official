@@ -12,7 +12,7 @@ import { checkVariantAvailability } from "@/lib/shopify/client";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { GlobalFooter } from "@/components/navigation";
 import { PortableText } from "@portabletext/react";
-import { getClassLabel, getCoordinateLabel } from "@/lib/brandSystem";
+import { getCoordinateLabel } from "@/lib/brandSystem";
 import { LegacyName } from "@/components/product/LegacyName";
 import dynamic from "next/dynamic";
 
@@ -159,7 +159,7 @@ const CollapsibleSection = ({
         aria-expanded={isOpen}
         className="w-full flex items-center justify-between min-h-11 py-2 group"
       >
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold">
+        <span className="font-serif text-[13px] text-theme-gold">
           {title}
         </span>
         <Plus weight="thin"
@@ -202,7 +202,7 @@ const FieldReportConcept = ({ concept, hotspots }: { concept?: string; hotspots?
 
   return (
     <div className="pt-8 border-t border-theme-charcoal/10">
-      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold block mb-4">
+      <span className="font-serif text-[13px] text-theme-gold block mb-4">
         Field Report Concept
       </span>
       {concept && (
@@ -214,9 +214,9 @@ const FieldReportConcept = ({ concept, hotspots }: { concept?: string; hotspots?
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {hotspots.map((h, i) => (
             <div key={i} className="flex gap-3 items-start">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-theme-gold mt-1">0{i + 1}</span>
+              <span className="font-serif text-[13px] text-theme-gold mt-1">0{i + 1}</span>
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-widest opacity-60 block">{h.item}</span>
+                <span className="font-serif text-[13px] opacity-80 block">{h.item}</span>
                 <span className="font-serif italic text-base md:text-sm opacity-80">{h.meaning}</span>
               </div>
             </div>
@@ -293,7 +293,7 @@ const AudioNarrativeDesktop = ({
   return (
     <div className="hidden md:block py-6 border-y border-theme-charcoal/10 my-6">
       <div className="flex items-center justify-between mb-4">
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-theme-gold">
+        <span className="font-serif text-[13px] text-theme-gold">
           Archive Audio
         </span>
         <div className="flex gap-4">
@@ -303,7 +303,7 @@ const AudioNarrativeDesktop = ({
               className={`flex items-center gap-2 transition-opacity ${activeTrack === 'journey' ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
             >
               <Compass weight="thin" className="w-3 h-3" />
-              <span className="font-mono text-[9px] uppercase tracking-widest">The Journey</span>
+              <span className="font-serif text-[13px]">The Journey</span>
             </button>
           )}
           {audioOnSkin && (
@@ -312,7 +312,7 @@ const AudioNarrativeDesktop = ({
               className={`flex items-center gap-2 transition-opacity ${activeTrack === 'skin' ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
             >
               <Drop weight="thin" className="w-3 h-3" />
-              <span className="font-mono text-[9px] uppercase tracking-widest">On Skin</span>
+              <span className="font-serif text-[13px]">On Skin</span>
             </button>
           )}
         </div>
@@ -404,7 +404,7 @@ const FieldReportImage = ({
 
             {/* Tooltip */}
             <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover/hotspot:opacity-100 transition-all transform translate-y-2 group-hover/hotspot:translate-y-0 pointer-events-none">
-              <div className="bg-theme-charcoal text-theme-alabaster px-3 py-1.5 text-[10px] uppercase tracking-widest font-mono shadow-md flex items-center gap-2">
+              <div className="bg-theme-charcoal text-theme-alabaster px-3 py-1.5 text-[13px] font-serif shadow-md flex items-center gap-2">
                 <span>{hotspot.note || hotspot.product?.title}</span>
                 {hotspot.product ? <ArrowLeft weight="thin" className="w-2 h-2 rotate-180" /> : null}
               </div>
@@ -485,7 +485,7 @@ const TerritoryBadge = ({ territory }: { territory: string }) => {
   return (
     <div className={`inline-flex items-center gap-2.5 px-4 py-2 ${style.bg} ${style.border} border backdrop-blur-sm`}>
       <IconComponent className={`w-4 h-4 ${style.iconColor}`} />
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/80">{name}</span>
+      <span className="font-serif text-[13px] text-theme-charcoal/80">{name}</span>
     </div>
   );
 };
@@ -520,7 +520,7 @@ const ScentPyramid = ({ notes }: { notes: Product["notes"] }) => {
             className="fill-theme-gold"
             whileHover={{ scale: 1.5 }}
           />
-          <text x="110" y="48" className="font-mono text-[8px] uppercase tracking-widest fill-theme-charcoal/60">Top</text>
+          <text x="110" y="48" className="font-serif text-[9px] fill-theme-charcoal/80">Top</text>
         </g>
 
         {/* HEART notes (Center) */}
@@ -535,7 +535,7 @@ const ScentPyramid = ({ notes }: { notes: Product["notes"] }) => {
             className="fill-theme-gold/70"
             whileHover={{ scale: 1.5 }}
           />
-          <text x="100" y="108" textAnchor="middle" className="font-mono text-[8px] uppercase tracking-widest fill-theme-charcoal/60">Heart</text>
+          <text x="100" y="108" textAnchor="middle" className="font-serif text-[9px] fill-theme-charcoal/80">Heart</text>
         </g>
 
         {/* BASE notes (Bottom) */}
@@ -543,7 +543,7 @@ const ScentPyramid = ({ notes }: { notes: Product["notes"] }) => {
           <motion.circle cx="70" cy="145" r="7" className="fill-theme-gold/40" whileHover={{ scale: 1.5 }} />
           <motion.circle cx="100" cy="145" r="7" className="fill-theme-gold/40" whileHover={{ scale: 1.5 }} />
           <motion.circle cx="130" cy="145" r="7" className="fill-theme-gold/40" whileHover={{ scale: 1.5 }} />
-          <text x="100" y="158" textAnchor="middle" className="font-mono text-[8px] uppercase tracking-widest fill-theme-charcoal/60">Base</text>
+          <text x="100" y="158" textAnchor="middle" className="font-serif text-[9px] fill-theme-charcoal/80">Base</text>
         </g>
       </svg>
     </div>
@@ -563,26 +563,26 @@ const TrustBadges = ({ collectionType, product }: { collectionType: Product['col
     ? customBadges.map(label => ({ label, icon: Check }))
     : collectionType === 'atlas'
       ? [
-        { label: "Skin Safe", icon: Check },
-        { label: "Clean", icon: Check },
-        { label: "Cruelty-Free", icon: Check },
+        { label: "Skin-safe", icon: Check },
+        { label: "Alcohol-free", icon: Check },
+        { label: "Cruelty-free", icon: Check },
       ]
       : collectionType === 'relic'
-        ? [
-          { label: "Pure Origin", icon: Check },
-          { label: "Wild Harvested", icon: Check },
-        ]
+        // Relic badges show only when set on the product in Sanity (Hallmark 46a).
+        ? []
         : [
           { label: "Gift-Ready", icon: Check },
           { label: "Cruelty-Free", icon: Check },
         ];
 
+  if (badges.length === 0) return null;
+
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-6 border-t border-theme-charcoal/5">
       {badges.map((badge, i) => (
-        <div key={i} className="flex items-center gap-2 opacity-60">
+        <div key={i} className="flex items-center gap-2 opacity-80">
           <badge.icon className="w-3 h-3 text-theme-gold" />
-          <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider whitespace-nowrap">
+          <span className="font-serif text-[13px] md:text-[14px] whitespace-nowrap">
             {badge.label}
           </span>
         </div>
@@ -950,7 +950,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         target.style.display = 'none';
                         const parent = target.parentElement;
                         if (parent) {
-                          parent.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="font-mono text-xs uppercase tracking-widest opacity-20">Coming Soon</span></div>';
+                          parent.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="font-serif text-[13px] opacity-20">Coming Soon</span></div>';
                         }
                       }}
                     />
@@ -970,11 +970,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   <div className="absolute inset-0 bg-gradient-to-t from-theme-charcoal/5 to-transparent pointer-events-none" />
                 </motion.div>
               ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="font-mono text-xs uppercase tracking-widest opacity-20">
-                    No Image
-                  </span>
-                </div>
+                <div className="w-full h-full bg-theme-charcoal/5" aria-hidden="true" />
               )}
             </div>
 
@@ -1024,25 +1020,6 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
           {/* Right: Product Details */}
           <div className="flex flex-col justify-center space-y-8">
-            {/* Collection Badge & Class Label */}
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-4">
-                <span className="font-mono text-xs md:text-sm uppercase tracking-[0.4em] opacity-80">
-                  {getClassLabel(product.collectionType, product.relicData?.isHeritageDistillation)}
-                </span>
-                {isAtlas && product.atlasData?.atmosphere && (
-                  <span className="font-mono text-xs md:text-sm uppercase tracking-widest text-theme-gold">
-                    {TERRITORY_NAMES[product.atlasData.atmosphere] || product.atlasData.atmosphere}
-                  </span>
-                )}
-              </div>
-              {isRelic && product.relicData?.isHeritageDistillation && product.relicData?.heritageType && (
-                <span className="font-mono text-[10px] uppercase tracking-widest opacity-60">
-                  {product.relicData.heritageType}
-                </span>
-              )}
-            </div>
-
             {/* Product Title + Legacy Name */}
             <div className="relative">
               <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] pr-14 md:pr-0">
@@ -1070,12 +1047,15 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             <LegacyName
               legacyName={product.legacyName}
               showLegacyName={product.showLegacyName}
-              className="text-sm md:text-base opacity-60 mt-2"
+              className="text-sm md:text-base opacity-80 mt-2"
             />
+            {isRelic && product.relicData?.isHeritageDistillation && product.relicData?.heritageType && (
+              <p className="font-serif text-[14px] opacity-80">{product.relicData.heritageType}</p>
+            )}
 
             {/* Scent Profile Summary */}
             {product.scentProfile && (
-              <p className="font-mono text-xs md:text-sm uppercase tracking-widest opacity-60 mt-3">
+              <p className="font-serif text-[13px] md:text-sm opacity-80 mt-3">
                 {product.scentProfile}
               </p>
             )}
@@ -1091,7 +1071,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     territory === 'terra' ? 'bg-emerald-700' :
                     'bg-theme-gold'
                   }`} />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-theme-charcoal/60">
+                  <span className="font-serif text-[13px] text-theme-charcoal/60">
                     {TERRITORY_NAMES[territory] || territory}
                   </span>
                 </div>
@@ -1104,7 +1084,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             {/* Variant Selector (Atlas with territory pricing) */}
             {isAtlas && territoryPricing ? (
               <div className="space-y-4">
-                <span className="font-mono text-xs uppercase tracking-widest opacity-60">
+                <span className="font-serif text-[13px] opacity-80">
                   Select Size
                 </span>
                 <div className="flex gap-3">
@@ -1120,7 +1100,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         }`}
                     >
                       <div className="text-center">
-                        <div className="font-mono text-sm uppercase tracking-widest mb-1">
+                        <div className="font-serif text-sm mb-1">
                           {size}
                         </div>
                         <div className={`text-2xl font-serif tracking-tighter ${selectedVariant === size ? 'text-theme-alabaster' : ''
@@ -1132,7 +1112,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   ))}
                 </div>
                 {product.productFormat && (
-                  <span className="font-mono text-xs uppercase tracking-widest opacity-60 block">
+                  <span className="font-serif text-[13px] opacity-80 block">
                     {product.productFormat}
                   </span>
                 )}
@@ -1150,7 +1130,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         <span className="text-xl md:text-2xl font-serif tracking-tighter opacity-40 line-through">
                           ${product.compareAtPrice}
                         </span>
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-theme-gold">
+                        <span className="font-serif text-[13px] md:text-[14px] text-theme-gold">
                           {Math.round((1 - currentPrice / product.compareAtPrice) * 100)}% Off
                         </span>
                       </>
@@ -1161,12 +1141,12 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 {/* Volume & Format */}
                 <div className="flex items-center gap-6">
                   {product.volume && (
-                    <div className="px-6 py-3 border border-theme-charcoal/20 font-mono text-xs md:text-sm uppercase tracking-widest">
+                    <div className="px-6 py-3 border border-theme-charcoal/20 font-serif text-[13px] md:text-sm">
                       {product.volume}
                     </div>
                   )}
                   {product.productFormat && (
-                    <span className="font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
+                    <span className="font-serif text-[13px] md:text-sm opacity-80">
                       {product.productFormat}
                     </span>
                   )}
@@ -1191,10 +1171,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       <MapPin weight="thin" className={`w-4 h-4 transition-colors ${showMap ? 'text-theme-gold' : 'text-theme-charcoal/50'}`} />
                     </div>
                     <div className="flex-1">
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-theme-gold/80 block mb-0.5">
+                      <span className="font-serif text-[13px] text-theme-gold/80 block mb-0.5">
                         {getCoordinateLabel('atlas')}
                       </span>
-                      <span className="font-mono text-[11px] uppercase tracking-wider opacity-70">
+                      <span className="font-mono text-[12px] opacity-80">
                         {product.atlasData.gpsCoordinates}
                       </span>
                     </div>
@@ -1226,8 +1206,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                           <div className="aspect-[16/9] bg-theme-charcoal/[0.03] border border-theme-charcoal/10 flex items-center justify-center relative">
                             <MapIcon weight="thin" className="w-16 h-16 opacity-[0.06]" />
                             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-theme-alabaster/80 to-transparent">
-                              <span className="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 block">
-                                Origin · {TERRITORY_NAMES[territory || ''] || 'Unknown'} Territory
+                              <span className="font-serif text-[13px] opacity-80 block">
+                                {TERRITORY_NAMES[territory || ''] || 'Unknown'} territory
                               </span>
                             </div>
                           </div>
@@ -1248,7 +1228,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     <button
                       onClick={() => setShowMap(!showMap)}
                       aria-expanded={showMap}
-                      className="min-h-11 justify-center flex flex-col gap-1 items-start font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-theme-gold transition-all"
+                      className="min-h-11 justify-center flex flex-col gap-1 items-start font-serif text-[13px] md:text-sm opacity-80 hover:opacity-100 hover:text-theme-gold transition-all"
                     >
                       <div className="flex items-center gap-2">
                         <MapPin weight="thin" className={`w-4 h-4 transition-transform ${showMap ? 'scale-110 text-theme-gold' : ''}`} />
@@ -1272,7 +1252,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                           <div className="aspect-video bg-theme-charcoal/5 border border-theme-charcoal/10 flex items-center justify-center relative group/map">
                             <MapIcon weight="thin" className="w-8 h-8 opacity-10 group-hover/map:scale-110 transition-transform duration-700" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                              <span className="font-mono text-[9px] uppercase tracking-[0.3em] opacity-40 text-center px-6">
+                              <span className="font-serif text-[13px] opacity-80 text-center px-6">
                                 [ Curatorial Geographic Archive Data Pending ]
                               </span>
                             </div>
@@ -1283,14 +1263,14 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   </div>
                 )}
                 {product.relicData.distillationYear && (
-                  <div className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
+                  <div className="flex items-center gap-2 font-serif text-[13px] md:text-sm opacity-80">
                     <Calendar weight="thin" className="w-4 h-4" />
                     Distilled {product.relicData.distillationYear}
                   </div>
                 )}
-                {product.relicData.viscosity !== undefined && (
+                {typeof product.relicData.viscosity === "number" && product.relicData.viscosity > 0 && (
                   <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
+                    <div className="flex items-center gap-2 font-serif text-[13px] md:text-sm opacity-80">
                       <Drop weight="thin" className="w-4 h-4" />
                       Viscosity: {product.relicData.viscosity}/100
                     </div>
@@ -1313,7 +1293,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
             {/* Quantity Selector */}
             <div className="flex items-center gap-4">
-              <span className="font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
+              <span className="font-serif text-[13px] md:text-sm opacity-80">
                 Quantity
               </span>
               <div className={`flex items-center border ${isRelic ? 'border-white/20' : 'border-theme-charcoal/20'}`}>
@@ -1350,7 +1330,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
               whileHover={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
               whileTap={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
-              className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${!isOutOfStock
+              className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-serif text-sm md:text-base transition-all relative overflow-hidden ${!isOutOfStock
                 ? addState === 'added'
                   ? "bg-theme-gold text-theme-obsidian"
                   : product.shopifyVariantId
@@ -1399,7 +1379,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-amber-50 border border-amber-200 rounded"
               >
-                <p className="font-mono text-[10px] uppercase tracking-widest text-amber-800 mb-1">
+                <p className="font-serif text-[13px] text-amber-800 mb-1">
                   ⚠️ Shopify Connection Required
                 </p>
                 <p className="font-serif text-xs text-amber-700">
@@ -1416,7 +1396,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                 className="flex items-center gap-2"
               >
                 <WarningCircle weight="thin" className="w-3 h-3" />
-                <span className="font-mono text-[9px] uppercase tracking-widest">
+                <span className="font-serif text-[13px]">
                   {product.scarcityNote || "Limited Batch Production: Small Volume Reserve"}
                 </span>
               </motion.div>
@@ -1425,7 +1405,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             {/* Gift Option */}
             <motion.button
               whileHover={{ x: 5 }}
-              className="flex items-center gap-2 min-h-11 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80 hover:opacity-100 transition-all hover:text-theme-gold"
+              className="flex items-center gap-2 min-h-11 font-serif text-[13px] md:text-sm opacity-80 hover:opacity-100 transition-all hover:text-theme-gold"
             >
               <Gift weight="thin" className="w-4 h-4" />
               Make it a gift
@@ -1502,7 +1482,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             ) : null}
             {isGift && product.giftData?.includedItems && product.giftData.includedItems.length > 0 && (
               <div className="pt-2 pb-4 space-y-2">
-                <span className="font-mono text-xs uppercase tracking-widest opacity-60">Included</span>
+                <span className="font-serif text-[13px] opacity-80">Included</span>
                 <ul className="font-serif text-base opacity-90 space-y-1">
                   {product.giftData.includedItems.map((item, i) => (
                     <li key={i}>{item}</li>
@@ -1517,7 +1497,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               {/* Notes & Ingredients */}
               <button
                 onClick={() => toggleSection("notes")}
-                className="w-full flex items-center justify-between py-4 font-mono text-xs md:text-sm uppercase tracking-widest opacity-90 hover:opacity-100 transition-opacity"
+                className="w-full flex items-center justify-between py-4 font-serif text-[13px] md:text-sm opacity-90 hover:opacity-100 transition-opacity"
               >
                 <span>Scent Architecture</span>
                 <Plus weight="thin"
@@ -1544,7 +1524,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
                           >
-                            <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 block mb-2">
+                            <span className="font-serif text-[13px] opacity-80 block mb-2">
                               Top Notes
                             </span>
                             <div className="font-serif text-base">
@@ -1558,7 +1538,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
                           >
-                            <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 block mb-2">
+                            <span className="font-serif text-[13px] opacity-80 block mb-2">
                               Heart Notes
                             </span>
                             <div className="font-serif text-base">
@@ -1572,7 +1552,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
                           >
-                            <span className="font-mono text-[10px] uppercase tracking-widest opacity-40 block mb-2">
+                            <span className="font-serif text-[13px] opacity-80 block mb-2">
                               Base Notes
                             </span>
                             <div className="font-serif text-base">
@@ -1584,7 +1564,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
 
                       {product.perfumer && (
                         <div className="pt-4 border-t border-theme-charcoal/5">
-                          <span className="font-mono text-[9px] uppercase tracking-widest opacity-40 block mb-2">
+                          <span className="font-serif text-[13px] opacity-80 block mb-2">
                             Perfumer
                           </span>
                           <div className="font-serif text-sm">{product.perfumer}</div>
@@ -1602,7 +1582,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
         {product.relatedProducts && product.relatedProducts.length > 0 && (
           <div className="max-w-[1800px] mx-auto px-6 md:px-24 mt-32">
             <div className="border-t border-theme-charcoal/10 pt-16">
-              <h2 className="font-mono text-xs md:text-sm uppercase tracking-[0.5em] mb-12 text-center opacity-60">
+              <h2 className="font-serif text-[13px] md:text-sm mb-12 text-center opacity-80">
                 Complete the Journey
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -1623,7 +1603,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center opacity-20 font-mono text-[8px] uppercase tracking-widest">
+                          <div className="w-full h-full flex items-center justify-center opacity-20 font-serif text-[13px]">
                             No Image
                           </div>
                         )}
@@ -1637,7 +1617,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             className="text-xs opacity-60 mb-2"
                           />
                         )}
-                        <p className="font-mono text-xs opacity-40 uppercase tracking-widest">
+                        <p className="font-serif text-[13px] opacity-80">
                           ${related.price}
                         </p>
                       </div>
@@ -1667,7 +1647,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             type="button"
             onClick={() => handleAddToSatchel('mobile')}
             disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
-            className={`w-full h-14 px-5 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden ${!isOutOfStock
+            className={`w-full h-14 px-5 flex items-center justify-between gap-4 font-serif text-[13px] transition-all relative overflow-hidden ${!isOutOfStock
               ? addState === 'added'
                 ? "bg-theme-gold text-theme-obsidian"
                 : product.shopifyVariantId

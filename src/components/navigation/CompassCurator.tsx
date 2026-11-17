@@ -91,7 +91,7 @@ const ChatMessage: React.FC<{ message: UIMessage }> = ({ message }) => {
       className={`mb-4 ${isUser ? 'text-right' : 'text-left'}`}
     >
       {/* Role Label */}
-      <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-theme-charcoal/40 mb-1 block">
+      <span className="font-serif text-[13px] text-theme-charcoal/40 mb-1 block">
         {isUser ? 'You' : 'Atlas'}
       </span>
       
@@ -269,7 +269,7 @@ export const CompassCurator: React.FC<CompassCuratorProps> = ({
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-theme-charcoal/10">
               <div>
-                <h2 className="font-mono text-xs uppercase tracking-[0.3em] text-theme-charcoal/60">
+                <h2 className="font-serif text-[13px] text-theme-charcoal/60">
                   The Atlas
                 </h2>
                 <p className="font-serif text-sm text-theme-charcoal/40 mt-0.5">
@@ -352,7 +352,7 @@ export const CompassCurator: React.FC<CompassCuratorProps> = ({
               
               {/* Submit Hint */}
               <div className="flex items-center justify-between mt-3">
-                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-theme-charcoal/30">
+                <span className="font-serif text-[13px] text-theme-charcoal/30">
                   Press Enter to explore
                 </span>
                 
@@ -362,7 +362,7 @@ export const CompassCurator: React.FC<CompassCuratorProps> = ({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`
-                    font-mono text-[10px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full
+                    font-serif text-[13px] px-3 py-1.5 rounded-full
                     transition-all duration-300
                     ${inputValue.trim() && !isLoading
                       ? 'bg-theme-charcoal text-theme-alabaster'

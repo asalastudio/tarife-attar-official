@@ -198,7 +198,7 @@ export default function AtlasMap() {
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-[1000] p-6 pointer-events-none flex flex-col items-center">
         <h1 className="text-4xl md:text-5xl font-serif tracking-widest text-[#C4A265] drop-shadow-lg mb-2">THE ATLAS</h1>
-        <p className="font-mono text-xs md:text-sm tracking-[0.2em] uppercase text-[#F5F0EB]/70 drop-shadow-md">
+        <p className="font-serif text-[13px] md:text-sm text-[#F5F0EB]/70 drop-shadow-md">
           Four Territories · 28 Waypoints · One Atlas
         </p>
       </div>
@@ -222,7 +222,7 @@ export default function AtlasMap() {
 
       {/* Legend */}
       <div className="absolute bottom-8 left-8 z-[1000] hidden lg:flex flex-col gap-3 bg-[#1a1714]/80 backdrop-blur-md p-5 rounded border border-[#C4A265]/20 shadow-2xl">
-        <h3 className="font-mono text-[10px] tracking-[0.2em] uppercase text-[#F5F0EB]/50 border-b border-[#C4A265]/20 pb-2 mb-1">
+        <h3 className="font-serif text-[13px] text-[#F5F0EB]/50 border-b border-[#C4A265]/20 pb-2 mb-1">
           Cartographer's Key
         </h3>
         <div className="flex flex-col gap-3">
@@ -237,7 +237,7 @@ export default function AtlasMap() {
                 <div className="absolute w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: t.color, boxShadow: `0 0 8px ${t.color}` }}></div>
                 <div className="absolute w-1.5 h-1.5 rounded-full bg-white opacity-80"></div>
               </div>
-              <span className="font-serif text-xs text-[#F5F0EB]/80 tracking-wide">{t.name} Territory</span>
+              <span className="font-serif text-xs text-[#F5F0EB]/80 ">{t.name} Territory</span>
             </div>
           ))}
         </div>
@@ -305,12 +305,12 @@ export default function AtlasMap() {
 
               <div className="mt-12 mb-6">
                 <span 
-                  className="inline-block px-3 py-1 rounded-full font-mono text-[10px] tracking-widest uppercase mb-4 border"
+                  className="inline-block px-3 py-1 rounded-full font-serif text-[13px] mb-4 border"
                   style={{ color: selectedWaypoint.color, borderColor: `${selectedWaypoint.color}40`, backgroundColor: `${selectedWaypoint.color}10` }}
                 >
                   {selectedWaypoint.territory} TERRITORY
                 </span>
-                <h2 className="text-5xl font-serif tracking-wide text-[#F5F0EB] mb-2">
+                <h2 className="text-5xl font-serif text-[#F5F0EB] mb-2">
                   {selectedWaypoint.name}
                 </h2>
                 {selectedWaypoint.legacy && (
@@ -326,7 +326,7 @@ export default function AtlasMap() {
                 "{selectedWaypoint.evocation}"
               </p>
 
-              <div className="space-y-4 font-mono text-xs tracking-widest text-[#F5F0EB]/60 uppercase mb-10">
+              <div className="space-y-4 font-serif text-[13px] text-[#F5F0EB]/60 mb-10">
                 <div className="flex items-center gap-3">
                   <MapPin weight="thin" size={14} className="text-[#C4A265]" />
                   <span>
@@ -354,7 +354,7 @@ export default function AtlasMap() {
                     </p>
                     <button 
                       onClick={() => fetchGeminiInfo(selectedWaypoint)}
-                      className="px-4 py-2 border border-[#C4A265]/40 text-[#C4A265] hover:bg-[#C4A265]/10 font-mono text-[10px] tracking-[0.2em] uppercase transition-colors"
+                      className="px-4 py-2 border border-[#C4A265]/40 text-[#C4A265] hover:bg-[#C4A265]/10 font-serif text-[13px] transition-colors"
                     >
                       Reveal Modern Geography
                     </button>
@@ -380,7 +380,7 @@ export default function AtlasMap() {
                     
                     {geminiResponse.links.length > 0 && (
                       <div className="pt-3 border-t border-[#C4A265]/10">
-                        <span className="block font-mono text-[9px] tracking-widest uppercase text-[#C4A265]/70 mb-2">Sources</span>
+                        <span className="block font-serif text-[13px] text-[#C4A265]/70 mb-2">Sources</span>
                         <ul className="space-y-1">
                           {geminiResponse.links.map((link, idx) => (
                             <li key={idx}>
@@ -405,7 +405,7 @@ export default function AtlasMap() {
             <div className="p-8 border-t border-[#C4A265]/10 bg-[#1a1714]">
               <a 
                 href={`/product/${selectedWaypoint.id}`}
-                className="block w-full py-4 text-center font-mono text-xs tracking-[0.2em] uppercase bg-[#C4A265] text-[#1a1714] hover:bg-[#d4b57e] transition-colors rounded-sm font-bold"
+                className="block w-full py-4 text-center font-serif text-[13px] bg-[#C4A265] text-[#1a1714] hover:bg-[#d4b57e] transition-colors rounded-sm font-bold"
               >
                 Explore Waypoint
               </a>

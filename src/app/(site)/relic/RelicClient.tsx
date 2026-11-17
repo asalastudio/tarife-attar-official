@@ -41,7 +41,7 @@ interface Props {
   placeholderImages?: PlaceholderImagesQueryResult | null;
 }
 
-export function RelicClient({ categories, totalCount, placeholderImages }: Props) {
+export function RelicClient({ categories, placeholderImages }: Props) {
   const router = useRouter();
 
 
@@ -60,9 +60,6 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
           >
             {/* Left - Title */}
             <div className="flex-shrink-0">
-              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.6em] md:tracking-[0.8em] text-theme-gold mb-2 md:mb-3 block leading-tight">
-                {totalCount} {getItemLabel('relic', totalCount)}{'\u00A0'}·{'\u00A0'}Pure Line
-              </span>
               <h1 className="text-3xl md:text-6xl font-serif tracking-tighter leading-[0.95] md:leading-[0.9]">
                 The Relic
               </h1>
@@ -71,10 +68,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
             {/* Right - Description */}
             <div className="hidden md:block max-w-md text-right">
               <p className="font-serif text-lg opacity-80 leading-relaxed mb-2">
-                Pure resins. Rare ouds. Aged materials sourced for the devoted collector.
-              </p>
-              <p className="font-mono text-[10px] uppercase tracking-widest opacity-60">
-                Limited quantities. Verified authenticity.
+                Resins and traditional attars, in small quantities.
               </p>
             </div>
           </motion.div>
@@ -84,7 +78,8 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
       {/* Categories */}
       <section className="pb-20 md:pb-24 px-4 md:px-24">
         <div className="max-w-[1800px] mx-auto space-y-8 md:space-y-12">
-          {categories.map((category, index) => (
+          {/* Hallmark 68: a category with nothing in it is not shown as a full section. */}
+          {categories.filter((category) => category.count > 0).map((category, index) => (
             <motion.div
               key={category.id}
               id={category.id}
@@ -103,7 +98,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                     {category.description}
                   </p>
                 </div>
-                <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-widest opacity-50 flex-shrink-0 whitespace-nowrap">
+                <p className="font-serif text-[13px] md:text-[14px] opacity-80 flex-shrink-0 whitespace-nowrap">
                   {category.count} {getItemLabel('relic', category.count)}
                 </p>
               </div>
@@ -124,11 +119,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                           const imageUrl = urlForImage(displayImage as any);
                           if (!imageUrl) {
                             return (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="font-mono text-[10px] uppercase tracking-widest opacity-20">
-                                  No Image
-                                </span>
-                              </div>
+                              <div className="absolute inset-0 bg-white/[0.03]" aria-hidden="true" />
                             );
                           }
 
@@ -162,7 +153,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                                   target.style.display = 'none';
                                   const parent = target.parentElement;
                                   if (parent) {
-                                    parent.innerHTML = '<div class="absolute inset-0 flex items-center justify-center"><span class="font-mono text-[10px] uppercase tracking-widest opacity-20">Coming Soon</span></div>';
+                                    parent.innerHTML = '<div class="absolute inset-0 flex items-center justify-center"></div>';
                                   }
                                 }}
                               />
@@ -181,7 +172,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                               target.style.display = 'none';
                               const parent = target.parentElement;
                               if (parent) {
-                                parent.innerHTML = '<div class="absolute inset-0 flex items-center justify-center"><span class="font-mono text-[10px] uppercase tracking-widest opacity-20">Coming Soon</span></div>';
+                                parent.innerHTML = '<div class="absolute inset-0 flex items-center justify-center"></div>';
                               }
                             }}
                           />
@@ -190,7 +181,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                       
                       {/* Product Info - Minimal like Atlas */}
                       <div className="text-center py-4 md:py-8 space-y-1.5 px-2">
-                        <h3 className="font-serif italic text-xs md:text-base tracking-wide break-words line-clamp-2">
+                        <h3 className="font-serif italic text-xs md:text-base break-words line-clamp-2">
                           {product.title}
                         </h3>
                         {!product.inStock ? (
@@ -208,7 +199,7 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                 </div>
               ) : (
                 <div className="py-20 text-center bg-[#1a1a1a]">
-                  <span className="font-mono text-xs uppercase tracking-widest opacity-30">
+                  <span className="font-serif text-[13px] opacity-80">
                     No specimens in this category yet
                   </span>
                 </div>

@@ -51,8 +51,8 @@ export function CommunityMap({ ports }: CommunityMapProps) {
       </MapContainer>
 
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] text-center">
-        <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#C4A265]/80">
-          28 waypoints · {ports.length} {ports.length === 1 ? 'port' : 'ports'} reached · One atlas
+        <p className="font-serif text-[13px] md:text-[14px] text-[#C4A265]/80">
+          {ports.length} {ports.length === 1 ? 'city' : 'cities'}
         </p>
       </div>
     </div>

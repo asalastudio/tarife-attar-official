@@ -25,17 +25,13 @@ export const LegacyName: React.FC<LegacyNameProps> = ({
     }
 
     // Base styles matching the brand's design system
-    const baseStyles = `
-    font-mono 
-    text-theme-industrial 
-    tracking-wider 
-    uppercase
-  `;
+    // Hallmark 64/67: the former name is a plain serif note, not a mono caps label.
+    const baseStyles = `font-serif`;
 
     // Variant-specific styles
     const variantStyles = {
-        inline: 'text-[10px] leading-tight',
-        block: 'text-[11px] leading-relaxed',
+        inline: 'text-[13px] leading-tight',
+        block: 'text-[14px] leading-relaxed',
     };
 
     return (
@@ -50,7 +46,7 @@ export const LegacyName: React.FC<LegacyNameProps> = ({
       `.trim()}
             aria-label={`Previously named ${legacyName}`}
         >
-            {legacyName}
+            Formerly {legacyName}
         </motion.span>
     );
 };

@@ -43,12 +43,12 @@
   /* SiteHeader publishes its measured height after hydration. These defaults
      match it, so the full-height hero is sized correctly in the first paint
      instead of shifting once JavaScript runs. */
-  --site-header-h: 109px;
+  --site-header-h: 65px;
 }
 
 @media (min-width: 768px) {
   :root {
-    --site-header-h: 152px;
+    --site-header-h: 121px;
   }
 }
 
@@ -170,11 +170,11 @@ body {
 #shopify-pc__banner button {
   margin: 0 !important;
   padding: 7px 16px !important;
-  font-family: var(--font-jetbrains-mono), ui-monospace, monospace !important;
-  font-size: 10px !important;
+  font-family: var(--font-eb-garamond), Georgia, serif !important;
+  font-size: 13px !important;
   font-weight: 500 !important;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   line-height: 1.4 !important;
   border-radius: 0 !important;
   cursor: pointer;
@@ -243,4 +243,38 @@ body {
     padding: 8px 12px !important;
     letter-spacing: 0.08em;
   }
+}
+
+
+/* ------------------------------------------------------------------------
+   Hallmark polish (gates 26a, 40): a focus ring that can be seen.
+   Ink on parchment, parchment on the dark Relic and footer surfaces.
+   Instant, never faded in (gate 15).
+   ------------------------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 3px;
+  transition: none;
+}
+
+.bg-theme-obsidian :focus-visible,
+.bg-theme-charcoal :focus-visible,
+[class*="bg-[#0f0f0f]"] :focus-visible,
+[class*="bg-[#141210]"] :focus-visible,
+[class*="bg-[#1a1a1a]"] :focus-visible,
+footer.bg-theme-obsidian :focus-visible {
+  outline-color: #f2f0e9;
+}
+
+/* Form fields: an edge of at least 3:1 against the surface (gate 40). */
+input[type="email"],
+input[type="text"],
+input[type="search"],
+textarea {
+  border-color: rgba(26, 26, 26, 0.6);
+}
+
+.bg-theme-obsidian input[type="email"],
+.bg-theme-obsidian input[type="text"] {
+  border-color: rgba(242, 240, 233, 0.6);
 }

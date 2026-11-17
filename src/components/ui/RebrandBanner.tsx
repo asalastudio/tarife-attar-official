@@ -93,7 +93,7 @@ export const RebrandBanner: React.FC<RebrandBannerProps> = ({
                         onClick={handleDismiss}
                         className={`
               flex-shrink-0
-              font-mono text-[10px] uppercase tracking-widest
+              font-serif text-[13px] 
               transition-opacity duration-300
               ${variant === 'global'
                                 ? 'text-theme-alabaster/50 hover:text-theme-alabaster'

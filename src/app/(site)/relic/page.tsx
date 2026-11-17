@@ -22,19 +22,19 @@ const RELIC_CATEGORIES = [
   {
     id: "pure-oud",
     name: "Pure Oud",
-    description: "Single-origin agarwood oils. Aged. Verified. Uncut.",
+    description: "Agarwood oils.",
     productFormat: "Pure Oud", // Must match schema exactly
   },
   {
     id: "aged-resins",
     name: "Aged Resins",
-    description: "Fossilized amber, vintage frankincense, and temple-grade myrrh.",
+    description: "Natural resins, including Hojari frankincense from Dhofar, Oman.",
     productFormat: "Aged Resin", // Must match schema exactly
   },
   {
     id: "rare-attars",
     name: "Rare Attars",
-    description: "Traditional hydro-distillations from master perfumers.",
+    description: "Traditional attars.",
     productFormat: "Traditional Attar", // Must match schema exactly
   },
 ];

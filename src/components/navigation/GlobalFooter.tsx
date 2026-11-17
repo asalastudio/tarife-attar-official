@@ -108,34 +108,12 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
               Clean, skin-safe perfume oils for those who travel by scent.
             </motion.p>
             
-            {/* Quiz CTA - Only for Atlas pages */}
-            {!hideQuiz && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-              >
-                <Link 
-                  href="/quiz"
-                  className={`group inline-flex flex-wrap items-center gap-x-3 gap-y-1 min-h-11 py-2.5 px-5 border ${isDark ? 'border-theme-gold/30 hover:border-theme-gold hover:bg-theme-gold/10' : 'border-theme-charcoal/20 hover:border-theme-charcoal hover:bg-theme-charcoal/5'} transition-all duration-300`}
-                >
-                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] opacity-80 group-hover:opacity-100">
-                    Not sure where to start?
-                  </span>
-                  <span className={`font-mono text-[10px] sm:text-xs uppercase tracking-[0.15em] ${isDark ? 'text-theme-gold' : 'text-theme-charcoal'} font-medium`}>
-                    Take the Quiz →
-                  </span>
-                </Link>
-              </motion.div>
-            )}
-            
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="flex flex-wrap gap-x-6 md:gap-x-8 font-mono text-[9px] uppercase tracking-widest opacity-70"
+              className="flex flex-wrap gap-x-6 md:gap-x-8 font-serif text-[13px] opacity-70"
             >
               {utilityLinks.map((link) => (
                 <Link 
@@ -157,7 +135,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-3 space-y-6 md:space-y-8 w-full"
           >
-            <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-70">
+            <h3 className="font-serif text-[13px] md:text-[14px] opacity-70">
               Navigation
             </h3>
             <ul className="space-y-1 md:space-y-2 font-serif text-base sm:text-lg opacity-80">
@@ -182,21 +160,21 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
             transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-4 space-y-6 md:space-y-8 w-full"
           >
-            <h3 className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] opacity-70">
+            <h3 className="font-serif text-[13px] md:text-[14px] opacity-70">
               Stay Connected
             </h3>
             <div className="space-y-6">
               <p className="font-serif text-base opacity-70">
-                New territories, limited releases, and scent journeys, delivered to your inbox.
+                New perfume oils and journal entries, by email.
               </p>
               
               {isSubscribed ? (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="py-4 font-mono text-[10px] uppercase tracking-widest text-theme-gold"
+                  className="py-4 font-serif text-[13px] text-theme-gold"
                 >
-                  ✓ Welcome to the Atlas. Check your inbox
+                  Thank you. You're subscribed.
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubscribe} className="w-full space-y-4">
@@ -206,7 +184,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
                     required
-                    className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-mono text-base md:[@media(pointer:fine)]:text-[11px] uppercase tracking-[0.08em] md:tracking-widest outline-none transition-colors placeholder:opacity-60 placeholder:normal-case placeholder:tracking-normal`}
+                    className={`w-full bg-transparent border-b ${isDark ? 'border-white/20 focus:border-white' : 'border-theme-charcoal/20 focus:border-theme-charcoal'} py-4 font-serif text-base md:[@media(pointer:fine)]:text-[13px] outline-none transition-colors placeholder:opacity-60 placeholder:normal-case`}
                   />
                   {subscriptionError && (
                     <p role="alert" className="font-serif text-sm text-red-400">
@@ -216,9 +194,9 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full min-h-12 py-3 font-mono text-[10px] uppercase tracking-[0.2em] transition-all ${isDark ? 'bg-theme-gold/90 text-theme-obsidian hover:bg-theme-gold' : 'bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90'} disabled:opacity-50`}
+                    className={`w-full min-h-12 py-3 font-serif text-[13px] transition-all ${isDark ? 'bg-theme-gold/90 text-theme-obsidian hover:bg-theme-gold' : 'bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90'} disabled:opacity-50`}
                   >
-                    {isSubmitting ? 'Joining...' : 'Join the Journey'}
+                    {isSubmitting ? 'Subscribing…' : 'Subscribe'}
                   </button>
                 </form>
               )}
@@ -227,7 +205,7 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-[0.2em] opacity-80 ${hoverClass} transition-opacity duration-300`}
+                className={`inline-flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-80 ${hoverClass} transition-opacity duration-300`}
               >
                 <InstagramLogo weight="light" className="w-5 h-5" aria-hidden="true" />
                 <span>
@@ -246,21 +224,15 @@ export const GlobalFooter: React.FC<Props> = ({ theme = 'dark', hideQuiz = false
           transition={{ duration: 0.8, delay: 0.4 }}
           className={`mt-16 md:mt-32 pt-12 border-t ${borderClass} flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10`}
         >
-          {/* GPS & Technical Data */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-x-6 md:gap-x-8 gap-y-3 font-mono text-[8px] uppercase tracking-[0.2em] md:tracking-[0.3em] opacity-70 text-center">
-            <span>Lat: 31.7917° N</span>
-            <span>Lon: 7.0926° W</span>
-            <span>Batch: ARCH_04_2025</span>
-            <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Status: Verified
-            </span>
-          </div>
-          
-          {/* Copyright */}
-          <div className="font-mono text-[8px] uppercase tracking-[0.2em] md:tracking-[0.3em] opacity-70 text-center">
-            © {new Date().getFullYear()} Tarife Attär: All Specimens Verified Archival Grade
-          </div>
+          <p className="font-serif text-sm opacity-80 text-center md:text-left">
+            Questions about an order or a perfume oil:{' '}
+            <a href="mailto:support@tarifeattar.com" className={`${hoverClass} underline underline-offset-4`}>
+              support@tarifeattar.com
+            </a>
+          </p>
+          <p className="font-serif text-sm opacity-80 text-center">
+            © {new Date().getFullYear()} Tarifé Attär
+          </p>
         </motion.div>
 
         {/* Decorative Element */}

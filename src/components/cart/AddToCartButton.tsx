@@ -79,7 +79,7 @@ export function AddToCartButton({
       disabled={!inStock || !variantId || isAdding}
       whileHover={inStock && !isAdding ? { scale: 1.01 } : {}}
       whileTap={inStock && !isAdding ? { scale: 0.99 } : {}}
-      className={`relative flex items-center justify-center gap-3 py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all overflow-hidden ${inStock
+      className={`relative flex items-center justify-center gap-3 py-5 font-serif text-sm md:text-base transition-all overflow-hidden ${inStock
           ? isAdding
             ? "bg-theme-gold text-theme-alabaster"
             : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90"

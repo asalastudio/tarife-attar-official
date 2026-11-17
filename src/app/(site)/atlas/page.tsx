@@ -64,6 +64,7 @@ interface AtlasProduct {
   mainImage?: unknown;
   atmosphere: string;
   inStock?: boolean;
+  has3ml?: boolean;
 }
 
 interface TerritoryCounts {

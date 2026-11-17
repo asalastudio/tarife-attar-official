@@ -82,7 +82,7 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
           </motion.p>
 
           {/* Territory preview */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-theme-charcoal/75 mb-5 md:mb-8">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-serif text-[13px] md:text-[14px] text-theme-charcoal/75 mb-5 md:mb-8">
             <span className="group-hover:text-theme-gold transition-all">Tidal</span>
             <span className="group-hover:text-theme-gold transition-all delay-75">Ember</span>
             <span className="group-hover:text-theme-gold transition-all delay-100">Petal</span>
@@ -95,7 +95,7 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <span className={`inline-block px-6 sm:px-8 py-3 sm:py-4 border border-theme-charcoal/20 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] transition-all duration-500 ${hovered === 'atlas' ? 'bg-theme-charcoal text-white' : ''}`}>
+            <span className={`inline-block px-6 sm:px-8 py-3 sm:py-4 border border-theme-charcoal/20 font-serif text-[13px] md:text-[14px] transition-all duration-500 ${hovered === 'atlas' ? 'bg-theme-charcoal text-white' : ''}`}>
               Explore Territories
             </span>
           </motion.div>
@@ -152,12 +152,12 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
 
           {/* Always visible description */}
           <motion.p className="max-w-[300px] md:max-w-sm mx-auto text-base md:text-lg opacity-90 leading-relaxed font-serif italic mb-4 md:mb-8">
-            Pure resins, rare ouds, and aged materials for the devoted collector. Each specimen arrives with provenance documentation.
+            Resins and traditional attars, in small quantities.
           </motion.p>
 
           {/* Material preview. Sits over the smoke image, so it gets solid
               colour and a soft shadow rather than low opacity. */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-theme-alabaster/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] mb-5 md:mb-8">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 font-serif text-[13px] md:text-[14px] text-theme-alabaster/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] mb-5 md:mb-8">
             <span className="group-hover:text-theme-gold transition-all">Resins</span>
             <span className="group-hover:text-theme-gold transition-all delay-75">Ouds</span>
             <span className="group-hover:text-theme-gold transition-all delay-100">Ambers</span>
@@ -170,7 +170,7 @@ export const SplitEntry: React.FC<Props> = ({ onNavigate, heroBackgrounds }) => 
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <span className={`inline-block px-6 sm:px-8 py-3 sm:py-4 border border-white/20 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.4em] transition-all duration-500 ${hovered === 'relic' ? 'bg-white text-black' : ''}`}>
+            <span className={`inline-block px-6 sm:px-8 py-3 sm:py-4 border border-white/20 font-serif text-[13px] md:text-[14px] transition-all duration-500 ${hovered === 'relic' ? 'bg-white text-black' : ''}`}>
               Enter Vault
             </span>
           </motion.div>

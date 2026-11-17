@@ -54,7 +54,7 @@ function AccordionItem({
               {title}
             </h2>
             {category && (
-              <span className="inline-flex items-center gap-1 mt-1 font-mono text-[9px] uppercase tracking-[0.2em] opacity-40">
+              <span className="inline-flex items-center gap-1 mt-1 font-serif text-[13px] opacity-80">
                 <Tag weight="thin" className="w-3 h-3" />
                 {category}
               </span>
@@ -151,12 +151,12 @@ export default function HelpDeskPage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-70 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.6em] opacity-40 flex items-center gap-2">
+          <span className="font-serif text-[13px] opacity-80 flex items-center gap-2">
             <Sparkle weight="thin" className="w-3 h-3 text-theme-gold" /> Protocol: Eleanor
           </span>
         </div>
@@ -174,7 +174,7 @@ export default function HelpDeskPage() {
             <h1 className="text-4xl md:text-6xl font-serif italic tracking-tighter leading-[0.9] mb-4">
               Knowledge Base
             </h1>
-            <p className="text-sm font-mono uppercase tracking-[0.3em] opacity-60 flex items-center gap-2">
+            <p className="text-sm font-serif opacity-60 flex items-center gap-2">
               <Sparkle weight="thin" className="w-4 h-4 text-theme-gold" />
               Living Archive · Powered by Eleanor
             </p>
@@ -207,7 +207,7 @@ export default function HelpDeskPage() {
             >
               <button
                 onClick={() => setActiveCategory(null)}
-                className={`px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] border transition-all duration-300 ${
+                className={`px-4 py-2 font-serif text-[13px] border transition-all duration-300 ${
                   !activeCategory
                     ? "bg-theme-charcoal text-theme-alabaster border-theme-charcoal"
                     : "border-theme-charcoal/15 text-theme-charcoal/60 hover:border-theme-charcoal/40"
@@ -219,7 +219,7 @@ export default function HelpDeskPage() {
                 <button
                   key={cat.category}
                   onClick={() => setActiveCategory(cat.category)}
-                  className={`px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] border transition-all duration-300 ${
+                  className={`px-4 py-2 font-serif text-[13px] border transition-all duration-300 ${
                     activeCategory === cat.category
                       ? "bg-theme-charcoal text-theme-alabaster border-theme-charcoal"
                       : "border-theme-charcoal/15 text-theme-charcoal/60 hover:border-theme-charcoal/40"
@@ -236,13 +236,13 @@ export default function HelpDeskPage() {
             {articles === undefined ? (
               <div className="py-20 text-center flex flex-col items-center justify-center opacity-50 animate-pulse">
                 <Sparkle weight="thin" className="w-6 h-6 mb-4 text-theme-gold" />
-                <p className="font-mono text-xs uppercase tracking-widest text-theme-charcoal">Consulting Eleanor...</p>
+                <p className="font-serif text-[13px] text-theme-charcoal">Consulting Eleanor...</p>
               </div>
             ) : dynamicArticles.length === 0 ? (
               <div className="py-20 text-center flex flex-col items-center justify-center opacity-60">
                 <BookOpen weight="thin" className="w-10 h-10 mb-4 opacity-20" />
                 <p className="font-serif text-xl italic mb-2">The archive is currently awaiting new inquiries.</p>
-                <p className="text-sm font-mono opacity-60 uppercase tracking-widest max-w-sm leading-relaxed mx-auto">
+                <p className="text-sm font-serif opacity-60 max-w-sm leading-relaxed mx-auto">
                   As our concierge answers novel questions, this repository will autonomously populate. Use the sidecar to ask Eleanor a question.
                 </p>
               </div>
@@ -261,7 +261,7 @@ export default function HelpDeskPage() {
             ) : (
               <div className="py-20 text-center flex flex-col items-center justify-center opacity-60">
                 <p className="font-serif text-2xl italic mb-2">No records found contextually.</p>
-                <p className="text-sm font-mono opacity-60 uppercase tracking-widest">Adjust your search parameters.</p>
+                <p className="text-sm font-serif opacity-60 ">Adjust your search parameters.</p>
               </div>
             )}
           </div>
@@ -278,7 +278,7 @@ export default function HelpDeskPage() {
             </p>
             <button
               onClick={() => router.push("/faq")}
-              className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-mono text-xs font-semibold uppercase tracking-[0.3em] hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
+              className="inline-flex items-center gap-3 px-8 py-4 border border-theme-charcoal/30 font-serif text-[13px] font-semibold hover:bg-theme-charcoal hover:text-theme-alabaster transition-all duration-500"
             >
               View Foundational FAQ
             </button>

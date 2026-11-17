@@ -15,12 +15,12 @@ export default function ArchivePage() {
         <div className="max-w-[1800px] mx-auto flex items-center justify-between">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-3 min-h-11 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity"
+            className="flex items-center gap-3 min-h-11 font-serif text-[13px] opacity-70 hover:opacity-100 transition-opacity"
           >
             <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
-          <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold">
             Archive
           </span>
         </div>
@@ -44,7 +44,7 @@ export default function ArchivePage() {
             vintage specimens, and historical reference materials.
           </p>
 
-          <div className="inline-block px-12 py-5 bg-theme-charcoal/5 border border-theme-charcoal/10 font-mono text-[10px] uppercase tracking-[0.4em]">
+          <div className="inline-block px-12 py-5 bg-theme-charcoal/5 border border-theme-charcoal/10 font-serif text-[13px]">
             Archive Access: Coming Soon
           </div>
         </motion.div>

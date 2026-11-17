@@ -28,14 +28,14 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
         <div className="z-50">
           <button 
             onClick={(e) => { e.stopPropagation(); onBack(); }}
-            className="group flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase mb-4 opacity-60 hover:opacity-100 transition-opacity text-theme-alabaster pointer-events-auto"
+            className="group flex items-center gap-2 font-serif text-[13px] mb-4 opacity-80 hover:opacity-100 transition-opacity text-theme-alabaster pointer-events-auto"
           >
             <span className="text-lg leading-none transform group-hover:-translate-x-1 transition-transform">←</span> Return to Bifurcation
           </button>
           <h3 className="text-4xl font-light">Material Calibration</h3>
         </div>
         <div className="text-right hidden md:block">
-          <span className="font-mono text-[10px] text-theme-industrial uppercase">Step 01: Physical Base Selection</span>
+          <span className="font-serif text-[13px] text-theme-industrial">Step 01: Physical Base Selection</span>
         </div>
       </header>
 
@@ -45,7 +45,7 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
           {/* Left: Technical Readout */}
           <div className="hidden lg:flex flex-col gap-8 text-left">
             <div className="space-y-2">
-              <span className="font-mono text-[9px] uppercase opacity-30 tracking-[0.3em]">Molecular Weight</span>
+              <span className="font-serif text-[13px] opacity-30 ">Molecular Weight</span>
               <div className="h-[1px] w-full bg-theme-alabaster/10" />
               <p className="font-mono text-xs opacity-60">Calculated: {(viscosity * 1.22).toFixed(2)} Da</p>
             </div>
@@ -62,7 +62,7 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center"
           >
-            <span className="font-mono text-[11px] tracking-[0.5em] uppercase opacity-30 mb-4 block">Current Calibration</span>
+            <span className="font-serif text-[13px] opacity-30 mb-4 block">Current Calibration</span>
             <div className="text-8xl font-light tracking-tighter tabular-nums mb-4 text-theme-alabaster">
               {viscosity.toString().padStart(3, '0')}<span className="text-2xl opacity-20 ml-2">μPa·s</span>
             </div>
@@ -81,7 +81,7 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
 
           {/* Right: Real-time Matches */}
           <div className="text-right hidden lg:block">
-            <span className="font-mono text-[9px] uppercase opacity-30 tracking-[0.3em] mb-4 block">Proposed Specimen</span>
+            <span className="font-serif text-[13px] opacity-80 mb-4 block">Proposed Specimen</span>
             <motion.div
               animate={{ x: [0, 5, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
@@ -89,7 +89,7 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
             >
               {activeSpecimen.matches}
             </motion.div>
-            <p className="mt-4 font-mono text-[8px] uppercase tracking-tighter opacity-20 max-w-[180px] ml-auto">
+            <p className="mt-4 font-serif text-[13px] opacity-20 max-w-[180px] ml-auto">
               Our lab adjusts base viscosity to match your archival preference.
             </p>
           </div>
@@ -110,7 +110,7 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
             }}
           />
           
-          <div className="flex justify-between mt-8 font-mono text-[9px] uppercase tracking-[0.3em] opacity-30">
+          <div className="flex justify-between mt-8 font-serif text-[13px] opacity-80">
             <span>Aqueous / 001</span>
             <span>Saturation Threshold</span>
             <span>Anhydrous / 100</span>
@@ -121,14 +121,14 @@ export const ViscosityTuner: React.FC<Props> = ({ onBack, onNavigate }) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => onNavigate?.('relic')}
-          className="mt-24 px-16 py-5 border border-theme-alabaster/10 hover:border-theme-alabaster hover:bg-theme-alabaster hover:text-theme-obsidian transition-all duration-700 font-mono text-[11px] tracking-[0.4em] uppercase z-50 relative pointer-events-auto"
+          className="mt-24 px-16 py-5 border border-theme-alabaster/10 hover:border-theme-alabaster hover:bg-theme-alabaster hover:text-theme-obsidian transition-all duration-700 font-serif text-[13px] z-50 relative pointer-events-auto"
         >
           Access Specified Vault
         </motion.button>
       </div>
 
       {/* Aesthetic Technical Footer Overlay */}
-      <div className="mt-auto pt-10 border-t border-theme-alabaster/5 grid grid-cols-4 gap-4 font-mono text-[9px] opacity-20 uppercase tracking-widest">
+      <div className="mt-auto pt-10 border-t border-theme-alabaster/5 grid grid-cols-4 gap-4 font-serif text-[13px] opacity-20">
         <div>Ref_Index: 1.458 nD</div>
         <div>Yield: 99.4% Extraction</div>
         <div>Archival_Grade: A-01</div>
