@@ -49,7 +49,7 @@ const TERRITORIES = [
     id: "terra",
     name: "Terra",
     tagline: "Wood. Oud. The gravity of deep forests.",
-    description: "Woody and exotic oils grounded in ancient forests, rare ouds, and earthen depths.",
+    description: "Wood, oud, leather, moss and earth.",
     color: "from-stone-900/20 to-transparent",
   },
 ];

@@ -4,11 +4,11 @@ import { RelicClient } from "./RelicClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'The Relic: Rare Oud Oils & Vintage Attars',
-  description: 'Pure oud oils, aged resins, and vintage attars. Single-origin agarwood specimens preserved in time. Rare, collectible, and authentic.',
+  title: 'The Relic: Traditional Attars and Sacred Hojari Oil',
+  description: 'The Relic from Tarifé Attär: traditional attars and Sacred Hojari oil.',
   openGraph: {
-    title: 'The Relic: Rare Oud Oils & Vintage Attars | Tarife Attar',
-    description: 'Pure oud oils, aged resins, and vintage attars. Single-origin specimens preserved in time.',
+    title: 'The Relic: Traditional Attars and Sacred Hojari Oil | Tarifé Attär',
+    description: 'Traditional attars and Sacred Hojari oil.',
     url: 'https://tarifeattar.com/relic',
   },
   alternates: {
@@ -28,12 +28,12 @@ const RELIC_CATEGORIES = [
   {
     id: "aged-resins",
     name: "Aged Resins",
-    description: "Natural resins, including Hojari frankincense from Dhofar, Oman.",
+    description: "Natural resins.",
     productFormat: "Aged Resin", // Must match schema exactly
   },
   {
     id: "rare-attars",
-    name: "Rare Attars",
+    name: "Traditional Attars",
     description: "Traditional attars.",
     productFormat: "Traditional Attar", // Must match schema exactly
   },

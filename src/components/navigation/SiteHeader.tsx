@@ -82,19 +82,19 @@ const MENUS: Record<
     },
   },
   relic: {
-    eyebrow: "Rare materials \u00b7 Small lots",
+    eyebrow: "",
     title: "The Relic",
-    intro: "Aged resins and traditional attars, in small lots.",
+    intro: "Traditional attars and Sacred Hojari oil.",
     all: { label: "View the Relic", href: "/relic" },
     links: [
-      { label: "Aged Resins", href: "/relic#aged-resins", note: "Natural resins, including Hojari frankincense from Dhofar, Oman." },
-      { label: "Rare Attars", href: "/relic#rare-attars", note: "Traditional attars." },
+      { label: "Aged Resins", href: "/relic#aged-resins", note: "Natural resins." },
+      { label: "Traditional Attars", href: "/relic#rare-attars", note: "Attars from the Relic." },
     ],
     feature: {
       eyebrow: "Collector's note",
-      title: "Quantities are finite",
-      body: "When a lot is gone it is gone. The Relic is restocked only when the material is right.",
-      cta: "See what remains",
+      title: "Sacred Hojari oil",
+      body: "A 10 ml roll-on of Sacred Hojari oil, from Dhofar, Oman.",
+      cta: "View the Relic",
       href: "/relic",
     },
   },
@@ -106,7 +106,7 @@ const MENUS: Record<
     links: [
       { label: "The Traveler Set", href: "/gift", note: "A curated set of Atlas waypoints, ready to give." },
       { label: "Three in 3 ml", href: "/atlas", note: "Explore travel sizes and check current availability." },
-      { label: "From the Relic", href: "/relic", note: "A rare oil or resin for the collector who has everything." },
+      { label: "From the Relic", href: "/relic", note: "A traditional attar or Sacred Hojari oil." },
     ],
     feature: {
       eyebrow: "Not sure what they wear?",
@@ -125,7 +125,7 @@ const MENUS: Record<
       { label: "Field Notes", href: "/journal?category=field-notes", note: "Dispatches from the road and the studio." },
       { label: "Behind the Blend", href: "/journal?category=behind-the-blend", note: "How a waypoint is composed, note by note." },
       { label: "Territory Spotlight", href: "/journal?category=territory-spotlight", note: "One territory, read closely." },
-      { label: "Collector Archives", href: "/journal?category=collector-archives", note: "Rare materials and the stories they carry." },
+      { label: "Collector Archives", href: "/journal?category=collector-archives", note: "Notes on the materials behind the Relic." },
     ],
     feature: {
       eyebrow: "The Field Journal",

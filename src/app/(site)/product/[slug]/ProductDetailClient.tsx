@@ -1234,7 +1234,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     >
                       <div className="flex items-center gap-2">
                         <MapPin weight="thin" className={`w-4 h-4 transition-transform ${showMap ? 'scale-110 text-theme-gold' : ''}`} />
-                        <span>{product.relicData.originRegion || "Rare Origin"}</span>
+                        <span>{product.relicData.originRegion || ""}</span>
                       </div>
                       {product.relicData.gpsCoordinates && (
                         <span className="pl-6 text-[10px] opacity-60 font-mono tracking-widest">

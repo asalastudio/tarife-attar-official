@@ -18,7 +18,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Threshold', path: 'home', direction: 'N', angle: 0, description: 'Return to origin' },
-  { label: 'The Relic', path: 'relic', direction: 'E', angle: 90, description: 'Pure resins & rare materials' },
+  { label: 'The Relic', path: 'relic', direction: 'E', angle: 90, description: 'Traditional attars and Sacred Hojari oil' },
   { label: 'Satchel', path: 'cart', direction: 'S', angle: 180, description: 'Your collection' },
   { label: 'The Atlas', path: 'atlas', direction: 'W', angle: 270, description: 'Perfume oil territories' },
 ];

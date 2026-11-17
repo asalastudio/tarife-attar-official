@@ -34,7 +34,7 @@ const QUICK_CHIPS = [
   },
 ];
 
-const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive, a living collection of rare and artisan perfume oils organized by territory and memory.
+const WELCOME_MESSAGE = `Welcome. I am your guide through the Tarife Attar archive, concentrated perfume oils organized by territory.
 
 I can help you discover a fragrance, navigate the new Atlas names, answer questions about your order, or explain how our oils are crafted.
 
