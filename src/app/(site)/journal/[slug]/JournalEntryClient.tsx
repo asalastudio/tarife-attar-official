@@ -121,7 +121,7 @@ export function JournalEntryClient({ entry }: Props) {
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="sr-only sm:not-sr-only">Back to Journal</span>
           </button>
-          <span className="font-serif text-[13px] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold-ink">
             {entry.category ? CATEGORY_LABELS[entry.category]?.replace(/^[^\s]+\s/, '') : 'Journal'}
           </span>
         </div>

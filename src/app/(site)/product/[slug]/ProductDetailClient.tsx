@@ -202,7 +202,7 @@ const FieldReportConcept = ({ concept, hotspots }: { concept?: string; hotspots?
 
   return (
     <div className="pt-8 border-t border-theme-charcoal/10">
-      <span className="font-serif text-[13px] text-theme-gold block mb-4">
+      <span className="font-serif text-[13px] text-theme-gold-ink block mb-4">
         Field Report Concept
       </span>
       {concept && (

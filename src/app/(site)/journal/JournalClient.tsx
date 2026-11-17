@@ -78,7 +78,7 @@ export function JournalClient({ entries }: Props) {
             <ArrowLeft weight="thin" className="w-4 h-4" />
             <span className="sr-only sm:not-sr-only">Back to Site</span>
           </button>
-          <span className="font-serif text-[13px] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold-ink">
             The Journal
           </span>
         </div>

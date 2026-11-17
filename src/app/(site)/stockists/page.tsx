@@ -21,7 +21,7 @@ export default function StockistsPage() {
             <ArrowLeft weight="thin" className="w-4 h-4" />
             Return
           </button>
-          <span className="font-serif text-[13px] text-theme-gold">
+          <span className="font-serif text-[13px] text-theme-gold-ink">
             Stockists
           </span>
         </div>

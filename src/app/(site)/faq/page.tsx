@@ -31,7 +31,7 @@ const FAQ_SECTIONS: FAQSection[] = [
             <span className="text-base opacity-80">
               $4.50–$5.80 · 2–5 business days
             </span>
-            <span className="font-serif text-[13px] text-theme-gold font-medium">
+            <span className="font-serif text-[13px] text-theme-gold-ink font-medium">
               Free on orders $35+
             </span>
           </div>
