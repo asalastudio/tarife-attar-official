@@ -159,7 +159,7 @@ const CollapsibleSection = ({
         aria-expanded={isOpen}
         className="w-full flex items-center justify-between min-h-11 py-2 group"
       >
-        <span className="font-serif text-[13px] text-theme-gold">
+        <span className="font-serif text-[13px] text-theme-gold-ink">
           {title}
         </span>
         <Plus weight="thin"
@@ -293,7 +293,7 @@ const AudioNarrativeDesktop = ({
   return (
     <div className="hidden md:block py-6 border-y border-theme-charcoal/10 my-6">
       <div className="flex items-center justify-between mb-4">
-        <span className="font-serif text-[13px] text-theme-gold">
+        <span className="font-serif text-[13px] text-theme-gold-ink">
           Archive Audio
         </span>
         <div className="flex gap-4">
