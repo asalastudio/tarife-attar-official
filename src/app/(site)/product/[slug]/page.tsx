@@ -89,7 +89,12 @@ function buildScentDescription(product: any): string {
     parts.push(territoryNames[territory] || territory);
   }
 
-  parts.push('Concentrated perfume oil, glass wand applicator, alcohol-free, skin-safe, cruelty-free');
+  // Essential oils carry a patch-test warning, so they don't get the skin-safe line.
+  parts.push(
+    productKind(product.productFormat).applicator
+      ? 'Concentrated perfume oil, glass wand applicator, alcohol-free, skin-safe, cruelty-free'
+      : 'Pure essential oil, alcohol-free, cruelty-free',
+  );
   return parts.join('. ') + '.';
 }
 

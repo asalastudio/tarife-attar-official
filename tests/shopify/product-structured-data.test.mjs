@@ -99,6 +99,15 @@ test('Relic pure distillates are named as essential oils, without the glass wand
   const page = await readFile('src/app/(site)/product/[slug]/page.tsx', 'utf8');
   assert.match(page, /productKind\(product\.productFormat\)/);
   assert.doesNotMatch(page, /Perfume Oil/);
+  // The search description follows the format too, and drops the skin-safe line for oils.
+  assert.match(page, /productKind\(product\.productFormat\)\.applicator\s*\?\s*'Concentrated perfume oil/);
+  assert.match(page, /: 'Pure essential oil, alcohol-free, cruelty-free'/);
+});
+
+test('viscosity shows any real reading, including 0, and hides an unset field', async () => {
+  const client = await readFile('src/app/(site)/product/[slug]/ProductDetailClient.tsx', 'utf8');
+  assert.match(client, /typeof product\.relicData\.viscosity === 'number' && \(/);
+  assert.doesNotMatch(client, /viscosity !== undefined/);
 });
 
 test('the Relic page has a Pure Distillates row for essential oils', async () => {

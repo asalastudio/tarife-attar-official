@@ -1288,8 +1288,8 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                     Distilled {product.relicData.distillationYear}
                   </div>
                 )}
-                {/* Sanity returns null for an unset field, so check for a real reading */}
-                {typeof product.relicData.viscosity === 'number' && product.relicData.viscosity > 0 && (
+                {/* Sanity returns null for an unset field; 0 is a real reading (Ethereal/Mist) */}
+                {typeof product.relicData.viscosity === 'number' && (
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">
                       <Drop weight="thin" className="w-4 h-4" />
