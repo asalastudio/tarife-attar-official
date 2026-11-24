@@ -1,6 +1,9 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { relicProductsQuery, placeholderImagesQuery, PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { RelicClient } from "./RelicClient";
+import { getProductsOffers } from "@/lib/shopify/client";
+import { toShopifyProductGid } from "@/lib/product-structured-data";
+import { withLiveOffers } from "@/lib/product-offers";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -54,11 +57,12 @@ interface RelicProduct {
   productFormat?: string;
   mainImage?: unknown;
   inStock?: boolean;
+  shopifyProductId?: string | number | null;
 }
 
 export default async function RelicPage() {
   // Fetch all Relic products and placeholder images
-  const [products, placeholderImages] = await Promise.all([
+  const [sanityProducts, placeholderImages] = await Promise.all([
     sanityFetch<RelicProduct[]>({
       query: relicProductsQuery,
       tags: ["relic-products"],
@@ -70,6 +74,12 @@ export default async function RelicPage() {
       revalidate: 0,
     })
   ]);
+
+  // Price and stock on each card come from Shopify; Sanity's are a logged fallback.
+  const live = await getProductsOffers(
+    sanityProducts.map((p) => toShopifyProductGid(p.shopifyProductId)).filter((gid): gid is string => !!gid),
+  );
+  const products = withLiveOffers(sanityProducts, live, { page: "/relic" });
 
   // Debug: Log products to help troubleshoot
   if (process.env.NODE_ENV === 'development') {

@@ -11,6 +11,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import { getItemLabel } from "@/lib/brandSystem";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
+import { formatPriceRange, formatUsd } from "@/lib/product-offers";
 import dynamic from "next/dynamic";
 
 // Dynamically import Leaflet maps to avoid SSR issues
@@ -27,27 +28,6 @@ const AtlasMapLeaflet = dynamic(
 );
 
 
-// Territory-based pricing for Atlas Collection (same as ProductDetailClient)
-const TERRITORY_PRICING: Record<string, { '6ml': number; '12ml': number }> = {
-  ember: { '6ml': 28, '12ml': 48 },
-  petal: { '6ml': 30, '12ml': 50 },
-  tidal: { '6ml': 30, '12ml': 50 },
-  terra: { '6ml': 33, '12ml': 55 },
-};
-
-// Helper to format price range for display
-const getTerritoryPriceRange = (territoryId: string): string => {
-  const pricing = TERRITORY_PRICING[territoryId];
-  if (!pricing) return '';
-  return `$${pricing['6ml']} – $${pricing['12ml']}`;
-};
-
-// Helper to get starting price for a territory
-const getTerritoryStartingPrice = (territoryId: string): number | null => {
-  const pricing = TERRITORY_PRICING[territoryId];
-  return pricing ? pricing['6ml'] : null;
-};
-
 interface Territory {
   id: string;
   name: string;
@@ -59,7 +39,8 @@ interface Territory {
     _id: string;
     title: string;
     slug: { current: string };
-    price?: number;
+    /** Lowest Shopify price that can be bought now (Sanity fallback if Shopify is down). */
+    price: number | null;
     volume?: string;
     productFormat?: string;
     mainImage?: unknown;
@@ -68,7 +49,10 @@ interface Territory {
     fieldReport?: {
       image?: unknown;
     };
-    inStock?: boolean;
+    /** Any size in stock in Shopify. */
+    inStock: boolean;
+    /** Cheapest and dearest Shopify size, for the territory header. */
+    priceRange: { min: number; max: number } | null;
     legacyName?: string;
     showLegacyName?: boolean;
     scentProfile?: string;
@@ -249,9 +233,9 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                     <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] opacity-50 whitespace-nowrap">
                       {territory.count} {getItemLabel('atlas', territory.count)}
                     </p>
-                    {getTerritoryPriceRange(territory.id) && (
+                    {formatPriceRange(territory.products) && (
                       <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-wider opacity-40 whitespace-nowrap">
-                        {getTerritoryPriceRange(territory.id)}
+                        {formatPriceRange(territory.products)}
                       </p>
                     )}
                   </div>
@@ -343,8 +327,8 @@ export function AtlasClient({ territories, totalCount, placeholderImages }: Prop
                             </p>
                           ) : (
                             <p className="text-xs md:text-base tracking-wide">
-                              {(getTerritoryStartingPrice(territory.id) || product.price)
-                                ? `$${getTerritoryStartingPrice(territory.id) || product.price}`
+                              {product.price !== null
+                                ? formatUsd(product.price)
                                 : 'Price unavailable'}
                             </p>
                           )}

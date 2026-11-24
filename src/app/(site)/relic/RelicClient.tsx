@@ -9,19 +9,22 @@ import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { getItemLabel } from "@/lib/brandSystem";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
+import { formatUsd } from "@/lib/product-offers";
 
 interface RelicProduct {
   _id: string;
   title: string;
   slug: { current: string };
-  price?: number;
+  /** Lowest Shopify price that can be bought now (Sanity fallback if Shopify is down). */
+  price: number | null;
   volume?: string;
   productFormat?: string;
   mainImage?: unknown;
   museumExhibit?: {
     exhibitImage?: unknown;
   };
-  inStock?: boolean;
+  /** Any size in stock in Shopify. */
+  inStock: boolean;
   legacyName?: string;
   showLegacyName?: boolean;
 }
@@ -197,9 +200,9 @@ export function RelicClient({ categories, totalCount, placeholderImages }: Props
                           <p className="font-mono text-[10px] md:text-sm tracking-wider opacity-40">
                             Out of Stock
                           </p>
-                        ) : product.price ? (
+                        ) : product.price !== null ? (
                           <p className="text-xs md:text-base tracking-wide opacity-70">
-                            ${product.price}
+                            {formatUsd(product.price)}
                           </p>
                         ) : null}
                       </div>
