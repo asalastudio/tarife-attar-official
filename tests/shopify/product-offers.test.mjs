@@ -300,6 +300,11 @@ test('product page renders price, sizes, variant and stock from the resolved off
   assert.match(page, /offer=\{offer\}/);
   assert.match(page, /withLiveOffers\(related, relatedOffers/);
   assert.doesNotMatch(page, /territoryPricing/);
+  // Both Shopify and fallback offers are named by product kind, so a pure
+  // distillate never reads "Glass Wand Applicator".
+  assert.match(page, /buildOffers\(offers\.variants, \{ productName, url: productUrl, applicator: kind\.applicator \}\)/);
+  assert.match(page, /fallbackOffers\(offer\.sizes, \{ productName, url: productUrl, applicator: kind\.applicator \}\)/);
+  assert.doesNotMatch(page, /Glass Wand Applicator`/);
 
   // Sanity's commerce fields are declared for the fallback, never rendered.
   for (const field of [

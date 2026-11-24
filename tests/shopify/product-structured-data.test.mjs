@@ -83,3 +83,37 @@ test('footer and Organization profile link to Instagram, not the old Etsy shop',
   assert.doesNotMatch(layout, /etsy\.com/);
   assert.match(layout, /email: 'support@tarifeattar\.com'/);
 });
+
+test('Relic pure distillates are named as essential oils, without the glass wand', async () => {
+  const { productKind } = await import('../../src/lib/product-structured-data.ts');
+  assert.equal(productKind('Pure Distillate').noun, 'Essential Oil');
+  assert.equal(productKind('Pure Distillate').applicator, null);
+  assert.equal(productKind('Traditional Attar').noun, 'Perfume Oil');
+  assert.equal(productKind(undefined).applicator, 'Glass Wand Applicator');
+
+  const [offer] = buildOffers(
+    [{ title: '10 ml', sku: 'ES-HOJA-10ML', availableForSale: false, price: usd('65.0') }],
+    { productName: 'SACRED HOJARI Essential Oil', url: 'https://tarifeattar.com/product/sacred-hojari', applicator: null },
+  );
+  assert.equal(offer.name, 'SACRED HOJARI Essential Oil, 10 ml');
+
+  const page = await readFile('src/app/(site)/product/[slug]/page.tsx', 'utf8');
+  assert.match(page, /productKind\(product\.productFormat\)/);
+  assert.doesNotMatch(page, /Perfume Oil/);
+  // The search description follows the format too, and drops the skin-safe line for oils.
+  assert.match(page, /productKind\(product\.productFormat\)\.applicator\s*\?\s*'Concentrated perfume oil/);
+  assert.match(page, /: 'Pure essential oil, alcohol-free, cruelty-free'/);
+});
+
+test('viscosity shows any real reading, including 0, and hides an unset field', async () => {
+  const client = await readFile('src/app/(site)/product/[slug]/ProductDetailClient.tsx', 'utf8');
+  assert.match(client, /typeof product\.relicData\.viscosity === 'number' && \(/);
+  assert.doesNotMatch(client, /viscosity !== undefined/);
+});
+
+test('the Relic page has a Pure Distillates row for essential oils', async () => {
+  const relic = await readFile('src/app/(site)/relic/page.tsx', 'utf8');
+  assert.match(relic, /name: "Pure Distillates"[\s\S]*?productFormat: "Pure Distillate"/);
+  const schema = await readFile('src/sanity/schema/product.ts', 'utf8');
+  assert.match(schema, /value: 'Pure Distillate'/);
+});

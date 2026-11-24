@@ -29,6 +29,12 @@ const RELIC_CATEGORIES = [
     productFormat: "Pure Oud", // Must match schema exactly
   },
   {
+    id: "pure-distillates",
+    name: "Pure Distillates",
+    description: "Single-material essential oils. Distilled. Uncut.",
+    productFormat: "Pure Distillate", // Must match schema exactly
+  },
+  {
     id: "aged-resins",
     name: "Aged Resins",
     description: "Fossilized amber, vintage frankincense, and temple-grade myrrh.",

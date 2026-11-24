@@ -30,22 +30,39 @@ export function sizeRank(title: string): number {
   return index === -1 ? SIZE_ORDER.length : index;
 }
 
+const GLASS_WAND = 'Glass Wand Applicator';
+
+/**
+ * What the product is called in titles and search data. Relic pure
+ * distillates are essential oils, not perfume oils, and don't ship with the
+ * glass wand.
+ */
+export function productKind(productFormat?: string | null) {
+  return productFormat === 'Pure Distillate'
+    ? { noun: 'Essential Oil', format: 'Pure Essential Oil', applicator: null }
+    : { noun: 'Perfume Oil', format: `Concentrated Perfume Oil, ${GLASS_WAND}`, applicator: GLASS_WAND };
+}
+
 /** Shopify names a single-variant product's only option "Default Title". */
-function offerName(variant: OfferVariant, productName: string): string {
+function offerName(variant: OfferVariant, productName: string, applicator: string | null): string {
   const title = variant.title.trim();
   if (!title || title === 'Default Title') return productName;
-  return `${title} Glass Wand Applicator`;
+  return applicator ? `${title} ${applicator}` : `${productName}, ${title}`;
 }
 
 export function buildOffers(
   variants: OfferVariant[],
-  { productName, url }: { productName: string; url: string },
+  {
+    productName,
+    url,
+    applicator = GLASS_WAND,
+  }: { productName: string; url: string; applicator?: string | null },
 ) {
   return [...variants]
     .sort((a, b) => sizeRank(a.title) - sizeRank(b.title))
     .map((variant) => ({
       '@type': 'Offer',
-      name: offerName(variant, productName),
+      name: offerName(variant, productName, applicator),
       ...(variant.sku ? { sku: variant.sku } : {}),
       price: Number(variant.price.amount),
       priceCurrency: variant.price.currencyCode,

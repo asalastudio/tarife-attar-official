@@ -7,6 +7,7 @@ import {
   SHARE_IMAGE,
   SHARE_PAD_COLOR,
   buildOffers,
+  productKind,
   schemaAvailability,
   shopifyShareImageUrl,
   toShopifyProductGid,
@@ -45,13 +46,21 @@ function productImages(product: any, featuredImageUrl?: string | null) {
   }
 }
 
-// Structured data from the Sanity fallback sizes, only when Shopify cannot be reached.
-function fallbackOffers(sizes: SizeOption[], productName: string, url: string) {
+// Structured data from the Sanity fallback sizes, only when Shopify cannot be
+// reached. Offers are named the way buildOffers names Shopify's.
+function fallbackOffers(
+  sizes: SizeOption[],
+  { productName, url, applicator }: { productName: string; url: string; applicator: string | null },
+) {
   return sizes
     .filter((size) => size.price !== null && size.price > 0)
     .map((size) => ({
       '@type': 'Offer',
-      name: size.label ? `${size.label} Glass Wand Applicator` : productName,
+      name: !size.label
+        ? productName
+        : applicator
+          ? `${size.label} ${applicator}`
+          : `${productName}, ${size.label}`,
       price: size.price,
       priceCurrency: 'USD',
       availability: schemaAvailability(size.availableForSale),
@@ -77,7 +86,12 @@ function buildScentDescription(product: any): string {
     parts.push(territoryNames[territory] || territory);
   }
 
-  parts.push('Concentrated perfume oil, glass wand applicator, alcohol-free, skin-safe, cruelty-free');
+  // Essential oils carry a patch-test warning, so they don't get the skin-safe line.
+  parts.push(
+    productKind(product.productFormat).applicator
+      ? 'Concentrated perfume oil, glass wand applicator, alcohol-free, skin-safe, cruelty-free'
+      : 'Pure essential oil, alcohol-free, cruelty-free',
+  );
   return parts.join('. ') + '.';
 }
 
@@ -111,14 +125,15 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     ? `${description} ${notesStr}`.slice(0, 155)
     : description.slice(0, 155);
 
+  const { noun } = productKind(product.productFormat);
   const title = product.legacyName
-    ? `${product.title}: ${product.legacyName} Perfume Oil`
-    : `${product.title} Perfume Oil`;
+    ? `${product.title}: ${product.legacyName} ${noun}`
+    : `${product.title} ${noun}`;
 
   const offers = await getOffersFor(product.shopifyProductId);
   const images = productImages(product, offers?.featuredImageUrl);
   const shareImage = images
-    ? { url: images.share, ...SHARE_IMAGE, alt: `${product.title} perfume oil by Tarife Attar` }
+    ? { url: images.share, ...SHARE_IMAGE, alt: `${product.title} ${noun.toLowerCase()} by Tarife Attar` }
     : null;
 
   return {
@@ -141,7 +156,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     // tags: Next 14 rejects that og:type, metadata.other writes `name=` (which
     // Facebook ignores), and <meta> rendered by the page lands in <body>.
     openGraph: {
-      title: `${product.title} Perfume Oil | Tarife Attar`,
+      title: `${product.title} ${noun} | Tarife Attar`,
       description: metaDescription,
       url: `https://tarifeattar.com/product/${slug}`,
       siteName: 'Tarife Attar',
@@ -150,7 +165,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${product.title} Perfume Oil | Tarife Attar`,
+      title: `${product.title} ${noun} | Tarife Attar`,
       description: metaDescription,
       ...(shareImage ? { images: [shareImage.url] } : {}),
     },
@@ -183,7 +198,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // Price, sizes, the variant the Satchel adds and stock all come from
   // Shopify; Sanity's commerce fields are only a logged fallback.
   const notesStr = buildNotesString(product.notes);
-  const productName = `${product.title} Perfume Oil`;
+  const kind = productKind(product.productFormat);
+  const productName = `${product.title} ${kind.noun}`;
   const productUrl = `https://tarifeattar.com/product/${slug}`;
   const related: any[] = product.relatedProducts ?? [];
   const relatedGids = related
@@ -199,8 +215,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
     : product.relatedProducts;
   const images = productImages(product, offers?.featuredImageUrl);
   const schemaOffers = offer.source === 'shopify' && offers
-    ? buildOffers(offers.variants, { productName, url: productUrl })
-    : fallbackOffers(offer.sizes, productName, productUrl);
+    ? buildOffers(offers.variants, { productName, url: productUrl, applicator: kind.applicator })
+    : fallbackOffers(offer.sizes, { productName, url: productUrl, applicator: kind.applicator });
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -211,7 +227,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       '@type': 'Brand',
       name: 'Tarife Attar',
     },
-    category: 'Perfume Oil',
+    category: kind.noun,
     url: productUrl,
     ...(images ? { image: Array.from(new Set([images.full, images.share])) } : {}),
     ...(schemaOffers.length ? { offers: schemaOffers } : {}),
@@ -220,7 +236,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       ...(product.longevity ? [{ '@type': 'PropertyValue', name: 'Longevity', value: product.longevity }] : []),
       ...(product.season ? [{ '@type': 'PropertyValue', name: 'Season', value: product.season }] : []),
       ...(notesStr ? [{ '@type': 'PropertyValue', name: 'Fragrance Notes', value: notesStr }] : []),
-      { '@type': 'PropertyValue', name: 'Format', value: 'Concentrated Perfume Oil, Glass Wand Applicator' },
+      { '@type': 'PropertyValue', name: 'Format', value: kind.format },
       { '@type': 'PropertyValue', name: 'Alcohol Free', value: 'Yes' },
       { '@type': 'PropertyValue', name: 'Cruelty Free', value: 'Yes' },
       { '@type': 'PropertyValue', name: 'Phthalate Free', value: 'Yes' },
