@@ -7,6 +7,7 @@ import {
   SHARE_IMAGE,
   SHARE_PAD_COLOR,
   buildOffers,
+  productKind,
   schemaAvailability,
   shopifyShareImageUrl,
   toShopifyProductGid,
@@ -122,14 +123,15 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     ? `${description} ${notesStr}`.slice(0, 155)
     : description.slice(0, 155);
 
+  const { noun } = productKind(product.productFormat);
   const title = product.legacyName
-    ? `${product.title}: ${product.legacyName} Perfume Oil`
-    : `${product.title} Perfume Oil`;
+    ? `${product.title}: ${product.legacyName} ${noun}`
+    : `${product.title} ${noun}`;
 
   const offers = await getOffersFor(product.shopifyProductId);
   const images = productImages(product, offers?.featuredImageUrl);
   const shareImage = images
-    ? { url: images.share, ...SHARE_IMAGE, alt: `${product.title} perfume oil by Tarife Attar` }
+    ? { url: images.share, ...SHARE_IMAGE, alt: `${product.title} ${noun.toLowerCase()} by Tarife Attar` }
     : null;
 
   return {
@@ -152,7 +154,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     // tags: Next 14 rejects that og:type, metadata.other writes `name=` (which
     // Facebook ignores), and <meta> rendered by the page lands in <body>.
     openGraph: {
-      title: `${product.title} Perfume Oil | Tarife Attar`,
+      title: `${product.title} ${noun} | Tarife Attar`,
       description: metaDescription,
       url: `https://tarifeattar.com/product/${slug}`,
       siteName: 'Tarife Attar',
@@ -161,7 +163,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${product.title} Perfume Oil | Tarife Attar`,
+      title: `${product.title} ${noun} | Tarife Attar`,
       description: metaDescription,
       ...(shareImage ? { images: [shareImage.url] } : {}),
     },
@@ -193,12 +195,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   // Build JSON-LD Product structured data from the live Shopify sizes and stock
   const notesStr = buildNotesString(product.notes);
-  const productName = `${product.title} Perfume Oil`;
+  const kind = productKind(product.productFormat);
+  const productName = `${product.title} ${kind.noun}`;
   const productUrl = `https://tarifeattar.com/product/${slug}`;
   const offers = await getOffersFor(product.shopifyProductId);
   const images = productImages(product, offers?.featuredImageUrl);
   const schemaOffers = offers?.variants.length
-    ? buildOffers(offers.variants, { productName, url: productUrl })
+    ? buildOffers(offers.variants, { productName, url: productUrl, applicator: kind.applicator })
     : fallbackOffers(product, productName, productUrl);
 
   const jsonLd = {
@@ -210,7 +213,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       '@type': 'Brand',
       name: 'Tarife Attar',
     },
-    category: 'Perfume Oil',
+    category: kind.noun,
     url: productUrl,
     ...(images ? { image: Array.from(new Set([images.full, images.share])) } : {}),
     ...(schemaOffers.length ? { offers: schemaOffers } : {}),
@@ -219,7 +222,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       ...(product.longevity ? [{ '@type': 'PropertyValue', name: 'Longevity', value: product.longevity }] : []),
       ...(product.season ? [{ '@type': 'PropertyValue', name: 'Season', value: product.season }] : []),
       ...(notesStr ? [{ '@type': 'PropertyValue', name: 'Fragrance Notes', value: notesStr }] : []),
-      { '@type': 'PropertyValue', name: 'Format', value: 'Concentrated Perfume Oil, Glass Wand Applicator' },
+      { '@type': 'PropertyValue', name: 'Format', value: kind.format },
       { '@type': 'PropertyValue', name: 'Alcohol Free', value: 'Yes' },
       { '@type': 'PropertyValue', name: 'Cruelty Free', value: 'Yes' },
       { '@type': 'PropertyValue', name: 'Phthalate Free', value: 'Yes' },
