@@ -9,18 +9,21 @@ import { urlForImage } from "@/sanity/lib/image";
 import { getPlaceholderImageUrl } from "@/lib/placeholder-image";
 import { getItemLabel } from "@/lib/brandSystem";
 import { PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
+import { formatUsd } from "@/lib/product-offers";
 
 interface GiftProduct {
   _id: string;
   title: string;
   slug: { current: string };
-  price?: number;
-  compareAtPrice?: number;
+  /** Shopify price and compare-at price (Sanity fallback if Shopify is down). */
+  price: number | null;
+  compareAtPrice: number | null;
   volume?: string;
   mainImage?: unknown;
   shopifyPreviewImageUrl?: string;
   shopifyImage?: string;
-  inStock?: boolean;
+  /** In stock in Shopify. */
+  inStock: boolean;
   setSize?: number;
   pieceFormat?: string;
   legacyName?: string;
@@ -90,7 +93,7 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
                   >
                     {/* Product Image */}
                     <div className="relative aspect-square">
-                      {product.compareAtPrice && product.price && product.compareAtPrice > product.price && (
+                      {product.compareAtPrice !== null && product.price !== null && (
                         <div className="absolute top-2 left-2 z-10 bg-theme-charcoal text-theme-alabaster px-2 py-1">
                           <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest">
                             {Math.round((1 - product.price / product.compareAtPrice) * 100)}% Off
@@ -165,12 +168,12 @@ export function GiftClient({ products, totalCount, placeholderImages }: Props) {
                         <p className="font-mono text-[10px] md:text-sm tracking-wider opacity-40">
                           Out of Stock
                         </p>
-                      ) : product.price ? (
+                      ) : product.price !== null ? (
                         <p className="text-xs md:text-base tracking-wide opacity-70 flex items-center justify-center gap-2">
-                          {product.compareAtPrice && product.compareAtPrice > product.price && (
-                            <span className="opacity-50 line-through">${product.compareAtPrice}</span>
+                          {product.compareAtPrice !== null && (
+                            <span className="opacity-50 line-through">{formatUsd(product.compareAtPrice)}</span>
                           )}
-                          <span>${product.price}</span>
+                          <span>{formatUsd(product.price)}</span>
                         </p>
                       ) : null}
                     </div>

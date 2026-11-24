@@ -30,6 +30,7 @@ const WaypointMiniMap = dynamic(
 import { triggerEssenceDrop } from "@/components/cart/Satchel";
 import { CompactAudioButton } from "@/components/ui/CompactAudioButton";
 import { buildShopifyCatalogContentId } from "@/lib/analytics/meta";
+import { formatUsd, type ProductOffer } from "@/lib/product-offers";
 
 // Portable Text type
 type PortableTextBlock = unknown;
@@ -43,6 +44,9 @@ interface Product {
   scentProfile?: string;
   inspiredBy?: string;
   collectionType: "atlas" | "relic" | "gift";
+  // Commerce fields below (price, compareAtPrice, volume, inStock and the
+  // shopifyVariant ids) are read on the server only as a fallback for when
+  // Shopify cannot be reached; the page renders from `offer`.
   price?: number;
   compareAtPrice?: number;
   volume?: string;
@@ -65,7 +69,8 @@ interface Product {
     slug: { current: string };
     legacyName?: string;
     showLegacyName?: boolean;
-    price?: number;
+    /** Live Shopify starting price, written over Sanity's on the server. */
+    price?: number | null;
     mainImage?: unknown;
   }>;
   notes?: {
@@ -135,6 +140,8 @@ interface Product {
 
 interface Props {
   product: Product;
+  /** Price, sizes, variant ids and stock, from Shopify (or the Sanity fallback). */
+  offer: ProductOffer;
   placeholderImages?: PlaceholderImagesQueryResult | null;
 }
 
@@ -425,24 +432,12 @@ const TERRITORY_NAMES: Record<string, string> = {
   terra: "Terra",
 };
 
-// Territory-based pricing for Atlas Collection
-// 3ml is only offered when a product carries a 3ml variant ID in Sanity.
-const TERRITORY_PRICING: Record<string, Record<VariantSize, number>> = {
-  ember: { '3ml': 23, '6ml': 28, '12ml': 48 },
-  petal: { '3ml': 23, '6ml': 30, '12ml': 50 },
-  tidal: { '3ml': 23, '6ml': 30, '12ml': 50 },
-  terra: { '3ml': 23, '6ml': 33, '12ml': 55 },
-};
-
 const TERRITORY_TAGLINES: Record<string, string> = {
   ember: "Spice. Warmth. The intimacy of ancient routes.",
   petal: "Bloom. Herb. The exhale of living gardens.",
   tidal: "Salt. Mist. The pull of open water.",
   terra: "Wood. Oud. The gravity of deep forests.",
 };
-
-type VariantSize = '3ml' | '6ml' | '12ml';
-const ALL_SIZES: VariantSize[] = ['3ml', '6ml', '12ml'];
 
 // Territory Badge Component with elegant icons
 const TerritoryBadge = ({ territory }: { territory: string }) => {
@@ -591,7 +586,7 @@ const TrustBadges = ({ collectionType, product }: { collectionType: Product['col
   );
 };
 
-export function ProductDetailClient({ product, placeholderImages }: Props) {
+export function ProductDetailClient({ product, offer, placeholderImages }: Props) {
   const { addItem } = useShopifyCart();
   const { ready: analyticsReady, trackViewItem } = useAnalytics();
   const [quantity, setQuantity] = useState(1);
@@ -605,44 +600,37 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const addResetTimer = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(addResetTimer.current), []);
   const [showMap, setShowMap] = useState(false);
-  const [selectedVariant, setSelectedVariant] = useState<VariantSize>('6ml');
+  // Sizes in Shopify (3ml, 6ml, 12ml, then any other), each with its price,
+  // stock and the variant the Satchel adds. The server already opens on 6ml,
+  // or on the first size in stock when 6ml is sold out.
+  const sizes = offer.sizes;
+  const [selectedIndex, setSelectedIndex] = useState(offer.defaultIndex);
+  const selectedSize = sizes[selectedIndex] ?? sizes[0];
+  const selectedShopifyVariantId = selectedSize?.variantId ?? undefined;
 
-  // Which sizes this product can actually sell. 6ml and 12ml are always offered
-  // for Atlas products; 3ml appears only when Sanity holds a 3ml variant ID.
-  const sizeOptions: VariantSize[] = ALL_SIZES.filter(
-    (size) => size !== '3ml' || Boolean(product.shopifyVariant3mlId),
+  // Only on the Sanity fallback (Shopify did not answer the server) does the
+  // page ask Shopify from the browser whether the starting size is in stock,
+  // and move to the first size that is. Runs once; a later choice is never
+  // overridden.
+  const [defaultSizeResolved, setDefaultSizeResolved] = useState(
+    offer.source === 'shopify' || sizes.length < 2,
   );
-  const variantIdForSize = (size: VariantSize): string | undefined => {
-    if (size === '3ml') return product.shopifyVariant3mlId || undefined;
-    if (size === '12ml') return product.shopifyVariant12mlId || undefined;
-    return product.shopifyVariant6mlId || product.shopifyVariantId || undefined;
-  };
-  // Falls back to the 6ml/default variant when the selected size has no ID.
-  const selectedShopifyVariantId =
-    variantIdForSize(selectedVariant) ?? variantIdForSize('6ml');
-
-  // If the default 6ml is sold out, land on the first size that is in stock
-  // (3ml first, then 12ml) instead of greeting the visitor with Out of Stock.
-  // Runs once per product; a later manual size choice is never overridden.
-  const [defaultSizeResolved, setDefaultSizeResolved] = useState(false);
-  const id3ml = product.shopifyVariant3mlId;
-  const id6ml = product.shopifyVariant6mlId || product.shopifyVariantId;
-  const id12ml = product.shopifyVariant12mlId;
-  // Only Atlas products with a 6ml variant pick a starting size; every other
-  // product shows its single size straight away.
-  const startingSizeSettled =
-    defaultSizeResolved || product.collectionType !== 'atlas' || !id6ml;
+  const startingSizeSettled = defaultSizeResolved;
   useEffect(() => {
-    if (defaultSizeResolved || product.collectionType !== 'atlas' || !id6ml) return;
+    if (defaultSizeResolved) return;
     let cancelled = false;
     (async () => {
-      const sixAvailable = await checkVariantAvailability(id6ml);
+      const start = sizes[offer.defaultIndex];
+      const startAvailable = start?.variantId
+        ? await checkVariantAvailability(start.variantId)
+        : true;
       if (cancelled) return;
-      if (!sixAvailable) {
-        for (const [size, id] of [['3ml', id3ml], ['12ml', id12ml]] as const) {
-          if (!id) continue;
-          if (await checkVariantAvailability(id)) {
-            if (!cancelled) setSelectedVariant(size);
+      if (!startAvailable) {
+        for (let index = 0; index < sizes.length; index++) {
+          const size = sizes[index];
+          if (index === offer.defaultIndex || !size.variantId) continue;
+          if (await checkVariantAvailability(size.variantId)) {
+            if (!cancelled) setSelectedIndex(index);
             break;
           }
         }
@@ -650,7 +638,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       if (!cancelled) setDefaultSizeResolved(true);
     })();
     return () => { cancelled = true; };
-  }, [defaultSizeResolved, product.collectionType, id3ml, id6ml, id12ml]);
+  }, [defaultSizeResolved, offer.defaultIndex, sizes]);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     description: false,
     notes: false,
@@ -659,17 +647,20 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     journey: false,
   });
 
-  // Real-time stock check from Shopify Storefront API
-  const [liveInStock, setLiveInStock] = useState<boolean | null>(null);
-  const isOutOfStock = liveInStock === false || (liveInStock === null && product.inStock === false);
+  // Stock: the server's Shopify answer (up to a minute old) until the browser's
+  // uncached check for the selected variant comes back.
+  const [liveStock, setLiveStock] = useState<Record<string, boolean>>({});
+  const liveInStock = selectedShopifyVariantId ? liveStock[selectedShopifyVariantId] : undefined;
+  const isOutOfStock = !selectedSize
+    || (liveInStock === undefined ? !selectedSize.availableForSale : !liveInStock);
 
   useEffect(() => {
-    // Check real-time availability for whichever variant is selected
     if (!selectedShopifyVariantId) return;
-
+    let cancelled = false;
     checkVariantAvailability(selectedShopifyVariantId).then(available => {
-      setLiveInStock(available);
+      if (!cancelled) setLiveStock(prev => ({ ...prev, [selectedShopifyVariantId]: available }));
     });
+    return () => { cancelled = true; };
   }, [selectedShopifyVariantId]);
 
   // Set responsive defaults after mount (collapse on mobile)
@@ -683,11 +674,10 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
     }
   }, []);
 
-  // Get territory-based pricing for Atlas products
   const territory = product.atlasData?.atmosphere;
-  const territoryPricing = territory ? TERRITORY_PRICING[territory] : null;
   const territoryTagline = territory ? TERRITORY_TAGLINES[territory] : null;
-  const currentPrice = territoryPricing ? territoryPricing[selectedVariant] : product.price;
+  const currentPrice = selectedSize?.price ?? undefined;
+  const compareAtPrice = selectedSize?.compareAtPrice ?? null;
 
   const addButtonRef = useRef<HTMLButtonElement>(null);
   const mobileAddButtonRef = useRef<HTMLButtonElement>(null);
@@ -725,12 +715,16 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
   const isAtlas = product.collectionType === "atlas";
   const isRelic = product.collectionType === "relic";
   const isGift = product.collectionType === "gift";
-  const selectedVariantLabel = isAtlas
-    ? selectedVariant
-    : product.volume || undefined;
+  // Shopify's size name ("6ml", "10ml"); none for a product without sizes.
+  const selectedVariantLabel = selectedSize?.label ?? undefined;
+  // A gift set has no size in Shopify; its chip names the set instead.
+  const giftSetLabel = isGift && product.giftData?.setSize
+    ? `${product.giftData.setSize}-Piece Set${product.giftData.pieceFormat ? ` \u00b7 ${product.giftData.pieceFormat}` : ''}`
+    : undefined;
+  const sizeChipLabel = selectedVariantLabel ?? giftSetLabel;
   // Shown on the phone purchase button: whole dollars stay whole, cents only when needed.
   const lineTotal = (currentPrice || 0) * quantity;
-  const lineTotalLabel = `$${Number.isInteger(lineTotal) ? lineTotal : lineTotal.toFixed(2)}`;
+  const lineTotalLabel = formatUsd(lineTotal);
 
   // Wait for the starting size: when 6ml is sold out the page switches to 3ml
   // or 12ml, and firing before that sent one view_item for each size.
@@ -813,17 +807,11 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       return;
     }
 
-    // Determine which variant ID to use based on selection
-    // For Atlas products with variant selection, use the specific variant ID
-    // For Relic or single-variant products, use the default shopifyVariantId
-    let variantIdToAdd = product.shopifyVariantId;
-
-    if (isAtlas && selectedVariant) {
-      variantIdToAdd = variantIdForSize(selectedVariant) || variantIdToAdd;
-    }
+    // The Shopify variant of the chosen size.
+    const variantIdToAdd = selectedShopifyVariantId;
 
     if (!variantIdToAdd) {
-      console.error('Product missing Shopify Variant ID. Please add variant IDs in Sanity Studio.');
+      console.error('No Shopify variant for the selected size of', product.slug?.current);
       alert('This product is not yet connected to Shopify. Please contact support.');
       return;
     }
@@ -853,14 +841,14 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
       console.log('[handleAddToSatchel] Triggering animation from:', { startX, startY });
       triggerEssenceDrop({
         productColor: '#c5a66a', // Theme gold
-        productName: `${product.title} (${selectedVariant})`,
+        productName: selectedVariantLabel ? `${product.title} (${selectedVariantLabel})` : product.title,
         startX,
         startY,
       });
     }, 0);
 
     try {
-      console.log('Adding to cart:', { variantId: variantIdToAdd, selectedVariant, quantity });
+      console.log('Adding to cart:', { variantId: variantIdToAdd, size: selectedVariantLabel, quantity });
       await addItem(variantIdToAdd, quantity);
       console.log('Successfully added to cart');
 
@@ -1101,31 +1089,32 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </div>
             )}
 
-            {/* Variant Selector (Atlas with territory pricing) */}
-            {isAtlas && territoryPricing ? (
+            {/* Size selector: one button per Shopify size */}
+            {sizes.length > 1 ? (
               <div className="space-y-4">
                 <span className="font-mono text-xs uppercase tracking-widest opacity-60">
                   Select Size
                 </span>
                 <div className="flex gap-3">
-                  {sizeOptions.map((size) => (
+                  {sizes.map((size, index) => (
                     <motion.button
-                      key={size}
-                      onClick={() => setSelectedVariant(size)}
+                      key={size.variantId ?? size.label ?? index}
+                      onClick={() => setSelectedIndex(index)}
+                      aria-pressed={selectedIndex === index}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`flex-1 py-4 px-6 border-2 transition-all ${selectedVariant === size
+                      className={`flex-1 py-4 px-6 border-2 transition-all ${selectedIndex === index
                         ? isRelic ? 'border-theme-alabaster bg-theme-alabaster text-theme-obsidian' : 'border-theme-charcoal bg-theme-charcoal text-theme-alabaster'
                         : isRelic ? 'border-white/20 hover:border-white/40' : 'border-theme-charcoal/20 hover:border-theme-charcoal/40'
                         }`}
                     >
                       <div className="text-center">
                         <div className="font-mono text-sm uppercase tracking-widest mb-1">
-                          {size}
+                          {size.label}
                         </div>
-                        <div className={`text-2xl font-serif tracking-tighter ${selectedVariant === size ? 'text-theme-alabaster' : ''
+                        <div className={`text-2xl font-serif tracking-tighter ${selectedIndex === index && !isRelic ? 'text-theme-alabaster' : ''
                           }`}>
-                          ${territoryPricing[size]}
+                          {size.price !== null ? formatUsd(size.price) : ''}
                         </div>
                       </div>
                     </motion.button>
@@ -1139,30 +1128,30 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               </div>
             ) : (
               <>
-                {/* Fallback: Single Price (Relic, Gift, or no territory) */}
-                {currentPrice && (
+                {/* Single size: its Shopify price */}
+                {currentPrice ? (
                   <div className="flex items-baseline gap-3">
                     <div className="text-4xl md:text-5xl font-serif tracking-tighter">
-                      ${currentPrice}
+                      {formatUsd(currentPrice)}
                     </div>
-                    {product.compareAtPrice && product.compareAtPrice > currentPrice && (
+                    {compareAtPrice && (
                       <>
                         <span className="text-xl md:text-2xl font-serif tracking-tighter opacity-40 line-through">
-                          ${product.compareAtPrice}
+                          {formatUsd(compareAtPrice)}
                         </span>
                         <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-theme-gold">
-                          {Math.round((1 - currentPrice / product.compareAtPrice) * 100)}% Off
+                          {Math.round((1 - currentPrice / compareAtPrice) * 100)}% Off
                         </span>
                       </>
                     )}
                   </div>
-                )}
+                ) : null}
 
-                {/* Volume & Format */}
+                {/* Size & Format */}
                 <div className="flex items-center gap-6">
-                  {product.volume && (
+                  {sizeChipLabel && (
                     <div className="px-6 py-3 border border-theme-charcoal/20 font-mono text-xs md:text-sm uppercase tracking-widest">
-                      {product.volume}
+                      {sizeChipLabel}
                     </div>
                   )}
                   {product.productFormat && (
@@ -1347,13 +1336,13 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
               ref={addButtonRef}
               layout
               onClick={() => handleAddToSatchel('desktop')}
-              disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
-              whileHover={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 1.01 } : {}}
-              whileTap={!isOutOfStock && !isAdding && product.shopifyVariantId ? { scale: 0.99 } : {}}
+              disabled={isOutOfStock || isAdding || !selectedShopifyVariantId}
+              whileHover={!isOutOfStock && !isAdding && selectedShopifyVariantId ? { scale: 1.01 } : {}}
+              whileTap={!isOutOfStock && !isAdding && selectedShopifyVariantId ? { scale: 0.99 } : {}}
               className={`hidden md:flex items-center justify-center gap-3 w-full py-5 font-mono text-sm md:text-base uppercase tracking-[0.4em] transition-all relative overflow-hidden ${!isOutOfStock
                 ? addState === 'added'
                   ? "bg-theme-gold text-theme-obsidian"
-                  : product.shopifyVariantId
+                  : selectedShopifyVariantId
                     ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90"
                     : isRelic ? "bg-white/40 text-white/60 cursor-not-allowed" : "bg-theme-charcoal/40 text-theme-alabaster/60 cursor-not-allowed"
                 : isRelic ? "bg-white/20 text-white/40 cursor-not-allowed" : "bg-theme-charcoal/20 text-theme-charcoal/40 cursor-not-allowed"
@@ -1384,7 +1373,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                         ? "Not added. Try again"
                         : isOutOfStock
                           ? "Out of Stock"
-                          : !product.shopifyVariantId
+                          : !selectedShopifyVariantId
                             ? "Not Connected to Shopify"
                             : "Add to Satchel"}
                   </motion.span>
@@ -1393,7 +1382,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             </motion.button>
 
             {/* Shopify Connection Warning */}
-            {!isOutOfStock && !product.shopifyVariantId && (
+            {!isOutOfStock && !selectedShopifyVariantId && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -1403,7 +1392,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                   ⚠️ Shopify Connection Required
                 </p>
                 <p className="font-serif text-xs text-amber-700">
-                  This product needs a Shopify Variant ID to be added to cart. Please add it in Sanity Studio under the "Shopify Sync" tab.
+                  This size could not be matched to a Shopify variant, so it cannot be added to the Satchel yet.
                 </p>
               </motion.div>
             )}
@@ -1637,9 +1626,11 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                             className="text-xs opacity-60 mb-2"
                           />
                         )}
-                        <p className="font-mono text-xs opacity-40 uppercase tracking-widest">
-                          ${related.price}
-                        </p>
+                        {typeof related.price === 'number' && (
+                          <p className="font-mono text-xs opacity-40 uppercase tracking-widest">
+                            {formatUsd(related.price)}
+                          </p>
+                        )}
                       </div>
                     </Link>
                   );
@@ -1666,11 +1657,11 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
             ref={mobileAddButtonRef}
             type="button"
             onClick={() => handleAddToSatchel('mobile')}
-            disabled={isOutOfStock || isAdding || !product.shopifyVariantId}
+            disabled={isOutOfStock || isAdding || !selectedShopifyVariantId}
             className={`w-full h-14 px-5 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-[0.2em] transition-all relative overflow-hidden ${!isOutOfStock
               ? addState === 'added'
                 ? "bg-theme-gold text-theme-obsidian"
-                : product.shopifyVariantId
+                : selectedShopifyVariantId
                   ? isRelic ? "bg-theme-alabaster text-theme-obsidian hover:bg-theme-alabaster/90 active:bg-theme-alabaster/80" : "bg-theme-charcoal text-theme-alabaster hover:bg-theme-charcoal/90 active:bg-theme-charcoal/80"
                   : isRelic ? "bg-white/40 text-white/60 cursor-not-allowed" : "bg-theme-charcoal/40 text-theme-alabaster/60 cursor-not-allowed"
               : isRelic ? "bg-white/20 text-white/40 cursor-not-allowed" : "bg-theme-charcoal/20 text-theme-charcoal/40 cursor-not-allowed"
@@ -1701,7 +1692,7 @@ export function ProductDetailClient({ product, placeholderImages }: Props) {
                       ? "Try again"
                       : isOutOfStock
                         ? "Out of Stock"
-                        : !product.shopifyVariantId
+                        : !selectedShopifyVariantId
                           ? "Not Connected"
                           : "Add to Satchel"}
                 </motion.span>

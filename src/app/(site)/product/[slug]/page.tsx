@@ -2,7 +2,7 @@ import { cache } from "react";
 import { sanityFetch } from "@/sanity/lib/client";
 import { productBySlugQuery, placeholderImagesQuery, PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { shareImageUrlFor, urlForImage } from "@/sanity/lib/image";
-import { getProductOffers } from "@/lib/shopify/client";
+import { getProductOffers, getProductsOffers } from "@/lib/shopify/client";
 import {
   SHARE_IMAGE,
   SHARE_PAD_COLOR,
@@ -11,6 +11,7 @@ import {
   shopifyShareImageUrl,
   toShopifyProductGid,
 } from "@/lib/product-structured-data";
+import { resolveProductOffer, withLiveOffers, type SizeOption } from "@/lib/product-offers";
 import { notFound } from "next/navigation";
 import { ProductDetailClient } from "./ProductDetailClient";
 import type { Metadata } from "next";
@@ -20,14 +21,6 @@ interface ProductPageProps {
     slug: string;
   }>;
 }
-
-// Territory pricing, used for structured data only when Shopify cannot be reached
-const territoryPricing: Record<string, { min: number; max: number }> = {
-  ember: { min: 28, max: 48 },
-  tidal: { min: 30, max: 50 },
-  petal: { min: 30, max: 50 },
-  terra: { min: 33, max: 55 },
-};
 
 // The metadata and the page both need the live offers; fetch them once per request.
 const getOffersFor = cache(async (shopifyProductId?: string | number | null) => {
@@ -52,24 +45,20 @@ function productImages(product: any, featuredImageUrl?: string | null) {
   }
 }
 
-function fallbackOffers(product: any, productName: string, url: string) {
-  const base = {
-    '@type': 'Offer',
-    priceCurrency: 'USD',
-    availability: schemaAvailability(product.inStock !== false),
-    itemCondition: 'https://schema.org/NewCondition',
-    url,
-    seller: { '@type': 'Organization', name: 'Tarife Attar' },
-  };
-  if (product.collectionType === 'atlas') {
-    const pricing = territoryPricing[product.atlasData?.atmosphere] || territoryPricing.ember;
-    return [
-      { ...base, name: '6ml Glass Wand Applicator', price: pricing.min },
-      { ...base, name: '12ml Glass Wand Applicator', price: pricing.max },
-    ];
-  }
-  const price = Number(product.price);
-  return Number.isFinite(price) && price > 0 ? [{ ...base, name: productName, price }] : [];
+// Structured data from the Sanity fallback sizes, only when Shopify cannot be reached.
+function fallbackOffers(sizes: SizeOption[], productName: string, url: string) {
+  return sizes
+    .filter((size) => size.price !== null && size.price > 0)
+    .map((size) => ({
+      '@type': 'Offer',
+      name: size.label ? `${size.label} Glass Wand Applicator` : productName,
+      price: size.price,
+      priceCurrency: 'USD',
+      availability: schemaAvailability(size.availableForSale),
+      itemCondition: 'https://schema.org/NewCondition',
+      url,
+      seller: { '@type': 'Organization', name: 'Tarife Attar' },
+    }));
 }
 
 function buildScentDescription(product: any): string {
@@ -191,15 +180,27 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  // Build JSON-LD Product structured data from the live Shopify sizes and stock
+  // Price, sizes, the variant the Satchel adds and stock all come from
+  // Shopify; Sanity's commerce fields are only a logged fallback.
   const notesStr = buildNotesString(product.notes);
   const productName = `${product.title} Perfume Oil`;
   const productUrl = `https://tarifeattar.com/product/${slug}`;
-  const offers = await getOffersFor(product.shopifyProductId);
+  const related: any[] = product.relatedProducts ?? [];
+  const relatedGids = related
+    .map((p) => toShopifyProductGid(p.shopifyProductId))
+    .filter((gid): gid is string => !!gid);
+  const [offers, relatedOffers] = await Promise.all([
+    getOffersFor(product.shopifyProductId),
+    related.length ? getProductsOffers(relatedGids) : Promise.resolve(new Map()),
+  ]);
+  const offer = resolveProductOffer(product, offers ? offers.variants : null);
+  const relatedProducts = related.length
+    ? withLiveOffers(related, relatedOffers, { page: `/product/${slug} related products` })
+    : product.relatedProducts;
   const images = productImages(product, offers?.featuredImageUrl);
-  const schemaOffers = offers?.variants.length
+  const schemaOffers = offer.source === 'shopify' && offers
     ? buildOffers(offers.variants, { productName, url: productUrl })
-    : fallbackOffers(product, productName, productUrl);
+    : fallbackOffers(offer.sizes, productName, productUrl);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -232,7 +233,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductDetailClient product={product as any} placeholderImages={placeholderImages} />
+      <ProductDetailClient
+        product={{ ...product, relatedProducts } as any}
+        offer={offer}
+        placeholderImages={placeholderImages}
+      />
     </>
   );
 }

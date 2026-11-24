@@ -7,6 +7,9 @@ import {
   PlaceholderImagesQueryResult,
 } from "@/sanity/lib/queries";
 import { AtlasClient } from "./AtlasClient";
+import { getProductsOffers } from "@/lib/shopify/client";
+import { toShopifyProductGid } from "@/lib/product-structured-data";
+import { withLiveOffers } from "@/lib/product-offers";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -64,6 +67,7 @@ interface AtlasProduct {
   mainImage?: unknown;
   atmosphere: string;
   inStock?: boolean;
+  shopifyProductId?: string | number | null;
 }
 
 interface TerritoryCounts {
@@ -75,7 +79,7 @@ interface TerritoryCounts {
 
 export default async function AtlasPage() {
   // Fetch all Atlas products, territory counts, and placeholder images
-  const [products, counts, placeholderImages] = await Promise.all([
+  const [sanityProducts, counts, placeholderImages] = await Promise.all([
     sanityFetch<AtlasProduct[]>({
       query: atlasProductsByTerritoryQuery,
       tags: ["atlas-products"],
@@ -92,6 +96,12 @@ export default async function AtlasPage() {
       revalidate: 0,
     }),
   ]);
+
+  // Price and stock on each card come from Shopify; Sanity's are a logged fallback.
+  const live = await getProductsOffers(
+    sanityProducts.map((p) => toShopifyProductGid(p.shopifyProductId)).filter((gid): gid is string => !!gid),
+  );
+  const products = withLiveOffers(sanityProducts, live, { page: "/atlas" });
 
   // Group products by territory
   const productsByTerritory = TERRITORIES.map((territory) => ({

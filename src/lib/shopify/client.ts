@@ -232,21 +232,46 @@ export async function getFeaturedAvailability(handles: string[]) {
   });
 }
 
+// Everything the site shows or buys for one size: the variant the Satchel
+// adds, its size, price, compare-at price and stock.
+const OFFER_VARIANT_FIELDS = `
+  id
+  title
+  sku
+  availableForSale
+  price { amount currencyCode }
+  compareAtPrice { amount currencyCode }
+`;
+
 export const PRODUCT_OFFERS_QUERY = `
   query ProductOffers($id: ID!) {
     product(id: $id) {
       featuredImage { url }
       variants(first: 10) {
-        nodes { title sku availableForSale price { amount currencyCode } }
+        nodes { ${OFFER_VARIANT_FIELDS} }
+      }
+    }
+  }
+`;
+
+export const PRODUCTS_OFFERS_QUERY = `
+  query ProductsOffers($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Product {
+        id
+        variants(first: 10) {
+          nodes { ${OFFER_VARIANT_FIELDS} }
+        }
       }
     }
   }
 `;
 
 /**
- * Live sizes, prices and stock for a product's structured data and share tags.
+ * Live sizes, prices, variant ids and stock for a product page: the price and
+ * size buttons, the variant the Satchel adds, structured data and share tags.
  * Cached for a minute; returns null when Shopify fails or takes longer than
- * 3 seconds, so the page renders with its fallback offers instead of waiting.
+ * 3 seconds, so the page renders with its Sanity fallback instead of waiting.
  */
 export async function getProductOffers(
   productGid: string,
@@ -264,6 +289,34 @@ export async function getProductOffers(
       variants: product.variants?.nodes ?? [],
       featuredImageUrl: product.featuredImage?.url ?? null,
     };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Live variants for every card on a grid (Atlas, Relic, gift) in one request,
+ * keyed by Shopify product gid. Products Shopify does not return are left out.
+ * Cached for a minute; null when Shopify fails or takes longer than 3 seconds.
+ */
+export async function getProductsOffers(
+  productGids: string[],
+): Promise<Map<string, OfferVariant[]> | null> {
+  const ids = Array.from(new Set(productGids));
+  if (!ids.length) return new Map();
+  try {
+    const { data, errors } = await shopifyFetch({
+      query: PRODUCTS_OFFERS_QUERY,
+      variables: { ids },
+      revalidate: 60,
+      timeoutMs: 3000,
+    });
+    if (errors?.length || !Array.isArray(data?.nodes)) return null;
+    const offers = new Map<string, OfferVariant[]>();
+    for (const node of data.nodes as Array<{ id?: string; variants?: { nodes?: OfferVariant[] } } | null>) {
+      if (node?.id) offers.set(node.id, node.variants?.nodes ?? []);
+    }
+    return offers;
   } catch {
     return null;
   }

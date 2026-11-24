@@ -63,7 +63,8 @@ test('product page builds offers from Shopify and keeps a fallback when it is do
   const page = await readFile('src/app/(site)/product/[slug]/page.tsx', 'utf8');
   assert.match(page, /getProductOffers/);
   assert.match(page, /buildOffers\(offers\.variants/);
-  assert.match(page, /fallbackOffers\(product/);
+  // The fallback is built from the same Sanity fallback sizes the page shows.
+  assert.match(page, /fallbackOffers\(offer\.sizes/);
   // og:type=product cannot be emitted as property= in <head> on Next 14, so the
   // page uses og:type=website plus a share image, and no name= OG tags.
   assert.match(page, /type: 'website'/);

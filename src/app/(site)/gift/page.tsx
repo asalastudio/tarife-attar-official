@@ -1,6 +1,9 @@
 import { sanityFetch } from "@/sanity/lib/client";
 import { giftProductsQuery, placeholderImagesQuery, PlaceholderImagesQueryResult } from "@/sanity/lib/queries";
 import { GiftClient } from "./GiftClient";
+import { getProductsOffers } from "@/lib/shopify/client";
+import { toShopifyProductGid } from "@/lib/product-structured-data";
+import { withLiveOffers } from "@/lib/product-offers";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,10 +32,11 @@ interface GiftProduct {
   inStock?: boolean;
   setSize?: number;
   pieceFormat?: string;
+  shopifyProductId?: string | number | null;
 }
 
 export default async function GiftPage() {
-  const [products, placeholderImages] = await Promise.all([
+  const [sanityProducts, placeholderImages] = await Promise.all([
     sanityFetch<GiftProduct[]>({
       query: giftProductsQuery,
       tags: ["gift-products"],
@@ -44,6 +48,12 @@ export default async function GiftPage() {
       revalidate: 0,
     })
   ]);
+
+  // Price and stock on each card come from Shopify; Sanity's are a logged fallback.
+  const live = await getProductsOffers(
+    sanityProducts.map((p) => toShopifyProductGid(p.shopifyProductId)).filter((gid): gid is string => !!gid),
+  );
+  const products = withLiveOffers(sanityProducts, live, { page: "/gift" });
 
   if (process.env.NODE_ENV === 'development') {
     console.log('[Gift Page] Total products fetched:', products.length);

@@ -5,10 +5,13 @@
  */
 
 export interface OfferVariant {
+  /** Shopify ProductVariant gid, the id the cart adds. */
+  id?: string | null;
   title: string;
   sku?: string | null;
   availableForSale: boolean;
   price: { amount: string; currencyCode: string };
+  compareAtPrice?: { amount: string; currencyCode: string } | null;
 }
 
 const SIZE_ORDER = ['3ml', '6ml', '12ml'];
@@ -21,7 +24,8 @@ export function schemaAvailability(availableForSale: boolean): string {
   return availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock';
 }
 
-function sizeRank(title: string): number {
+/** 3ml, 6ml, 12ml, then every other size in Shopify's order. */
+export function sizeRank(title: string): number {
   const index = SIZE_ORDER.indexOf(title.trim().toLowerCase());
   return index === -1 ? SIZE_ORDER.length : index;
 }
